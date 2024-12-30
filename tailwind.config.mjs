@@ -7,10 +7,17 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      fontFamily: {
+        sans: ['']
       },
+      gridTemplateColumns: {
+        '70/30': '70% 28%',
+
+      }
+      // colors: {
+      //   background: "var(--background)",
+      //   foreground: "var(--foreground)",
+      // },
     },
   },
   plugins: [],
