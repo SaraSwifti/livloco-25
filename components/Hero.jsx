@@ -3,7 +3,7 @@ const Hero = () => {
         // < !--Hero -- >
         <section className=" py-0 mb-4">
           <div
-            className="backdrop-invert max-w-7xl py-3.5 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
+            className="bg-gray-800 max-w-7xl py-3.5 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
           >
             <div className="text-center">
               <h1

@@ -1,8 +1,10 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+// import { hydrateRoot } from 'react-dom/client';
 import '@/public/assets/styles/global.css';
 
 import backdrop from '@/public/assets/images/sunflowers.png'
+
 export const metadata = {
   title: 'Livloco',
   keywords: 'local, living, sustainable, micro-economies, LivLoco, Livlo.co',

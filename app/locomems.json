@@ -1,0 +1,151 @@
+[
+    {
+        "_id": "1",
+        "locomem_owner": {
+            "email": "grummet@gmail.com",
+            "name": "Esther Grummet",
+            "phone": "616-558-1817",
+            "membership_expiry_date": "",
+            "mempayment_confirmed": "true"
+        },
+        "locobiz": {
+            "locobiz_permission": true,
+            "locobiz_name": "Kairos Flowers",
+            "lcocbiz_description": "Flower Sales and Home Delivery Services",
+            "locobiz-email":{
+                "email-memmessage":"true",
+                "email":"grummet@gmail.com"
+
+            },
+            "locobiz_address": {
+                "locobiz_address_permission": true,
+                "add_line1": "5913 68th street",
+                "add_line2": "",
+                "city": "Alto",
+                "state": "MI",
+                "zipcode": "48726",
+                "country": "",
+                "business_hours": {
+                    "bizhours_permission_post": "true",
+                    "monday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    },
+                    "tuesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                       
+                    },
+                    "wednesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "thursday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "friday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                      
+                    },
+                    "saturday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "sunday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    }
+                }
+            },
+            "locobiz_phone": {
+                "permission_to_post": "true",
+                "locobiz_phone#": "616-558-1817"
+            },
+            "locobiz_url": {
+                "locobiz_url_permission": true,
+                "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
+            },
+            "locobiz_profile_image": "hallelherbs.jpg",
+          
+           
+            "fm-location": {
+                "fm_location_post": "true",
+                "monday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state":""
+                },
+                "tuesday": {
+                  "fm_name": "",
+                    "city": "",
+                    "state":""
+                   
+                },
+                "wednesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state":""
+                },
+                "thursday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state":""
+                },
+                "friday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state":""
+                  
+                },
+                "saturday": {
+                 "fm_name": "",
+                    "city": "",
+                    "state":""
+                },
+                "sunday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state":""
+                }
+            },
+            "selling": {
+                "selling1": {
+                    "description": "Dailia Bouquets",
+                    "image": "kairosflowers.png"
+                },
+                "selling2": {
+                    "description": "Dandelion Bouquets",
+                    "image": "kairosflowers2.png"
+                },
+                "selling3": {
+                    "description": "Daisy Bouquets",
+                    "image": ""
+                }
+            },
+            "needs": {
+                "need1": {
+                    "description": "Honey Bees",
+                    "image": "kairosflowers.png"
+                },
+                "need2": {
+                    "description": "Organic Horse Manure",
+                    "image": ""
+                },
+                "need3": {
+                    "description": "",
+                    "image": ""
+                }
+            },
+            "locobiz_votes": 3
+        }
+    }
+]

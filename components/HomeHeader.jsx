@@ -1,7 +1,7 @@
 const HomeHeader = () => {
     return ( <section className=" py-0 mb-4">
         <div
-          className="backdrop-invert max-w-7xl mx-auto py-3.5 px-4 sm:px-6 lg:px-8 flex flex-col items-center"
+          className="bg-gray-800 max-w-7xl mx-auto py-3.5 px-4 sm:px-6 lg:px-8 flex flex-col items-center"
         >
             <div className="text-center">
                 
@@ -14,7 +14,7 @@ const HomeHeader = () => {
               What your neighbor has, might be what you need.
                 </p>
                 <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              What you need, might be what your neighbor has.
+              What your neighbor needs, might be what you have.
             </p>
           </div>
           {/* <-- Form Component --> */}
