@@ -1,8 +1,8 @@
 
 
+const LocobusPage = ({ params }) => {
 
-const BusinessesPage = ({ params }) => {
-    
+
 
     return ( 
         <div>BusinessPage {params.id}</div>

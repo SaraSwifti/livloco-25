@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import logo from "@/public/assets/images/livlopng24.png";
-import profileDefault from '@/public/assets/images/profile.png';
+import profileDefault from '@/public/assets/images/aiprofile2.png';
 import { FaGoogle } from 'react-icons/fa';
 
 
@@ -79,13 +79,7 @@ const Navbar = () => {
                                         LocoBusinesses 
                                     </Link >
                                 )}
-                                {isLoggedIn && (
-                                    <Link
-                                        href="/businesses/edit"
-                                        className={`${pathname === '/businesses/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}>
-                                        Edit YoLocoBusiness
-                                    </Link >
-                                )}
+                               
                 </div>
               </div>
             </div>
@@ -118,7 +112,7 @@ const Navbar = () => {
                                         className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                     >
                                         <span className="absolute -inset-1.5"></span>
-                                        <span className="sr-only">View notifications</span>
+                                        <span className="sr-only">View messages</span>
                                         <svg
                                             className="h-6 w-6"
                                             fill="none"
@@ -155,9 +149,9 @@ const Navbar = () => {
                                             <span className="absolute -inset-1.5"></span>
                                             <span className="sr-only">Open user menu</span>
                                             <Image
-                                                className="h-8 w-8 rounded-full"
-                                                src={profileDefault}
-                                                alt=""
+                                                className="h-8 w-8 text-white rounded-full"
+                                                src={ profileDefault }
+                                                alt="building icon"
                                             />
                                         </button>
                                     </div>
@@ -174,19 +168,25 @@ const Navbar = () => {
                                                 tabIndex="-1"
                                             >
                                                 <Link
-                                                    href="/accountprofile"
+                                                    href="/membershipstatus"
                                                     className="block px-4 py-2 text-sm text-gray-700"
                                                     role="menuitem"
                                                     tabIndex="-1"
                                                     id="user-menu-item-0"
-                                                >Your Account Profile</Link>
+                                                >Your LivLoco Membership Status</Link>
+                                                <Link
+                                        href="/businesses/edit"
+                                         className="block px-4 py-2 text-sm text-gray-700">
+                                        Edit Your LivLoco Business
+                                    </Link >
+                                               
                                                 <Link
                                                     href="/businesses/saved"
-                                                    className="block px-4 py-2 text-sm text-gray-700"
+                                                    className="block px-4 py-2 text-sm text-black"
                                                     role="menuitem"
                                                     tabIndex="-1"
                                                     id="user-menu-item-2"
-                                                >Saved Loco Businesses
+                                                >Saved LivLoco Businesses
                                                 </Link>
                                                 <button
                                                     className="block px-4 py-2 text-sm text-gray-700"
