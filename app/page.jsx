@@ -1,6 +1,6 @@
 import HomeHeader from '@/components/HomeHeader';
 import AboutPage from '@/components/AboutPage';
-import InfoBox from '@/components/InfoBox';
+import CurrentStatsBox from '@/components/CurrentStatsBox';
 
 
 
@@ -10,7 +10,7 @@ const HomePage = () => {
             
             <HomeHeader />
             <AboutPage />
-            <InfoBox />
+            <CurrentStatsBox />
             
         </>
      );
