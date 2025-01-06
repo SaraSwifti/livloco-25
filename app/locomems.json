@@ -1,22 +1,25 @@
 [
     {
         "_id": "1",
-        "locomem_owner": {
+        "locomem": {
             "email": "grummet@gmail.com",
             "name": "Esther Grummet",
             "phone": "616-558-1817",
-            "membership_expiry_date": "",
-            "mempayment_confirmed": "true"
+            "mem_expiry": {
+                "event": "payment_confirmed",
+                "date_yearlater": "2026-01-01"
+            },
+            "last_login": {
+                "event": "last_login",
+                "date": "2025-01-03T15:00:00Z"
+            },
+            "payment_confirmed": "true"
         },
         "locobiz": {
             "locobiz_permission": true,
             "locobiz_name": "Kairos Flowers",
             "lcocbiz_description": "Flower Sales and Home Delivery Services",
-            "locobiz-email":{
-                "email-memmessage":"true",
-                "email":"grummet@gmail.com"
-
-            },
+            "email_memmessage_notification": "true",
             "locobiz_address": {
                 "locobiz_address_permission": true,
                 "add_line1": "5913 68th street",
@@ -36,7 +39,6 @@
                         "closed": false,
                         "opens": "9:00 am",
                         "closes": "5:00 pm"
-                       
                     },
                     "wednesday": {
                         "closed": false,
@@ -52,7 +54,6 @@
                         "closed": false,
                         "opens": "9:00 am",
                         "closes": "5:00 pm"
-                      
                     },
                     "saturday": {
                         "closed": false,
@@ -75,46 +76,42 @@
                 "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
             },
             "locobiz_profile_image": "hallelherbs.jpg",
-          
-           
             "fm-location": {
                 "fm_location_post": "true",
                 "monday": {
                     "fm_name": "",
                     "city": "",
-                    "state":""
+                    "state": ""
                 },
                 "tuesday": {
-                  "fm_name": "",
+                    "fm_name": "",
                     "city": "",
-                    "state":""
-                   
+                    "state": ""
                 },
                 "wednesday": {
                     "fm_name": "",
                     "city": "",
-                    "state":""
+                    "state": ""
                 },
                 "thursday": {
                     "fm_name": "",
                     "city": "",
-                    "state":""
+                    "state": ""
                 },
                 "friday": {
                     "fm_name": "",
                     "city": "",
-                    "state":""
-                  
+                    "state": ""
                 },
                 "saturday": {
-                 "fm_name": "",
+                    "fm_name": "",
                     "city": "",
-                    "state":""
+                    "state": ""
                 },
                 "sunday": {
                     "fm_name": "",
                     "city": "",
-                    "state":""
+                    "state": ""
                 }
             },
             "selling": {

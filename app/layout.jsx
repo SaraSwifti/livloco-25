@@ -14,12 +14,12 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html>
+    <html lang='eng'>
       <body>
         <Navbar />
-       <main>
-        <section
-        suppressHydrationWarning
+       
+        {/* <section
+       
         className="mx-max w-full h-screen bg-cover bg-no-repeat bg-center"
         // priority={true}
         style={{
@@ -27,15 +27,22 @@ const MainLayout = ({ children }) => {
          
        
         }}
-      >
+      > */}
        
      
-          <div className=''>
-            <main>{children}</main>
-          </div>
+         
+        <main
+        className="mx-max w-full h-screen bg-cover bg-no-repeat bg-center"
+        // priority={true}
+        style={{
+          backgroundImage: `url(${backdrop.src})`,
+         
+       
+        }}>{children}</main>
+         
           
-          </section>
-        </main>
+          {/* </section> */}
+       
       <Footer />
       </body>
     </html>

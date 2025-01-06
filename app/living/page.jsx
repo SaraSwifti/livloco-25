@@ -1,7 +1,24 @@
+'use client'
+import Image from 'next/image';
+import Link from 'next/link';
+import SlogHeader from '@/components/SlogHeader';
+// import Head from 'next/head';
+
 const LivingPage = () => {
     return ( 
-        <div>This will be the Living blog</div>
+        <>
+            
+               
+                    
+            
+            <SlogHeader />
+                
+
+        
+           
+        </>
      );
 }
  
 export default LivingPage;
+
