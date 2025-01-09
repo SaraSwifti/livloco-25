@@ -221,7 +221,7 @@
                 "locobiz_url_permission": true,
                 "locobiz_url_link": "https://www.fireboltfarms.com/"
             },
-            "locobiz_profile_image": "",
+            "locobiz_profile_image": "hay.jpeg",
             "fm-location": {
                 "fm_location_post": "false",
                 "monday": {
@@ -277,7 +277,7 @@
             "needs": {
                 "need1": {
                     "description": "hay",
-                    "image": "kairosflowers.png"
+                    "image": "hay.jpeg"
                 },
                 "need2": {
                     "description": "Oats",

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '@/public/assets/images/livlopng24.png';
+import logo from '@/public/images/livlopng24.png';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();

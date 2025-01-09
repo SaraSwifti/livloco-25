@@ -8,7 +8,7 @@ import '@/public/styles/global.css';
 //   <App />
 // );
 
-import backdrop from '@/public/assets/images/sunflowers.png'
+import backdrop from '@/public/images/sunflowers.png'
 
 export const metadata = {
   title: 'Livloco',

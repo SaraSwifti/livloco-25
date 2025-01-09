@@ -3,11 +3,13 @@ import Link from "next/link";
 
 
 const BusinessCard = ({ business }) => {
-    return ( 
-        <>
-             <div className="rounded-xl shadow-md relative bg-white">
-            <Image
-              src={`/images/locobizimages/fireboltbeef.jpeg`}
+  return (
+    <>
+      <div className="rounded-xl shadow-md relative bg-white">
+        <Image
+          src={`/images/locobizimages/${business.locobiz.locobiz_profile_image}`}
+          // Make a component to insert alt tag for these per customer//
+
             alt=""
             width="0"
             height="0"
@@ -16,36 +18,56 @@ const BusinessCard = ({ business }) => {
             />
             <div className="p-4">
               <div className="text-left md:text-center lg:text-left mb-6">
-                <div className="text-gray-600">Apartment</div>
-                <h3 className="text-xl font-bold">Boston Commons Retreat</h3>
+                {/* <div className="text-gray-600">Apartment</div> */}
+            <h3 className="text-xl font-bold">{`${business.locobiz.locobiz_name}`}</h3>
               </div>
               <h3
-                className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right"
+                className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-green-900 font-bold text-right md:text-center lg:text-right"
               >
-                $4,200/mo
+               {`${business.locobiz.locobiz_name}`}
               </h3>
-
-              <div className="flex justify-center gap-4 text-gray-500 mb-4">
+{/* Selling list */}
+              <div className="flex text-lg justify-center gap-4 text-black mb-4">
+            <div className="flex text-lg justify-center gap-4 text-black mb-4">
+              <p className="font-bold ">
+                  {/* <i className="fa-solid fa-bed"></i> 3
+                  <span className="md:hidden lg:inline">Beds</span> */}
+              Selling
+            </p>
+            </div>
+                
                 <p>
-                  <i className="fa-solid fa-bed"></i> 3
-                  <span className="md:hidden lg:inline">Beds</span>
+               {`${business.locobiz.selling.selling1.description}`}
+            </p>
+            <p>
+               {`${business.locobiz.selling.selling2.description}`}
+            </p>
+            <p>
+               {`${business.locobiz.selling.selling3.description}`}
                 </p>
+                
+              </div>
+          {/* Needing list */}
+          <div className="flex text-lg justify-center gap-4 text-black mb-4">
+            <div className="flex text-lg justify-center gap-4 text-black mb-4">
+              <p className="font-bold ">
+              Needing
+            </p>
+            </div>
+                
                 <p>
-                  <i className="fa-solid fa-bath"></i> 2
-                  <span className="md:hidden lg:inline">Baths</span>
+               {`${business.locobiz.needs.need1.description}`}
+            </p>
+            <p>
+               {`${business.locobiz.needs.need2.description}`}
+            </p>
+            <p>
+               {`${business.locobiz.needs.need3.description}`}
                 </p>
-                <p>
-                  <i className="fa-solid fa-ruler-combined"></i>
-                  1,500 <span className="md:hidden lg:inline">sqft</span>
-                </p>
+                
               </div>
 
-              <div
-                className="flex justify-center gap-4 text-green-900 text-sm mb-4"
-              >
-                <p><i className="fa-solid fa-money-bill"></i> Weekly</p>
-                <p><i className="fa-solid fa-money-bill"></i> Monthly</p>
-              </div>
+             
 
               <div className="border border-gray-100 mb-5"></div>
 
