@@ -1,7 +1,12 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 // import { hydrateRoot } from 'react-dom/client';
-import '@/public/assets/styles/global.css';
+import '@/public/styles/global.css';
+
+// hydrateRoot(
+//   document.getElementById('root'),
+//   <App />
+// );
 
 import backdrop from '@/public/assets/images/sunflowers.png'
 
@@ -18,17 +23,6 @@ const MainLayout = ({ children }) => {
       <body>
         <Navbar />
        
-        {/* <section
-       
-        className="mx-max w-full h-screen bg-cover bg-no-repeat bg-center"
-        // priority={true}
-        style={{
-          backgroundImage: `url(${backdrop.src})`,
-         
-       
-        }}
-      > */}
-       
      
          
         <main
@@ -41,7 +35,7 @@ const MainLayout = ({ children }) => {
         }}>{children}</main>
          
           
-          {/* </section> */}
+       
        
       <Footer />
       </body>

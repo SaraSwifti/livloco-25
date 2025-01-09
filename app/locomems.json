@@ -104,6 +104,444 @@
                     "state": ""
                 },
                 "saturday": {
+                    "fm_name": "Calendonia Farmers' Market",
+                    "city": "Calendonia",
+                    "state": "Michigan"
+                },
+                "sunday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                }
+            },
+            "selling": {
+                "selling1": {
+                    "description": "Dailia Bouquets",
+                    "image": "kairosflowers.png"
+                },
+                "selling2": {
+                    "description": "Dandelion Bouquets",
+                    "image": "kairosflowers2.png"
+                },
+                "selling3": {
+                    "description": "Daisy Bouquets",
+                    "image": ""
+                }
+            },
+            "needs": {
+                "need1": {
+                    "description": "Honey Bees",
+                    "image": "kairosflowers.png"
+                },
+                "need2": {
+                    "description": "Organic Horse Manure",
+                    "image": ""
+                },
+                "need3": {
+                    "description": "",
+                    "image": ""
+                }
+            },
+            "locobiz_votes": 3
+        }
+    },
+    {
+        "_id": "2",
+        "locomem": {
+            "email": "livlocally@gmail.com",
+            "name": "Sarah Zigmont",
+            "phone": "616-308-9842",
+            "mem_expiry": {
+                "event": "payment_confirmed",
+                "date_yearlater": "2026-01-06"
+            },
+            "last_login": {
+                "event": "last_login",
+                "date": "2024-01-03T15:00:00Z"
+            },
+            "payment_confirmed": "true"
+        },
+        "locobiz": {
+            "locobiz_permission": true,
+            "locobiz_name": "Firebolt Farms",
+            "lcocbiz_description": "Grazed with Passion",
+            "email_memmessage_notification": "true",
+            "locobiz_address": {
+                "locobiz_address_permission": true,
+                "add_line1": "11910 Riverside Dr",
+                "add_line2": "",
+                "city": "Lowell",
+                "state": "Michigan",
+                "zipcode": "49331",
+                "country": "",
+                "business_hours": {
+                    "bizhours_permission_post": "true",
+                    "monday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    },
+                    "tuesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "wednesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "thursday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "friday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "saturday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "sunday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    }
+                }
+            },
+            "locobiz_phone": {
+                "permission_to_post": "true",
+                "locobiz_phone#": "616-558-1817"
+            },
+            "locobiz_url": {
+                "locobiz_url_permission": true,
+                "locobiz_url_link": "https://www.fireboltfarms.com/"
+            },
+            "locobiz_profile_image": "",
+            "fm-location": {
+                "fm_location_post": "false",
+                "monday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "tuesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "wednesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "thursday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "friday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "saturday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "sunday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                }
+            },
+            "selling": {
+                "selling1": {
+                    "description": "chicken",
+                    "image": "fireboltchicken.jpg"
+                },
+                "selling2": {
+                    "description": "Beef",
+                    "image": "fireboltbeef.jpeg"
+                },
+                "selling3": {
+                    "description": "Goat",
+                    "image": "fireboltgoat.jpg"
+                }
+            },
+            "needs": {
+                "need1": {
+                    "description": "hay",
+                    "image": "kairosflowers.png"
+                },
+                "need2": {
+                    "description": "Oats",
+                    "image": "oats.jpg"
+                },
+                "need3": {
+                    "description": "Chainsaw sharpening",
+                    "image": "chainsawservices.jpeg"
+                }
+            },
+            "locobiz_votes": 5
+        }
+    },
+    {
+        "_id": "3",
+        "locomem": {
+            "email": "grummet@gmail.com",
+            "name": "Esther Grummet",
+            "phone": "616-558-1817",
+            "mem_expiry": {
+                "event": "payment_confirmed",
+                "date_yearlater": "2026-01-01"
+            },
+            "last_login": {
+                "event": "last_login",
+                "date": "2025-01-03T15:00:00Z"
+            },
+            "payment_confirmed": "true"
+        },
+        "locobiz": {
+            "locobiz_permission": true,
+            "locobiz_name": "Kairos Flowers",
+            "lcocbiz_description": "Flower Sales and Home Delivery Services",
+            "email_memmessage_notification": "true",
+            "locobiz_address": {
+                "locobiz_address_permission": true,
+                "add_line1": "5913 68th street",
+                "add_line2": "",
+                "city": "Alto",
+                "state": "MI",
+                "zipcode": "48726",
+                "country": "",
+                "business_hours": {
+                    "bizhours_permission_post": "true",
+                    "monday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    },
+                    "tuesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "wednesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "thursday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "friday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "saturday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "sunday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    }
+                }
+            },
+            "locobiz_phone": {
+                "permission_to_post": "true",
+                "locobiz_phone#": "616-558-1817"
+            },
+            "locobiz_url": {
+                "locobiz_url_permission": true,
+                "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
+            },
+            "locobiz_profile_image": "hallelherbs.jpg",
+            "fm-location": {
+                "fm_location_post": "true",
+                "monday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "tuesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "wednesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "thursday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "friday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "saturday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "sunday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                }
+            },
+            "selling": {
+                "selling1": {
+                    "description": "Dailia Bouquets",
+                    "image": "kairosflowers.png"
+                },
+                "selling2": {
+                    "description": "Dandelion Bouquets",
+                    "image": "kairosflowers2.png"
+                },
+                "selling3": {
+                    "description": "Daisy Bouquets",
+                    "image": ""
+                }
+            },
+            "needs": {
+                "need1": {
+                    "description": "Honey Bees",
+                    "image": "kairosflowers.png"
+                },
+                "need2": {
+                    "description": "Organic Horse Manure",
+                    "image": ""
+                },
+                "need3": {
+                    "description": "",
+                    "image": ""
+                }
+            },
+            "locobiz_votes": 3
+        }
+    },
+    {
+        "_id": "4",
+        "locomem": {
+            "email": "grummet@gmail.com",
+            "name": "Esther Grummet",
+            "phone": "616-558-1817",
+            "mem_expiry": {
+                "event": "payment_confirmed",
+                "date_yearlater": "2026-01-01"
+            },
+            "last_login": {
+                "event": "last_login",
+                "date": "2025-01-03T15:00:00Z"
+            },
+            "payment_confirmed": "true"
+        },
+        "locobiz": {
+            "locobiz_permission": true,
+            "locobiz_name": "Kairos Flowers",
+            "lcocbiz_description": "Flower Sales and Home Delivery Services",
+            "email_memmessage_notification": "true",
+            "locobiz_address": {
+                "locobiz_address_permission": true,
+                "add_line1": "5913 68th street",
+                "add_line2": "",
+                "city": "Alto",
+                "state": "MI",
+                "zipcode": "48726",
+                "country": "",
+                "business_hours": {
+                    "bizhours_permission_post": "true",
+                    "monday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    },
+                    "tuesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "wednesday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "thursday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "friday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "saturday": {
+                        "closed": false,
+                        "opens": "9:00 am",
+                        "closes": "5:00 pm"
+                    },
+                    "sunday": {
+                        "closed": true,
+                        "opens": "",
+                        "closes": ""
+                    }
+                }
+            },
+            "locobiz_phone": {
+                "permission_to_post": "true",
+                "locobiz_phone#": "616-558-1817"
+            },
+            "locobiz_url": {
+                "locobiz_url_permission": true,
+                "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
+            },
+            "locobiz_profile_image": "hallelherbs.jpg",
+            "fm-location": {
+                "fm_location_post": "true",
+                "monday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "tuesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "wednesday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "thursday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "friday": {
+                    "fm_name": "",
+                    "city": "",
+                    "state": ""
+                },
+                "saturday": {
                     "fm_name": "",
                     "city": "",
                     "state": ""
