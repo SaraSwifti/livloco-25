@@ -19,42 +19,42 @@ const BusinessCard = ({ business }) => {
         />
         <div className='p-4'>
           <div className='text-left md:text-center lg:text-left mb-6'>
-            {/* <div className="text-gray-600">Apartment</div> */}
+            
             <h3 className='text-xl font-bold'>{`${business.locobiz.locobiz_name}`}</h3>
           </div>
-          <h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-green-900 font-bold text-right md:text-center lg:text-right'>
+          <h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-black font-bold text-right md:text-center lg:text-right'>
             {`${business.locobiz.locobiz_name}`}
           </h3>
           {/* Selling list */}
-          <div className='flex text-lg justify-center gap-4 text-black mb-4'>
+          
             <div className=' text-lg justify-center gap-4 text-black mb-4'>
-              <div className="inline-flex justify-left">
-              <p className='font-bold col-1 '>
+            <div className='border border-gray-500 mb-5'>
+              <p className='justify-self-center font-bold'>
                 Selling:
               </p>
-              <p className='flex'>{`${business.locobiz.selling.selling1.description}`}</p>
-              </div>
-              <p className='flex'>{`${business.locobiz.selling.selling2.description}`}</p>
-              <p className='flex'>{`${business.locobiz.selling.selling3.description}`}</p>
+              <p className='justify-self-center'>{`${business.locobiz.selling.selling1.description}`}</p>
+             
+              <p className='justify-self-center'>{`${business.locobiz.selling.selling2.description}`}</p>
+              <p className='justify-self-center'>{`${business.locobiz.selling.selling3.description}`}</p>
             </div>
-          </div>
+            </div>
+         
           {/* Needing list */}
-          <div className='flex text-lg justify-center gap-4 text-black mb-4'>
-            <div className='flex text-lg justify-center gap-4 text-black mb-4'>
-              <p className='font-bold '>Needing</p>
+          <div className=' text-lg justify-center gap-4 text-black mb-4'>
+          <div className='border border-gray-500 mb-5'>
+            <p className='justify-self-center font-bold'>Needing:</p>
+            <p className='justify-self-center '>{`${business.locobiz.needs.need1.description}`}</p>
+            <p className='justify-self-center '>{`${business.locobiz.needs.need2.description}`}</p>
+            <p className='justify-self-center '>{`${business.locobiz.needs.need3.description}`}</p>
+            </div>
             </div>
 
-            <p>{`${business.locobiz.needs.need1.description}`}</p>
-            <p>{`${business.locobiz.needs.need2.description}`}</p>
-            <p>{`${business.locobiz.needs.need3.description}`}</p>
-          </div>
-
-          <div className='border border-gray-100 mb-5'></div>
+          <div className='border border-gray-300 mb-5'></div>
 
           <div className='flex flex-col lg:flex-row justify-between mb-4'>
             <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
               <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
-              <span className='text-orange-900'>{business.locobiz.locobiz_address.city}{`, `} {business.locobiz.locobiz_address.state }</span>
+              <span className='text-black'>{business.locobiz.locobiz_address.city}{`, `} {business.locobiz.locobiz_address.state }</span>
             </div>
             <Link
               href={`/businesses/${business._id}`}
