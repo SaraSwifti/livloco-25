@@ -16,12 +16,12 @@
             "payment_confirmed": "true"
         },
         "locobiz": {
-            "locobiz_permission": true,
+            "locobiz_active": true,
             "locobiz_name": "Kairos Flowers",
             "lcocbiz_description": "Flower Sales and Home Delivery Services",
             "email_memmessage_notification": "true",
             "locobiz_address": {
-                "locobiz_address_permission": true,
+                "locobiz_address_active": true,
                 "add_line1": "5913 68th street",
                 "add_line2": "",
                 "city": "Alto",
@@ -29,50 +29,48 @@
                 "zipcode": "48726",
                 "country": "",
                 "business_hours": {
-                    "bizhours_permission_post": "true",
+                    "bizhours_active_post": "true",
                     "monday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""   
                     },
                     "tuesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am- 4Pm"
+                       
                     },
                     "wednesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am-4pm"
+                        
                     },
                     "thursday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am-4pm"
+                        
                     },
                     "friday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9am- 4pm"
                     },
                     "saturday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am-4pm"
+                        
                     },
                     "sunday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
+                        
                     }
                 }
             },
             "locobiz_phone": {
-                "permission_to_post": "true",
+                "active_to_post": "true",
                 "locobiz_phone#": "616-558-1817"
             },
             "locobiz_url": {
-                "locobiz_url_permission": true,
+                "locobiz_url_active": true,
                 "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
             },
             "locobiz_profile_image": "hallelherbs.jpg",
@@ -162,12 +160,12 @@
             "payment_confirmed": "true"
         },
         "locobiz": {
-            "locobiz_permission": true,
+            "locobiz_active": true,
             "locobiz_name": "Firebolt Farms",
             "lcocbiz_description": "Grazed with Passion",
             "email_memmessage_notification": "true",
             "locobiz_address": {
-                "locobiz_address_permission": true,
+                "locobiz_address_active": true,
                 "add_line1": "11910 Riverside Dr",
                 "add_line2": "",
                 "city": "Lowell",
@@ -175,50 +173,45 @@
                 "zipcode": "49331",
                 "country": "",
                 "business_hours": {
-                    "bizhours_permission_post": "true",
+                    "bizhours_active_post": "true",
                     "monday": {
                         "closed": true,
-                        "opens": "",
+                        "hours": "",
                         "closes": ""
                     },
                     "tuesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9am-5"
+                       
                     },
                     "wednesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9am-5pm"
                     },
                     "thursday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9am-4pm"
                     },
                     "friday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "saturday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "sunday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
                     }
                 }
             },
             "locobiz_phone": {
-                "permission_to_post": "true",
+                "active_to_post": "true",
                 "locobiz_phone#": "616-558-1817"
             },
             "locobiz_url": {
-                "locobiz_url_permission": true,
+                "locobiz_url_active": true,
                 "locobiz_url_link": "https://www.fireboltfarms.com/"
             },
             "locobiz_profile_image": "hay.jpeg",
@@ -245,14 +238,14 @@
                     "state": ""
                 },
                 "friday": {
-                    "fm_name": "",
-                    "city": "",
-                    "state": ""
+                    "fm_name": "Huron Valley",
+                    "city": "Huron, Valley",
+                    "state": "Michigan"
                 },
                 "saturday": {
-                    "fm_name": "",
-                    "city": "",
-                    "state": ""
+                    "fm_name": "Mackinaw Farmers Market",
+                    "city": "Mackinaw",
+                    "state": "MI"
                 },
                 "sunday": {
                     "fm_name": "",
@@ -308,12 +301,12 @@
             "payment_confirmed": "true"
         },
         "locobiz": {
-            "locobiz_permission": true,
+            "locobiz_active": true,
             "locobiz_name": "Kairos Flowers",
             "lcocbiz_description": "Flower Sales and Home Delivery Services",
             "email_memmessage_notification": "true",
             "locobiz_address": {
-                "locobiz_address_permission": true,
+                "locobiz_address_active": true,
                 "add_line1": "5913 68th street",
                 "add_line2": "",
                 "city": "Alto",
@@ -321,50 +314,43 @@
                 "zipcode": "48726",
                 "country": "",
                 "business_hours": {
-                    "bizhours_permission_post": "true",
+                    "bizhours_active_post": "true",
                     "monday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
                     },
                     "tuesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "wednesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "thursday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "friday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "saturday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "sunday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
                     }
                 }
             },
             "locobiz_phone": {
-                "permission_to_post": "true",
+                "active_to_post": "true",
                 "locobiz_phone#": "616-558-1817"
             },
             "locobiz_url": {
-                "locobiz_url_permission": true,
+                "locobiz_url_active": true,
                 "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
             },
             "locobiz_profile_image": "hallelherbs.jpg",
@@ -386,9 +372,9 @@
                     "state": ""
                 },
                 "thursday": {
-                    "fm_name": "",
-                    "city": "",
-                    "state": ""
+                    "fm_name": "Alto",
+                    "city": "Alto",
+                    "state": "Michigan"
                 },
                 "friday": {
                     "fm_name": "",
@@ -396,9 +382,9 @@
                     "state": ""
                 },
                 "saturday": {
-                    "fm_name": "",
-                    "city": "",
-                    "state": ""
+                    "fm_name": "Pasedena",
+                    "city": "Pasedena",
+                    "state": "California"
                 },
                 "sunday": {
                     "fm_name": "",
@@ -454,12 +440,12 @@
             "payment_confirmed": "true"
         },
         "locobiz": {
-            "locobiz_permission": true,
+            "locobiz_active": true,
             "locobiz_name": "Kairos Flowers",
             "lcocbiz_description": "Flower Sales and Home Delivery Services",
             "email_memmessage_notification": "true",
             "locobiz_address": {
-                "locobiz_address_permission": true,
+                "locobiz_address_active": true,
                 "add_line1": "5913 68th street",
                 "add_line2": "",
                 "city": "Alto",
@@ -467,50 +453,43 @@
                 "zipcode": "48726",
                 "country": "",
                 "business_hours": {
-                    "bizhours_permission_post": "true",
+                    "bizhours_active_post": "true",
                     "monday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
                     },
                     "tuesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "wednesday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "thursday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "friday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "saturday": {
                         "closed": false,
-                        "opens": "9:00 am",
-                        "closes": "5:00 pm"
+                        "hours": "9:00 am"
                     },
                     "sunday": {
                         "closed": true,
-                        "opens": "",
-                        "closes": ""
+                        "hours": ""
                     }
                 }
             },
             "locobiz_phone": {
-                "permission_to_post": "true",
+                "active_to_post": "true",
                 "locobiz_phone#": "616-558-1817"
             },
             "locobiz_url": {
-                "locobiz_url_permission": true,
+                "locobiz_url_active": true,
                 "locobiz_url_link": "https://www.facebook.com/search/top?q=kairos%20flowers%20llc"
             },
             "locobiz_profile_image": "hallelherbs.jpg",
@@ -527,9 +506,9 @@
                     "state": ""
                 },
                 "wednesday": {
-                    "fm_name": "",
-                    "city": "",
-                    "state": ""
+                    "fm_name": "Miami",
+                    "city": "Miami",
+                    "state": "FL"
                 },
                 "thursday": {
                     "fm_name": "",
@@ -580,7 +559,7 @@
                     "image": ""
                 }
             },
-            "locobiz_votes": 3
+            "locobiz_votes": 18
         }
     }
 ]
