@@ -6,6 +6,8 @@ import CurrentStatsBox from '@/components/CurrentStatsBox';
 
 
 const HomePage = () => {
+
+   
     return ( 
         <>
             

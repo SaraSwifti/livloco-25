@@ -1,4 +1,4 @@
-// import businesses from '@/app/locomems.json'
+import businesses from '@/app/locomems.json'
 
 const NewMemLocal = () => {
     return ( 
