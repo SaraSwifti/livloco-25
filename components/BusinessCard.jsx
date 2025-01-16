@@ -7,6 +7,7 @@ const BusinessCard = ({ locomem }) => {
   return (
     <>
       <div className='rounded-xl shadow-md relative bg-white'>
+        <div className='mt-5 flex justify-center items-center'>
         <Image
           src={`/images/locobizimages/${locomem.locobiz_profile_image}`}
           // Make a component to insert alt tag for these per customer//
@@ -15,8 +16,9 @@ const BusinessCard = ({ locomem }) => {
           width='0'
           height='0'
           sizes='100vw'
-          className='w-full h-auto rounded-t-xl'
-        />
+          className='object-contain h-[200px] w-[300px] rounded-t-xl'
+          />
+          </div>
         <div className='p-4'>
           <div className='text-left md:text-center lg:text-left mb-6'>
             
@@ -56,12 +58,12 @@ const BusinessCard = ({ locomem }) => {
               <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
               <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
             </div>
-            {/* <Link
+            <Link
               href={`/locomemes/${locomem._id}`}
               className='h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
             >
               Details
-            </Link> */}
+            </Link>
           </div>
         </div>
       </div>
