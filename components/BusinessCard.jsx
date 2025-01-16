@@ -20,16 +20,16 @@ const BusinessCard = ({ locomem }) => {
         <div className='p-4'>
           <div className='text-left md:text-center lg:text-left mb-6'>
             
-            <h3 className='text-xl font-bold'>{`${locomem.locobiz_name}`}</h3>
+            <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
           </div>
-          <h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-black font-bold text-right md:text-center lg:text-right'>
+          <h3 className='text-xl absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-black font-bold text-right md:text-center lg:text-right'>
             {`${locomem.locobiz_name}`}
           </h3>
           {/* Selling list */}
           
-            <div className=' text-lg justify-center gap-4 text-black mb-4'>
+            <div className='text-2xl justify-center gap-4 text-black mb-4'>
             <div className='border border-gray-500 mb-5'>
-              <p className='justify-self-center font-bold'>
+              <p className=' justify-self-center font-bold'>
                 Selling:
               </p>
               <p className='justify-self-center'>{`${locomem.selling.selling1.description}`}</p>
@@ -40,7 +40,7 @@ const BusinessCard = ({ locomem }) => {
             </div>
          
           {/* Needing list */}
-          <div className=' text-lg justify-center gap-4 text-black mb-4'>
+          <div className=' text-2xl justify-center gap-4 text-black mb-4'>
           <div className='border border-gray-500 mb-5'>
             <p className='justify-self-center font-bold'>Needing:</p>
             <p className='justify-self-center '>{`${locomem.needs.need1.description}`}</p>
