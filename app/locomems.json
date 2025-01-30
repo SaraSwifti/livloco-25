@@ -1,6 +1,6 @@
 [
     {
-        "_id": 1,
+        
         "email": "grummet@gmail.com",
         "account_owner_name": "Esther Grummet",
         "phone": "616-558-1817",
@@ -102,7 +102,7 @@
         "locobiz_votes": 3
     },
     {
-        "_id": 2,
+        
         "email": "bakersdelight@mail.com",
         "account_owner_name": "Susan Lee",
         "phone": "567-890-1234",
@@ -165,7 +165,7 @@
         "locobiz_votes": 18
     },
     {
-        "_id": 3,
+        
         "email": "greenlawns@mail.com",
         "account_owner_name": "Mike Johnson",
         "phone": "456-789-1011",
@@ -228,7 +228,7 @@
         "locobiz_votes": 15
     },
     {
-        "_id": 4,
+        
         "email": "craftcove@mail.com",
         "account_owner_name": "Sarah Brown",
         "phone": "345-678-2345",
@@ -291,7 +291,7 @@
         "locobiz_votes": 20
     },
     {
-        "_id": 5,
+        
         "email": "petpalace@mail.com",
         "account_owner_name": "John Smith",
         "phone": "678-901-2345",

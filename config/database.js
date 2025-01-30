@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 let connected = false;
 
 const connectDB = async () => {
+    //only fields specified are saved to the database with strictQuery
     mongoose.set('strictQuery', true);
 
     //if the database is already connected, don't connect again
