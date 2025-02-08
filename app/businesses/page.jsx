@@ -1,7 +1,13 @@
 import Hero from '@/components/Hero';
-import locomems from '@/app/locomems.json';
+// import locomems from '@/app/locomems.json';
+import connectDB from '@/config/database';
+import LocoMem from '@/models/LocoMem';
 import BusinessCard from '@/components/BusinessCard';
-const BusinessesPage = () => {
+
+
+const BusinessesPage = async () => {
+    await connectDB();
+    const locomems = await LocoMem.find({}).lean();
     return ( 
         <>
             <Hero />

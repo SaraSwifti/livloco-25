@@ -2,7 +2,7 @@
 import HomeHeader from '@/components/HomeHeader';
 import AboutPage from '@/components/AboutPage';
 // import CurrentStatsBox from '@/components/CurrentStatsBox';
-
+import NewMemLocal from '@/components/NewMemLocal';
 
 
 const HomePage = () => {
@@ -15,7 +15,7 @@ const HomePage = () => {
             <HomeHeader />
             <AboutPage />
             {/* <CurrentStatsBox /> */}
-            
+            {/* <NewMemLocal /> */}
         </>
      );
 }

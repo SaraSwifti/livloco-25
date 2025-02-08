@@ -4,7 +4,9 @@ const UserSchema = new Schema({
     email: {
         type: String,
         unique: [true, 'Email already exists'],
-        required: [true, 'Email is required']
+        required: [true, 'Email is required'],
+        trim: true,
+        lowercase: true
     },
     username: {
         type: String,
@@ -16,7 +18,7 @@ const UserSchema = new Schema({
     bookmarks: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Business'
+            ref: 'LocoMem'
         }
     ]
 }, {
