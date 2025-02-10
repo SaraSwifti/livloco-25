@@ -59,7 +59,7 @@ const BusinessCard = ({ locomem }) => {
               <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
             </div>
             <Link
-              href={`/locomemes/${locomem._id}`}
+              href={`/businesses/${locomem._id}`}
               className='h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
             >
               Details

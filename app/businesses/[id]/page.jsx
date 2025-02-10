@@ -1,12 +1,18 @@
+import connectDB from "@/config/database";
+import LocoMem from "@/models/LocoMem";
 
 
-const LocobusPage = ({ params }) => {
+
+const LocobusPage = async ({ params }) => {
+    await connectDB();
+    const locomem = await LocoMem.findById(params.id).lean();
+
 
 
 
     return ( 
-        <div>BusinessPage {params.id}</div>
+        <h1>{locomem.locobiz_name}</h1>
      );
 }
  
-export default BusinessesPage;
+export default LocobusPage;
