@@ -11,10 +11,10 @@ const HomeHeader = () => {
               Find Your LocoPeeps
             </h1>
             <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              What your neighbor has, might be what you need.
+              What you are selling, might be what your neighbor is buying.
                 </p>
                 <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              What your neighbor needs, might be what you have.
+              What your neighbor is selling, might be what you are buying.
             </p>
           </div>
           {/* <-- Form Component --> */}

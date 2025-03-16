@@ -12,10 +12,10 @@ const Hero = () => {
                 Find Your LocoPeeps
               </h1>
               <p className="my-4 font-bold drop-shadow-2xltext-xl text-white">
-                What your neighbor has, might be what you need.
+                What you are selling, might be what your neighbor is buying.
                     </p>
                     <p className="my-4 font-bold drop-shadow-2xltext-xl text-white">
-              What you need, might be what your neighbor has.
+              What your neighbot is selling, might be what you are buying.
               </p>
             </div>
             {/* <-- Form Component --> */}
