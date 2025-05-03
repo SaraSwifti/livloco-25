@@ -1,9 +1,10 @@
-import locomems from '@/app/locomems.json';
-import { FaMapMarker } from 'react-icons/fa';
-// import NewMemLocal from './NewMemLocal';
 
-const CurrentStatsBox = () => {
-  const recentMems = locomems.slice(0, 3)
+import { FaMapMarker } from 'react-icons/fa';
+
+
+const CurrentStatsBox =  () => {
+  
+  
   return (
     <div className='container-xl lg:container m-auto'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg'>
@@ -18,10 +19,12 @@ const CurrentStatsBox = () => {
                           Our most recent members:
                       </h1>
                       <br></br>
-            {recentMems.map((locomem) => (
-             <div key={_id}
-                    locomem={locomem}>
-                    <h1 className=''>{locomem.locobiz_name}</h1>
+            
+            
+            
+               
+           
+                    <h1> className=''{locomem.locobiz_name}</h1>
                     {/* <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker> */}
                     <h1 className='text-black'>
                     <FaMapMarker className='inline text-orange-700 mt-1'></FaMapMarker>
@@ -30,15 +33,17 @@ const CurrentStatsBox = () => {
                     {locomem.locobiz_address.state}
                     </h1>
                     <br></br>
-                </div>
+                  </div>
+                )
 
-            ))}
+              )
 
-          </div>
+         </div>
         </div>
       </div>
-    </div>
+  
   )
 }
+ 
 
 export default CurrentStatsBox

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import logo from '@/public/images/livlopng24.png'
+import logo from '@/public/images/newlivlocologo.png'
 import profileDefault from '@/public/images/aiprofile2.png'
 import { FaGoogle } from 'react-icons/fa'
 
