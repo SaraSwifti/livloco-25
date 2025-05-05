@@ -6,6 +6,7 @@ import { FaMapMarker } from 'react-icons/fa';
 const BusinessCard = ({ locomem }) => {
   return (
     <>
+      <Link href={`/business/${locomem._id}`}>
       <div className='rounded-xl shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
         <Image
@@ -22,11 +23,13 @@ const BusinessCard = ({ locomem }) => {
         <div className='p-4'>
           <div className='text-left md:text-center lg:text-left mb-6'>
             
-            <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
+              <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
+              <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
+              <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
+              <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
+            </div>
           </div>
-          <h3 className='text-xl absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-black font-bold text-right md:text-center lg:text-right'>
-            {`${locomem.locobiz_name}`}
-          </h3>
+            
           {/* Selling list */}
           
             <div className='text-2xl justify-center gap-4 text-black mb-4'>
@@ -51,22 +54,10 @@ const BusinessCard = ({ locomem }) => {
             </div>
             </div>
 
-          <div className='border border-gray-300 mb-5'></div>
 
-          <div className='flex flex-col lg:flex-row justify-between mb-4'>
-            <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
-              <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
-              <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
-            </div>
-            <Link
-              href={`/businesses/${locomem._id}`}
-              className='h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
-            >
-              Details
-            </Link>
-          </div>
+        </div> 
         </div>
-      </div>
+        </Link>
     </>
   )
 }

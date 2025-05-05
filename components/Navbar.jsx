@@ -60,7 +60,7 @@ const Navbar = () => {
               />
 
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
-                Less Is More
+                The Livlo.co Co-op
               </span>
             </Link>
             {/* <!-- Desktop Menu Hidden below md screens --> */}
