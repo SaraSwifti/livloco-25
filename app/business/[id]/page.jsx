@@ -1,4 +1,5 @@
 import BusinessHeaderImage from '@/components/BusinessHeaderImage';
+import BusinessDetails from '@/components/BusinessDetails';
 import connectDB from "@/config/database";
 import LocoMem from '@/models/LocoMem';
 import Link from 'next/link';
@@ -27,14 +28,14 @@ const BusinessPage = async ({ params }) => {
           className="text-black hover:text-xl flex items-center"
         >
           <FaArrowLeft className='mr-2'/> Back to Co-op Listing 
-       
-                    </Link>
+       </Link>
       </div>
     </section>
     <section class="">
       <div class="container m-auto py-10 px-6">
         <div class="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
-              {/*Co-op info*/}      
+              {/*Co-op mem business info*/}  
+              <BusinessDetails locomem={locomem} />
                     
                     </div>
                 </div>

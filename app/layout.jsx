@@ -19,14 +19,13 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html lang='eng'>
-      <body>
+    <html className='h-full' lang='eng'>
+      <body suppressHydrationWarning className="flex flex-col min-h-screen" >
         <Navbar />
        
      
          
-        <main
-        className="mx-max w-full h-screen bg-cover bg-no-repeat bg-center"
+        <main className="flex-grow bg-cover bg-no-repeat bg-center"
         // priority={true}
         style={{
           backgroundImage: `url(${backdrop.src})`,
@@ -37,7 +36,7 @@ const MainLayout = ({ children }) => {
           
        
        
-      <Footer />
+      <Footer className='bg-gray-800 text-white text-center p-4'/>
       </body>
     </html>
   )

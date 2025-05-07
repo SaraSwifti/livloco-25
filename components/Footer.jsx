@@ -9,9 +9,9 @@ const Footer = () => {
     return (
         <>
             {/* <!-- Footer --> */}
-        <footer className="bg-gray-200 py-4 mt-5">
+        <footer className="bg-gray-800 text-white text-center p-4">
           <div
-            className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4"
+            className=" bg-gray-300 rounded-lg shadow m-4 w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
           >
             <div className="mb-4 md:mb-0">
               <Image src={logo} alt="Logo" className="h-8 w-auto" />

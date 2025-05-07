@@ -61,5 +61,4 @@ const BusinessCard = ({ locomem }) => {
     </>
   )
 }
-
 export default BusinessCard
