@@ -8,11 +8,11 @@ const LocoMemSchema = new Schema(
             ref: 'User',
             required: true
         },
-        "account_owner_name": {
+        account_owner_name: {
             type: String,
             required: true
         },
-        "phone": 
+        phone: 
         { 
             type: String, 
             required: true, 
@@ -20,208 +20,208 @@ const LocoMemSchema = new Schema(
             trim: true, //removes uncessary white space. 
             match: /^\+?[1-9]\d{1,14}$/ // Ensures valid international format (E.164)
           },
-        "payment_confirmed": {
+        payment_confirmed: {
             type: Boolean,
             required: true, 
             default: false
         },
-        "locobiz_active": {
+        locobiz_active: {
             type: Boolean,
             default: false
         },
-        "locobiz_name": String,
-        "lcocbiz_description": String,
-        "email_memmessage_notification": {
+        locobiz_name: String,
+        locobiz_description: String,
+        email_memmessage_notification: {
             type: Boolean,
             default: false
         },
-        "locobiz_address": {
-            "post_permission": {
+        locobiz_address: {
+            post_permission: {
                 type: Boolean
             },
-            "add_line1":{ type: String, required: true, trim: true },
-            "add_line2": { type: String, required: false, trim: true },
-            "city": { type: String, required: true, trim: true },
-            "state": { type: String, required: true, trim: true },
-            "zipcode": { 
+            add_line1:{ type: String, required: true, trim: true },
+            add_line2: { type: String, required: false, trim: true },
+            city: { type: String, required: true, trim: true },
+            state: { type: String, required: true, trim: true },
+            zipcode: { 
                 type: String, 
                 required: true, 
                 match: /^\d{5}(-\d{4})?$/ // U.S. ZIP Code format (5-digit or 9-digit ZIP+4)
               },
-            "country": { 
+            country: { 
                 type: String, 
                 required: true, 
                 default: "USA", 
                 trim: true 
               }
         },
-        "business_hours": {
-            "post_permission":
+        business_hours: {
+            post_permission:
             {
                 type: Boolean
             },
-            "monday_hours": String,
-            "tuesday_hours": String,
-            "wednesday_hours": String,
-            "thursday_hours": String,
-            "friday_hours": String,
-            "saturday_hours": String,
-            "sunday_hours": String,
+            monday_hours: String,
+            tuesday_hours: String,
+            wednesday_hours: String,
+            thursday_hours: String,
+            friday_hours: String,
+            saturday_hours: String,
+            sunday_hours: String,
         },
-        "website": {
+        website: {
             type: String,  
             unique: true, 
             trim: true, 
             //match: /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/ 
             match: /regex/
         },
-        "locobiz_profile_image":
+        locobiz_profile_image:
         { type: String
                  },
-        "farmers_market_location": {
-            "fm_location_post": {
+        farmers_market_location: {
+            fm_location_post: {
                 type: Boolean
             },
-            "monday": {
-                "farmers_market_name": {
+            monday: {
+                farmers_market_name: {
                     type: String
                 },
-                "city": {
+                city: {
                     type: String
                 },
-                "state": {
+                state: {
                     type: String
                 }
             },
-            "tuesday": {
-                "farmers_market_name": {
+            tuesday: {
+                farmers_market_name: {
                     type: String
                 },
-                "city": {
+                city: {
                     type: String
                 },
-                "state": {
+                state: {
                     type: String
                 }
             },
-            "wednesday": {
-                "farmers_market_name": {
+            wednesday: {
+                farmers_market_name: {
                     type: String
                 },
-                "city": {
+                city: {
                     type: String
                 },
-                "state": {
+                state: {
                     type: String
                 }
             },
-            "thursday": {
-                "farmers_market_name": {
+            thursday: {
+                farmers_market_name: {
                     type: String
                 },
-                "city": {
+                city: {
                     type: String
                 },
-                "state": {
+                state: {
                     type: String
                 }
             },
-            "friday": {
-                "farmers_market_name":  {
+            friday: {
+                farmers_market_name:  {
                     type: String
                 },
-                "city":  {
+                city:  {
                     type: String
                 },
-                "state":  {
+                state:  {
                     type: String
                 }
             },
-            "saturday": {
-                "farmers_market_name":  {
+            saturday: {
+                farmers_market_name:  {
                     type: String
                 },
-                "city":  {
+                city:  {
                     type: String
                 },
-                "state":  {
+                state:  {
                     type: String
                 }
             },
-            "sunday": {
-                "farmers_market_name":  {
+            sunday: {
+                farmers_market_name:  {
                     type: String
                 },
-                "city":  {
+                city:  {
                     type: String
                 },
-                "state":  {
+                state:  {
                     type: String
                 }
             }
         },
-        "selling": {
-            "selling1": {
-                "description":  {
+        selling: {
+            selling1: {
+                description:  {
                     type: String
                 },
-                "image":  {
+                image:  {
                     type: String
                 },
-                "price": {
+                price: {
                     type: String
                 }
             },
-            "selling2": {
-                "description":  {
+            selling2: {
+                description:  {
                     type: String
                 },
-                "image":  {
+                image:  {
                     type: String
                 },
-                "price": {
+                price: {
                     type: String
                 }
             },
-            "selling3": {
-                "description":{
+            selling3: {
+                description:{
                     type: String
                 },
-                "image": {
+                image: {
                     type: String
                 },
-                "price": {
+                price: {
                     type: String
                 }
             }
         },
-        "needs": {
-            "need1": {
-                "description": {
+        needs: {
+            need1: {
+                description: {
                     type: String
                 },
-                "image": {
+                image: {
                     type: String
                 }
             },
-            "need2": {
-                "description": {
+            need2: {
+                description: {
                     String
                 },
-                "image":{
+                image:{
                     type: String
                 }
             },
-            "need3": {
-                "description":{
+            need3: {
+                description:{
                     type: String
                 },
-                "image": {
+                image: {
                     type: String
                 }
             }
         },
-        "locobiz_votes": {
+        locobiz_votes: {
             type: Number
         }
 }, {

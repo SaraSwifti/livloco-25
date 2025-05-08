@@ -1,45 +1,51 @@
+import BusinessHeaderImage from '@/components/BusinessHeaderImage';
+import BusinessBuyingSelling from '@/components/BusinessBuyingSelling';
+import FarmMarket from '@/components/FarmMarket';
+import BusinessContact from '@/components/BusinessContact';
 import connectDB from "@/config/database";
-import LocoMem from "@/models/LocoMem";
-import Image from "next/image";
+import LocoMem from '@/models/LocoMem';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa';
 
-
-
-const LocobusPage = async ({ params }) => {
+const BusinessPage = async ({ params }) => {
     await connectDB();
     const locomem = await LocoMem.findById(params.id).lean();
 
-
-
-
-    return ( 
-        <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
-        <div className="max-w-xl">
-          <h2 className="text-pretty text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-            {locomem.locobiz_name}
-          </h2>
-          <p className="mt-6 text-lg/8 text-gray-600">
-            {locomem.lococbiz_description}
-          </p>
+  return (
+    <>
+      <div className="relative w-full">
+        <BusinessHeaderImage image={locomem.locobiz_profile_image} />
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <h1 className="text-white text-7xl font-bold">{locomem.locobiz_name}</h1>
         </div>
-        <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
-         
-            <li key={locomem.selling.selling1.description}>
-              <div className="flex items-center gap-x-6">
-                            <Image alt={locomem.selling.selling1.description}
-                                src={locomem.selling.selling1.image}
-                                className="size-16 rounded-full" />
-                <div>
-                  <h3 className="text-base/7 font-semibold tracking-tight text-gray-900">{person.name}</h3>
-                  <p className="text-sm/6 font-semibold text-indigo-600">{person.role}</p>
-                </div>
-              </div>
-            </li>
-          
-        </ul>
+           
       </div>
-    </div>
-     );
-}
- 
-export default LocobusPage;
+      <section>
+        {/* Go Back Arrow */}
+        <div className="bg-white container m-auto py-6 px-6">
+                    
+          <Link
+            href="/businesses"
+            className="text-black hover:text-xl flex items-center"
+          >
+            <FaArrowLeft className='mr-2' /> Back to Co-op Listing
+          </Link>
+        </div>
+      </section>
+      <section className='flex items-center justify-center h-screen'>
+        <div className="container m-auto py-10 px-6 ">
+          <div className="grid grid-cols-1 mb-5 divide-x-4md:grid-cols-70/30 w-full gap-6">
+            {/*Co-op mem business info*/}
+            <BusinessBuyingSelling locomem={locomem} />
+            <BusinessContact locomem={locomem} />
+            
+          </div>
+          <FarmMarket className=" " locomem={locomem} /> 
+        </div>
+      </section>
+
+    </>
+  );
+  
+};
+export default BusinessPage;

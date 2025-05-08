@@ -6,7 +6,7 @@ import { FaMapMarker } from 'react-icons/fa';
 const BusinessCard = ({ locomem }) => {
   return (
     <>
-      <Link href={`/business/${locomem._id}`}>
+      <Link href={`/businesses/${locomem._id}`}>
       <div className='rounded-xl shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
         <Image
@@ -47,7 +47,7 @@ const BusinessCard = ({ locomem }) => {
           {/* Needing list */}
           <div className=' text-2xl justify-center gap-4 text-black mb-4'>
           <div className='border border-gray-500 mb-5'>
-            <p className='justify-self-center font-bold'>Needing:</p>
+            <p className='justify-self-center font-bold'>Buying:</p>
             <p className='justify-self-center '>{`${locomem.needs.need1.description}`}</p>
             <p className='justify-self-center '>{`${locomem.needs.need2.description}`}</p>
             <p className='justify-self-center '>{`${locomem.needs.need3.description}`}</p>

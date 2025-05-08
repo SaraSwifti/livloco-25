@@ -15,11 +15,17 @@ const UserSchema = new Schema({
     image: {
         type: String
     },
+    payment_confirmed: {
+            type: Boolean,
+            required: true, 
+            default: false
+        },
     bookmarks: [
         {
             type: Schema.Types.ObjectId,
             ref: 'LocoMem'
-        }
+        },
+        
     ]
 }, {
     timestamps: true
