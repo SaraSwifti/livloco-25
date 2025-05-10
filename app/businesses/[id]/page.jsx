@@ -1,6 +1,6 @@
 import BusinessHeaderImage from '@/components/BusinessHeaderImage';
-import BusinessBuyingSelling from '@/components/BusinessBuyingSelling';
-import FarmMarket from '@/components/FarmMarket';
+import BusinessDetails from '@/components/BusinessDetails';
+// import FarmMarket from '@/components/FarmMarket';
 import BusinessContact from '@/components/BusinessContact';
 import connectDB from "@/config/database";
 import LocoMem from '@/models/LocoMem';
@@ -34,13 +34,13 @@ const BusinessPage = async ({ params }) => {
       </section>
       <section className='flex items-center justify-center h-screen'>
         <div className="container m-auto py-10 px-6 ">
-          <div className="grid grid-cols-1 mb-5 divide-x-4md:grid-cols-70/30 w-full gap-6">
+          <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
             {/*Co-op mem business info*/}
-            <BusinessBuyingSelling locomem={locomem} />
+            <BusinessDetails locomem={locomem} />
             <BusinessContact locomem={locomem} />
             
           </div>
-          <FarmMarket className=" " locomem={locomem} /> 
+           
         </div>
       </section>
 
