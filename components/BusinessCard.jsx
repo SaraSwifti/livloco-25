@@ -26,8 +26,12 @@ const BusinessCard = ({ locomem }) => {
               <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
               <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
               <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
-              <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
-            </div>
+                <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
+                
+              </div>
+              {locomem.current_promotional
+                  ? <h3 className='text-xl font-bold'>{`${locomem.current_promotional}`}</h3>
+                  : null}
           </div>
             
           {/* Selling list */}

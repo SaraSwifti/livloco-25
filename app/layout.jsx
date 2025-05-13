@@ -1,7 +1,8 @@
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+// import Image from 'next/image'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 // import { hydrateRoot } from 'react-dom/client';
-import '@/public/styles/global.css';
+import '@/public/styles/global.css'
 
 // hydrateRoot(
 //   document.getElementById('root'),
@@ -19,24 +20,47 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html className='h-full' lang='eng'>
-      <body suppressHydrationWarning className="flex flex-col min-h-screen" >
+    <html
+      className='h-full'
+      lang='eng'
+    >
+      <body
+        suppressHydrationWarning
+        className='flex flex-col  '
+      >
         <Navbar />
-       
-     
-         
-        <main className="flex-grow bg-cover bg-no-repeat bg-center"
+        <main className="flex-grow" >
+          <div
+            className='relative min-h-screen'
+            style={{
+              backgroundImage: `url(${backdrop.src})`
+            }}>
+            {/* <Image
+              src='/images/your-image.jpg'
+              alt='Background image of a black and white picture of sunflowers'
+              fill
+              style={{
+                backgroundImage: `url(${backdrop.src})`
+              }}
+              sizes='100vw'
+              className='flex-grow min-h-screen bg-cover bg-center object-cover z-0'
+              priority
+            > */}
+            <div>{children}</div>
+            
+            <div className='relative z-10'></div>
+        </div>
+        
+
+          {/* <div className="flex-grow min-h-screen bg-cover bg-center "
         // priority={true}
         style={{
           backgroundImage: `url(${backdrop.src})`,
          
        
-        }}>{children}</main>
-         
-          
-       
-       
-      <Footer className='bg-gray-800 text-white text-center p-4'/>
+        }}>{children}</div> */}
+        </main>
+        <Footer className='bg-gray-800 text-white text-center p-4' />
       </body>
     </html>
   )

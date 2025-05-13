@@ -221,6 +221,9 @@ const LocoMemSchema = new Schema(
                 }
             }
         },
+        current_promotional: {
+            type: String
+        },
         locobiz_votes: {
             type: Number
         }

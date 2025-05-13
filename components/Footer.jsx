@@ -5,10 +5,9 @@ import logo from '@/public/images/livlopng24.png';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-
     return (
-        <>
-            {/* <!-- Footer --> */}
+        
+           
         <footer className="bg-gray-800 text-white text-center p-4">
           <div
             className=" bg-gray-300 rounded-lg shadow m-4 w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
@@ -30,6 +29,7 @@ const Footer = () => {
               </p>
             </div>
           </div>
-        </footer></>);
+        </footer >
+        );
 }
 export default Footer;
