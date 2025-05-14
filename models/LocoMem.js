@@ -39,7 +39,8 @@ const LocoMemSchema = new Schema(
             post_permission: {
                 type: Boolean
             },
-            add_line1:{ type: String, required: true, trim: true },
+            biz_phone: {type: String},
+            add_line1: { type: String, required: true, trim: true },
             add_line2: { type: String, required: false, trim: true },
             city: { type: String, required: true, trim: true },
             state: { type: String, required: true, trim: true },

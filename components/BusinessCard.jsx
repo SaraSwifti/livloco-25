@@ -30,7 +30,7 @@ const BusinessCard = ({ locomem }) => {
                 
               </div>
               {locomem.current_promotional
-                  ? <h3 className='text-xl font-bold'>{`${locomem.current_promotional}`}</h3>
+                  ? <h3 className='text-xl text-orange-800 font-bold'>{`${locomem.current_promotional}`}</h3>
                   : null}
           </div>
             

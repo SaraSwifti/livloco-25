@@ -1,6 +1,5 @@
 import BusinessHeaderImage from '@/components/BusinessHeaderImage';
 import BusinessDetails from '@/components/BusinessDetails';
-// import FarmMarket from '@/components/FarmMarket';
 import BusinessContact from '@/components/BusinessContact';
 import connectDB from "@/config/database";
 import LocoMem from '@/models/LocoMem';
