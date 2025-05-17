@@ -15,7 +15,7 @@ const BusinessPage = async ({ params }) => {
   return (
     <>
       <div className="relative w-full">
-        <BusinessHeaderImage image={locomem.locobiz_profile_image} />
+        <BusinessHeaderImage image={`/images/locobizimages/${locomem.locobiz_profile_image}`} />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
           <h1 className="text-white text-7xl font-bold">{locomem.locobiz_name}</h1>
         </div>
@@ -23,15 +23,19 @@ const BusinessPage = async ({ params }) => {
       </div>
       <section>
         {/* Go Back Arrow */}
-        <div className="bg-white container m-auto py-6 px-6">
-                    
+        
+               <button
+        type="button"
+        className="rounded-md bg-white/60 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
+      >         
           <Link
             href="/businesses"
             className="text-black hover:text-xl flex items-center"
           >
             <FaArrowLeft className='mr-2' /> Back to Co-op Listing
-          </Link>
-        </div>
+            </Link>
+            </button>
+        
       </section>
       <section className='flex items-center justify-center h-screen'>
         <div className="container m-auto py-10 px-6 ">

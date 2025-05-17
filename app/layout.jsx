@@ -1,8 +1,8 @@
-// import Image from 'next/image'
 import backdrop from '@/assets/images/sunflowers.png';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-// import { hydrateRoot } from 'react-dom/client';
+import AuthProvider from '@/components/AuthProvider';
+
 import '@/assets/styles/global.css';
 
 // hydrateRoot(
@@ -21,6 +21,7 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
+    <AuthProvider>
     <html
       className='h-full'
       lang='eng'
@@ -63,7 +64,8 @@ const MainLayout = ({ children }) => {
         </main>
         <Footer className='bg-gray-800 text-white text-center p-4' />
       </body>
-    </html>
+      </html>
+      </AuthProvider>
   )
 }
 
