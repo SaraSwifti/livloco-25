@@ -3,8 +3,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import logo from '@/public/images/newlivlocologo.png'
-import profileDefault from '@/public/images/aiprofile2.png'
+import logo from '@/assets/images/newlivlocologo.png'
+// import profileDefault from '@/assets/images/'
 import { FaGoogle } from 'react-icons/fa'
 
 const Navbar = () => {
@@ -155,11 +155,11 @@ const Navbar = () => {
                   >
                     <span className='absolute -inset-1.5'></span>
                     <span className='sr-only'>Open user menu</span>
-                    <Image
+                    {/* <Image
                       className='h-8 w-8 text-white rounded-full'
                       src={profileDefault}
                       alt='building icon'
-                    />
+                    /> */}
                   </button>
                 </div>
 

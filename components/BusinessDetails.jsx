@@ -77,7 +77,8 @@ const BusinessDetails = ({ locomem }) => {
         </div>
 
         {/* If there is Farmers market details */}
-        {locomem.farmers_market_location.fm_location_post && <FarmersMarket locomem={locomem} /> }
+        {locomem.farmers_market_location.fm_location_post && (<FarmersMarket locomem={locomem} />
+        )}
                   
 
         {/* <h1 className="text-xl text-green-900">Check out our Farmer's Market Schedule!</h1>

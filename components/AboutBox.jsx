@@ -21,7 +21,7 @@ const AboutBox = async () => {
             <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
               Less....
             </h3>
-            <p className='text-xl/8 text-black'>
+            <div className='text-xl/8 text-black'>
               <ul>
                 <li>Distance</li>
                 <li>Transport</li>
@@ -29,7 +29,7 @@ const AboutBox = async () => {
                 <li>Cost</li>
                 <li>Polution</li>.
                 </ul>
-            </p>
+            </div>
             <br />
             <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
               More....

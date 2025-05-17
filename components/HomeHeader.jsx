@@ -11,11 +11,9 @@ const HomeHeader = () => {
               Find Your LocoPeeps
             </h1>
             <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              What you are selling, might be what your neighbor is buying.
+              Local businesses finding local businesses. Creating local economies right where you live.
                 </p>
-                <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              What your neighbor is selling, might be what you are buying.
-            </p>
+               
           </div>
           {/* <-- Form Component --> */}
           {/* <form

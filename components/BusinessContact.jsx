@@ -66,7 +66,7 @@ const BusinessContact = ({ locomem }) => {
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Saturday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.business_hours.saturday_hours}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">${locomem.business_hours.saturday_hours}</td>
                     </tr>
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">

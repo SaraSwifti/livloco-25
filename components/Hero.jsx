@@ -12,11 +12,11 @@ const Hero = () => {
                 Find Your LocoPeeps
               </h1>
               <p className="my-4 font-bold drop-shadow-2xltext-xl text-white">
-                What you are selling, might be what your neighbor is buying.
+               Local businesses finding local businessess. Creating local economies right where you live.
                     </p>
-                    <p className="my-4 font-bold drop-shadow-2xltext-xl text-white">
+                    {/* <p className="my-4 font-bold drop-shadow-2xltext-xl text-white">
               What your neighbot is selling, might be what you are buying.
-              </p>
+              </p> */}
             </div>
             {/* <-- Form Component --> */}
             <form

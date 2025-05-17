@@ -7,7 +7,9 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const BusinessPage = async ({ params }) => {
-    await connectDB();
+
+  await connectDB();
+  
     const locomem = await LocoMem.findById(params.id).lean();
 
   return (

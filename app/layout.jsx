@@ -1,19 +1,20 @@
 // import Image from 'next/image'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import backdrop from '@/assets/images/sunflowers.png';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 // import { hydrateRoot } from 'react-dom/client';
-import '@/public/styles/global.css'
+import '@/assets/styles/global.css';
 
 // hydrateRoot(
 //   document.getElementById('root'),
 //   <App />
 // );
 
-import backdrop from '@/public/images/sunflowers.png'
+
 
 export const metadata = {
   title: 'Livloco',
-  keywords: 'local, living, sustainable, micro-economies, LivLoco, Livlo.co',
+  keywords: 'local, living, sustainable, micro-economies, LivLoco, Livlo.co, local, economies, businesses, business',
   description:
     'local businesses finding local businesses, creating local economies right where you live',
 }
