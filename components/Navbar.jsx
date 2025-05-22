@@ -1,29 +1,38 @@
-'use client'
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import logo from '@/assets/images/newlivlocologo.png'
-// import profileDefault from '@/assets/images/'
-import { FaGoogle } from 'react-icons/fa'
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+'use client';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import logo from '@/assets/images/newlivlocologo.png';
 
-import { usePathname } from 'next/navigation'
+// import profileDefault from '@/assets/images/'
+import { usePathname } from 'next/navigation';
+
+import { FaGoogle } from 'react-icons/fa';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+ 
+
 
 const Navbar = () => {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  const [providers, setProviders] = useState(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [providers, setProviders] = useState(null);
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
     const setAuthProviders = async () => {
-      const res = await getProviders()
-      setProviders(res)
+      const res = await getProviders();
+      setProviders(res);
     }
-    setAuthProviders()
+    setAuthProviders();
+
+      // NOTE: close mobile menu if the viewport size is changed
+    window.addEventListener('resize', () => {
+      setIsMobileMenuOpen(false);
+    });
+
   }, [])
 
   return (
@@ -117,7 +126,7 @@ const Navbar = () => {
                   Object.values(providers).map((provider, index) => (
                     <button
                       key={index}
-                      onClick={ () => signIn(provider.id) }
+                      onClick={() => signIn(provider.id)}
                       className='flex items-center text-black bg-white hover:bg-gray-500 hover:text-white rounded-md px-3 py-2'
                     >
                       <FaGoogle className='text-black mr-2' />
@@ -272,10 +281,19 @@ const Navbar = () => {
                             </Link>
                             )} */}
             {!session && (
-              <button className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'>
-                <FaGoogle className='fa-brands fa-google mr-2'></FaGoogle>
-                <span>Login or Register</span>
-              </button>
+            <div>
+              {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  key={provider.id}
+                  onClick={() => signIn(provider.id)}
+                  className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'>
+                  
+                  <FaGoogle className='fa-brands fa-google mr-2'></FaGoogle>
+                  <span>Login or Register</span>
+                </button>
+              ))}
+                </div>
             )}
           </div>
         </div>
