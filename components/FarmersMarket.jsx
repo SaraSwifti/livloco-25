@@ -26,16 +26,22 @@ const FarmersMarket = ({ locomem }) => {
                    
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                  {/* conditional rendering of monday's farm market if not data is there */}
+                {(locomem?.farmers_market_location?.monday?.farmers_market_name || '').trim() !== ''? (
+        
                     <tr >
+                      
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Monday</p>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.farmers_market_name}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.state}`}</td>
-                    </tr>
+                      </tr>
+                    ) : null}
+
+                      {(locomem?.farmers_market_location?.tuesday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Tuesday</p>
@@ -44,6 +50,8 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.tuesday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.tuesday.state}`}</td>
                     </tr>
+                    ) : null}
+                    {(locomem?.farmers_market_location?.wednesday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Wednesday</p>
@@ -52,6 +60,8 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.wednesday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.wednesday.state}`}</td>
                     </tr>
+                    ) : null}
+                     {(locomem?.farmers_market_location?.thursday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Thursday</p>
@@ -59,7 +69,9 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.farmers_market_name}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.state}`}</td>
-                    </tr>
+                      </tr>
+                      ) : null}
+                       {(locomem?.farmers_market_location?.friday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Friday</p>
@@ -67,7 +79,9 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.farmers_market_name}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.state}`}</td>
-                    </tr>
+                      </tr>
+                      ) : null}
+                       {(locomem?.farmers_market_location?.saturday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Saturday</p>
@@ -75,7 +89,9 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.farmers_market_name}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.state}`}</td>
-                    </tr>
+                      </tr>
+                      ) : null}
+                       {(locomem?.farmers_market_location?.sunday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Sunday</p>
@@ -83,7 +99,8 @@ const FarmersMarket = ({ locomem }) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.farmers_market_name}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.city}`}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.state}`}</td>
-                    </tr>
+                      </tr>
+                      ) : null}
                   
                 </tbody>
               </table>
