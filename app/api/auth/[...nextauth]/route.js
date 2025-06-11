@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth/next';
 // import { authOptions } from '@//utils/authOptions';
-//for some reason it will not allow me to inport providers through the util file per the code. 
+//for some reason it will not allow me to import providers through the util file per the code. 
 
 import GoogleProvider from "next-auth/providers/google";
 

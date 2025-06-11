@@ -3,7 +3,7 @@
 const FarmersMarket = ({ locomem }) => {
     return ( 
         <div>
-        <h1 className="text-xl text-green-900">Check out our Farmer's Market Schedule!</h1>
+        <h1 className="text-xl font-bold text-green-900">Check out our Farmer's Market Schedule!</h1>
         <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
