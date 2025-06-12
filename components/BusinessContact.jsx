@@ -9,6 +9,7 @@ const BusinessContact = ({ locomem }) => {
           LocoMember's Contact Information
         </h1>
         {/* This is where I am going to add the chance to message the member through the platform */}
+        <h1 className="text-center">This is where they will message the member on Livloco platform</h1>
         {(locomem?.website || '').trim() !== '' ? (
           <div className='flex justify-center items-center'>
             <Link
@@ -24,6 +25,7 @@ const BusinessContact = ({ locomem }) => {
         ) : null}
 
         {/* store front address and hours */}
+        
         {locomem?.locobiz_address?.post_permission === true && (
           <div>
         <h1 className='text-xl pt-3 text-center font-bold text-green-900'>

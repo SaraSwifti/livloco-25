@@ -26,13 +26,13 @@ const BusinessPage = async ({ params }) => {
         
                <button
         type="button"
-        className="rounded-md bg-white/60 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
+        className="rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
       >         
           <Link
             href="/businesses"
             className="text-black hover:text-xl flex items-center"
           >
-            <FaArrowLeft className='mr-2' /> Back to Co-op Listing
+            <FaArrowLeft className='mr-2' /> Back to Co-op Listings
             </Link>
             </button>
         
@@ -42,6 +42,22 @@ const BusinessPage = async ({ params }) => {
           <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
             {/*Co-op mem business info*/}
             <BusinessDetails locomem={locomem} />
+             <section>
+        {/* Go Back Arrow */}
+        
+               <button
+        type="button"
+        className="rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
+      >         
+          <Link
+            href="/businesses"
+            className="text-black hover:text-xl flex items-center"
+          >
+            <FaArrowLeft className='mr-2' /> Back to Co-op Listings
+            </Link>
+            </button>
+        
+      </section>
             <BusinessContact locomem={locomem} />
             
           </div>
