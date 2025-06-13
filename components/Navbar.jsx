@@ -212,6 +212,12 @@ const Navbar = () => {
                       Your LivLoco Profile and Membership Status
                     </Link>
                     <Link
+                      href='/businesses/add'
+                      className='block px-4 py-2 text-sm text-gray-700'
+                    >
+                      Add Your LivLoco Business
+                    </Link>
+                     <Link
                       href='/businesses/edit'
                       className='block px-4 py-2 text-sm text-gray-700'
                     >

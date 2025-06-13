@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaMapMarker } from 'react-icons/fa';
+
+import { FaMapMarkerAlt, FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
 
 
 const BusinessCard = ({ locomem }) => {
@@ -21,11 +22,11 @@ const BusinessCard = ({ locomem }) => {
           />
           </div>
         <div className='p-4'>
-          <div className='text-left md:text-center lg:text-left mb-6'>
+          <div className=' text-center mb-6'>
             
               <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
               <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
-              <FaMapMarker className=' text-orange-700 mt-1'></FaMapMarker>
+              <FaMapMarkerAlt className=' text-orange-700 mt-1'></FaMapMarkerAlt>
                 <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
                 
               </div>
@@ -36,33 +37,79 @@ const BusinessCard = ({ locomem }) => {
             
           {/* Selling list */}
           
-            <div className='text-2xl justify-center gap-4 text-black mb-4'>
+            <div className='text-2xl gap-4 text-black mb-4'>
             <div className='border border-gray-500 mb-5'>
-              <p className=' justify-self-center font-bold'>
+              <p className='mb-2 font-bold'>
                 Selling:
-              </p>
-              <p className='justify-self-center'>{`${locomem.selling.selling1.description}`}</p>
+                </p>
+               <div className="flex items-center gap-2 mb-2">
+                 {locomem.selling.selling1.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.selling.selling1.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
+                  <p className='mb-2'>{`${locomem.selling.selling1.description}`}</p>
+                  </div>
+                <div className="flex items-center gap-2 mb-2">
+                 {locomem.selling.selling2.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.selling.selling2.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
              
-              <p className='justify-self-center'>{`${locomem.selling.selling2.description}`}</p>
-              <p className='justify-self-center'>{`${locomem.selling.selling3.description}`}</p>
+                  <p className='mb-1'>{`${locomem.selling.selling2.description}`}</p>
+                  
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                 {locomem.selling.selling3.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.selling.selling3.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
+                  <p className='mb-1'>{`${locomem.selling.selling3.description}`}</p>
+                  </div>
             </div>
             </div>
          
           {/* Needing list */}
-          <div className=' text-2xl justify-center gap-4 text-black mb-4'>
-          <div className='border border-gray-500 mb-5'>
-            <p className='justify-self-center font-bold'>Buying:</p>
-            <p className='justify-self-center '>{`${locomem.needs.need1.description}`}</p>
-            <p className='justify-self-center '>{`${locomem.needs.need2.description}`}</p>
-            <p className='justify-self-center '>{`${locomem.needs.need3.description}`}</p>
+          <div className=' text-2xl gap-4 text-black mb-4'>
+          <div className='border border-gray-500 p-4 mb-5'>
+                <p className='font-bold mb-2'>Needing:</p>
+                
+                 <div className="flex items-center gap-2 mb-2">
+                 {locomem.needs.need1.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.needs.need1.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
+                  <p className='mb-1 '>{`${locomem.needs.need1.description}`}</p>
+                </div>
+                 <div className="flex items-center gap-2 mb-2">
+                 {locomem.needs.need2.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.needs.need2.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
+                  <p className='mb-1'>{`${locomem.needs.need2.description}`}</p>
+                </div>
+                 <div className="flex items-center gap-2 mb-2">
+                 {locomem.needs.need3.type === 'Product' ? (
+                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                      ) : locomem.needs.need3.type === 'Service' ? (
+                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
+                      ) : null}
+                  <p className='mb-1'>{`${locomem.needs.need3.description}`}</p>
+                  </div>
             </div>
             </div>
 
 
         </div> 
-        </div>
+          </div>
+          
         </Link>
     </>
   )
 }
 export default BusinessCard
+ 

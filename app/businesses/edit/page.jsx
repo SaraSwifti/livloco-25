@@ -1,6 +1,6 @@
 const EditBusinessPage = () => {
     return (
-        <div>Add Business Page</div>
+        <div>Edit Business Page</div>
       );
 }
  
