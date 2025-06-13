@@ -8,7 +8,7 @@ const BusinessCard = ({ locomem }) => {
   return (
     <>
       <Link href={`/businesses/${locomem._id}`}>
-      <div className='rounded-xl shadow-md relative bg-white'>
+      <div className='rounded-xl pt-1 shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
         <Image
           src={`/images/locobizimages/${locomem.locobiz_profile_image}`}
@@ -30,15 +30,13 @@ const BusinessCard = ({ locomem }) => {
                 <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
                 
               </div>
-              {locomem.current_promotional
-                  ? <h3 className='text-xl text-orange-800 font-bold'>{`${locomem.current_promotional}`}</h3>
-                  : null}
+           
           </div>
             
           {/* Selling list */}
           
             <div className='text-2xl gap-4 text-black mb-4'>
-            <div className='border border-gray-500 mb-5'>
+            <div className='border border-gray-500 p-4 mb-5'>
               <p className='mb-2 font-bold'>
                 Selling:
                 </p>
