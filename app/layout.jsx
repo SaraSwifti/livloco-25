@@ -28,42 +28,23 @@ const MainLayout = ({ children }) => {
     >
       <body
         suppressHydrationWarning
-        className='flex flex-col  '
+        className='flex flex-col min-h-screen'
       >
         <Navbar />
-        <main className="flex-grow" >
-          <div
-            className='relative min-h-screen'
+          <main className="flex-grow"
             style={{
-              backgroundImage: `url(${backdrop.src})`
+              backgroundImage: `url(${backdrop.src})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'repeat',
+              backgroundPosition: 'center',
             }}>
-            {/* <Image
-              src='/images/your-image.jpg'
-              alt='Background image of a black and white picture of sunflowers'
-              fill
-              style={{
-                backgroundImage: `url(${backdrop.src})`
-              }}
-              sizes='100vw'
-              className='flex-grow min-h-screen bg-cover bg-center object-cover z-0'
-              priority
-            > */}
-            <div>{children}</div>
-            
-            <div className='relative z-10'></div>
-        </div>
         
-
-          {/* <div className="flex-grow min-h-screen bg-cover bg-center "
-        // priority={true}
-        style={{
-          backgroundImage: `url(${backdrop.src})`,
-         
-       
-        }}>{children}</div> */}
+            <div className="relative z-10 px-4 py-8">{children}</div>
+            
         </main>
-        <Footer className='bg-gray-800 text-white text-center p-4' />
-      </body>
+        <Footer className='' />
+        </body>
+        
       </html>
       </AuthProvider>
   )

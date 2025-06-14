@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { FaGlobe, FaGlobeAsia } from 'react-icons/fa'
 
-const BusinessContact = ({ locomem }) => {
+const BusinessContact = ({ locomem, className ='' }) => {
   return (
     <>
-      <div className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
+      <div className={className}>
         <h1 className='text-xl text-center pb-4 font-bold'>
           LocoMember's Contact Information
         </h1>

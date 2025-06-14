@@ -58,7 +58,7 @@ const BusinessPage = async ({ params }) => {
             </button>
         
       </section>
-            <BusinessContact locomem={locomem} />
+            {/* <BusinessContact locomem={locomem} /> */}
             
           </div>
            

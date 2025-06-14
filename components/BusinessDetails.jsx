@@ -1,35 +1,54 @@
 // import Image from 'next/image';
-import FarmersMarket from "./FarmersMarket";
-import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
+import FarmersMarket from './FarmersMarket'
+import BusinessContact from './BusinessContact'
+import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 const BusinessDetails = ({ locomem }) => {
   return (
     <>
-      <div className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
-        
-        <div className="mb-3">
-          <h1 className='text-3xl font-bold mb-1'>{locomem.locobiz_name}</h1>
-        <h1 className='text-2xl'>{locomem.locobiz_description}</h1>
-        {locomem.current_promotional
-            && (<>
-               <h4 className="text-lg text-gray-400 font-semibold">Current Promotion</h4>
-            <h3 className='text-xl text-orange-800 font-bold'>{`${locomem.current_promotional}`}</h3>
-            
-            
-            </>)}
-        </div>
-       
-        {/* the key for goods and services */}
-        <div className="boarder mb-4">
-          <FaDollyFlatbed alt="Product Icon" className="mr-1 mt-1.5 text-blue-800" />
-          <FaClipboardList alt="Service Icon" className="mr-1 mt-1.5 text-green-800"/>
-        </div>
-        {/* Selling buying feature section */}
-        <div className='mx-auto max-w-2xl   '>
-          <h2 className='text-xl font-bold tracking-tight text-gray-900'>
-            Selling
-          </h2>
-          <div className='mb-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
-            {/* <Image
+      <section className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
+        <div className='p-4'>
+          <div className='flex flex-col items-center justify-center mb-3'>
+            <h1 className='text-3xl font-bold mb-1'>{locomem.locobiz_name}</h1>
+            <h1 className='text-2xl'>{locomem.locobiz_description}</h1>
+          </div>
+          <div className='flex flex-col lg:flex-row gap-6'>
+            <div className='lg:w-1/2 p-3 text-center'>
+              {(locomem.current_promotional || '').trim() !== '' && (
+                <>
+                  <h4 className='text-lg text-gray-400 font-semibold'>
+                    Current Promotion
+                  </h4>
+                  <h3 className='text-xl text-orange-800 font-bold'>{`${locomem.current_promotional}`}</h3>
+                </>
+              )}
+
+              {/* the key for goods and services */}
+              <div className='mb-4'>
+                <FaDollyFlatbed
+                  alt='Product Icon'
+                  className='mr-1 mt-1.5 text-blue-800'
+                />
+                <FaClipboardList
+                  alt='Service Icon'
+                  className='mr-1 mt-1.5 text-green-800'
+                />
+              </div>
+            </div>
+            <div className='lg:w-1/2 p-3 text-center'>
+              <p>LocoMember Messaging button</p>
+              <p>votes</p>
+              <p>Member since</p>
+            </div>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-full mx-auto'>
+            {/* Selling buying feature section */}
+            <div className='col-span-1 md:col-span-2 lg:col-span-2'>
+              <div className='p-4 border rounded shadow'>
+                <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
+                  Selling
+                </h2>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {/* <Image
                                   src={ `/images/locobizimages/${locomem.selling.selling1.image}`}
                                   alt=''
                                   className="object-cover h-[400px] w-full"
@@ -37,56 +56,93 @@ const BusinessDetails = ({ locomem }) => {
                                               height={20}
                                               sizes='25vw'
                                 /> */}
-            <div className='mt-4 flex items-start gap-2'>
-              {locomem.selling.selling1.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-1 mt-1.5 text-blue-800" />
-      ) : locomem.selling.selling1.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-1 mt-1.5 text-green-800"/>
-      ) : null}
-                <div className="flex flex-col">
-              <h3 className='text-xl text-left text-black'>
-                 
-                  {`${locomem.selling.selling1.description}`}
-                </h3>
-              <p className='text-sm font-medium text-gray-900'>{locomem.selling.selling1.price}</p>
+                  <div className='flex items-start gap-2'>
+                    {locomem.selling.selling1.type === 'Product' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaDollyFlatbed
+                          alt='Product Icon'
+                          className='mr-1 mt-1.5 text-blue-800'
+                        />
+                      </div>
+                    ) : locomem.selling.selling1.type === 'Service' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaClipboardList
+                          alt='Service Icon'
+                          className='mr-1 mt-1.5 text-green-800'
+                        />{' '}
+                      </div>
+                    ) : null}
+                    <div className='flex flex-col'>
+                      <h3 className='text-xl text-left text-black'>
+                        {`${locomem.selling.selling1.description}`}
+                      </h3>
+                      <p className='text-sm font-medium text-gray-900'>
+                        {locomem.selling.selling1.price}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='flex items-start gap-2'>
+                    {locomem.selling.selling2.type === 'Product' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaDollyFlatbed
+                          alt='Product Icon'
+                          className='mr-1 mt-1.5 text-blue-800'
+                        />
+                      </div>
+                    ) : locomem.selling.selling2.type === 'Service' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaClipboardList
+                          alt='Service Icon'
+                          className='mr-1 mt-1.5 text-green-800'
+                        />
+                      </div>
+                    ) : null}
+                    <div className='flex flex-col'>
+                      <h3 className='text-xl text-black'>
+                        {`${locomem.selling.selling2.description}`}
+                      </h3>
+                      <p className='text-sm font-medium text-gray-900'>
+                        {locomem.selling.selling2.price}
+                      </p>
+                    </div>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    {locomem.selling.selling3.type === 'Product' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaDollyFlatbed
+                          alt='Product Icon'
+                          className='mr-1 mt-1.5 text-blue-800'
+                        />
+                      </div>
+                    ) : locomem.selling.selling3.type === 'Service' ? (
+                      <div className='flex items-start gap-2'>
+                        <FaClipboardList
+                          alt='Service Icon'
+                          className='mr-1 mt-1.5 text-green-800'
+                        />
+                      </div>
+                    ) : null}
+                    <div className='flex flex-col'>
+                      <h3 className='text-xl text-black'>
+                        {`${locomem.selling.selling3.description}`}
+                      </h3>
+                      <p className='text-sm font-medium text-gray-900'>
+                        {locomem.selling.selling3.price}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div className='mt-4 flex items-start gap-2'>
-                {locomem.selling.selling2.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-1 mt-1.5 text-blue-800" />
-      ) : locomem.selling.selling2.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-1 mt-1.5 text-green-800"/>
-              ) : null}
-              <div className="flex flex-col">
-                <h3 className='text-xl text-black'>
-                  {`${locomem.selling.selling2.description}`}
-                </h3>
-              <p className='text-sm font-medium text-gray-900'>{locomem.selling.selling2.price}</p>
-              </div>
-            </div>
-            <div className='mt-4 flex items-start gap-2'>
-               {locomem.selling.selling3.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-1 mt-1.5 text-blue-800" />
-      ) : locomem.selling.selling3.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-1 mt-1.5 text-green-800"/>
-              ) : null}
-              <div className="flex flex-col">
-                <h3 className='text-xl text-black'>
-                  {`${locomem.selling.selling3.description}`}
-                </h3>
-              <p className='text-sm font-medium text-gray-900'>{locomem.selling.selling1.price}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Buying list feature section */}
-        <div className='mx-auto max-w-2xl   '>
-          <h2 className='text-xl font-bold tracking-tight text-gray-900'>
-            Buying
-          </h2>
-          <div className='mb-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8'>
-            {/* <Image
+            {/* Buying list feature section */}
+            <div className='col-span-1 md:col-span-2 lg:col-span-2'></div>
+          <div className="p-4 border rounded shadow">
+              <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
+                Needing
+              </h2>
+              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                {/* <Image
                                   src={ `/images/locobizimages/${locomem.selling.selling1.image}`}
                                   alt=''
                                   className="object-cover h-[400px] w-full"
@@ -94,54 +150,95 @@ const BusinessDetails = ({ locomem }) => {
                                               height={20}
                                               sizes='25vw'
                                 /> */}
-            <div className='mt-4 flex '>
-               {locomem.needs.need1.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-1 mt-1.5 text-blue-800" />
-      ) : locomem.needs.need1.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-1 mt-1.5 text-green-800"/>
-      ) : null}
-              <h3 className='text-xl text-black'>
-                  {`${locomem.needs.need1.description}`}
-                </h3>
-             
-            </div>
-            <div className='mt-4 flex'>
-                    {locomem.needs.need2.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-2 mt-1.5 text-blue-800" />
-      ) : locomem.needs.need2.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-2 mt-1.5 text-green-800"/>
-      ) : null}
-             
-                <h3 className='text-xl text-black'>
-                  {`${locomem.needs.need2.description}`}
-                </h3>
-             
-            </div>
-            <div className='mt-4 flex '>
-                    {locomem.needs.need3.type === 'Product' ? (
-        <FaDollyFlatbed alt="Product Icon" className="mr-2 mt-1.5 text-blue-800" />
-      ) : locomem.needs.need3.type === 'Service' ? (
-        <FaClipboardList alt="Service Icon" className="mr-2 mt-1.5 text-green-800"/>
-      ) : null}
-             
-                <h3 className='text-xl text-black'>
-                  {`${locomem.needs.need3.description}`}
-                </h3>
-             
+                <div className='flex items-start gap-2'>
+                  {locomem.needs.need1.type === 'Product' ? (
+                    <FaDollyFlatbed
+                      alt='Product Icon'
+                      className='mr-1 mt-1.5 text-blue-800'
+                    />
+                  ) : locomem.needs.need1.type === 'Service' ? (
+                    <FaClipboardList
+                      alt='Service Icon'
+                      className='mr-1 mt-1.5 text-green-800'
+                    />
+                  ) : null}
+                  <h3 className='text-xl text-black'>
+                    {`${locomem.needs.need1.description}`}
+                  </h3>
+                </div>
+                <div className='mt-4 flex'>
+                  {locomem.needs.need2.type === 'Product' ? (
+                    <div className='flex items-start gap-2'>
+                    <FaDollyFlatbed
+                      alt='Product Icon'
+                      className='mr-2 mt-1.5 text-blue-800'
+                    />
+                      </div>
+                  ) : locomem.needs.need2.type === 'Service' ? (
+                      <div className='flex items-start gap-2'>
+                    <FaClipboardList
+                      alt='Service Icon'
+                      className='mr-2 mt-1.5 text-green-800'
+                    />
+                        </div>
+                        
+                  ) : null}
+ <div className='flex flex-col'>
+                  <h3 className='text-xl text-black'>
+                    {`${locomem.needs.need2.description}`}
+                  </h3>
+                  </div>
+                </div>
+                <div className='flex items-start gap-2'>
+                  {locomem.needs.need3.type === 'Product' ? (
+                    <div className='flex items-start gap-2'>
+                    <FaDollyFlatbed
+                      alt='Product Icon'
+                      className='mr-2 mt-1.5 text-blue-800'
+                      />
+                      </div>
+                  ) : locomem.needs.need3.type === 'Service' ? (
+                    <div className='flex items-start gap-2'>
+                      <FaClipboardList
+                      alt='Service Icon'
+                      className='mr-2 mt-1.5 text-green-800'
+                        />
+                        </div>
+                  ) : null}
+<div className='flex flex-col'>
+                  <h3 className='text-xl text-black'>
+                    {`${locomem.needs.need3.description}`}
+                    </h3>
+                    </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* If there is Farmers market details */}
-        {locomem?.farmers_market_location?.fm_location_post === true && (<FarmersMarket locomem={locomem} />
-        )}
-                  
-
-        
-
-      </div>
+        <div className='flex flex-col md:flex-row gap-6 mt-8'>
+          <div
+            className={
+              locomem?.farmers_market_location?.fm_location_post === true
+                ? 'md:w-1/2'
+                : 'md:w-full'
+            }
+          >
+            <BusinessContact
+              locomem={locomem}
+              className='h-full flex flex-col'
+            />
+          </div>
+          {/* If there is Farmers market details */}
+          {locomem?.farmers_market_location?.fm_location_post === true && (
+            <div className='md:w-1/2'>
+              <FarmersMarket locomem={locomem} />
+            </div>
+          )}
+        </div>
+      </section>
     </>
   )
 }
 
-export default BusinessDetails;
+export default BusinessDetails
