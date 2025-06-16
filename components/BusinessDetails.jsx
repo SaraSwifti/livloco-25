@@ -1,6 +1,7 @@
 // import Image from 'next/image';
 import FarmersMarket from './FarmersMarket'
 import BusinessContact from './BusinessContact'
+import Image from 'next/image'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 const BusinessDetails = ({ locomem }) => {
   return (
@@ -48,14 +49,8 @@ const BusinessDetails = ({ locomem }) => {
                   Selling
                 </h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {/* <Image
-                                  src={ `/images/locobizimages/${locomem.selling.selling1.image}`}
-                                  alt=''
-                                  className="object-cover h-[400px] w-full"
-                                              width={20}
-                                              height={20}
-                                              sizes='25vw'
-                                /> */}
+                  {/* Selling item 1 */}
+                  {locomem.selling.selling1?.description?.trim() && (
                   <div className='flex items-start gap-2'>
                     {locomem.selling.selling1.type === 'Product' ? (
                       <div className='flex items-start gap-2'>
@@ -79,137 +74,237 @@ const BusinessDetails = ({ locomem }) => {
                       <p className='text-sm font-medium text-gray-900'>
                         {locomem.selling.selling1.price}
                       </p>
+                      {locomem.selling.selling1?.image ? (
+                        <Image
+                          src={`/images/locobizimages/${locomem.selling.selling1.image}`}
+                          alt={locomem.selling.selling1.description || 'Need item image'}
+                          className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                          width={600}
+                          height={400}
+                          sizes='(max-width: 768px) 100vw, 33vw'
+                        />
+                      ) : (
+                        <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                          No image available
+                        </div>
+                      )}
                     </div>
-                  </div>
+                    </div>
+                  )}
+                  
+                  {/* Selling item 2 */}
+                  {locomem.selling.selling2?.description?.trim() && (
+                    <div className='flex items-start gap-2'>
+                      {locomem.selling.selling2.type === 'Product' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaDollyFlatbed
+                            alt='Product Icon'
+                            className='mr-1 mt-1.5 text-blue-800'
+                          />
+                        </div>
+                      ) : locomem.selling.selling2.type === 'Service' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaClipboardList
+                            alt='Service Icon'
+                            className='mr-1 mt-1.5 text-green-800'
+                          />
+                        </div>
+                      ) : null}
+                      <div className='flex flex-col'>
+                        <h3 className='text-xl text-black'>
+                          {`${locomem.selling.selling2.description}`}
+                        </h3>
+                        <p className='text-sm font-medium text-gray-900'>
+                          {locomem.selling.selling2.price}
+                        </p>
+                        {locomem.selling.selling2?.image ? (
+                          <Image
+                            src={`/images/locobizimages/${locomem.selling.selling2.image}`}
+                            alt={locomem.selling.selling2.description || 'Need item image'}
+                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                            width={600}
+                            height={400}
+                            sizes='(max-width: 768px) 100vw, 33vw'
+                          />
+                        ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
-                  <div className='flex items-start gap-2'>
-                    {locomem.selling.selling2.type === 'Product' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaDollyFlatbed
-                          alt='Product Icon'
-                          className='mr-1 mt-1.5 text-blue-800'
-                        />
+                  {/* selling item 3 */}
+                  {locomem.selling.selling3?.description?.trim() && (
+                    <div className='flex items-start gap-2'>
+                      {locomem.selling.selling3.type === 'Product' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaDollyFlatbed
+                            alt='Product Icon'
+                            className='mr-1 mt-1.5 text-blue-800'
+                          />
+                        </div>
+                      ) : locomem.selling.selling3.type === 'Service' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaClipboardList
+                            alt='Service Icon'
+                            className='mr-1 mt-1.5 text-green-800'
+                          />
+                        </div>
+                      ) : null}
+                      <div className='flex flex-col'>
+                        <h3 className='text-xl text-black'>
+                          {`${locomem.selling.selling3.description}`}
+                        </h3>
+                        <p className='text-sm font-medium text-gray-900'>
+                          {locomem.selling.selling3.price}
+                        </p>
+                        {locomem.selling.selling3?.image ? (
+                          <Image
+                            src={`/images/locobizimages/${locomem.selling.selling3.image}`}
+                            alt={locomem.selling.selling3.description || 'Need item image'}
+                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                            width={600}
+                            height={400}
+                            sizes='(max-width: 768px) 100vw, 33vw'
+                          />
+                        ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
                       </div>
-                    ) : locomem.selling.selling2.type === 'Service' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaClipboardList
-                          alt='Service Icon'
-                          className='mr-1 mt-1.5 text-green-800'
-                        />
-                      </div>
-                    ) : null}
-                    <div className='flex flex-col'>
-                      <h3 className='text-xl text-black'>
-                        {`${locomem.selling.selling2.description}`}
-                      </h3>
-                      <p className='text-sm font-medium text-gray-900'>
-                        {locomem.selling.selling2.price}
-                      </p>
                     </div>
-                  </div>
-                  <div className='flex items-start gap-2'>
-                    {locomem.selling.selling3.type === 'Product' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaDollyFlatbed
-                          alt='Product Icon'
-                          className='mr-1 mt-1.5 text-blue-800'
-                        />
-                      </div>
-                    ) : locomem.selling.selling3.type === 'Service' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaClipboardList
-                          alt='Service Icon'
-                          className='mr-1 mt-1.5 text-green-800'
-                        />
-                      </div>
-                    ) : null}
-                    <div className='flex flex-col'>
-                      <h3 className='text-xl text-black'>
-                        {`${locomem.selling.selling3.description}`}
-                      </h3>
-                      <p className='text-sm font-medium text-gray-900'>
-                        {locomem.selling.selling3.price}
-                      </p>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
             {/* Buying list feature section */}
-            <div className='col-span-1 md:col-span-2 lg:col-span-2'></div>
-          <div className="p-4 border rounded shadow">
-              <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
-                Needing
-              </h2>
-              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-                {/* <Image
-                                  src={ `/images/locobizimages/${locomem.selling.selling1.image}`}
-                                  alt=''
-                                  className="object-cover h-[400px] w-full"
-                                              width={20}
-                                              height={20}
-                                              sizes='25vw'
-                                /> */}
-                <div className='flex items-start gap-2'>
-                  {locomem.needs.need1.type === 'Product' ? (
-                    <FaDollyFlatbed
-                      alt='Product Icon'
-                      className='mr-1 mt-1.5 text-blue-800'
-                    />
-                  ) : locomem.needs.need1.type === 'Service' ? (
-                    <FaClipboardList
-                      alt='Service Icon'
-                      className='mr-1 mt-1.5 text-green-800'
-                    />
-                  ) : null}
-                  <h3 className='text-xl text-black'>
-                    {`${locomem.needs.need1.description}`}
-                  </h3>
-                </div>
-                <div className='mt-4 flex'>
-                  {locomem.needs.need2.type === 'Product' ? (
+            <div className='col-span-1 md:col-span-2 lg:col-span-2'>
+              {/* Needing item 1 */}
+              <div className='p-4 border rounded shadow'>
+                <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
+                  Needing
+                </h2>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {/* Needing item 1 */}
+                  {locomem.needs.need1?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                    <FaDollyFlatbed
-                      alt='Product Icon'
-                      className='mr-2 mt-1.5 text-blue-800'
-                    />
-                      </div>
-                  ) : locomem.needs.need2.type === 'Service' ? (
-                      <div className='flex items-start gap-2'>
-                    <FaClipboardList
-                      alt='Service Icon'
-                      className='mr-2 mt-1.5 text-green-800'
-                    />
+                      {locomem.needs.need1.type === 'Product' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaDollyFlatbed
+                            alt='Product Icon'
+                            className='mr-1 mt-1.5 text-blue-800'
+                          />
                         </div>
-                        
-                  ) : null}
- <div className='flex flex-col'>
-                  <h3 className='text-xl text-black'>
-                    {`${locomem.needs.need2.description}`}
-                  </h3>
-                  </div>
-                </div>
-                <div className='flex items-start gap-2'>
-                  {locomem.needs.need3.type === 'Product' ? (
-                    <div className='flex items-start gap-2'>
-                    <FaDollyFlatbed
-                      alt='Product Icon'
-                      className='mr-2 mt-1.5 text-blue-800'
-                      />
-                      </div>
-                  ) : locomem.needs.need3.type === 'Service' ? (
-                    <div className='flex items-start gap-2'>
-                      <FaClipboardList
-                      alt='Service Icon'
-                      className='mr-2 mt-1.5 text-green-800'
-                        />
+                      ) : locomem.needs.need1.type === 'Service' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaClipboardList
+                            alt='Service Icon'
+                            className='mr-1 mt-1.5 text-green-800'
+                          />
                         </div>
-                  ) : null}
-<div className='flex flex-col'>
-                  <h3 className='text-xl text-black'>
-                    {`${locomem.needs.need3.description}`}
-                    </h3>
+                      ) : null}
+                      <div className='flex flex-col'>
+                        <h3 className='text-xl text-left text-black'>
+                          {`${locomem.needs.need1.description}`}
+                        </h3>
+                        {locomem.needs.need1?.image ? (
+                          <Image
+                            src={`/images/locobizimages/${locomem.needs.need1.image}`}
+                            alt={locomem.needs.need1.description || 'Need item image'}
+                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                            width={600}
+                            height={400}
+                            sizes='(max-width: 768px) 100vw, 33vw'
+                          />
+                        ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
+                      </div>
                     </div>
+                  )}
+                  {/* Needing item 2 */}
+                  {locomem.needs.need2?.description?.trim() && (
+                    <div className='flex items-start gap-2'>
+                      {locomem.needs.need2.type === 'Product' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaDollyFlatbed
+                            alt='Product Icon'
+                            className='mr-2 mt-1.5 text-blue-800'
+                          />
+                        </div>
+                      ) : locomem.needs.need2.type === 'Service' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaClipboardList
+                            alt='Service Icon'
+                            className='mr-2 mt-1.5 text-green-800'
+                          />
+                        </div>
+                      ) : null}
+                      <div className='flex flex-col'>
+                        <h3 className='text-xl text-black'>
+                          {`${locomem.needs.need2.description}`}
+                        </h3>
+                        {locomem.needs.need2?.image ? (
+                          <Image
+                            src={`/images/locobizimages/${locomem.needs.need2.image}`}
+                            alt='Selling item'
+                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                            width={600}
+                            height={400}
+                            sizes='(max-width: 768px) 100vw, 33vw'
+                          />
+                        ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {/* needing item 3 */}
+                  {locomem.needs.need3?.description?.trim() && (
+                    <div className='flex items-start gap-2'>
+                      {locomem.needs.need3.type === 'Product' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaDollyFlatbed
+                            alt='Product Icon'
+                            className='mr-2 mt-1.5 text-blue-800'
+                          />
+                        </div>
+                      ) : locomem.needs.need3.type === 'Service' ? (
+                        <div className='flex items-start gap-2'>
+                          <FaClipboardList
+                            alt='Service Icon'
+                            className='mr-2 mt-1.5 text-green-800'
+                          />
+                        </div>
+                      ) : null}
+                      <div className='flex flex-col'>
+                        <h3 className='text-xl text-black'>
+                          {`${locomem.needs.need3.description}`}
+                        </h3>
+                        {locomem.needs.need3?.image ? (
+                          <Image
+                            src={`/images/locobizimages/${locomem.needs.need1.image}`}
+                           alt={locomem.needs.need3.description || 'Need item image'}
+                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
+                            width={600}
+                            height={400}
+                            sizes='(max-width: 768px) 100vw, 33vw'
+                          />
+                        ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
