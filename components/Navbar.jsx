@@ -170,7 +170,7 @@ const Navbar = () => {
                 </span>
               </Link>
               {/* <!-- Profile dropdown button --> */}
-              <div className='relative ml-3'>
+              <div className='relative ml-3 z-50'>
                 <div>
                   <button
                     type='button'
