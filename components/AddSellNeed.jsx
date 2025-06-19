@@ -3,13 +3,13 @@
 import { useState } from 'react'
 
 const AddSellNeed = () => {
-  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
-  const [sellingItems, setSellingItems] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-  ])
-  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+    const [showSellNeedForm, setShowSellNeedForm] = useState(false);
+    const [sellingItems, setSellingItems] = useState([
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+    ]);
+    const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
 
   return (
     <div className='mt-6 border-t pt-4'>
@@ -118,7 +118,7 @@ const AddSellNeed = () => {
 
             <div className='mt-4 space-y-4 bg-gray-50 border p-4 rounded-md'>
               <h1 className='font-bold text-2xl'>Needing</h1>
-              {sellingItems.map((item, index) => (
+              {needItems.map((item, index) => (
                 <div
       key={item.id}
       className='bg-white p-4 rounded border space-y-4'

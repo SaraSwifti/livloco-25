@@ -26,13 +26,7 @@ const AboutBox = async () => {
               Knowing your neighbor, local business, community, their needs, sustainability,
               interdependence, ....peace.
             </p>
-              {/* <ul>
-                <li>Distance</li>
-                <li>Transport</li>
-                <li>Energy</li>
-                <li>Cost</li>
-                <li>Polution</li>.
-                </ul> */}
+            
             </div>
             <br />
             <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
@@ -40,7 +34,29 @@ const AboutBox = async () => {
             </h3>
             <p className='text-xl/8 text-black'>
               Distance, Transport, Energy, Pollution
-           </p>
+            </p>
+             <br />
+            <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+              At the LivLoco Co-op: 
+            </h3>
+            <ul className="list-disc ml-6 space-y-2">
+            <li className='text-xl/8 text-black'>
+             Everyone has a seat at the table, regardless of how large or small your business is. 
+              </li>
+               <li className='text-xl/8 text-black'>
+             You can be a member without posting a business and just look around. 
+              </li>
+              <li className='text-xl/8 text-black'>
+             Yearly memberships are $35/year with the ability to post up to three items you would like to sell and up to three items that you are needing to make your business more locally sustainable. 
+              </li>
+            </ul>
+            <br/>
+             <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+              I hope that...
+            </h3>
+            <p className='text-xl/8 text-black'>
+              You find this helpful. We can make an app for this site someday. We can offer scholarships to those wanting to learn a new trade, regardless of age. Together, the possibilities are endless! 
+            </p>
           </div>
 
           <div className='lg:flex lg:flex-auto lg:justify-center'>

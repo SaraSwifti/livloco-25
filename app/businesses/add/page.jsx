@@ -1,7 +1,7 @@
 import BusinessAddForm from "@/components/BusinessAddForm.jsx";
 import AddFarmersMarket from "@/components/FarmMarkAddForm";
 // import AddSellNeed from "@/components/AddSellNeed";
-import AddStoreFront from "@/components/StoreFrontAddForm";
+// import AddStoreFront from "@/components/StoreFrontAddForm";
 
 
 const AddBusinessPage = () => {
@@ -11,7 +11,7 @@ const AddBusinessPage = () => {
               <div className="bg-white px-6 py-8 mb-4 rounded-md shadow-md border m-4 md:m-0">
                   <BusinessAddForm />
                   {/* <AddSellNeed /> */}
-                  <AddStoreFront />
+                  {/* <AddStoreFront /> */}
                   <AddFarmersMarket />
               </div>
              
