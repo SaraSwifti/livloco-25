@@ -1,12 +1,16 @@
-const AddBusinessForm = () => {
-    return ( 
-        
-         <form>
-            <h2 className="text-3xl text-center font-semibold mb-6">
-              Add Property
-            </h2>
+'use client';
+import addBusinessAction from '@/app/actions/addBusinessAction.js';
+import AddSellNeed from '@/components/AddSellNeed';
 
-            <div className="mb-4">
+const BusinessAddForm = () => {
+  return (
+    <form action={addBusinessAction}>
+      <h2 className='text-3xl text-center font-semibold mb-6'>
+        Add Your LocoBusiness
+      </h2>
+      <p>(For LivLoco purposes only. Under no circumstances will Livloco sell or share your information. However we cannot prevent anyone from copying any information that you have voluntarily displayed)</p>
+      {/* Dropdown for goods or services */}
+      {/* <div className="mb-4">
               <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
                 >Property Type</label
               >
@@ -16,44 +20,55 @@ const AddBusinessForm = () => {
                 className="border rounded w-full py-2 px-3"
                 required
               >
-                <option value="Apartment">Apartment</option>
-                <option value="Condo">Condo</option>
-                <option value="House">House</option>
-                <option value="CabinOrCottage">Cabin or Cottage</option>
-                <option value="Room">Room</option>
-                <option value="Studio">Studio</option>
+                 <option value="Studio">Studio</option>
                 <option value="Other">Other</option>
               </select>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2"
-                >Listing Name</label
-              >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="eg. Beautiful Apartment In Miami"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="description"
-                className="block text-gray-700 font-bold mb-2"
-                >Description</label
-              >
-              <textarea
-                id="description"
-                name="description"
-                className="border rounded w-full py-2 px-3"
-                rows="4"
-                placeholder="Add an optional description of your property"
-              ></textarea>
-            </div>
-
-            <div className="mb-4 bg-blue-50 p-4">
+            </div> */}
+      <div className='mb-4'>
+        <label className='block text-gray-700 font-bold mb-2'>
+          LocoBusiness Name
+        </label>
+        <input
+          type='text'
+          id='name'
+          name='name'
+          className='border rounded w-full py-2 px-3 mb-2'
+          placeholder=''
+          required
+        />
+      </div>
+      <div className='mb-4'>
+        <label
+          htmlFor='description'
+          className='block text-gray-700 font-bold mb-2'
+        >
+          Description
+        </label>
+        <textarea
+          id='description'
+          name='description'
+          className='border rounded w-full py-2 px-3'
+          rows='4'
+          placeholder='Add an optional description of your property'
+        ></textarea>
+      </div>
+      <div className=''>
+        <label
+          htmlFor='zipcode'
+          className='block text-gray-700 font-bold mb-2'
+        >
+          So That Your Neighbors Can Find you in a Location Search
+        </label>
+        <input
+          type='text'
+          id='zipcode'
+          name='location.zipcode'
+          className='border rounded w-full py-2 px-3 mb-2'
+          placeholder='Zipcode'
+        />
+      </div>
+      {/* Address input */}
+      {/* <div className="mb-4 bg-blue-50 p-4">
               <label className="block text-gray-700 font-bold mb-2">Location</label>
               <input
                 type="text"
@@ -85,9 +100,9 @@ const AddBusinessForm = () => {
                 className="border rounded w-full py-2 px-3 mb-2"
                 placeholder="Zipcode"
               />
-            </div>
+            </div> */}
 
-            <div className="mb-4 flex flex-wrap">
+      {/* <div className="mb-4 flex flex-wrap">
               <div className="w-full sm:w-1/3 pr-2">
                 <label htmlFor="beds" className="block text-gray-700 font-bold mb-2"
                   >Beds</label
@@ -99,8 +114,8 @@ const AddBusinessForm = () => {
                   className="border rounded w-full py-2 px-3"
                   required
                 />
-              </div>
-              <div className="w-full sm:w-1/3 px-2">
+              </div> */}
+      {/* <div className="w-full sm:w-1/3 px-2">
                 <label htmlFor="baths" className="block text-gray-700 font-bold mb-2"
                   >Baths</label
                 >
@@ -125,10 +140,10 @@ const AddBusinessForm = () => {
                   className="border rounded w-full py-2 px-3"
                   required
                 />
-              </div>
-            </div>
-
-            <div className="mb-4">
+              </div> 
+            </div>*/}
+      {/* Amenities checkbox */}
+      {/* <div className="mb-4">
               <label className="block text-gray-700 font-bold mb-2"
                 >Amenities</label
               >
@@ -288,9 +303,9 @@ const AddBusinessForm = () => {
                   <label htmlFor="amenity_coffee_maker">Coffee Maker</label>
                 </div>
               </div>
-            </div>
-
-            <div className="mb-4 bg-blue-50 p-4">
+            </div> */}
+      {/* Rates */}
+      {/* <div className="mb-4 bg-blue-50 p-4">
               <label className="block text-gray-700 font-bold mb-2"
                 >Rates (Leave blank if not applicable)</label
               >
@@ -326,76 +341,68 @@ const AddBusinessForm = () => {
                 </div>
               </div>
             </div>
+ */}
+      <div className='mb-4'>
+        <label
+          htmlFor='seller_name'
+          className='block text-gray-700 font-bold mb-2'
+        >
+          Account Holder's Name
+        </label>
+        <input
+          type='text'
+          id='seller_name'
+          name='seller_info.name.'
+          className='border rounded w-full py-2 px-3'
+          placeholder='Name'
+        />
+      </div>
+      <div className='mb-4'>
+        <label
+          htmlFor='seller_email'
+          className='block text-gray-700 font-bold mb-2'
+        >
+          Account Holder's Email Make this populate from their sign-in
+          credentials?
+        </label>
+        <input
+          type='email'
+          id='seller_email'
+          name='seller_info.email'
+          className='border rounded w-full py-2 px-3'
+          placeholder='Email address'
+          required
+        />
+      </div>
+      <div className='mb-4'>
+        <label
+          htmlFor='seller_phone'
+          className='block text-gray-700 font-bold mb-2'
+        >
+          Account Holder's Phone (for account verification. Business phone can be added later for display if different)
+        </label>
+        <input
+          type='tel'
+          id='seller_phone'
+          name='seller_info.phone'
+          className='border rounded w-full py-2 px-3'
+          placeholder='Phone'
+        />
+      </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="seller_name"
-                className="block text-gray-700 font-bold mb-2"
-                >Seller Name</label
-              >
-              <input
-                type="text"
-                id="seller_name"
-                name="seller_info.name."
-                className="border rounded w-full py-2 px-3"
-                placeholder="Name"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="seller_email"
-                className="block text-gray-700 font-bold mb-2"
-                >Seller Email</label
-              >
-              <input
-                type="email"
-                id="seller_email"
-                name="seller_info.email"
-                className="border rounded w-full py-2 px-3"
-                placeholder="Email address"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="seller_phone"
-                className="block text-gray-700 font-bold mb-2"
-                >Seller Phone</label
-              >
-              <input
-                type="tel"
-                id="seller_phone"
-                name="seller_info.phone"
-                className="border rounded w-full py-2 px-3"
-                placeholder="Phone"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="images" className="block text-gray-700 font-bold mb-2"
-                >Images (Select up to 4 images)</label
-              >
-              <input
-                type="file"
-                id="images"
-                name="images"
-                className="border rounded w-full py-2 px-3"
-                accept="image/*"
-                multiple
-                required
-              />
-            </div>
-
-            <div>
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Add Property
-              </button>
-            </div>
-          </form>
-     );
+  
+      {/* Here is the toggle button to turn on business posting and adding their SellNeeds */}
+      <AddSellNeed />
+      <div>
+        <button
+          className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline '
+          type='submit'
+        >
+          Add LocoBusiness
+        </button>
+      </div>
+    </form>
+  )
 }
- 
-export default AddBusinessForm;
+
+export default BusinessAddForm
