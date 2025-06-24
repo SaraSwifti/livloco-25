@@ -1,29 +1,35 @@
-'use client';
+'use client'
 import addBusinessAction from '@/app/actions/addBusinessAction.js';
-import AddSellNeed from '@/components/AddSellNeed';
+
+import { useState } from 'react';
+
+const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 const BusinessAddForm = () => {
+  // mapping and states to toggle needs and selling section
+
+  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
+  const [sellingItems, setSellingItems] = useState([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+  ])
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  // storefront marketstand needed data
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
+  // farmers market toggle state
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false);
   return (
     <form action={addBusinessAction}>
       <h2 className='text-3xl text-center font-semibold mb-6'>
         Add Your LocoBusiness
       </h2>
-      <p>(For LivLoco purposes only. Under no circumstances will Livloco sell or share your information. However we cannot prevent anyone from copying any information that you have voluntarily displayed)</p>
-      {/* Dropdown for goods or services */}
-      {/* <div className="mb-4">
-              <label htmlFor="type" className="block text-gray-700 font-bold mb-2"
-                >Property Type</label
-              >
-              <select
-                id="type"
-                name="type"
-                className="border rounded w-full py-2 px-3"
-                required
-              >
-                 <option value="Studio">Studio</option>
-                <option value="Other">Other</option>
-              </select>
-            </div> */}
+      <p>
+        (For LivLoco purposes only. Under no circumstances will Livloco sell or
+        share your information. However we cannot prevent anyone from copying
+        any information that you have voluntarily displayed)
+      </p>
+
       <div className='mb-4'>
         <label className='block text-gray-700 font-bold mb-2'>
           LocoBusiness Name
@@ -67,281 +73,7 @@ const BusinessAddForm = () => {
           placeholder='Zipcode'
         />
       </div>
-      {/* Address input */}
-      {/* <div className="mb-4 bg-blue-50 p-4">
-              <label className="block text-gray-700 font-bold mb-2">Location</label>
-              <input
-                type="text"
-                id="street"
-                name="location.street"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="Street"
-              />
-              <input
-                type="text"
-                id="city"
-                name="location.city"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="City"
-                required
-              />
-              <input
-                type="text"
-                id="state"
-                name="location.state"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="State"
-                required
-              />
-              <input
-                type="text"
-                id="zipcode"
-                name="location.zipcode"
-                className="border rounded w-full py-2 px-3 mb-2"
-                placeholder="Zipcode"
-              />
-            </div> */}
 
-      {/* <div className="mb-4 flex flex-wrap">
-              <div className="w-full sm:w-1/3 pr-2">
-                <label htmlFor="beds" className="block text-gray-700 font-bold mb-2"
-                  >Beds</label
-                >
-                <input
-                  type="number"
-                  id="beds"
-                  name="beds"
-                  className="border rounded w-full py-2 px-3"
-                  required
-                />
-              </div> */}
-      {/* <div className="w-full sm:w-1/3 px-2">
-                <label htmlFor="baths" className="block text-gray-700 font-bold mb-2"
-                  >Baths</label
-                >
-                <input
-                  type="number"
-                  id="baths"
-                  name="baths"
-                  className="border rounded w-full py-2 px-3"
-                  required
-                />
-              </div>
-              <div className="w-full sm:w-1/3 pl-2">
-                <label
-                  htmlFor="square_feet"
-                  className="block text-gray-700 font-bold mb-2"
-                  >Square Feet</label
-                >
-                <input
-                  type="number"
-                  id="square_feet"
-                  name="square_feet"
-                  className="border rounded w-full py-2 px-3"
-                  required
-                />
-              </div> 
-            </div>*/}
-      {/* Amenities checkbox */}
-      {/* <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2"
-                >Amenities</label
-              >
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_wifi"
-                    name="amenities"
-                    value="Wifi"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_wifi">Wifi</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_kitchen"
-                    name="amenities"
-                    value="Full kitchen"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_kitchen">Full kitchen</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_washer_dryer"
-                    name="amenities"
-                    value="Washer & Dryer"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_washer_dryer">Washer & Dryer</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_free_parking"
-                    name="amenities"
-                    value="Free Parking"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_free_parking">Free Parking</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_pool"
-                    name="amenities"
-                    value="Swimming Pool"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_pool">Swimming Pool</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_hot_tub"
-                    name="amenities"
-                    value="Hot Tub"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_hot_tub">Hot Tub</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_24_7_security"
-                    name="amenities"
-                    value="24/7 Security"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_24_7_security">24/7 Security</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_wheelchair_accessible"
-                    name="amenities"
-                    value="Wheelchair Accessible"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_wheelchair_accessible"
-                    >Wheelchair Accessible</label
-                  >
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_elevator_access"
-                    name="amenities"
-                    value="Elevator Access"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_elevator_access">Elevator Access</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_dishwasher"
-                    name="amenities"
-                    value="Dishwasher"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_dishwasher">Dishwasher</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_gym_fitness_center"
-                    name="amenities"
-                    value="Gym/Fitness Center"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_gym_fitness_center"
-                    >Gym/Fitness Center</label
-                  >
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_air_conditioning"
-                    name="amenities"
-                    value="Air Conditioning"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_air_conditioning">Air Conditioning</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_balcony_patio"
-                    name="amenities"
-                    value="Balcony/Patio"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_balcony_patio">Balcony/Patio</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_smart_tv"
-                    name="amenities"
-                    value="Smart TV"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_smart_tv">Smart TV</label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="amenity_coffee_maker"
-                    name="amenities"
-                    value="Coffee Maker"
-                    className="mr-2"
-                  />
-                  <label htmlFor="amenity_coffee_maker">Coffee Maker</label>
-                </div>
-              </div>
-            </div> */}
-      {/* Rates */}
-      {/* <div className="mb-4 bg-blue-50 p-4">
-              <label className="block text-gray-700 font-bold mb-2"
-                >Rates (Leave blank if not applicable)</label
-              >
-              <div
-                className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
-              >
-                <div className="flex items-center">
-                  <label htmlFor="weekly_rate" className="mr-2">Weekly</label>
-                  <input
-                    type="number"
-                    id="weekly_rate"
-                    name="rates.weekly"
-                    className="border rounded w-full py-2 px-3"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <label htmlFor="monthly_rate" className="mr-2">Monthly</label>
-                  <input
-                    type="number"
-                    id="monthly_rate"
-                    name="rates.monthly"
-                    className="border rounded w-full py-2 px-3"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <label htmlFor="nightly_rate" className="mr-2">Nightly</label>
-                  <input
-                    type="number"
-                    id="nightly_rate"
-                    name="rates.nightly"
-                    className="border rounded w-full py-2 px-3"
-                  />
-                </div>
-              </div>
-            </div>
- */}
       <div className='mb-4'>
         <label
           htmlFor='seller_name'
@@ -379,7 +111,8 @@ const BusinessAddForm = () => {
           htmlFor='seller_phone'
           className='block text-gray-700 font-bold mb-2'
         >
-          Account Holder's Phone (for account verification. Business phone can be added later for display if different)
+          Account Holder's Phone (for account verification. Business phone can
+          be added later for display if different)
         </label>
         <input
           type='tel'
@@ -389,10 +122,505 @@ const BusinessAddForm = () => {
           placeholder='Phone'
         />
       </div>
+      {/* Sellig and needing section */}
+      <div className='mt-6 border-t pt-4'>
+        {/* Toggle */}
+        <div className='flex items-center gap-3'>
+          <input
+            type='checkbox'
+            checked={showSellNeedForm}
+            onChange={(e) => setShowSellNeedForm(e.target.checked)}
+            className='w-5 h-5'
+          />
+          <label className='font-medium'>
+            Add Selling/needing profile to make your LivLoco pofile Active
+          </label>
+        </div>
 
+        {/* Conditional form fields */}
+        {showSellNeedForm ? (
+          <>
+            <div>
+              {/* add selling information */}
+              <div className='mt-4 space-y-4 bg-gray-100 border p-4 rounded-md'>
+                <h1 className='font-bold text-2xl'>Selling</h1>
+                {sellingItems.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className='bg-white p-4 rounded border space-y-4'
+                  >
+                    <h3 className='text-lg font-semibold'>
+                      Selling {index + 1}
+                    </h3>
+                    {/* Description */}
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700'>
+                        Description
+                      </label>
+                      <input
+                        name={`selling${index + 1}_description`}
+                        type='text'
+                        className='mt-1 block w-full border rounded p-2'
+                      />
+                    </div>
+
+                    {/* Type */}
+
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700 mb-1'>
+                        Type
+                      </label>
+                      <div className='flex items-center gap-6'>
+                        <label className='flex items-center space-x-2'>
+                          <input
+                            type='radio'
+                            name={`selling${index + 1}_type`}
+                            value='product'
+                            defaultChecked
+                            className='text-blue-600'
+                            required
+                          />
+                          <span>Product</span>
+                        </label>
+
+                        <label className='flex items-center space-x-2'>
+                          <input
+                            type='radio'
+                            name={`selling${index + 1}_type`}
+                            value='service'
+                            className='text-green-600'
+                            required
+                          />
+                          <span>Service</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700'>
+                        Price
+                      </label>
+                      <input
+                        name={`selling${index + 1}_price`}
+                        type='text'
+                        className='mt-1 block w-full border rounded p-2'
+                      />
+                    </div>
+
+                    {/* Image */}
+                    <div>
+                      <label
+                        htmlFor='image'
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        Upload image if you have one
+                      </label>
+                      <input
+                        name={`selling${index + 1}_image`}
+                        type='file'
+                        className='mt-1 block w-full border rounded p-2'
+                        id='image'
+                        accept='image/*'
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* the needing entry feilds */}
+
+              <div className='mt-4 space-y-4 bg-gray-50 border p-4 rounded-md'>
+                <h1 className='font-bold text-2xl'>Needing</h1>
+                {needItems.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className='bg-white p-4 rounded border space-y-4'
+                  >
+                    <h3 className='text-lg font-semibold'>Need {index + 1}</h3>
+
+                    {/* Description */}
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700'>
+                        Description
+                      </label>
+                      <input
+                        name={`need${index + 1}_description`}
+                        type='text'
+                        className='mt-1 block w-full border rounded p-2'
+                      />
+                    </div>
+
+                    {/* Type */}
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700 mb-1'>
+                        Type
+                      </label>
+                      <div className='flex items-center gap-6'>
+                        <label className='flex items-center space-x-2'>
+                          <input
+                            type='radio'
+                            name={`need${index + 1}_type`}
+                            value='product'
+                            defaultChecked
+                            onChange={() => setNeedType('product')}
+                            className='text-blue-600'
+                            required
+                          />
+                          <span>Product</span>
+                        </label>
+
+                        <label className='flex items-center space-x-2'>
+                          <input
+                            type='radio'
+                            name={`need${index + 1}_type`}
+                            value='service'
+                            onChange={() => setNeedType('service')}
+                            className='text-green-600'
+                            required
+                          />
+                          <span>Service</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor={`need${index + 1}_image`}
+                        className='block text-sm font-medium text-gray-700'
+                      >
+                        Upload image if you have one
+                      </label>
+                      <input
+                        name={`need${index + 1}_image`}
+                        type='file'
+                        className='mt-1 block w-full border rounded p-2'
+                        id={`need${index + 1}_image`}
+                        accept='image/*'
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Hidden fallbacks if toggle is off */}
+            <input
+              type='hidden'
+              name='extraField1'
+              value=''
+            />
+            <input
+              type='hidden'
+              name='extraField2'
+              value=''
+            />
+          </>
+        )}
+      </div>
+      {/* adding storefront and farmstand component */}
+<div className='mt-6 border-t pt-4'>
+      {/* // Toggle for needing to post storefront// */}
+      <div className='flex items-center gap-3'>
+        <input
+          type='checkbox'
+          checked={showStoreFrontForm}
+          onChange={(e) => setShowStoreFrontForm(e.target.checked)}
+          className='w-5 h-5'
+          />
+          <label className='font-medium'>
+          Add storefront/farmstand address and hours if you have one.
+        </label>
+      
+      </div>
+        
+      {showStoreFrontForm ? (
+        <>
+          <h2 className='text-xl font-bold'>Storefront/Farmstand Address</h2>
+
+          {/* <label className='flex items-center space-x-2'>
+            <input
+              type='checkbox'
+              name='post_permission'
+              checked={formData.locobiz_address.post_permission}
+              // onChange={handleAddressChange}
+              className='w-5 h-5'
+            />
+            <span>
+              Allow LocoBiz storefront/farmstand address to be posted publicly
+            </span>
+          </label> */}
+
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            <div>
+              <label className='block text-sm font-medium'>LocoBiz Phone</label>
+              <input
+                type='tel'
+                name='biz_phone'
+                // value={formData.locobiz_address.biz_phone}
+                // onChange={handleAddressChange}
+                placeholder='+1234567890'
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>
+                {' '}
+                Locobiz Address Line 1
+              </label>
+              <input
+                type='text'
+                name='add_line1'
+                // value={formData.locobiz_address.add_line1}
+                // onChange={handleAddressChange}
+                required
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>
+                Address Line 2
+              </label>
+              <input
+                type='text'
+                name='add_line2'
+                // value={formData.locobiz_address.add_line2}
+                // onChange={handleAddressChange}
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>City</label>
+              <input
+                type='text'
+                name='city'
+                // value={formData.locobiz_address.city}
+                // onChange={handleAddressChange}
+                required
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>State</label>
+              <input
+                type='text'
+                name='state'
+                // value={formData.locobiz_address.state}
+                // onChange={handleAddressChange}
+                required
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>Zip Code</label>
+              <input
+                type='text'
+                name='zipcode'
+                // value={formData.locobiz_address.zipcode}
+                // onChange={handleAddressChange}
+                required
+                pattern='^\d{5}(-\d{4})?$'
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium'>Country</label>
+              <input
+                type='text'
+                name='country'
+                // value={formData.locobiz_address.country}
+                // onChange={handleAddressChange}
+                className='mt-1 w-full rounded border p-2'
+              />
+            </div>
+          </div>
+
+          <h2 className='text-xl font-bold mt-6'>LocoBiz Business Hours</h2>
+
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+            
+          </div>
+        </>
+      ) : null}
+      </div>
+
+      {/* Farmers Market days and location */}
+<div className="flex items-center space-x-2 mb-4">
+        <input
+          type="checkbox"
+          checked={showFarmersMarketForm}
+          // onChange={handleToggle}
+           onChange={(e) => setShowFarmersMarketForm(e.target.checked)}
+          className="w-5 h-5"
+        />
+        <label className="font-medium text-lg">
+          Add Farmers Market locations if you attend any.
+        </label>
+      </div>
+
+      {showFarmersMarketForm ? (
+        <>
+          <h2 className="text-xl font-bold mt-4">Farmers Market Locations</h2>
+
+          {daysOfWeek.map((day) => (
+            <div key={day} className="border rounded p-4 mb-4">
+              <h3 className="text-lg font-semibold capitalize mb-2">{day}</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium">Market Name</label>
+                  <input
+                    type="text"
+                    name="farmers_market_name"
+                    // value={data[day]?.farmers_market_name || ''}
+                    // onChange={(e) => handleDayChange(e, day)}
+                    className="mt-1 w-full border rounded p-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    // value={data[day]?.city || ''}
+                    // onChange={(e) => handleDayChange(e, day)}
+                    className="mt-1 w-full border rounded p-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">State</label>
+                  <input
+                    type="text"
+                    name="state"
+                    // value={data[day]?.state || ''}
+                    // onChange={(e) => handleDayChange(e, day)}
+                    className="mt-1 w-full border rounded p-2"
+                  />
+                </div>
+              </div>
+            </div>
+          ))};
+        </>
+      ) : null}
+   
+    
+    
+    
   
-      {/* Here is the toggle button to turn on business posting and adding their SellNeeds */}
-      <AddSellNeed />
+
+      
+      {/* submit button for everything */}
       <div>
         <button
           className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline '

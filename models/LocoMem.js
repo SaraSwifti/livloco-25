@@ -82,10 +82,7 @@ const LocoMemSchema = new Schema(
       },
     },
     business_hours: {
-      post_permission: {
-        type: Boolean,
-        default: false,
-      },
+    
       monday_hours: String,
       tuesday_hours: String,
       wednesday_hours: String,
