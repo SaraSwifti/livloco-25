@@ -11,7 +11,7 @@ const HomeHeader = () => {
               Find Your LocoPeeps
             </h1>
             <p className="my-4 font-bold text-xl text-white drop-shadow-2xl">
-              Local businesses finding local businesses. Creating local economies right where you live.
+              Local businesses finding local businesses. Sustaining local economies right where you live.
                 </p>
                
           </div>

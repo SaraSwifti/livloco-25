@@ -8,7 +8,7 @@ const AboutBox = async () => {
   //Get the latest 3 members general info without link
   const recentMems = await LocoMem.find({})
     .sort({ createdAt: -1 })
-    .limit(3)
+    .limit(5)
     .lean()
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>
@@ -23,7 +23,7 @@ const AboutBox = async () => {
             </h3>
             <div className='text-xl/8 text-black'>
                <p className='text-xl/8 text-black'>
-              Knowing your neighbor, local business, community, their needs, sustainability,
+              Knowing your neighbor, local business, community, their needs. Growing in our sustainability
               interdependence, ....peace.
             </p>
             
@@ -36,7 +36,7 @@ const AboutBox = async () => {
               Distance, Transport, Energy, Pollution
             </p>
              <br />
-            <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+            <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
               At the LivLoco Co-op: 
             </h3>
             <ul className="list-disc ml-6 space-y-2">
@@ -51,7 +51,7 @@ const AboutBox = async () => {
               </li>
             </ul>
             <br/>
-             <h3 className='text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+             <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
               I hope that...
             </h3>
             <p className='text-xl/8 text-black'>
