@@ -1,8 +1,8 @@
 'use client'
-import addBusinessAction from '@/app/actions/addBusinessAction.js'
-
-import { useState } from 'react'
-
+import addBusinessAction from '@/app/actions/addBusinessAction.js';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 const daysOfWeek = [
   'monday',
   'tuesday',
@@ -14,26 +14,61 @@ const daysOfWeek = [
 ]
 
 const BusinessAddForm = () => {
+  const router = useRouter()
+  //skip add business form.
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false);
+  const handleSkipPopOutCheckbox = (e) => {
+    const checked = e.target.checked;
+    setSkipAddBusiness(checked);
+
+    if (checked) {
+      setShowPopOut(true) // Show the popout
+      // router.push('/businesses') // Navigate immediately
+    };
+  };
+  // Handle close of popout
+  const handleClose = () => {
+  setShowPopOut(false);
+  router.push('/businesses'); // redirect AFTER modal is closed
+};
+
+  //showpopout for directions later
+  const [showPopOut, setShowPopOut] = useState(false);
   // mapping and states to toggle needs and selling section
 
-  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
+  const [showSellNeedForm, setShowSellNeedForm] = useState(false);
   const [sellingItems, setSellingItems] = useState([
     { id: 1 },
     { id: 2 },
     { id: 3 },
   ])
-  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
   // storefront marketstand needed data
-  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false);
   // farmers market toggle state
-  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
-  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false);
+  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false);
   return (
     <form action={addBusinessAction}>
       <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
         <h2 className='text-3xl text-center font-semibold mb-6'>
           Add Your LocoBusiness
         </h2>
+        <div className='flex items-center p-2 gap-3'>
+          <input
+            type='checkbox'
+            checked={skipAddBusiness}
+            onChange={handleSkipPopOutCheckbox}
+            className='w-5 h-5'
+          />
+          <label className='font-medium text-lg'>
+            Skip adding a business profile for now and just puruse being a
+            locoMember.
+          </label>
+          {showPopOut && (
+            <AddBusLaterPopout onClose={handleClose} />
+          )}
+        </div>
         <p>
           (For LivLoco purposes only. Under no circumstances will Livloco sell
           or share your information. However we cannot prevent anyone from
@@ -329,28 +364,26 @@ const BusinessAddForm = () => {
       )}
 
       {/* adding storefront and farmstand component */}
-     
-        {/* // Toggle for needing to post storefront// */}
-        <div className='flex p-2 items-center gap-3'>
-          <input
-            type='checkbox'
-            checked={showStoreFrontForm}
-            onChange={(e) => setShowStoreFrontForm(e.target.checked)}
-            className='w-5 h-5'
-          />
-          <label className='font-medium text-lg'>
-            Add storefront/farmstand address and hours if you have one.
-          </label>
-        </div>
 
-        {showStoreFrontForm ? (
-          <>
-            <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
-              <h2 className='text-xl font-bold'>
-                Storefront/Farmstand Address
-              </h2>
+      {/* // Toggle for needing to post storefront// */}
+      <div className='flex p-2 items-center gap-3'>
+        <input
+          type='checkbox'
+          checked={showStoreFrontForm}
+          onChange={(e) => setShowStoreFrontForm(e.target.checked)}
+          className='w-5 h-5'
+        />
+        <label className='font-medium text-lg'>
+          Add storefront/farmstand address and hours if you have one.
+        </label>
+      </div>
 
-              {/* <label className='flex items-center space-x-2'>
+      {showStoreFrontForm ? (
+        <>
+          <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+            <h2 className='text-xl font-bold'>Storefront/Farmstand Address</h2>
+
+            {/* <label className='flex items-center space-x-2'>
             <input
               type='checkbox'
               name='post_permission'
@@ -363,210 +396,209 @@ const BusinessAddForm = () => {
             </span>
           </label> */}
 
-              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                <div>
-                  <label className='block text-sm font-medium'>
-                    LocoBiz Phone
-                  </label>
-                  <input
-                    type='tel'
-                    name='biz_phone'
-                    // value={formData.locobiz_address.biz_phone}
-                    // onChange={handleAddressChange}
-                    placeholder='+1234567890'
-                    className='mt-1 bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>
-                    {' '}
-                    Locobiz Address Line 1
-                  </label>
-                  <input
-                    type='text'
-                    name='add_line1'
-                    // value={formData.locobiz_address.add_line1}
-                    // onChange={handleAddressChange}
-                    required
-                    className='mt-1  bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>
-                    Address Line 2
-                  </label>
-                  <input
-                    type='text'
-                    name='add_line2'
-                    // value={formData.locobiz_address.add_line2}
-                    // onChange={handleAddressChange}
-                    className='mt-1 bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>City</label>
-                  <input
-                    type='text'
-                    name='city'
-                    // value={formData.locobiz_address.city}
-                    // onChange={handleAddressChange}
-                    required
-                    className='mt-1 bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>State</label>
-                  <input
-                    type='text'
-                    name='state'
-                    // value={formData.locobiz_address.state}
-                    // onChange={handleAddressChange}
-                    required
-                    className='mt-1  bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>Zip Code</label>
-                  <input
-                    type='text'
-                    name='zipcode'
-                    // value={formData.locobiz_address.zipcode}
-                    // onChange={handleAddressChange}
-                    required
-                    pattern='^\d{5}(-\d{4})?$'
-                    className='mt-1  bg-white w-full rounded border p-2'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium'>Country</label>
-                  <input
-                    type='text'
-                    name='country'
-                    // value={formData.locobiz_address.country}
-                    // onChange={handleAddressChange}
-                    className='mt-1  bg-white w-full rounded border p-2'
-                  />
-                </div>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+              <div>
+                <label className='block text-sm font-medium'>
+                  LocoBiz Phone
+                </label>
+                <input
+                  type='tel'
+                  name='biz_phone'
+                  // value={formData.locobiz_address.biz_phone}
+                  // onChange={handleAddressChange}
+                  placeholder='+1234567890'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
               </div>
 
-              <h2 className='text-xl font-bold mt-6'>LocoBiz Business Hours</h2>
+              <div>
+                <label className='block text-sm font-medium'>
+                  {' '}
+                  Locobiz Address Line 1
+                </label>
+                <input
+                  type='text'
+                  name='add_line1'
+                  // value={formData.locobiz_address.add_line1}
+                  // onChange={handleAddressChange}
+                  required
+                  className='mt-1  bg-white w-full rounded border p-2'
+                />
+              </div>
 
-              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
-                <div>
-                  <label className='block text-sm font-medium capitalize'>
-                    Monday's Hours
-                  </label>
-                  <input
-                    type='text'
-                    // name={key}
-                    // value={value}
-                    // onChange={handleHoursChange}
-                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
-                    className='mt-1 w-full rounded border p-2'
-                  />
-                </div>
+              <div>
+                <label className='block text-sm font-medium'>
+                  Address Line 2
+                </label>
+                <input
+                  type='text'
+                  name='add_line2'
+                  // value={formData.locobiz_address.add_line2}
+                  // onChange={handleAddressChange}
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label className='block text-sm font-medium'>City</label>
+                <input
+                  type='text'
+                  name='city'
+                  // value={formData.locobiz_address.city}
+                  // onChange={handleAddressChange}
+                  required
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label className='block text-sm font-medium'>State</label>
+                <input
+                  type='text'
+                  name='state'
+                  // value={formData.locobiz_address.state}
+                  // onChange={handleAddressChange}
+                  required
+                  className='mt-1  bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label className='block text-sm font-medium'>Zip Code</label>
+                <input
+                  type='text'
+                  name='zipcode'
+                  // value={formData.locobiz_address.zipcode}
+                  // onChange={handleAddressChange}
+                  required
+                  pattern='^\d{5}(-\d{4})?$'
+                  className='mt-1  bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label className='block text-sm font-medium'>Country</label>
+                <input
+                  type='text'
+                  name='country'
+                  // value={formData.locobiz_address.country}
+                  // onChange={handleAddressChange}
+                  className='mt-1  bg-white w-full rounded border p-2'
+                />
               </div>
             </div>
-          </>
-        ) : null}
-      
+
+            <h2 className='text-xl font-bold mt-6'>LocoBiz Business Hours</h2>
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-medium capitalize'>
+                  Monday's Hours
+                </label>
+                <input
+                  type='text'
+                  // name={key}
+                  // value={value}
+                  // onChange={handleHoursChange}
+                  placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                  className='mt-1 w-full rounded border p-2'
+                />
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
 
       {/* Farmers Market days and location */}
       <div className='flex p-2 items-center space-x-2'>
@@ -628,7 +660,6 @@ const BusinessAddForm = () => {
                 </div>
               </div>
             ))}
-            
           </div>
         </>
       ) : null}
@@ -643,33 +674,30 @@ const BusinessAddForm = () => {
           className='w-5 h-5'
         />
         <label className='font-medium text-lg'>
-          Add your business webpage if you have one. 
+          Add your business webpage if you have one.
         </label>
       </div>
-        {showLocoBizUrl ? (
-
+      {showLocoBizUrl ? (
         <>
           <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
-          <label htmlFor="website" className="block text-sm font-medium text-gray-700">
-        Website URL
-      </label>
-      <input
-        type="url"
-        id="website"
-        name="website"
-        placeholder="https://example.com"
-        // value={url}
-        // onChange={(e) => setUrl(e.target.value)}
-        className="w-full bg-white border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
-        
-      />
-         
-            </div>
-          </>
-        ) : null}
-     
-
-  
+            <label
+              htmlFor='website'
+              className='block text-sm font-medium text-gray-700'
+            >
+              Website URL
+            </label>
+            <input
+              type='url'
+              id='website'
+              name='website'
+              placeholder='https://example.com'
+              // value={url}
+              // onChange={(e) => setUrl(e.target.value)}
+              className='w-full bg-white border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500'
+            />
+          </div>
+        </>
+      ) : null}
 
       {/* submit button for everything */}
       <div className='p-3'>
