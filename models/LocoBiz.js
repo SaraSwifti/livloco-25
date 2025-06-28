@@ -1,7 +1,7 @@
 import { Schema, model, models } from 'mongoose'
-import { FaLess } from 'react-icons/fa'
 
-const LocoMemSchema = new Schema(
+
+const LocoBizSchema = new Schema(
   {
     memowner: {
       type: Schema.Types.ObjectId,
@@ -117,6 +117,10 @@ const LocoMemSchema = new Schema(
           type: String,
           trim: true,
         },
+          zip: {
+          type: String,
+          trim: true,
+        },
       },
       tuesday: {
         farmers_market_name: {
@@ -128,6 +132,10 @@ const LocoMemSchema = new Schema(
           trim: true,
         },
         state: {
+          type: String,
+          trim: true,
+        },
+        zip: {
           type: String,
           trim: true,
         },
@@ -145,6 +153,10 @@ const LocoMemSchema = new Schema(
           type: String,
           trim: true,
         },
+        zip: {
+          type: String,
+          trim: true,
+        },
       },
       thursday: {
         farmers_market_name: {
@@ -156,6 +168,10 @@ const LocoMemSchema = new Schema(
           trim: true,
         },
         state: {
+          type: String,
+          trim: true,
+        },
+        zip: {
           type: String,
           trim: true,
         },
@@ -171,6 +187,10 @@ const LocoMemSchema = new Schema(
         state: {
           type: String,
         },
+        zip: {
+          type: String,
+          trim: true,
+        },
       },
       saturday: {
         farmers_market_name: {
@@ -185,6 +205,10 @@ const LocoMemSchema = new Schema(
           type: String,
           trim: true,
         },
+        zip: {
+          type: String,
+          trim: true,
+        },
       },
       sunday: {
         farmers_market_name: {
@@ -196,6 +220,10 @@ const LocoMemSchema = new Schema(
           trim: true,
         },
         state: {
+          type: String,
+          trim: true,
+        },
+        zip: {
           type: String,
           trim: true,
         },
@@ -302,6 +330,6 @@ const LocoMemSchema = new Schema(
   }
 )
 
-const LocoMem = models.LocoMem || model('LocoMem', LocoMemSchema)
+const LocoBiz = models.LocoBiz || model('LocoBiz', LocoBizSchema)
 
-export default LocoMem
+export default LocoBiz;

@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     bookmarks: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'LocoMem'
+            ref: 'LocoBiz'
         },
         
     ]

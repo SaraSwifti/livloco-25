@@ -1,8 +1,8 @@
 import BusinessHeaderImage from '@/components/BusinessHeaderImage';
 import BusinessDetails from '@/components/BusinessDetails';
-import BusinessContact from '@/components/BusinessContact';
+// import BusinessContact from '@/components/BusinessContact';
 import connectDB from "@/config/database";
-import LocoMem from '@/models/LocoMem';
+import LocoBiz from '@/models/LocoBiz';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -10,14 +10,23 @@ const BusinessPage = async ({ params }) => {
 
   await connectDB();
   
-    const locomem = await LocoMem.findById(params.id).lean();
-
+    const locobiz = await LocoBiz.findById(params.id).lean();
+// if (!locobiz) {
+//   return (
+//     <div className="text-center py-10">
+//       <h2 className="text-2xl font-semibold">Business not found</h2>
+//       <Link href="/businesses" className="text-blue-600 underline mt-4 inline-block">
+//         Back to Listings
+//       </Link>
+//     </div>
+//   );
+//   };
   return (
     <>
       <div className="relative w-full">
-        <BusinessHeaderImage image={`/images/locobizimages/${locomem.locobiz_profile_image}`} />
+        <BusinessHeaderImage image={`/images/locobizimages/${locobiz.locobiz_profile_image}`} />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <h1 className="text-white text-7xl font-bold">{locomem.locobiz_name}</h1>
+          <h1 className="text-white text-7xl font-bold">{locobiz.locobiz_name}</h1>
         </div>
            
       </div>
@@ -41,7 +50,7 @@ const BusinessPage = async ({ params }) => {
         <div className="container m-auto py-10 px-6 ">
           <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
             {/*Co-op mem business info*/}
-            <BusinessDetails locomem={locomem} />
+            <BusinessDetails locobiz={locobiz} />
              <section>
         {/* Go Back Arrow */}
         
@@ -58,7 +67,7 @@ const BusinessPage = async ({ params }) => {
             </button>
         
       </section>
-            {/* <BusinessContact locomem={locomem} /> */}
+            {/* <BusinessContact locobiz={locobiz} /> */}
             
           </div>
            

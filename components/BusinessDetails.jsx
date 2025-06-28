@@ -3,36 +3,42 @@ import FarmersMarket from './FarmersMarket'
 import BusinessContact from './BusinessContact'
 import Image from 'next/image'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
-const BusinessDetails = ({ locomem }) => {
+const BusinessDetails = ({ locobiz }) => {
   return (
     <>
       <section className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
         <div className='p-4'>
           <div className='flex flex-col items-center justify-center mb-3'>
-            <h1 className='text-3xl font-bold mb-1'>{locomem.locobiz_name}</h1>
-            <h1 className='text-2xl'>{locomem.locobiz_description}</h1>
+            <h1 className='text-3xl font-bold mb-1'>{locobiz.locobiz_name}</h1>
+            <h1 className='text-2xl'>{locobiz.locobiz_description}</h1>
           </div>
           <div className='flex flex-col lg:flex-row gap-6'>
             <div className='lg:w-1/2 p-3 text-center'>
-              {(locomem.current_promotional || '').trim() !== '' && (
+              {(locobiz.current_promotional || '').trim() !== '' && (
                 <>
                   <h4 className='text-lg text-gray-400 font-semibold'>
                     Current Promotion
                   </h4>
-                  <h3 className='text-xl text-orange-800 font-bold'>{`${locomem.current_promotional}`}</h3>
+                  <h3 className='text-xl text-orange-800 font-bold'>{`${locobiz.current_promotional}`}</h3>
                 </>
               )}
 
               {/* the key for goods and services */}
-              <div className='mb-4'>
+              <div className='mb-4 space-y-2'>
+                <div className='flex items-center text-blue-800'>
                 <FaDollyFlatbed
                   alt='Product Icon'
                   className='mr-1 mt-1.5 text-blue-800'
                 />
+                  <span className="text-sm font-medium"> = Products</span>
+                </div>
+                <div className='flex items-center text-blue-800'>
                 <FaClipboardList
                   alt='Service Icon'
                   className='mr-1 mt-1.5 text-green-800'
-                />
+                  />
+                  <span className='text-sm font-medium'> = Services</span>
+                  </div>
               </div>
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
@@ -50,16 +56,17 @@ const BusinessDetails = ({ locomem }) => {
                 </h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                   {/* Selling item 1 */}
-                  {locomem.selling.selling1?.description?.trim() && (
+                  {locobiz.selling.selling1?.description?.trim() && (
                   <div className='flex items-start gap-2'>
-                    {locomem.selling.selling1.type === 'Product' ? (
+                    {locobiz.selling.selling1.type === 'Product' ? (
                       <div className='flex items-start gap-2'>
                         <FaDollyFlatbed
                           alt='Product Icon'
                           className='mr-1 mt-1.5 text-blue-800'
-                        />
+                          />
+                          
                       </div>
-                    ) : locomem.selling.selling1.type === 'Service' ? (
+                    ) : locobiz.selling.selling1.type === 'Service' ? (
                       <div className='flex items-start gap-2'>
                         <FaClipboardList
                           alt='Service Icon'
@@ -69,15 +76,15 @@ const BusinessDetails = ({ locomem }) => {
                     ) : null}
                     <div className='flex flex-col'>
                       <h3 className='text-xl text-left text-black'>
-                        {`${locomem.selling.selling1.description}`}
+                        {`${locobiz.selling.selling1.description}`}
                       </h3>
                       <p className='text-sm font-medium text-gray-900'>
-                        {locomem.selling.selling1.price}
+                        {locobiz.selling.selling1.price}
                       </p>
-                      {locomem.selling.selling1?.image ? (
+                      {locobiz.selling.selling1?.image ? (
                         <Image
-                          src={`/images/locobizimages/${locomem.selling.selling1.image}`}
-                          alt={locomem.selling.selling1.description || 'Need item image'}
+                          src={`/images/locobizimages/${locobiz.selling.selling1.image}`}
+                          alt={locobiz.selling.selling1.description || 'Need item image'.slice(0, 100)}
                           className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                           width={600}
                           height={400}
@@ -93,16 +100,16 @@ const BusinessDetails = ({ locomem }) => {
                   )}
                   
                   {/* Selling item 2 */}
-                  {locomem.selling.selling2?.description?.trim() && (
+                  {locobiz.selling.selling2?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locomem.selling.selling2.type === 'Product' ? (
+                      {locobiz.selling.selling2.type === 'Product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locomem.selling.selling2.type === 'Service' ? (
+                      ) : locobiz.selling.selling2.type === 'Service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -112,15 +119,15 @@ const BusinessDetails = ({ locomem }) => {
                       ) : null}
                       <div className='flex flex-col'>
                         <h3 className='text-xl text-black'>
-                          {`${locomem.selling.selling2.description}`}
+                          {`${locobiz.selling.selling2.description}`}
                         </h3>
                         <p className='text-sm font-medium text-gray-900'>
-                          {locomem.selling.selling2.price}
+                          {locobiz.selling.selling2.price}
                         </p>
-                        {locomem.selling.selling2?.image ? (
+                        {locobiz.selling.selling2?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locomem.selling.selling2.image}`}
-                            alt={locomem.selling.selling2.description || 'Need item image'}
+                            src={`/images/locobizimages/${locobiz.selling.selling2.image}`}
+                            alt={locobiz.selling.selling2.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
                             height={400}
@@ -136,16 +143,16 @@ const BusinessDetails = ({ locomem }) => {
                   )}
 
                   {/* selling item 3 */}
-                  {locomem.selling.selling3?.description?.trim() && (
+                  {locobiz.selling.selling3?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locomem.selling.selling3.type === 'Product' ? (
+                      {locobiz.selling.selling3.type === 'Product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locomem.selling.selling3.type === 'Service' ? (
+                      ) : locobiz.selling.selling3.type === 'Service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -155,15 +162,15 @@ const BusinessDetails = ({ locomem }) => {
                       ) : null}
                       <div className='flex flex-col'>
                         <h3 className='text-xl text-black'>
-                          {`${locomem.selling.selling3.description}`}
+                          {`${locobiz.selling.selling3.description}`}
                         </h3>
                         <p className='text-sm font-medium text-gray-900'>
-                          {locomem.selling.selling3.price}
+                          {locobiz.selling.selling3.price}
                         </p>
-                        {locomem.selling.selling3?.image ? (
+                        {locobiz.selling.selling3?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locomem.selling.selling3.image}`}
-                            alt={locomem.selling.selling3.description || 'Need item image'}
+                            src={`/images/locobizimages/${locobiz.selling.selling3.image}`}
+                            alt={locobiz.selling.selling3.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
                             height={400}
@@ -189,16 +196,16 @@ const BusinessDetails = ({ locomem }) => {
                 </h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                   {/* Needing item 1 */}
-                  {locomem.needs.need1?.description?.trim() && (
+                  {locobiz.needs.need1?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locomem.needs.need1.type === 'Product' ? (
+                      {locobiz.needs.need1.type === 'Product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locomem.needs.need1.type === 'Service' ? (
+                      ) : locobiz.needs.need1.type === 'Service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -208,12 +215,12 @@ const BusinessDetails = ({ locomem }) => {
                       ) : null}
                       <div className='flex flex-col'>
                         <h3 className='text-xl text-left text-black'>
-                          {`${locomem.needs.need1.description}`}
+                          {`${locobiz.needs.need1.description}`}
                         </h3>
-                        {locomem.needs.need1?.image ? (
+                        {locobiz.needs.need1?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locomem.needs.need1.image}`}
-                            alt={locomem.needs.need1.description || 'Need item image'}
+                            src={`/images/locobizimages/${locobiz.needs.need1.image}`}
+                            alt={locobiz.needs.need1.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
                             height={400}
@@ -228,16 +235,16 @@ const BusinessDetails = ({ locomem }) => {
                     </div>
                   )}
                   {/* Needing item 2 */}
-                  {locomem.needs.need2?.description?.trim() && (
+                  {locobiz.needs.need2?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locomem.needs.need2.type === 'Product' ? (
+                      {locobiz.needs.need2.type === 'Product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-2 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locomem.needs.need2.type === 'Service' ? (
+                      ) : locobiz.needs.need2.type === 'Service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -247,12 +254,12 @@ const BusinessDetails = ({ locomem }) => {
                       ) : null}
                       <div className='flex flex-col'>
                         <h3 className='text-xl text-black'>
-                          {`${locomem.needs.need2.description}`}
+                          {`${locobiz.needs.need2.description}`}
                         </h3>
-                        {locomem.needs.need2?.image ? (
+                        {locobiz.needs.need2?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locomem.needs.need2.image}`}
-                            alt='Selling item'
+                            src={`/images/locobizimages/${locobiz.needs.need2.image}`}
+                            alt={locobiz.needs.need2.description || 'Selling item'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
                             height={400}
@@ -267,16 +274,16 @@ const BusinessDetails = ({ locomem }) => {
                     </div>
                   )}
                   {/* needing item 3 */}
-                  {locomem.needs.need3?.description?.trim() && (
+                  {locobiz.needs.need3?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locomem.needs.need3.type === 'Product' ? (
+                      {locobiz.needs.need3.type === 'Product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-2 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locomem.needs.need3.type === 'Service' ? (
+                      ) : locobiz.needs.need3.type === 'Service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -286,12 +293,12 @@ const BusinessDetails = ({ locomem }) => {
                       ) : null}
                       <div className='flex flex-col'>
                         <h3 className='text-xl text-black'>
-                          {`${locomem.needs.need3.description}`}
+                          {`${locobiz.needs.need3.description}`}
                         </h3>
-                        {locomem.needs.need3?.image ? (
+                        {locobiz.needs.need3?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locomem.needs.need1.image}`}
-                           alt={locomem.needs.need3.description || 'Need item image'}
+                            src={`/images/locobizimages/${locobiz.needs.need1.image}`}
+                           alt={locobiz.needs.need3.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
                             height={400}
@@ -314,20 +321,20 @@ const BusinessDetails = ({ locomem }) => {
         <div className='flex flex-col md:flex-row gap-6 mt-8'>
           <div
             className={
-              locomem?.farmers_market_location?.fm_location_post === true
+              locobiz?.farmers_market_location?.fm_location_post === true
                 ? 'md:w-1/2'
                 : 'md:w-full'
             }
           >
             <BusinessContact
-              locomem={locomem}
+              locobiz={locobiz}
               className='h-full flex flex-col'
             />
           </div>
           {/* If there is Farmers market details */}
-          {locomem?.farmers_market_location?.fm_location_post === true && (
+          {locobiz?.farmers_market_location?.fm_location_post === true && (
             <div className='md:w-1/2'>
-              <FarmersMarket locomem={locomem} />
+              <FarmersMarket locobiz={locobiz} />
             </div>
           )}
         </div>

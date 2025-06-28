@@ -20,7 +20,7 @@ const AddBusLaterPopout = ({ onClose }) => {
         <h2 className='text-xl font-semibold mb-3'>
           Come Back Anytime to Add Your Business
         </h2>
-        <p className='text-gray-700 mb-4'>
+        <p className='text-black mb-4'>
           As a LocoMember, you can explore freely. When/If you're ready to add a business for visibility, click on your profile in the upper right. It comes with your membership. 
           
         </p>

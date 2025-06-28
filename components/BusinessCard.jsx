@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { FaMapMarkerAlt, FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
 
 
-const BusinessCard = ({ locomem }) => {
+const BusinessCard = ({ locobiz }) => {
   return (
     <>
-      <Link href={`/businesses/${locomem._id}`}>
+      <Link href={`/businesses/${locobiz._id}`}>
       <div className='rounded-xl pt-1 shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
         <Image
-          src={`/images/locobizimages/${locomem.locobiz_profile_image}`}
+          src={`/images/locobizimages/${locobiz.locobiz_profile_image}`}
           // Make a component to insert alt tag for these per customer//
 
           alt=''
@@ -24,10 +24,10 @@ const BusinessCard = ({ locomem }) => {
         <div className='p-4'>
           <div className=' text-center mb-6'>
             
-              <h3 className='text-3xl font-bold'>{`${locomem.locobiz_name}`}</h3>
+              <h3 className='text-3xl font-bold'>{`${locobiz.locobiz_name}`}</h3>
               <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
               <FaMapMarkerAlt className=' text-orange-700 mt-1'></FaMapMarkerAlt>
-                <span className='text-black'>{locomem.locobiz_address.city}{`, `} {locomem.locobiz_address.state}</span>
+                <span className='text-black'>{locobiz.locobiz_address.city}{`, `} {locobiz.locobiz_address.state}</span>
                 
               </div>
            
@@ -41,30 +41,30 @@ const BusinessCard = ({ locomem }) => {
                 Selling:
                 </p>
                <div className="flex items-center gap-2 mb-2">
-                 {locomem.selling.selling1.type === 'Product' ? (
+                 {locobiz.selling.selling1.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.selling.selling1.type === 'Service' ? (
+                      ) : locobiz.selling.selling1.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
-                  <p className='mb-2'>{`${locomem.selling.selling1.description}`}</p>
+                  <p className='mb-2'>{`${locobiz.selling.selling1.description}`}</p>
                   </div>
                 <div className="flex items-center gap-2 mb-2">
-                 {locomem.selling.selling2.type === 'Product' ? (
+                 {locobiz.selling.selling2.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.selling.selling2.type === 'Service' ? (
+                      ) : locobiz.selling.selling2.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
              
-                  <p className='mb-1'>{`${locomem.selling.selling2.description}`}</p>
+                  <p className='mb-1'>{`${locobiz.selling.selling2.description}`}</p>
                   
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                 {locomem.selling.selling3.type === 'Product' ? (
+                 {locobiz.selling.selling3.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.selling.selling3.type === 'Service' ? (
+                      ) : locobiz.selling.selling3.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
-                  <p className='mb-1'>{`${locomem.selling.selling3.description}`}</p>
+                  <p className='mb-1'>{`${locobiz.selling.selling3.description}`}</p>
                   </div>
             </div>
             </div>
@@ -75,28 +75,28 @@ const BusinessCard = ({ locomem }) => {
                 <p className='font-bold mb-2'>Needing:</p>
                 
                  <div className="flex items-center gap-2 mb-2">
-                 {locomem.needs.need1.type === 'Product' ? (
+                 {locobiz.needs.need1.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.needs.need1.type === 'Service' ? (
+                      ) : locobiz.needs.need1.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
-                  <p className='mb-1 '>{`${locomem.needs.need1.description}`}</p>
+                  <p className='mb-1 '>{`${locobiz.needs.need1.description}`}</p>
                 </div>
                  <div className="flex items-center gap-2 mb-2">
-                 {locomem.needs.need2.type === 'Product' ? (
+                 {locobiz.needs.need2.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.needs.need2.type === 'Service' ? (
+                      ) : locobiz.needs.need2.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
-                  <p className='mb-1'>{`${locomem.needs.need2.description}`}</p>
+                  <p className='mb-1'>{`${locobiz.needs.need2.description}`}</p>
                 </div>
                  <div className="flex items-center gap-2 mb-2">
-                 {locomem.needs.need3.type === 'Product' ? (
+                 {locobiz.needs.need3.type === 'Product' ? (
                         <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locomem.needs.need3.type === 'Service' ? (
+                      ) : locobiz.needs.need3.type === 'Service' ? (
                         <FaClipboardList alt="Service Icon" className=" text-green-800"/>
                       ) : null}
-                  <p className='mb-1'>{`${locomem.needs.need3.description}`}</p>
+                  <p className='mb-1'>{`${locobiz.needs.need3.description}`}</p>
                   </div>
             </div>
             </div>

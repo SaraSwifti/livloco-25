@@ -1,24 +1,24 @@
 import Link from 'next/link'
 import { FaGlobe, FaGlobeAsia } from 'react-icons/fa'
 
-const BusinessContact = ({ locomem, className ='' }) => {
+const BusinessContact = ({ locobiz, className ='' }) => {
   return (
     <>
       <div className={className}>
         <h1 className='text-xl text-center pb-4 font-bold'>
-          LocoMember's Contact Information
+          Locobizber's Contact Information
         </h1>
         {/* This is where I am going to add the chance to message the member through the platform */}
         <h1 className="text-center">This is where they will message the member on Livloco platform</h1>
-        {(locomem?.website || '').trim() !== '' ? (
+        {(locobiz?.website || '').trim() !== '' ? (
           <div className='flex justify-center items-center'>
             <Link
-              href={locomem.website}
+              href={locobiz.website}
               target='_blank'
               rel='noopener noreferrer'
               className='inline-flex items-center space-x-2 text-blue-800 hover:text-blue-900'
             >
-              <span>LocoMember's Website</span>
+              <span>Locobizber's Website</span>
               <FaGlobeAsia className='w-6 h-6 text-blue-800 hover:text-blue-900 cursor-pointer' />
             </Link>
           </div>
@@ -26,32 +26,32 @@ const BusinessContact = ({ locomem, className ='' }) => {
 
         {/* store front address and hours */}
         
-        {locomem?.locobiz_address?.post_permission === true && (
+        {locobiz?.locobiz_address?.post_permission === true && (
           <div>
         <h1 className='text-xl pt-3 text-center font-bold text-green-900'>
           Storefront Address and Hours
         </h1>
         <div className='flex justify-center items-center'>
           <h1 className='text-xl text-green-900'>
-            {locomem.locobiz_address.biz_phone}
+            {locobiz.locobiz_address.biz_phone}
           </h1>
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-xl text-green-900'>
-            {locomem.locobiz_address.add_line1}
+            {locobiz.locobiz_address.add_line1}
           </h1>
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-xl text-green-900'>
-            {locomem.locobiz_address.add_line2}
+            {locobiz.locobiz_address.add_line2}
           </h1>
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-xl text-green-900'>
-            {locomem.locobiz_address.city}
-            {`, `} {locomem.locobiz_address.state}
+            {locobiz.locobiz_address.city}
+            {`, `} {locobiz.locobiz_address.state}
             {` `}
-            {locomem.locobiz_address.zipcode}
+            {locobiz.locobiz_address.zipcode}
           </h1>
         </div>
 
@@ -65,45 +65,45 @@ const BusinessContact = ({ locomem, className ='' }) => {
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Monday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.monday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.monday_hours}`}</td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Tuesday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.tuesday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.tuesday_hours}`}</td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Wednesday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.wednesday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.wednesday_hours}`}</td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Thursday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.thursday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.thursday_hours}`}</td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Friday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.friday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.friday_hours}`}</td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Saturday</p>
                       </td>
                       <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>
-                        ${locomem.business_hours.saturday_hours}
+                        ${locobiz.business_hours.saturday_hours}
                       </td>
                     </tr>
                     <tr>
                       <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
                         <p>Sunday</p>
                       </td>
-                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locomem.business_hours.sunday_hours}`}</td>
+                      <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.sunday_hours}`}</td>
                     </tr>
                   </tbody>
                 </table>

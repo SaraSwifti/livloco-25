@@ -1,5 +1,6 @@
 'use client'
 import addBusinessAction from '@/app/actions/addBusinessAction.js';
+import connectDB from '@/config/database';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import AddBusLaterPopout from '@/components/AddBusLaterPopout';
@@ -63,7 +64,8 @@ const BusinessAddForm = () => {
           />
           <label className='font-medium text-lg'>
             Skip adding a business profile for now and just puruse being a
-            locoMember.
+            Livloco Co-op Member.<span className=""> There is no additional charge to post a business and comes with every membership.
+              </span>
           </label>
           {showPopOut && (
             <AddBusLaterPopout onClose={handleClose} />
