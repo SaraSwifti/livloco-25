@@ -78,11 +78,11 @@ const BusinessAddForm = () => {
         </p>
         <div className='bg-white p-4 rounded border space-y-4'>
           <div className='mb-4'>
-            <label className='block font-bold mb-2'>LocoBusiness Name</label>
+            <label htmlFor='locobiz_name' className='block font-bold mb-2'>LocoBusiness Name</label>
             <input
               type='text'
-              id='name'
-              name='name'
+              id='locobiz_name'
+              name='locobiz_name'
               className='border rounded w-full py-2 px-3 mb-2'
               placeholder=''
               required
@@ -90,14 +90,14 @@ const BusinessAddForm = () => {
           </div>
           <div className='mb-4'>
             <label
-              htmlFor='description'
+              htmlFor='locobiz_description'
               className='block text-gray-700 font-bold mb-2'
             >
               Description
             </label>
             <textarea
-              id='description'
-              name='description'
+              id='locobiz_description'
+              name='locobiz_description'
               className='border rounded w-full py-2 px-3'
               rows='4'
               placeholder='Add an optional description of your property'
@@ -105,15 +105,15 @@ const BusinessAddForm = () => {
           </div>
           <div className=''>
             <label
-              htmlFor='zipcode'
+              htmlFor='mem_zip'
               className='block font-bold mb-2'
             >
               So That Your Neighbors Can Find you in a Location Search
             </label>
             <input
               type='text'
-              id='zipcode'
-              name='location.zipcode'
+              id='mem_zip'
+              name='mem_zip'
               className='border rounded w-full py-2 px-3 mb-2'
               placeholder='Zipcode'
             />
@@ -121,22 +121,22 @@ const BusinessAddForm = () => {
 
           <div className='mb-4'>
             <label
-              htmlFor='seller_name'
+              htmlFor='account_owner_name'
               className='block font-bold mb-2'
             >
               Account Holder's Name
             </label>
             <input
               type='text'
-              id='seller_name'
-              name='seller_info.name.'
+              id='account_owner_name'
+              name='account_owner_name'
               className='border rounded w-full py-2 px-3'
               placeholder='Name'
             />
           </div>
           <div className='mb-4'>
             <label
-              htmlFor='seller_email'
+              htmlFor='email'
               className='block font-bold mb-2'
             >
               Account Holder's Email Make this populate from their sign-in
@@ -144,16 +144,17 @@ const BusinessAddForm = () => {
             </label>
             <input
               type='email'
-              id='seller_email'
-              name='seller_info.email'
+              id='email'
+              name='email'
               className='border rounded w-full py-2 px-3'
               placeholder='Email address'
               required
+              unique
             />
           </div>
           <div className='mb-4'>
             <label
-              htmlFor='seller_phone'
+              htmlFor='phone'
               className='block font-bold mb-2'
             >
               Account Holder's Phone (for account verification. Business phone
@@ -161,8 +162,8 @@ const BusinessAddForm = () => {
             </label>
             <input
               type='tel'
-              id='seller_phone'
-              name='seller_info.phone'
+              id='phone'
+              name='.phone'
               className='border rounded w-full py-2 px-3'
               placeholder='Phone'
             />
@@ -175,6 +176,8 @@ const BusinessAddForm = () => {
       {/* Toggle */}
       <div className='flex items-center p-2 gap-3'>
         <input
+         id=''
+          name=''
           type='checkbox'
           checked={showSellNeedForm}
           onChange={(e) => setShowSellNeedForm(e.target.checked)}
@@ -198,12 +201,13 @@ const BusinessAddForm = () => {
                 <h3 className='text-lg font-semibold'>Selling {index + 1}</h3>
                 {/* Description */}
                 <div>
-                  <label className='block text-sm font-medium text-black'>
+                  <label htmlFor={`selling${index + 1}_description`} className='block text-sm font-medium text-black'>
                     Description
                   </label>
                   <input
                     placeholder='e.g. Grass-fed beef, CNC Services, Shoe Repair, Manure'
-                    name={`selling${index + 1}_description`}
+                    id={`selling${index + 1}_description`}
+                    name={`selling.selling${index + 1}.description`}
                     type='text'
                     className='mt-1 block w-full bg-gray-100 border rounded p-2'
                   />
@@ -216,10 +220,11 @@ const BusinessAddForm = () => {
                     Type
                   </label>
                   <div className='flex items-center gap-6'>
-                    <label className='flex items-center space-x-2'>
+                    <label htmlFor={`selling${index + 1}_type_product`} className='flex items-center space-x-2'>
                       <input
                         type='radio'
-                        name={`selling${index + 1}_type`}
+                        name={`selling.selling${index + 1}.type`}
+                        id={`selling${index + 1}_type_product`}
                         value='product'
                         defaultChecked
                         className='text-blue-600'
@@ -228,10 +233,11 @@ const BusinessAddForm = () => {
                       <span>Product</span>
                     </label>
 
-                    <label className='flex items-center space-x-2'>
+                    <label htmlFor={`selling${index + 1}_type_service`} className='flex items-center space-x-2'>
                       <input
                         type='radio'
-                        name={`selling${index + 1}_type`}
+                        name={`selling.selling${index + 1}.type`}
+                        id={`selling${index + 1}_type_service`}
                         value='service'
                         className='text-green-600'
                         required
@@ -243,10 +249,11 @@ const BusinessAddForm = () => {
 
                 {/* Price */}
                 <div>
-                  <label className='block text-sm font-medium'>Price</label>
+                  <label htmlFor={`selling${index + 1}_price`} className='block text-sm font-medium'>Price</label>
                   <input
                     placeholder='$/bushel/bale, variable/job, free '
-                    name={`selling${index + 1}_price`}
+                    id={`selling${index + 1}_price`}
+                    name={`selling.selling${index + 1}.price`}
                     type='text'
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
                   />
@@ -255,16 +262,16 @@ const BusinessAddForm = () => {
                 {/* Image */}
                 <div>
                   <label
-                    htmlFor='image'
+                    htmlFor={`selling${index + 1}_image`}
                     className='block text-sm font-medium'
                   >
                     Upload image if you have one
                   </label>
                   <input
-                    name={`selling${index + 1}_image`}
+                    name={`selling.selling${index + 1}.image`}
                     type='file'
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
-                    id='image'
+                    id={`selling${index + 1}_image`}
                     accept='image/*'
                   />
                 </div>
@@ -288,12 +295,13 @@ const BusinessAddForm = () => {
 
                 {/* Description */}
                 <div>
-                  <label className='block text-sm font-medium'>
+                  <label htmlFor={`need${index + 1}_description`} className='block text-sm font-medium'>
                     Description
                   </label>
                   <input
                     placeholder='Hedge Removal, Cement Work, Local Eggs'
-                    name={`need${index + 1}_description`}
+                    id={`need${index + 1}_description`}
+                    name={`needs.need${index + 1}.description`}
                     type='text'
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
                   />
@@ -303,25 +311,27 @@ const BusinessAddForm = () => {
                 <div>
                   <label className='block text-sm font-medium'>Type</label>
                   <div className='flex items-center gap-6'>
-                    <label className='flex items-center space-x-2'>
+                    <label htmlFor={`need${index + 1}_type_product`} className='flex items-center space-x-2'>
                       <input
                         type='radio'
-                        name={`need${index + 1}_type`}
+                        id={`need${index + 1}_type_product`}
+                        name={`needs.need${index + 1}.type`}
                         value='product'
                         defaultChecked
-                        onChange={() => setNeedType('product')}
+                        
                         className='text-blue-600'
                         required
                       />
                       <span>Product</span>
                     </label>
 
-                    <label className='flex items-center space-x-2'>
+                    <label htmlFor={`need${index + 1}_type_service`} className='flex items-center space-x-2'>
                       <input
                         type='radio'
-                        name={`need${index + 1}_type`}
+                        id={`need${index + 1}_type_service`}
+                        name={`needs.need${index + 1}.type`}
                         value='service'
-                        onChange={() => setNeedType('service')}
+                        
                         className='text-green-600'
                         required
                       />
@@ -338,10 +348,10 @@ const BusinessAddForm = () => {
                     Upload image if you have one
                   </label>
                   <input
-                    name={`need${index + 1}_image`}
+                    id={`need${index + 1}_image`}
+                    name={`needs.need${index + 1}.image`}
                     type='file'
                     className='mt-1 block w-full border rounded p-2'
-                    id={`need${index + 1}_image`}
                     accept='image/*'
                   />
                 </div>
@@ -349,33 +359,21 @@ const BusinessAddForm = () => {
             ))}
           </div>
         </>
-      ) : (
-        <>
-          {/* Hidden fallbacks if toggle is off */}
-          <input
-            type='hidden'
-            name='extraField1'
-            value=''
-          />
-          <input
-            type='hidden'
-            name='extraField2'
-            value=''
-          />
-        </>
-      )}
+      ) : null }
 
       {/* adding storefront and farmstand component */}
 
       {/* // Toggle for needing to post storefront// */}
-      <div className='flex p-2 items-center gap-3'>
+      <div  className='flex p-2 items-center gap-3'>
         <input
+          id='locobiz_storefront_post_permission'
+         name='locobiz_address.post_permission'
           type='checkbox'
           checked={showStoreFrontForm}
           onChange={(e) => setShowStoreFrontForm(e.target.checked)}
           className='w-5 h-5'
         />
-        <label className='font-medium text-lg'>
+        <label htmlFor='locobiz_storefront_post_permission' className='font-medium text-lg'>
           Add storefront/farmstand address and hours if you have one.
         </label>
       </div>
@@ -400,12 +398,13 @@ const BusinessAddForm = () => {
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div>
-                <label className='block text-sm font-medium'>
+                <label htmlFor='biz_phone' className='block text-sm font-medium'>
                   LocoBiz Phone
                 </label>
                 <input
+                  id='biz_phone'
                   type='tel'
-                  name='biz_phone'
+                  name='locobiz_address.biz_phone'
                   // value={formData.locobiz_address.biz_phone}
                   // onChange={handleAddressChange}
                   placeholder='+1234567890'
@@ -414,13 +413,14 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>
+                <label htmlFor='locobiz_address_line1' className='block text-sm font-medium'>
                   {' '}
                   Locobiz Address Line 1
                 </label>
                 <input
+                  id='locobiz_address_line1'
                   type='text'
-                  name='add_line1'
+                  name='locobiz_address.add_line1'
                   // value={formData.locobiz_address.add_line1}
                   // onChange={handleAddressChange}
                   required
@@ -429,12 +429,14 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>
+                <label htmlFor='locobiz_address_line1' className='block text-sm font-medium'>
                   Address Line 2
                 </label>
                 <input
+                  id='locobiz_address_line1'
                   type='text'
-                  name='add_line2'
+                  name='locobiz_address.add_line2'
+                  placeholder='Or short description of the farmstand.'
                   // value={formData.locobiz_address.add_line2}
                   // onChange={handleAddressChange}
                   className='mt-1 bg-white w-full rounded border p-2'
@@ -442,10 +444,11 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>City</label>
+                <label htmlFor='locobiz_city' className='block text-sm font-medium'>City</label>
                 <input
                   type='text'
-                  name='city'
+                  id='locobiz_city'
+                  name='locobiz_address.city'
                   // value={formData.locobiz_address.city}
                   // onChange={handleAddressChange}
                   required
@@ -454,10 +457,11 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>State</label>
+                <label  htmlFor='locobiz_state' className='block text-sm font-medium'>State</label>
                 <input
+                  id='locobiz_state'
                   type='text'
-                  name='state'
+                  name='locobiz_address.state'
                   // value={formData.locobiz_address.state}
                   // onChange={handleAddressChange}
                   required
@@ -466,10 +470,11 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>Zip Code</label>
+                <label htmlFor='locobiz_address_zipcode' className='block text-sm font-medium'>Zip Code</label>
                 <input
+                  id='locobiz_address_zipcode'
                   type='text'
-                  name='zipcode'
+                  name='locobiz_address.zipcode'
                   // value={formData.locobiz_address.zipcode}
                   // onChange={handleAddressChange}
                   required
@@ -479,11 +484,13 @@ const BusinessAddForm = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium'>Country</label>
+                <label htmlFor='locobiz_address_country' className='block text-sm font-medium'>Country (test driving it here first)</label>
                 <input
+                  id='locobiz_address_country'
                   type='text'
-                  name='country'
-                  // value={formData.locobiz_address.country}
+                  name='locobiz_address.country'
+                  value='USA'
+                  readOnly
                   // onChange={handleAddressChange}
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
