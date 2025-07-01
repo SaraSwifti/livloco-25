@@ -1,7 +1,5 @@
 'use client'
 import addBusinessAction from '@/app/actions/addBusinessAction.js';
-import connectDB from '@/config/database';
-import User from '@/models/User';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import AddBusLaterPopout from '@/components/AddBusLaterPopout';
@@ -15,10 +13,9 @@ const daysOfWeek = [
   'sunday',
 ]
 
-const BusinessAddForm = async ({ params }) => {
-  await connectDB();
+const BusinessAddForm = ({ userEmail }) => {
+ console.log('userEmail:', userEmail);
   
-   const user = await User.findById(params.id).lean();
   const router = useRouter()
   //skip add business form.
   const [skipAddBusiness, setSkipAddBusiness] = useState(false);
@@ -142,16 +139,17 @@ const BusinessAddForm = async ({ params }) => {
             <label
               htmlFor='email'
               className='block font-bold mb-2'
-            >{user.email}
+            >Email Address 
             </label>
             <input
               type='email'
               id='email'
               name='email'
+              value={ userEmail }
+              readOnly
               className='border rounded w-full py-2 px-3'
-              placeholder='Email address'
               required
-              unique
+              
             />
           </div>
           <div className='mb-4'>
