@@ -3,7 +3,7 @@ import { Schema, model, models } from 'mongoose'
 
 const LocoBizSchema = new Schema(
   {
-    memowner: {
+    bizowner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
@@ -83,13 +83,38 @@ const LocoBizSchema = new Schema(
     },
     business_hours: {
     
-      monday_hours: String,
-      tuesday_hours: String,
-      wednesday_hours: String,
-      thursday_hours: String,
-      friday_hours: String,
-      saturday_hours: String,
-      sunday_hours: String,
+      post_permission: {
+        type: Boolean,
+        default: false,
+      },
+      monday_hours: {
+        type: String,
+        trim: true,
+      },
+      tuesday_hours:{
+        type: String,
+        trim: true,
+      },
+      wednesday_hours: {
+        type: String,
+        trim: true,
+      },
+      thursday_hours:{
+        type: String,
+        trim: true,
+      },
+      friday_hours: {
+        type: String,
+        trim: true,
+      },
+      saturday_hours: {
+        type: String,
+        trim: true,
+      },
+      sunday_hours: {
+        type: String,
+        trim: true,
+      },
     },
     website: {
       type: String,

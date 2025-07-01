@@ -1,6 +1,7 @@
 'use client'
 import addBusinessAction from '@/app/actions/addBusinessAction.js';
 import connectDB from '@/config/database';
+import User from '@/models/User';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import AddBusLaterPopout from '@/components/AddBusLaterPopout';
@@ -14,7 +15,10 @@ const daysOfWeek = [
   'sunday',
 ]
 
-const BusinessAddForm = () => {
+const BusinessAddForm = async ({ params }) => {
+  await connectDB();
+  
+   const user = await User.findById(params.id).lean();
   const router = useRouter()
   //skip add business form.
   const [skipAddBusiness, setSkipAddBusiness] = useState(false);
@@ -138,9 +142,7 @@ const BusinessAddForm = () => {
             <label
               htmlFor='email'
               className='block font-bold mb-2'
-            >
-              Account Holder's Email Make this populate from their sign-in
-              credentials?
+            >{user.email}
             </label>
             <input
               type='email'
@@ -504,14 +506,23 @@ const BusinessAddForm = () => {
 
       {/* Farmers Market days and location */}
       <div className='flex p-2 items-center space-x-2'>
+        {/* Hidden fallback value if checkbox is unchecked */}
+  <input
+    type='hidden'
+    name='farmers_market_location.fm_location_post'
+    value='false'
+  />
         <input
+          id='fm_location_post'
+          name='farmers_market_location.fm_location_post'
           type='checkbox'
           checked={showFarmersMarketForm}
           // onChange={handleToggle}
           onChange={(e) => setShowFarmersMarketForm(e.target.checked)}
+          value='true'
           className='w-5 h-5'
         />
-        <label className='font-medium text-lg'>
+        <label htmlFor='fm_location_post' className='font-medium text-lg'>
           Add Farmers Market locations if you attend any.
         </label>
       </div>
@@ -528,32 +539,35 @@ const BusinessAddForm = () => {
                 <h3 className='text-lg font-semibold capitalize mb-2'>{day}</h3>
                 <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
                   <div>
-                    <label className='block text-sm font-medium'>
+                    <label htmlFor={`farmers_market_location_${day}_farmers_market_name`} className='block text-sm font-medium'>
                       Market Name
                     </label>
                     <input
+                      id={`farmers_market_location_${day}_farmers_market_name`}
                       type='text'
-                      name='farmers_market_name'
+                      name={`farmers_market_location.${day}.farmers_market_name`}
                       // value={data[day]?.farmers_market_name || ''}
                       // onChange={(e) => handleDayChange(e, day)}
                       className='mt-1 w-full border rounded p-2'
                     />
                   </div>
                   <div>
-                    <label className='block text-sm font-medium'>City</label>
+                    <label  htmlFor={`farmers_market_location_${day}_city`} className='block text-sm font-medium'>City</label>
                     <input
+                      id={`farmers_market_location_${day}_city`}
+                      name={`farmers_market_location.${day}.city`}
                       type='text'
-                      name='city'
-                      // value={data[day]?.city || ''}
-                      // onChange={(e) => handleDayChange(e, day)}
+                    
+                    
                       className='mt-1 w-full border rounded p-2'
                     />
                   </div>
                   <div>
-                    <label className='block text-sm font-medium'>State</label>
+                    <label htmlFor={`farmers_market_location_${day}_state`} className='block text-sm font-medium'>State</label>
                     <input
+                      id={`farmers_market_location_${day}_state`}
+                      name={`farmers_market_location.${day}.state`}
                       type='text'
-                      name='state'
                       // value={data[day]?.state || ''}
                       // onChange={(e) => handleDayChange(e, day)}
                       className='mt-1 w-full border rounded p-2'

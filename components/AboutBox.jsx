@@ -52,6 +52,9 @@ const AboutBox = async () => {
                 three items you would like to sell and up to three items that
                 you are needing to make your business more locally sustainable.
               </li>
+              <li className='text-xl/8 text-black'>
+             No Transactions- do those yourself. No dispearaging comment sections. If you didn't like the service, don't vote for them and don't use them again. It is that simple. 
+              </li>
             </ul>
             <br />
             <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
