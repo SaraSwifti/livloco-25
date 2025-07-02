@@ -1,9 +1,10 @@
-// import LocoMem from "@/models/LocoMem";
+// import Locobiz from "@/models/Locobiz";
 
-const FarmersMarket = ({ locomem }) => {
+const FarmersMarket = ({ locobiz }) => {
     return ( 
         <div>
-        <h1 className="text-xl font-bold text-green-900">Check out our Farmer's Market Schedule!</h1>
+        <h1 className="text-xl text-center font-bold text-green-900">Check out the Farmer's Market Schedule for </h1>
+        <h1 className="text-2xl text-center font-bold text-green-900">{locobiz.locobiz_name} </h1>
         <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -28,77 +29,77 @@ const FarmersMarket = ({ locomem }) => {
                 </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                   {/* conditional rendering of monday's farm market if not data is there */}
-                {(locomem?.farmers_market_location?.monday?.farmers_market_name || '').trim() !== ''? (
+                {(locobiz?.farmers_market_location?.monday?.farmers_market_name || '').trim() !== ''? (
         
                     <tr >
                       
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Monday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.monday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.monday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.monday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.monday.state}`}</td>
                       </tr>
                     ) : null}
 
-                      {(locomem?.farmers_market_location?.tuesday?.farmers_market_name || '').trim() !== ''? (
+                      {(locobiz?.farmers_market_location?.tuesday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Tuesday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.tuesday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.tuesday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.tuesday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.tuesday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.tuesday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.tuesday.state}`}</td>
                     </tr>
                     ) : null}
-                    {(locomem?.farmers_market_location?.wednesday?.farmers_market_name || '').trim() !== ''? (
+                    {(locobiz?.farmers_market_location?.wednesday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Wednesday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.wednesday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.wednesday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.wednesday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.wednesday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.wednesday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.wednesday.state}`}</td>
                     </tr>
                     ) : null}
-                     {(locomem?.farmers_market_location?.thursday?.farmers_market_name || '').trim() !== ''? (
+                     {(locobiz?.farmers_market_location?.thursday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Thursday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.thursday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.thursday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.thursday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.thursday.state}`}</td>
                       </tr>
                       ) : null}
-                       {(locomem?.farmers_market_location?.friday?.farmers_market_name || '').trim() !== ''? (
+                       {(locobiz?.farmers_market_location?.friday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Friday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.friday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.friday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.friday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.friday.state}`}</td>
                       </tr>
                       ) : null}
-                       {(locomem?.farmers_market_location?.saturday?.farmers_market_name || '').trim() !== ''? (
+                       {(locobiz?.farmers_market_location?.saturday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Saturday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.saturday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.saturday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.saturday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.saturday.state}`}</td>
                       </tr>
                       ) : null}
-                       {(locomem?.farmers_market_location?.sunday?.farmers_market_name || '').trim() !== ''? (
+                       {(locobiz?.farmers_market_location?.sunday?.farmers_market_name || '').trim() !== ''? (
                     <tr >
                       <td className="whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                        <p>Sunday</p>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.farmers_market_name}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.city}`}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locomem.farmers_market_location.sunday.state}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.sunday.farmers_market_name}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.sunday.city}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-black">{`${locobiz.farmers_market_location.sunday.state}`}</td>
                       </tr>
                       ) : null}
                   

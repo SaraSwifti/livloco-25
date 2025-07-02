@@ -1,6 +1,7 @@
 // import Image from 'next/image';
-import FarmersMarket from './FarmersMarket'
-import BusinessContact from './BusinessContact'
+import FarmersMarket from '@/components/FarmersMarket';
+import BusinessContact from '@/components/BusinessContact';
+import StoreFront from '@/components/StoreFront';
 import Image from 'next/image'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 const BusinessDetails = ({ locobiz }) => {
@@ -319,18 +320,16 @@ const BusinessDetails = ({ locobiz }) => {
         </div>
 
         <div className='flex flex-col md:flex-row gap-6 mt-8'>
-          <div
-            className={
-              locobiz?.farmers_market_location?.fm_location_post === true
-                ? 'md:w-1/2'
-                : 'md:w-full'
-            }
-          >
+        {/* Left Column: BusinessContact + StoreFront */}
+         <div className={locobiz?.farmers_market_location?.fm_location_post === true ? 'md:w-1/2' : 'md:w-full'}>
             <BusinessContact
               locobiz={locobiz}
-              className='h-full flex flex-col'
+              className='mb-6'
             />
-          </div>
+          {locobiz?.locobiz_address?.post_permission === true && (
+            <StoreFront locobiz={locobiz} />
+          )}</div>
+          
           {/* If there is Farmers market details */}
           {locobiz?.farmers_market_location?.fm_location_post === true && (
             <div className='md:w-1/2'>

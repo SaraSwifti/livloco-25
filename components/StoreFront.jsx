@@ -1,35 +1,7 @@
-import Link from 'next/link'
-import { FaGlobe, FaGlobeAsia } from 'react-icons/fa'
+const StoreFront = ({ locobiz }) => {
+    return ( 
 
-const BusinessContact = ({ locobiz, className = '' }) => {
-  return (
-    <>
-      <div className={className}>
-        <h1 className='text-xl text-center pb-4 font-bold'>
-          {' '}
-          Contact Information for {locobiz.locobiz_name}
-        </h1>
-        {/* This is where I am going to add the chance to message the member through the platform */}
-        <h1 className='text-center'>
-          This is where they will message the member on Livloco platform
-        </h1>
-        {(locobiz?.website || '').trim() !== '' ? (
-          <div className='flex justify-center items-center'>
-            <Link
-              href={locobiz.website}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-2xl font-bold inline-flex items-center space-x-2 text-blue-800 hover:text-blue-900, underline'
-            >
-              <span>Website for {locobiz.locobiz_name}</span>
-              <FaGlobeAsia className='w-6 h-6 text-blue-800 hover:text-blue-900 cursor-pointer' />
-            </Link>
-          </div>
-        ) : null}
-
-        {/* store front address and hours */}
-
-        {/* {locobiz?.locobiz_address?.post_permission === true && (
+       
           <div>
             <h1 className='text-2xl pt-3 text-center font-bold text-green-900'>
               {locobiz.locobiz_name}
@@ -118,10 +90,9 @@ const BusinessContact = ({ locobiz, className = '' }) => {
               </div>
             </div>
           </div>
-        )} */}
-      </div>
-    </>
-  )
+           
+          
+     );
 }
-
-export default BusinessContact
+ 
+export default StoreFront;

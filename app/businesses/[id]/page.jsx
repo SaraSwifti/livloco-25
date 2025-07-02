@@ -10,7 +10,8 @@ const BusinessPage = async ({ params }) => {
 
   await connectDB();
   
-    const locobiz = await LocoBiz.findById(params.id).lean();
+  const locobiz = await LocoBiz.findById(params.id).lean();
+  // const locobiz = convertToSerializeableObject(locobizDoc);
 // if (!locobiz) {
 //   return (
 //     <div className="text-center py-10">
