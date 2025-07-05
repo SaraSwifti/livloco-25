@@ -173,6 +173,8 @@ const BusinessAddForm = ({ userEmail }) => {
               name='account_owner_name'
               className='border rounded w-full py-2 px-3'
               placeholder='Name'
+              pattern='^[a-zA-Z\s]{2,}$'
+               title='Name should contain only letters and be at least 2 characters long.'
               required
             />
           </div>
