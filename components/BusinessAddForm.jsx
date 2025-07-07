@@ -38,23 +38,21 @@ const BusinessAddForm = ({ userEmail }) => {
   const [showPopOut, setShowPopOut] = useState(false)
 
   //to handle phonnumber fomatting and saving as a string
-  const [phone, setPhone] = useState('')
-  const formatPhoneNumber = (value) => {
-    const phoneDigits = value.replace(/\D/g, '').substring(0, 10)
-    const phoneLength = phoneDigits.length
+  const [phone, setPhone] = useState('');
+  const [phoneValue, setPhoneValue] = useState(''); // backend-safe version
+  const formatPhoneDisplay = (value) => {
+    const digits = value.replace(/\D/g, '').substring(0, 10);
+    const len = digits.length;
 
-    if (phoneLength < 4) return phoneDigits
-    if (phoneLength < 7) {
-      return `(${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(3)}`
-    }
-    return `(${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(
-      3,
-      6
-    )}-${phoneDigits.slice(6, 10)}`
+    if (len < 4) return digits;
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   }
   const handlePhoneChange = (e) => {
-    const formatted = formatPhoneNumber(e.target.value)
-    setPhone(formatted)
+    const input = e.target.value;
+    const digits = input.replace(/\D/g, '').slice(0, 10);
+    setPhone(formatPhoneDisplay(digits));
+    setPhoneValue(`+1${digits}`);
   }
 
   // mapping and states to toggle needs and selling section
@@ -101,6 +99,7 @@ const BusinessAddForm = ({ userEmail }) => {
           or share your information. However we cannot prevent anyone from
           copying any information that you have voluntarily displayed)
         </p>
+        {/* Business name */}
         <div className='bg-white p-4 rounded border space-y-4'>
           <div className='mb-4'>
             <label
@@ -118,6 +117,7 @@ const BusinessAddForm = ({ userEmail }) => {
               required
             />
           </div>
+          {/* Biz Description */}
           <div className='mb-4'>
             <label
               htmlFor='locobiz_description'
@@ -140,6 +140,7 @@ const BusinessAddForm = ({ userEmail }) => {
               {description.length}/{maxLength} characters
             </div>
           </div>
+          {/* Member zip so that they can show their location if nothing else */}
           <div className=''>
             <label
               htmlFor='mem_zip'
@@ -153,12 +154,13 @@ const BusinessAddForm = ({ userEmail }) => {
               type='text'
               id='mem_zip'
               name='mem_zip'
+              pattern='^\d{5}(-\d{4})?$'
               className='border rounded w-full py-2 px-3 mb-2'
-              placeholder='Zipcode'
+              title='Enter a valid 5-digit ZIP code (e.g., 48846 or 48846-1234)'
               required
             />
           </div>
-
+          {/* Account Holder's Name */}
           <div className='mb-4'>
             <label
               htmlFor='account_owner_name'
@@ -174,10 +176,11 @@ const BusinessAddForm = ({ userEmail }) => {
               className='border rounded w-full py-2 px-3'
               placeholder='Name'
               pattern='^[a-zA-Z\s]{2,}$'
-               title='Name should contain only letters and be at least 2 characters long.'
+              title='Name should contain only letters and be at least 2 characters long.'
               required
             />
           </div>
+          {/* Account holders email..generated from their sign-in */}
           <div className='mb-4'>
             <label
               htmlFor='email'
@@ -195,6 +198,7 @@ const BusinessAddForm = ({ userEmail }) => {
               required
             />
           </div>
+          {/* Account holder's phone number for validation */}
           <div className='mb-4'>
             <label
               htmlFor='phone'
@@ -239,6 +243,8 @@ const BusinessAddForm = ({ userEmail }) => {
               placeholder='e.g 10% off flower subscriptions, 1$ off total when you bring your own bag'
             />
           </div>
+
+          {/* Should they want to add a business profile image */}
           <div>
             <label
               htmlFor='locobiz_profile_image'
@@ -260,23 +266,27 @@ const BusinessAddForm = ({ userEmail }) => {
       {/* Conditional form fields */}
       {/* Toggle */}
       <div className='flex flex-col p-2 gap-2'>
-      <div className='flex items-center p-2 gap-3'>
-        <input
-          id=''
-          name=''
-          type='checkbox'
-          checked={showSellNeedForm}
-          onChange={(e) => setShowSellNeedForm(e.target.checked)}
-          className='w-5 h-5'
-          required
-        />
-        <label className='font-medium text-lg'><span className='text-red-500'>* </span>
-          Add Selling/Needing profile to make your LivLoco pofile Active
-        </label>
-        
+        <div className='flex items-center p-2 gap-3'>
+          <input
+            id=''
+            name=''
+            type='checkbox'
+            checked={showSellNeedForm}
+            onChange={(e) => setShowSellNeedForm(e.target.checked)}
+            className='w-5 h-5'
+            required
+          />
+          <label className='font-medium text-lg'>
+            <span className='text-red-500'>* </span>
+            Add Selling/Needing profile to make your LivLoco pofile Active
+          </label>
         </div>
-        <h1>This data is required to post your livLoco business as it is the backbone of being a contributing member of an interdependent local economy.</h1>
-        </div>
+        <h1>
+          This data is required to post your livLoco business as it is the
+          backbone of being a contributing member of an interdependent local
+          economy.
+        </h1>
+      </div>
       {showSellNeedForm ? (
         <>
           <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
@@ -483,6 +493,7 @@ const BusinessAddForm = ({ userEmail }) => {
           checked={showStoreFrontForm}
           onChange={(e) => setShowStoreFrontForm(e.target.checked)}
           className='w-5 h-5'
+          value='true'
         />
         <label
           htmlFor='locobiz_storefront_post_permission'
@@ -511,6 +522,8 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.biz_phone'
                   placeholder='+1234567890'
                   className='mt-1 bg-white w-full rounded border p-2'
+                  value={phoneDisplay}
+                  onChange={handlePhoneChange}
                 />
               </div>
 
@@ -519,14 +532,12 @@ const BusinessAddForm = ({ userEmail }) => {
                   htmlFor='locobiz_address_line1'
                   className='block text-sm font-medium'
                 >
-                  {' '}
                   Locobiz Address Line 1
                 </label>
                 <input
                   id='locobiz_address_line1'
                   type='text'
                   name='locobiz_address.add_line1'
-                  required
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
               </div>
@@ -560,7 +571,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.city'
                   // value={formData.locobiz_address.city}
                   // onChange={handleAddressChange}
-                  required
+
                   className='mt-1 bg-white w-full rounded border p-2'
                 />
               </div>
@@ -578,7 +589,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.state'
                   // value={formData.locobiz_address.state}
                   // onChange={handleAddressChange}
-                  required
+
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
               </div>
@@ -596,7 +607,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.zipcode'
                   // value={formData.locobiz_address.zipcode}
                   // onChange={handleAddressChange}
-                  required
+
                   pattern='^\d{5}(-\d{4})?$'
                   className='mt-1  bg-white w-full rounded border p-2'
                 />

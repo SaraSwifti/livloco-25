@@ -1,3 +1,6 @@
+
+import { formatPhone } from '@/utils/formatPhone';
+
 const StoreFront = ({ locobiz }) => {
     return ( 
 
@@ -11,7 +14,7 @@ const StoreFront = ({ locobiz }) => {
             </h1>
             <div className='flex justify-center items-center'>
               <h1 className='text-xl text-green-900'>
-                {locobiz.locobiz_address.biz_phone}
+                {formatPhone(locobiz.locobiz_address.biz_phone)}
               </h1>
             </div>
             <div className='flex justify-center items-center'>

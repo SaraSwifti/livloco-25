@@ -3,22 +3,22 @@ import { Schema, model, models } from 'mongoose'
 
 const LocoBizSchema = new Schema(
   {
-    bizowner: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
+    // biz_account_owner_id: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'User',
+      
+    // },
     account_owner_name: {
       type: String,
       required: true,
     },
-    phone: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true, //removes uncessary white space.
-      match: /^\+?[1-9]\d{1,14}$/, // Ensures valid international format (E.164)
-    },
+    phone:  {
+  type: String,
+  required: true,
+  unique: true,
+  match: /^\+1\d{10}$/,
+  trim: true,
+},
     mem_zip: {
       type: String,
       required: true,
@@ -44,34 +44,29 @@ const LocoBizSchema = new Schema(
         type: Boolean,
         default: false,
       },
-      biz_phone: {
-        type: String,
-        match: /^\+?[1-9]\d{1,14}$/,
-        trim: true,
-      },
+      biz_phone:  {
+  type: String,
+  match: /^\+1\d{10}$/,
+  trim: true,
+},
       add_line1: {
         type: String,
-        required: true,
         trim: true,
       },
       add_line2: {
         type: String,
-        required: false,
         trim: true,
       },
       city: {
         type: String,
-        required: true,
         trim: true,
       },
       state: {
         type: String,
-        required: true,
         trim: true,
       },
       zipcode: {
         type: String,
-        required: true,
         match: /^\d{5}(-\d{4})?$/, // U.S. ZIP Code format (5-digit or 9-digit ZIP+4)
       },
       country: {

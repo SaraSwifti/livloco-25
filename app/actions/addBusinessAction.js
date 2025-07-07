@@ -4,7 +4,6 @@ import LocoBiz from '@/models/LocoBiz';
 import { getSessionUser } from '@/utils/getSessionUser';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-  
 
 
 
@@ -19,32 +18,60 @@ async function addBusinessAction(formData) {
 
   //not sure if I should bring in the userEmail to add to the account holder here or not. Currently it is comming in through DB connect in the biz add form.
 
-  const { userId, userEmail} = sessionUser;
+  const { userId } = sessionUser;
+
+
+  //to ensure that I am not uploading empty files of data
+  const getFileUrlOrNull = async (file) => {
+  if (!file || file.size === 0 || file.name === 'undefined') return null;
+  return await handleFileUpload(file); // Your upload logic
+};
+  
+// build the locobiz_address object only if posting is permitted
+let locobizAddress = null;
+
+if (formData.get('locobiz_address.post_permission') === 'on') {
+  // build the locobiz_address object only if posting is permitted
+  locobizAddress = {
+   
+    post_permission: formData.get('locobiz_address.post_permission'),
+    biz_phone: biz_phone,
+    add_line1: formData.get('locobiz_address.add_line1'),
+    add_line2: formData.get('locobiz_address.add_line2'),
+    city: formData.get('locobiz_address.city'),
+    state: formData.get('locobiz_address.state'),
+    zipcode: formData.get('locobiz_address.zipcode'),
+    country: formData.get('locobiz_address.country'),
+  };
+}
+
+
+// Normalize phone to E.164 format (US-based)
+let phoneRaw = formData.get('phone') || '';
+let phoneDigits = phoneRaw.replace(/\D/g, '');
+let phone = phoneDigits.length === 10 ? `+1${phoneDigits}` : phoneDigits;
+  
+// Normalize business phone (if provided)
+let bizPhoneRaw = formData.get('locobiz_address.biz_phone') || '';
+let bizPhoneDigits = bizPhoneRaw.replace(/\D/g, '');
+let biz_phone =
+  bizPhoneDigits.length === 10 ? `+1${bizPhoneDigits}` : bizPhoneDigits;
+
 
 
  //create businessData object with embedded members info
   const locobizData = {
 
-   account_owner_id: userId,
+   biz_account_owner_id: userId,
     account_owner_name: formData.get('account_owner_name'),
     
-    phone: formData.get('phone'),
+    phone: phone,
     mem_zip: formData.get('mem_zip'),
     // payment_confirmed:,
     // locobiz_active:,
     locobiz_name: formData.get('locobiz_name'),
     locobiz_description: formData.get('locobiz_description'),
-    // email_memmessage_notification: formData.get(email),
-    locobiz_address: {
-      post_permission: formData.get('locobiz_address.post_permission'),
-      biz_phone: formData.get('locobiz_address.biz_phone'),
-      add_line1: formData.get('locobiz_address.add_line1'),
-      add_line2: formData.get('locobiz_address.add_line2'),
-      city: formData.get('locobiz_address.city'),
-      state: formData.get('locobiz_address.state'),
-      zipcode: formData.get('locobiz_address.zipcode'),
-      country: formData.get('locobiz_address.country'),
-    },
+ ...(locobizAddress && { locobiz_address: locobizAddress }),
     business_hours: {
     
       monday_hours: formData.get('business_hours.monday_hours'),
@@ -56,7 +83,7 @@ async function addBusinessAction(formData) {
       sunday_hours: formData.get('business_hours.sunday_hours'),
     },
     website: formData.get('website'),
-    locobiz_profile_image: formData.get('locobiz_profile_image'),
+    locobiz_profile_image: await getFileUrlOrNull(formData.get('locobiz_profile_image')),
     farmers_market_location: {
       fm_location_post: formData.get('farmers_market_location.farmers_market_location'),
       monday: {
@@ -106,38 +133,38 @@ async function addBusinessAction(formData) {
       selling1: {
         type: formData.get('selling.selling1.type'),
         description: formData.get('selling.selling1.description'),
-        image: formData.get('selling.selling1.image'),
+        image: await getFileUrlOrNull(formData.get('selling.selling1.image')),
         price: formData.get('selling.selling1.price'),
       },
       selling2: {
         type: formData.get('selling.selling2.type'),
         description: formData.get('selling.selling2.description'),
-        image: formData.get('selling.selling2.image'),
+        image: await getFileUrlOrNull(formData.get('selling.selling2.image')),
         price: formData.get('selling.selling2.price'),
       },
       selling3: {
         type: formData.get('selling.selling3.type'),
         description: formData.get('selling.selling3.description'),
-        image: formData.get('selling.selling3.image'),
+        image: await getFileUrlOrNull(formData.get('selling.selling3.image')),
         price: formData.get('selling.selling3.description'),
       },
     },
     needs: {
       need1: {
         description: formData.get('needs.need1.description'),
-        image: formData.get('needs.need1.image'),
+        image: await getFileUrlOrNull(formData.get('needs.need1.image')),
         type: formData.get('needs.need1.type'),
         
       },
       need2: {
         type: formData.get('needs.need2.type'),
         description: formData.get('needs.need2.description'),
-        image: formData.get('needs.need2.image'),
+        image: await getFileUrlOrNull(formData.get('needs.need2.image')),
       },
       need3: {
         type: formData.get('needs.need3.type'),
         description: formData.get('needs.need3.description'),
-        image: formData.get('needs.need3.image'),
+        image: await getFileUrlOrNull(formData.get('needs.need3.image')),
       },
     },
   
@@ -149,7 +176,7 @@ async function addBusinessAction(formData) {
 //not sure if this is correct in adding a business as they are only going to be able to add one. 
 
   const newLocoBiz = new LocoBiz(locobizData);
-  await newPropery.save();
+  await newLocoBiz.save();
 
   revalidatePath('/', 'layout');
 
