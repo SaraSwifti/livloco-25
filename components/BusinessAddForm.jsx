@@ -198,6 +198,8 @@ const BusinessAddForm = ({ userEmail }) => {
               required
             />
           </div>
+          {/* Add here the option of checking a box and giving permission to email notify when there is a member message here */}
+
           {/* Account holder's phone number for validation */}
           <div className='mb-4'>
             <label

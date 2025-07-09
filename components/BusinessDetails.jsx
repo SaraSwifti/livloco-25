@@ -1,4 +1,4 @@
-// import Image from 'next/image';
+
 import FarmersMarket from '@/components/FarmersMarket';
 import BusinessContact from '@/components/BusinessContact';
 import StoreFront from '@/components/StoreFront';
@@ -59,7 +59,7 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* Selling item 1 */}
                   {locobiz.selling.selling1?.description?.trim() && (
                   <div className='flex items-start gap-2'>
-                    {locobiz.selling.selling1.type === 'Product' ? (
+                    {locobiz.selling.selling1.type === 'product' ? (
                       <div className='flex items-start gap-2'>
                         <FaDollyFlatbed
                           alt='Product Icon'
@@ -67,7 +67,7 @@ const BusinessDetails = ({ locobiz }) => {
                           />
                           
                       </div>
-                    ) : locobiz.selling.selling1.type === 'Service' ? (
+                    ) : locobiz.selling.selling1.type === 'service' ? (
                       <div className='flex items-start gap-2'>
                         <FaClipboardList
                           alt='Service Icon'
@@ -103,14 +103,14 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* Selling item 2 */}
                   {locobiz.selling.selling2?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locobiz.selling.selling2.type === 'Product' ? (
+                      {locobiz.selling.selling2.type === 'product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locobiz.selling.selling2.type === 'Service' ? (
+                      ) : locobiz.selling.selling2.type === 'service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -146,14 +146,14 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* selling item 3 */}
                   {locobiz.selling.selling3?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locobiz.selling.selling3.type === 'Product' ? (
+                      {locobiz.selling.selling3.type === 'product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locobiz.selling.selling3.type === 'Service' ? (
+                      ) : locobiz.selling.selling3.type === 'service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -199,14 +199,14 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* Needing item 1 */}
                   {locobiz.needs.need1?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locobiz.needs.need1.type === 'Product' ? (
+                      {locobiz.needs.need1.type === 'product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-1 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locobiz.needs.need1.type === 'Service' ? (
+                      ) : locobiz.needs.need1.type === 'service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -238,14 +238,14 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* Needing item 2 */}
                   {locobiz.needs.need2?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locobiz.needs.need2.type === 'Product' ? (
+                      {locobiz.needs.need2.type === 'product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-2 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locobiz.needs.need2.type === 'Service' ? (
+                      ) : locobiz.needs.need2.type === 'service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'
@@ -277,14 +277,14 @@ const BusinessDetails = ({ locobiz }) => {
                   {/* needing item 3 */}
                   {locobiz.needs.need3?.description?.trim() && (
                     <div className='flex items-start gap-2'>
-                      {locobiz.needs.need3.type === 'Product' ? (
+                      {locobiz.needs.need3.type === 'product' ? (
                         <div className='flex items-start gap-2'>
                           <FaDollyFlatbed
                             alt='Product Icon'
                             className='mr-2 mt-1.5 text-blue-800'
                           />
                         </div>
-                      ) : locobiz.needs.need3.type === 'Service' ? (
+                      ) : locobiz.needs.need3.type === 'service' ? (
                         <div className='flex items-start gap-2'>
                           <FaClipboardList
                             alt='Service Icon'

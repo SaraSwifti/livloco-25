@@ -10,7 +10,9 @@ const BusinessCard = ({ locobiz }) => {
       <Link href={`/businesses/${locobiz._id}`}>
       <div className='rounded-xl pt-1 shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
-        <Image
+            {/* {locobiz.locobiz_profile_image?.image ? ( */}
+           {locobiz.needs.need3?.image ? (
+            <Image
           src={`/images/locobizimages/${locobiz.locobiz_profile_image}`}
           // Make a component to insert alt tag for these per customer//
 
@@ -19,7 +21,18 @@ const BusinessCard = ({ locobiz }) => {
           height='0'
           sizes='100vw'
           className='object-contain h-[200px] w-[300px] rounded-t-xl'
-          />
+              />
+                  ) : (
+                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}
+            {/* ) : (
+                 <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
+                            No image available
+                          </div>
+                        )}; */}
+            
           </div>
         <div className='p-4'>
           <div className=' text-center mb-6'>
@@ -40,32 +53,40 @@ const BusinessCard = ({ locobiz }) => {
               <p className='mb-2 font-bold'>
                 Selling:
                 </p>
-               <div className="flex items-center gap-2 mb-2">
-                 {locobiz.selling.selling1.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.selling.selling1.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
-                  <p className='mb-2'>{`${locobiz.selling.selling1.description}`}</p>
+                {locobiz.selling.selling1.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.selling.selling1.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.selling.selling1.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
+                    <p className='mb-2'>{`${locobiz.selling.selling1.description}`}</p>
                   </div>
-                <div className="flex items-center gap-2 mb-2">
-                 {locobiz.selling.selling2.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.selling.selling2.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
+                )}
+
+                {locobiz.selling.selling2.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.selling.selling2.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.selling.selling2.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
              
-                  <p className='mb-1'>{`${locobiz.selling.selling2.description}`}</p>
+                    <p className='mb-1'>{`${locobiz.selling.selling2.description}`}</p>
                   
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                 {locobiz.selling.selling3.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.selling.selling3.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
-                  <p className='mb-1'>{`${locobiz.selling.selling3.description}`}</p>
                   </div>
+                )}
+
+                {locobiz.selling.selling3.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.selling.selling3.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.selling.selling3.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
+                    <p className='mb-1'>{`${locobiz.selling.selling3.description}`}</p>
+                  </div>
+                )}
             </div>
             </div>
          
@@ -73,31 +94,38 @@ const BusinessCard = ({ locobiz }) => {
           <div className=' text-2xl gap-4 text-black mb-4'>
           <div className='border border-gray-500 p-4 mb-5'>
                 <p className='font-bold mb-2'>Needing:</p>
-                
-                 <div className="flex items-center gap-2 mb-2">
-                 {locobiz.needs.need1.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.needs.need1.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
-                  <p className='mb-1 '>{`${locobiz.needs.need1.description}`}</p>
-                </div>
-                 <div className="flex items-center gap-2 mb-2">
-                 {locobiz.needs.need2.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.needs.need2.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
-                  <p className='mb-1'>{`${locobiz.needs.need2.description}`}</p>
-                </div>
-                 <div className="flex items-center gap-2 mb-2">
-                 {locobiz.needs.need3.type === 'Product' ? (
-                        <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                      ) : locobiz.needs.need3.type === 'Service' ? (
-                        <FaClipboardList alt="Service Icon" className=" text-green-800"/>
-                      ) : null}
-                  <p className='mb-1'>{`${locobiz.needs.need3.description}`}</p>
+                {locobiz.needs.need1.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.needs.need1.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.needs.need1.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
+                    <p className='mb-1 '>{`${locobiz.needs.need1.description}`}</p>
                   </div>
+                )}
+
+                {locobiz.needs.need2.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.needs.need2.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.needs.need2.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
+                    <p className='mb-1'>{`${locobiz.needs.need2.description}`}</p>
+                  </div>
+                )}
+
+                {locobiz.needs.need3.description?.trim() && (
+                  <div className="flex items-center gap-2 mb-2">
+                    {locobiz.needs.need3.type === 'product' ? (
+                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
+                    ) : locobiz.needs.need3.type === 'service' ? (
+                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
+                    ) : null}
+                    <p className='mb-1'>{`${locobiz.needs.need3.description}`}</p>
+                  </div>
+                )}
             </div>
             </div>
 
