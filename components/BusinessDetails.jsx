@@ -2,8 +2,14 @@
 import FarmersMarket from '@/components/FarmersMarket';
 import BusinessContact from '@/components/BusinessContact';
 import StoreFront from '@/components/StoreFront';
-import Image from 'next/image'
-import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
+import Image from 'next/image';
+import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
+
+
+
+
+
+
 const BusinessDetails = ({ locobiz }) => {
   return (
     <>

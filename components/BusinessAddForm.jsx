@@ -1,8 +1,11 @@
 'use client'
-import addBusinessAction from '@/app/actions/addBusinessAction.js'
+
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import AddBusLaterPopout from '@/components/AddBusLaterPopout'
+import uploadToCloudinary from '@/utils/uploadToCloudinary'
+import addBusinessAction from '@/app/actions/addBusinessAction'
+
 const daysOfWeek = [
   'monday',
   'tuesday',
@@ -16,8 +19,30 @@ const daysOfWeek = [
 const BusinessAddForm = ({ userEmail }) => {
   const router = useRouter()
   //skip add business form.
-  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
   const [description, setDescription] = useState('')
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
+  //to handle phonnumber fomatting and saving as a string
+  const [phone, setPhone] = useState('')
+  const [phoneValue, setPhoneValue] = useState('') // backend-safe version
+  //showpopout for directions later
+  const [showPopOut, setShowPopOut] = useState(false)
+  // mapping and states to toggle needs and selling section
+
+  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
+  const [sellingItems, setSellingItems] = useState([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+  ])
+  //image urls for cloudinary
+  const [imageUrls, setImageUrls] = useState({})
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  // storefront marketstand needed data
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
+  // farmers market toggle state
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
+  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
+
   const maxLength = 500
   const handleSkipPopOutCheckbox = (e) => {
     const checked = e.target.checked
@@ -34,44 +59,43 @@ const BusinessAddForm = ({ userEmail }) => {
     router.push('/businesses') // redirect AFTER modal is closed
   }
 
-  //showpopout for directions later
-  const [showPopOut, setShowPopOut] = useState(false)
-
-  //to handle phonnumber fomatting and saving as a string
-  const [phone, setPhone] = useState('');
-  const [phoneValue, setPhoneValue] = useState(''); // backend-safe version
   const formatPhoneDisplay = (value) => {
-    const digits = value.replace(/\D/g, '').substring(0, 10);
-    const len = digits.length;
+    const digits = value.replace(/\D/g, '').substring(0, 10)
+    const len = digits.length
 
-    if (len < 4) return digits;
-    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    if (len < 4) return digits
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
   }
   const handlePhoneChange = (e) => {
-    const input = e.target.value;
-    const digits = input.replace(/\D/g, '').slice(0, 10);
-    setPhone(formatPhoneDisplay(digits));
-    setPhoneValue(`+1${digits}`);
+    const input = e.target.value
+    const digits = input.replace(/\D/g, '').slice(0, 10)
+    setPhone(formatPhoneDisplay(digits))
+    setPhoneValue(`+1${digits}`)
   }
 
-  // mapping and states to toggle needs and selling section
+  //handling clientside Cloudinary images and files
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    const fieldName = e.target.name;
+    if (!file) return;
 
-  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
-  const [sellingItems, setSellingItems] = useState([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-  ])
+    try {
+      const uploaded = await uploadToCloudinary(file); 6
+      setImageUrls((prev) => ({
+        ...prev,
+        [fieldName]: uploaded,
+      }))
+    } catch (err) {
+      console.error('Cloudinary upload failed:', err);
+    }
+  };
 
-  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
-  // storefront marketstand needed data
-  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
-  // farmers market toggle state
-  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
-  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
+  // const imageUrl = await uploadToCloudinary(file);
+  // console.log('Cloudinary URL:', imageUrl);
+
   return (
-    <form action={addBusinessAction}>
+    <form action={addBusinessAction} method="POST">
       <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
         <h2 className='text-3xl text-center font-semibold mb-6'>
           Add Your LocoBusiness
@@ -255,11 +279,16 @@ const BusinessAddForm = ({ userEmail }) => {
               Upload a profile image for your business if you have one.
             </label>
             <input
-              name='locobiz_profile_image'
               type='file'
+              onChange={handleFileChange}
               className='mt-1 bg-white block w-full border rounded p-2'
               id='locobiz_profile_image'
               accept='image/*'
+            />
+            <input
+              type='hidden'
+              name='locobiz_profile_image'
+              value={imageUrls['locobiz_profile_image'] || ''}
             />
           </div>
         </div>
@@ -384,11 +413,17 @@ const BusinessAddForm = ({ userEmail }) => {
                     Upload image if you have one
                   </label>
                   <input
-                    name={`selling.selling${index + 1}.image`}
                     type='file'
+                    
+                    onChange={handleFileChange}
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
-                    id={`selling${index + 1}_image`}
                     accept='image/*'
+                    id={`selling${index + 1}_image`}
+                  />
+                  <input
+                    type='hidden'
+                    name={`selling.selling${index + 1}.image`}
+                    value={imageUrls[`selling.selling${index + 1}.image`] || ''}
                   />
                 </div>
               </div>
@@ -471,11 +506,17 @@ const BusinessAddForm = ({ userEmail }) => {
                     Upload image if you have one
                   </label>
                   <input
-                    id={`need${index + 1}_image`}
-                    name={`needs.need${index + 1}.image`}
                     type='file'
+                 
+                    onChange={handleFileChange}
+                    id={`need${index + 1}_image`}
                     className='mt-1 block w-full border rounded p-2'
                     accept='image/*'
+                  />
+                  <input
+                    type='hidden'
+                    name={`needing.need${index + 1}.image`}
+                    value={imageUrls[`needing.need${index + 1}.image`] || ''}
                   />
                 </div>
               </div>

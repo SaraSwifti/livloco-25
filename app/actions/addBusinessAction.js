@@ -7,6 +7,9 @@ import { redirect } from 'next/navigation';
 
 
 
+
+
+
 async function addBusinessAction(formData) {
   await connectDB();
 
@@ -22,31 +25,12 @@ async function addBusinessAction(formData) {
 
 
   //to ensure that I am not uploading empty files of data
-  const getFileUrlOrNull = async (file) => {
-  if (!file || file.size === 0 || file.name === 'undefined') return null;
-  return await handleFileUpload(file); // Your upload logic
-};
+  // const getFileUrlOrNull = async (file) => {
+  // if (!file || file.size === 0 || file.name === 'undefined') return null;
+  // return await handleFileUpload(file); // Your upload logic
+  // };
   
-// build the locobiz_address object only if posting is permitted
-let locobizAddress = null;
-
-if (formData.get('locobiz_address.post_permission') === 'on') {
-  // build the locobiz_address object only if posting is permitted
-  locobizAddress = {
-   
-    post_permission: formData.get('locobiz_address.post_permission'),
-    biz_phone: biz_phone,
-    add_line1: formData.get('locobiz_address.add_line1'),
-    add_line2: formData.get('locobiz_address.add_line2'),
-    city: formData.get('locobiz_address.city'),
-    state: formData.get('locobiz_address.state'),
-    zipcode: formData.get('locobiz_address.zipcode'),
-    country: formData.get('locobiz_address.country'),
-  };
-}
-
-
-// Normalize phone to E.164 format (US-based)
+  // Normalize phone to E.164 format (US-based)
 let phoneRaw = formData.get('phone') || '';
 let phoneDigits = phoneRaw.replace(/\D/g, '');
 let phone = phoneDigits.length === 10 ? `+1${phoneDigits}` : phoneDigits;
@@ -57,6 +41,23 @@ let bizPhoneDigits = bizPhoneRaw.replace(/\D/g, '');
 let biz_phone =
   bizPhoneDigits.length === 10 ? `+1${bizPhoneDigits}` : bizPhoneDigits;
 
+  
+// build the locobiz_address object only if posting is permitted
+let locobizAddress = null;
+
+if (formData.get('locobiz_address.post_permission') === 'on') {
+  // build the locobiz_address object only if posting is permitted
+  locobizAddress = {
+    post_permission: formData.get('locobiz_address.post_permission'),
+    biz_phone: biz_phone,
+    add_line1: formData.get('locobiz_address.add_line1'),
+    add_line2: formData.get('locobiz_address.add_line2'),
+    city: formData.get('locobiz_address.city'),
+    state: formData.get('locobiz_address.state'),
+    zipcode: formData.get('locobiz_address.zipcode'),
+    country: formData.get('locobiz_address.country'),
+  };
+}
 
 
  //create businessData object with embedded members info
@@ -83,7 +84,7 @@ let biz_phone =
       sunday_hours: formData.get('business_hours.sunday_hours'),
     },
     website: formData.get('website'),
-    locobiz_profile_image: await getFileUrlOrNull(formData.get('locobiz_profile_image')),
+    locobiz_profile_image: formData.get('locobiz_profile_image'),
     farmers_market_location: {
       fm_location_post: formData.get('farmers_market_location.farmers_market_location'),
       monday: {
@@ -133,38 +134,38 @@ let biz_phone =
       selling1: {
         type: formData.get('selling.selling1.type'),
         description: formData.get('selling.selling1.description'),
-        image: await getFileUrlOrNull(formData.get('selling.selling1.image')),
+        image:formData.get('selling.selling1.image'),
         price: formData.get('selling.selling1.price'),
       },
       selling2: {
         type: formData.get('selling.selling2.type'),
         description: formData.get('selling.selling2.description'),
-        image: await getFileUrlOrNull(formData.get('selling.selling2.image')),
+        image:formData.get('selling.selling2.image'),
         price: formData.get('selling.selling2.price'),
       },
       selling3: {
         type: formData.get('selling.selling3.type'),
         description: formData.get('selling.selling3.description'),
-        image: await getFileUrlOrNull(formData.get('selling.selling3.image')),
+        image:formData.get('selling.selling3.image'),
         price: formData.get('selling.selling3.description'),
       },
     },
     needs: {
       need1: {
         description: formData.get('needs.need1.description'),
-        image: await getFileUrlOrNull(formData.get('needs.need1.image')),
+        image:formData.get('needs.need1.image'),
         type: formData.get('needs.need1.type'),
         
       },
       need2: {
         type: formData.get('needs.need2.type'),
         description: formData.get('needs.need2.description'),
-        image: await getFileUrlOrNull(formData.get('needs.need2.image')),
+        image:formData.get('needs.need2.image'),
       },
       need3: {
         type: formData.get('needs.need3.type'),
         description: formData.get('needs.need3.description'),
-        image: await getFileUrlOrNull(formData.get('needs.need3.image')),
+        image:formData.get('needs.need3.image'),
       },
     },
   
