@@ -13,7 +13,7 @@ const BusinessCard = ({ locobiz }) => {
             {/* {locobiz.locobiz_profile_image?.image ? ( */}
            {locobiz.needs.need3?.image ? (
             <Image
-          src={`/images/locobizimages/${locobiz.locobiz_profile_image}`}
+          src={locobiz.locobiz_profile_image}
           // Make a component to insert alt tag for these per customer//
 
           alt=''

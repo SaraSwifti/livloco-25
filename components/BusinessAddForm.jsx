@@ -26,7 +26,10 @@ const BusinessAddForm = ({ userEmail }) => {
   const [phoneValue, setPhoneValue] = useState('') // backend-safe version
   //showpopout for directions later
   const [showPopOut, setShowPopOut] = useState(false)
+  //handling uploading of file to wait before submission
+  const [isUploading, setIsUploading] = useState(false);
   // mapping and states to toggle needs and selling section
+  
 
   const [showSellNeedForm, setShowSellNeedForm] = useState(false)
   const [sellingItems, setSellingItems] = useState([
@@ -35,13 +38,14 @@ const BusinessAddForm = ({ userEmail }) => {
     { id: 3 },
   ])
   //image urls for cloudinary
-  const [imageUrls, setImageUrls] = useState({})
-  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  const [imageUrls, setImageUrls] = useState({});
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
   // storefront marketstand needed data
-  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false);
   // farmers market toggle state
-  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
-  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false);
+  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false);
+    // const formData = new FormData(e.target);
 
   const maxLength = 500
   const handleSkipPopOutCheckbox = (e) => {
@@ -79,23 +83,47 @@ const BusinessAddForm = ({ userEmail }) => {
     const file = e.target.files[0];
     const fieldName = e.target.name;
     if (!file) return;
-
+setIsUploading(true);
     try {
-      const uploaded = await uploadToCloudinary(file); 6
+      const uploaded = await uploadToCloudinary(file); 
       setImageUrls((prev) => ({
         ...prev,
         [fieldName]: uploaded,
-      }))
+      }));
     } catch (err) {
       console.error('Cloudinary upload failed:', err);
+      alert('Image upload failed');
+      e.target.value = ''; // Reset file input so user can reselect
     }
+     setIsUploading(false);
   };
 
   // const imageUrl = await uploadToCloudinary(file);
   // console.log('Cloudinary URL:', imageUrl);
+  const handleSubmit = async (e) => {
+  e.preventDefault(); // stop native form submission
+
+  if (isUploading) {
+    alert('Please wait for image uploads to finish.');
+    return;
+  }
+  // Debug if needed
+  // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
+    const formData = new FormData(e.target);
+  try {
+    await addBusinessAction(formData);
+    router.push('/businesses');
+  } catch (err) {
+    console.error('Form submission failed:', err);
+    alert('Something went wrong. Please try again.');
+    };
+
+    
+};
 
   return (
-    <form action={addBusinessAction} method="POST">
+    // <form ={addBusinessAction} >
+    <form onSubmit={handleSubmit} >
       <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
         <h2 className='text-3xl text-center font-semibold mb-6'>
           Add Your LocoBusiness
@@ -275,10 +303,12 @@ const BusinessAddForm = ({ userEmail }) => {
             <label
               htmlFor='locobiz_profile_image'
               className='block text-sm font-medium'
+              
             >
               Upload a profile image for your business if you have one.
             </label>
             <input
+              name='locobiz_profile_image'  // Make sure this matches your hidden input!
               type='file'
               onChange={handleFileChange}
               className='mt-1 bg-white block w-full border rounded p-2'
@@ -414,7 +444,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   </label>
                   <input
                     type='file'
-                    
+                     name={`selling.selling${index + 1}.image`}
                     onChange={handleFileChange}
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
                     accept='image/*'
@@ -507,7 +537,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   </label>
                   <input
                     type='file'
-                 
+                 name={`needing.need${index + 1}.image`}
                     onChange={handleFileChange}
                     id={`need${index + 1}_image`}
                     className='mt-1 block w-full border rounded p-2'

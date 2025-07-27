@@ -4,10 +4,11 @@ import BusinessDetails from '@/components/BusinessDetails';
 import connectDB from "@/config/database";
 import LocoBiz from '@/models/LocoBiz';
 import Link from 'next/link';
+import { notFound } from 'next/navigation'; // Optional for handling missing business
 import { FaArrowLeft } from 'react-icons/fa';
 
 const BusinessPage = async ({ params }) => {
-
+ 
   await connectDB();
   
   const locobiz = await LocoBiz.findById(params.id).lean();
