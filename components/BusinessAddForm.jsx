@@ -18,25 +18,37 @@ const daysOfWeek = [
 
 const BusinessAddForm = ({ userEmail }) => {
   const router = useRouter()
+
+  //  State to hold uploaded image URLs
+  const [images, setImages] = useState({
+    profile: '',
+    selling1: '',
+    selling2: '',
+    selling3: '',
+    need1: '',
+    need2: '',
+    need3: '',
+  });
+
   //skip add business form.
-  const [description, setDescription] = useState('')
-  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
+  const [description, setDescription] = useState('');
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false);
   //to handle phonnumber fomatting and saving as a string
-  const [phone, setPhone] = useState('')
-  const [phoneValue, setPhoneValue] = useState('') // backend-safe version
+  const [phone, setPhone] = useState('');
+  const [phoneValue, setPhoneValue] = useState(''); // backend-safe version
   //showpopout for directions later
-  const [showPopOut, setShowPopOut] = useState(false)
+  const [showPopOut, setShowPopOut] = useState(false);
   //handling uploading of file to wait before submission
   const [isUploading, setIsUploading] = useState(false);
   // mapping and states to toggle needs and selling section
-  
 
   const [showSellNeedForm, setShowSellNeedForm] = useState(false)
   const [sellingItems, setSellingItems] = useState([
     { id: 1 },
     { id: 2 },
     { id: 3 },
-  ])
+  ]);
+
   //image urls for cloudinary
   const [imageUrls, setImageUrls] = useState({});
   const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
@@ -45,85 +57,117 @@ const BusinessAddForm = ({ userEmail }) => {
   // farmers market toggle state
   const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false);
   const [showLocoBizUrl, setShowLocoBizUrl] = useState(false);
-    // const formData = new FormData(e.target);
+  // const formData = new FormData(e.target);
 
-  const maxLength = 500
-  const handleSkipPopOutCheckbox = (e) => {
-    const checked = e.target.checked
-    setSkipAddBusiness(checked)
+  const maxLength = 500;
+  const handleFileChange = async (e, key) => {
+    const file = e.target.files[0]
+    if (!file) return
 
-    if (checked) {
-      setShowPopOut(true) // Show the popout
-      // router.push('/businesses') // Navigate immediately
-    }
-  }
-  // Handle close of popout
-  const handleClose = () => {
-    setShowPopOut(false)
-    router.push('/businesses') // redirect AFTER modal is closed
-  }
-
-  const formatPhoneDisplay = (value) => {
-    const digits = value.replace(/\D/g, '').substring(0, 10)
-    const len = digits.length
-
-    if (len < 4) return digits
-    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
-  }
-  const handlePhoneChange = (e) => {
-    const input = e.target.value
-    const digits = input.replace(/\D/g, '').slice(0, 10)
-    setPhone(formatPhoneDisplay(digits))
-    setPhoneValue(`+1${digits}`)
-  }
-
-  //handling clientside Cloudinary images and files
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    const fieldName = e.target.name;
-    if (!file) return;
-setIsUploading(true);
     try {
-      const uploaded = await uploadToCloudinary(file); 
-      setImageUrls((prev) => ({
-        ...prev,
-        [fieldName]: uploaded,
-      }));
+      const url = await uploadToCloudinary(file) // calls /api/sign-cloudinary
+      setImages((prev) => ({ ...prev, [key]: url }))
     } catch (err) {
-      console.error('Cloudinary upload failed:', err);
-      alert('Image upload failed');
-      e.target.value = ''; // Reset file input so user can reselect
-    }
-     setIsUploading(false);
-  };
-
-  // const imageUrl = await uploadToCloudinary(file);
-  // console.log('Cloudinary URL:', imageUrl);
-  const handleSubmit = async (e) => {
-  e.preventDefault(); // stop native form submission
-
-  if (isUploading) {
-    alert('Please wait for image uploads to finish.');
-    return;
-  }
-  // Debug if needed
-  // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
-    const formData = new FormData(e.target);
-  try {
-    await addBusinessAction(formData);
-    router.push('/businesses');
-  } catch (err) {
-    console.error('Form submission failed:', err);
-    alert('Something went wrong. Please try again.');
+      console.error('Cloudinary upload failed:', err)
     };
+  
 
-    
-};
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+
+      const form = new FormData(e.target)
+
+      // Inject image URLs into the FormData
+      form.set('locobiz_profile_image', images.profile || '')
+      form.set('selling.selling1.image', images.selling1 || '')
+      form.set('selling.selling2.image', images.selling2 || '')
+      form.set('selling.selling3.image', images.selling3 || '')
+      form.set('needs.need1.image', images.need1 || '')
+      form.set('needs.need2.image', images.need2 || '')
+      form.set('needs.need3.image', images.need3 || '')
+
+      try {
+        await addBusinessAction(form)
+      } catch (err) {
+        console.error('Form submission failed:', err)
+      }
+    }
+
+    const formatPhoneDisplay = (value) => {
+      const digits = value.replace(/\D/g, '').substring(0, 10)
+      const len = digits.length
+
+      if (len < 4) return digits
+      if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+    }
+
+    const handlePhoneChange = (e) => {
+      const input = e.target.value
+      const digits = input.replace(/\D/g, '').slice(0, 10)
+      setPhone(formatPhoneDisplay(digits))
+      setPhoneValue(`+1${digits}`)
+    }
+
+    const handleSkipPopOutCheckbox = (e) => {
+      const checked = e.target.checked
+      setSkipAddBusiness(checked)
+
+      if (checked) {
+        setShowPopOut(true) // Show the popout
+        // router.push('/businesses') // Navigate immediately
+      }
+    }
+    // Handle close of popout
+    const handleClose = () => {
+      setShowPopOut(false)
+      router.push('/businesses') // redirect AFTER modal is closed
+    }
+
+    //   //handling clientside Cloudinary images and files
+    //   const handleFileChange = async (e) => {
+    //     const file = e.target.files[0];
+    //     const fieldName = e.target.name;
+    //     if (!file) return;
+    // setIsUploading(true);
+    //     try {
+    //       const uploaded = await uploadToCloudinary(file);
+    //       setImageUrls((prev) => ({
+    //         ...prev,
+    //         [fieldName]: uploaded,
+    //       }));
+    //     } catch (err) {
+    //       console.error('Cloudinary upload failed:', err);
+    //       alert('Image upload failed');
+    //       e.target.value = ''; // Reset file input so user can reselect
+    //     }
+    //      setIsUploading(false);
+    //   };
+
+    // // const imageUrl = await uploadToCloudinary(file);
+    // // console.log('Cloudinary URL:', imageUrl);
+    // const handleSubmit = async (e) => {
+    // e.preventDefault(); // stop native form submission
+
+    // if (isUploading) {
+    //   alert('Please wait for image uploads to finish.');
+    //   return;
+    // }
+    // // Debug if needed
+    // // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
+    //   const formData = new FormData(e.target);
+    // try {
+    //   await addBusinessAction(formData);
+    //   router.push('/businesses');
+    // } catch (err) {
+    //   console.error('Form submission failed:', err);
+    //   alert('Something went wrong. Please try again.');
+    //   };
+  }
 
   return (
     // <form ={addBusinessAction} >
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit}>
       <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
         <h2 className='text-3xl text-center font-semibold mb-6'>
           Add Your LocoBusiness
@@ -136,8 +180,8 @@ setIsUploading(true);
             className='w-5 h-5'
           />
           <label className='font-medium text-lg'>
-            Skip adding a business profile for now and just puruse being a
-            Livloco Co-op Member.
+            Skip adding a business profile for now and just puruse being a Livloco
+            Co-op Member.
             <span className=''>
               {' '}
               There is no additional charge to post a business and comes with
@@ -147,9 +191,9 @@ setIsUploading(true);
           {showPopOut && <AddBusLaterPopout onClose={handleClose} />}
         </div>
         <p>
-          (For LivLoco purposes only. Under no circumstances will Livloco sell
-          or share your information. However we cannot prevent anyone from
-          copying any information that you have voluntarily displayed)
+          (For LivLoco purposes only. Under no circumstances will Livloco sell or
+          share your information. However we cannot prevent anyone from copying
+          any information that you have voluntarily displayed)
         </p>
         {/* Business name */}
         <div className='bg-white p-4 rounded border space-y-4'>
@@ -261,10 +305,10 @@ setIsUploading(true);
               <span className='text-red-500'>* </span>
               Account Holder's Phone{' '}
               <span className='block font-normal text-md'>
-                This number will be associated with the account holder for
-                account verification purposes only. A business phone number can
-                be added later, but is not required as we will have Livloco
-                inter app messaging if you do not want to give your number out.{' '}
+                This number will be associated with the account holder for account
+                verification purposes only. A business phone number can be added
+                later, but is not required as we will have Livloco inter app
+                messaging if you do not want to give your number out.{' '}
               </span>
             </label>
             <input
@@ -303,14 +347,13 @@ setIsUploading(true);
             <label
               htmlFor='locobiz_profile_image'
               className='block text-sm font-medium'
-              
             >
               Upload a profile image for your business if you have one.
             </label>
             <input
-              name='locobiz_profile_image'  // Make sure this matches your hidden input!
+              name='locobiz_profile_image' // Make sure this matches your hidden input!
               type='file'
-              onChange={handleFileChange}
+              onChange={(e) => handleFileChange(e, 'profile')}
               className='mt-1 bg-white block w-full border rounded p-2'
               id='locobiz_profile_image'
               accept='image/*'
@@ -318,7 +361,8 @@ setIsUploading(true);
             <input
               type='hidden'
               name='locobiz_profile_image'
-              value={imageUrls['locobiz_profile_image'] || ''}
+              // value={imageUrls['locobiz_profile_image'] || ''}
+              value={images.profile}
             />
           </div>
         </div>
@@ -380,9 +424,7 @@ setIsUploading(true);
                 {/* Type */}
 
                 <div>
-                  <label className='block text-sm font-medium  mb-1'>
-                    Type
-                  </label>
+                  <label className='block text-sm font-medium  mb-1'>Type</label>
                   <div className='flex items-center gap-6'>
                     <label
                       htmlFor={`selling${index + 1}_type_product`}
@@ -444,8 +486,8 @@ setIsUploading(true);
                   </label>
                   <input
                     type='file'
-                     name={`selling.selling${index + 1}.image`}
-                    onChange={handleFileChange}
+                    name={`selling.selling${index + 1}.image`}
+                    onChange={(e) => handleFileChange(e, `selling${index + 1}`)}
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
                     accept='image/*'
                     id={`selling${index + 1}_image`}
@@ -453,7 +495,7 @@ setIsUploading(true);
                   <input
                     type='hidden'
                     name={`selling.selling${index + 1}.image`}
-                    value={imageUrls[`selling.selling${index + 1}.image`] || ''}
+                    value={images[`selling${index + 1}`] || ''}
                   />
                 </div>
               </div>
@@ -537,8 +579,8 @@ setIsUploading(true);
                   </label>
                   <input
                     type='file'
-                 name={`needing.need${index + 1}.image`}
-                    onChange={handleFileChange}
+                    name={`needing.need${index + 1}.image`}
+                    onChange={(e) => handleFileChange(e, `need${index + 1}`)}
                     id={`need${index + 1}_image`}
                     className='mt-1 block w-full border rounded p-2'
                     accept='image/*'
@@ -546,7 +588,7 @@ setIsUploading(true);
                   <input
                     type='hidden'
                     name={`needing.need${index + 1}.image`}
-                    value={imageUrls[`needing.need${index + 1}.image`] || ''}
+                    value={images[`need${index + 1}`] || ''}
                   />
                 </div>
               </div>
@@ -868,7 +910,6 @@ setIsUploading(true);
         </button>
       </div>
     </form>
-  )
-}
-
+  );
+};
 export default BusinessAddForm

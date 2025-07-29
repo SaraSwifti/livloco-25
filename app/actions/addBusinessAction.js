@@ -4,10 +4,15 @@ import LocoBiz from '@/models/LocoBiz';
 import { getSessionUser } from '@/utils/getSessionUser';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
 
 
-
-
+const fileToUrl = async (file) => {
+  if (!file || !(file instanceof File) || file.size === 0 || file.name === 'undefined') {
+    return null;
+  }
+  return await uploadToCloudinary(file); // returns Cloudinary URL
+};
 
 
 async function addBusinessAction(formData) {
@@ -58,7 +63,23 @@ if (formData.get('locobiz_address.post_permission') === 'on') {
     country: formData.get('locobiz_address.country'),
   };
 }
+  // using cloudinary url to store photos
+  
+const profileImageFile = formData.get('locobiz_profile_image');
+const selling1ImageFile = formData.get('selling.selling1.image');
+const selling2ImageFile = formData.get('selling.selling2.image');
+const selling3ImageFile = formData.get('selling.selling3.image');
+const need1ImageFile = formData.get('needs.need1.image');
+const need2ImageFile = formData.get('needs.need2.image');
+const need3ImageFile = formData.get('needs.need3.image');
 
+const profileImageUrl = await fileToUrl(profileImageFile);
+const selling1ImageUrl = await fileToUrl(selling1ImageFile);
+const selling2ImageUrl = await fileToUrl(selling2ImageFile);
+const selling3ImageUrl = await fileToUrl(selling3ImageFile);
+const need1ImageUrl = await fileToUrl(need1ImageFile);
+const need2ImageUrl = await fileToUrl(need2ImageFile);
+const need3ImageUrl = await fileToUrl(need3ImageFile);
 
  //create businessData object with embedded members info
   const locobizData = {
@@ -84,7 +105,7 @@ if (formData.get('locobiz_address.post_permission') === 'on') {
       sunday_hours: formData.get('business_hours.sunday_hours'),
     },
     website: formData.get('website'),
-    locobiz_profile_image: formData.get('locobiz_profile_image'),
+    locobiz_profile_image: profileImageUrl,
     farmers_market_location: {
       fm_location_post: formData.get('farmers_market_location.farmers_market_location'),
       monday: {
@@ -134,38 +155,38 @@ if (formData.get('locobiz_address.post_permission') === 'on') {
       selling1: {
         type: formData.get('selling.selling1.type'),
         description: formData.get('selling.selling1.description'),
-        image:formData.get('selling.selling1.image'),
+        image: selling1ImageUrl,
         price: formData.get('selling.selling1.price'),
       },
       selling2: {
         type: formData.get('selling.selling2.type'),
         description: formData.get('selling.selling2.description'),
-        image:formData.get('selling.selling2.image'),
+        image: selling2ImageUrl,
         price: formData.get('selling.selling2.price'),
       },
       selling3: {
         type: formData.get('selling.selling3.type'),
         description: formData.get('selling.selling3.description'),
-        image:formData.get('selling.selling3.image'),
+        image:selling2ImageUrl,
         price: formData.get('selling.selling3.description'),
       },
     },
     needs: {
       need1: {
         description: formData.get('needs.need1.description'),
-        image:formData.get('needs.need1.image'),
+        image: need1ImageUrl,
         type: formData.get('needs.need1.type'),
         
       },
       need2: {
         type: formData.get('needs.need2.type'),
         description: formData.get('needs.need2.description'),
-        image:formData.get('needs.need2.image'),
+        image: need2ImageUrl,
       },
       need3: {
         type: formData.get('needs.need3.type'),
         description: formData.get('needs.need3.description'),
-        image:formData.get('needs.need3.image'),
+        image: need3ImageUrl,
       },
     },
   

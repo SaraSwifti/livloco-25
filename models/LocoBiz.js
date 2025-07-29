@@ -118,7 +118,10 @@ const LocoBizSchema = new Schema(
       //match: /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
       match: /regex/,
     },
-    locobiz_profile_image: { type: String },
+    locobiz_profile_image: {
+      type: String,
+        required: false,
+    },
     farmers_market_location: {
       fm_location_post: {
         type: Boolean,
@@ -253,49 +256,61 @@ const LocoBizSchema = new Schema(
       selling1: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
         price: {
           type: String,
           trim: true,
+            required: false,
         },
       },
       selling2: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
         price: {
           type: String,
           trim: true,
+            required: false,
         },
       },
       selling3: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
         price: {
           type: String,
           trim: true,
+            required: false,
         },
       },
     },
@@ -303,46 +318,57 @@ const LocoBizSchema = new Schema(
       need1: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
       },
       need2: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
       },
       need3: {
         type: {
           type: String,
+            required: false,
         },
         description: {
           type: String,
           trim: true,
+            required: false,
         },
         image: {
           type: String,
+            required: false,
         },
       },
     },
     current_promotional: {
       type: String,
       trim: true,
+        required: false,
     },
     locobiz_votes: {
       type: Number,
+        required: false,
     },
   },
   {
