@@ -71,99 +71,99 @@ const BusinessAddForm = ({ userEmail }) => {
       console.error('Cloudinary upload failed:', err)
     };
   
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-    const handleSubmit = async (e) => {
-      e.preventDefault()
+    const form = new FormData(e.target)
 
-      const form = new FormData(e.target)
+    // Inject image URLs into the FormData
+    form.set('locobiz_profile_image', images.profile || '')
+    form.set('selling.selling1.image', images.selling1 || '')
+    form.set('selling.selling2.image', images.selling2 || '')
+    form.set('selling.selling3.image', images.selling3 || '')
+    form.set('needs.need1.image', images.need1 || '')
+    form.set('needs.need2.image', images.need2 || '')
+    form.set('needs.need3.image', images.need3 || '')
 
-      // Inject image URLs into the FormData
-      form.set('locobiz_profile_image', images.profile || '')
-      form.set('selling.selling1.image', images.selling1 || '')
-      form.set('selling.selling2.image', images.selling2 || '')
-      form.set('selling.selling3.image', images.selling3 || '')
-      form.set('needs.need1.image', images.need1 || '')
-      form.set('needs.need2.image', images.need2 || '')
-      form.set('needs.need3.image', images.need3 || '')
-
-      try {
-        await addBusinessAction(form)
-      } catch (err) {
-        console.error('Form submission failed:', err)
-      }
+    try {
+      await addBusinessAction(form)
+    } catch (err) {
+      console.error('Form submission failed:', err)
     }
-
-    const formatPhoneDisplay = (value) => {
-      const digits = value.replace(/\D/g, '').substring(0, 10)
-      const len = digits.length
-
-      if (len < 4) return digits
-      if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
-      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
-    }
-
-    const handlePhoneChange = (e) => {
-      const input = e.target.value
-      const digits = input.replace(/\D/g, '').slice(0, 10)
-      setPhone(formatPhoneDisplay(digits))
-      setPhoneValue(`+1${digits}`)
-    }
-
-    const handleSkipPopOutCheckbox = (e) => {
-      const checked = e.target.checked
-      setSkipAddBusiness(checked)
-
-      if (checked) {
-        setShowPopOut(true) // Show the popout
-        // router.push('/businesses') // Navigate immediately
-      }
-    }
-    // Handle close of popout
-    const handleClose = () => {
-      setShowPopOut(false)
-      router.push('/businesses') // redirect AFTER modal is closed
-    }
-
-    //   //handling clientside Cloudinary images and files
-    //   const handleFileChange = async (e) => {
-    //     const file = e.target.files[0];
-    //     const fieldName = e.target.name;
-    //     if (!file) return;
-    // setIsUploading(true);
-    //     try {
-    //       const uploaded = await uploadToCloudinary(file);
-    //       setImageUrls((prev) => ({
-    //         ...prev,
-    //         [fieldName]: uploaded,
-    //       }));
-    //     } catch (err) {
-    //       console.error('Cloudinary upload failed:', err);
-    //       alert('Image upload failed');
-    //       e.target.value = ''; // Reset file input so user can reselect
-    //     }
-    //      setIsUploading(false);
-    //   };
-
-    // // const imageUrl = await uploadToCloudinary(file);
-    // // console.log('Cloudinary URL:', imageUrl);
-    // const handleSubmit = async (e) => {
-    // e.preventDefault(); // stop native form submission
-
-    // if (isUploading) {
-    //   alert('Please wait for image uploads to finish.');
-    //   return;
-    // }
-    // // Debug if needed
-    // // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
-    //   const formData = new FormData(e.target);
-    // try {
-    //   await addBusinessAction(formData);
-    //   router.push('/businesses');
-    // } catch (err) {
-    //   console.error('Form submission failed:', err);
-    //   alert('Something went wrong. Please try again.');
-    //   };
   }
+
+  const formatPhoneDisplay = (value) => {
+    const digits = value.replace(/\D/g, '').substring(0, 10)
+    const len = digits.length
+
+    if (len < 4) return digits
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+
+  const handlePhoneChange = (e) => {
+    const input = e.target.value
+    const digits = input.replace(/\D/g, '').slice(0, 10)
+    setPhone(formatPhoneDisplay(digits))
+    setPhoneValue(`+1${digits}`)
+  }
+
+  const handleSkipPopOutCheckbox = (e) => {
+    const checked = e.target.checked
+    setSkipAddBusiness(checked)
+
+    if (checked) {
+      setShowPopOut(true) // Show the popout
+      // router.push('/businesses') // Navigate immediately
+    }
+  }
+  // Handle close of popout
+  const handleClose = () => {
+    setShowPopOut(false)
+    router.push('/businesses') // redirect AFTER modal is closed
+  }
+
+  //   //handling clientside Cloudinary images and files
+  //   const handleFileChange = async (e) => {
+  //     const file = e.target.files[0];
+  //     const fieldName = e.target.name;
+  //     if (!file) return;
+  // setIsUploading(true);
+  //     try {
+  //       const uploaded = await uploadToCloudinary(file);
+  //       setImageUrls((prev) => ({
+  //         ...prev,
+  //         [fieldName]: uploaded,
+  //       }));
+  //     } catch (err) {
+  //       console.error('Cloudinary upload failed:', err);
+  //       alert('Image upload failed');
+  //       e.target.value = ''; // Reset file input so user can reselect
+  //     }
+  //      setIsUploading(false);
+  //   };
+
+  // // const imageUrl = await uploadToCloudinary(file);
+  // // console.log('Cloudinary URL:', imageUrl);
+  // const handleSubmit = async (e) => {
+  // e.preventDefault(); // stop native form submission
+
+  // if (isUploading) {
+  //   alert('Please wait for image uploads to finish.');
+  //   return;
+  // }
+  // // Debug if needed
+  // // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
+  //   const formData = new FormData(e.target);
+  // try {
+  //   await addBusinessAction(formData);
+  //   router.push('/businesses');
+  // } catch (err) {
+  //   console.error('Form submission failed:', err);
+  //   alert('Something went wrong. Please try again.');
+  //   };
+  
 
   return (
     // <form ={addBusinessAction} >

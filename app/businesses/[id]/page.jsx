@@ -11,7 +11,7 @@ const BusinessPage = async ({ params }) => {
  
   await connectDB();
   
-  const locobiz = await LocoBiz.findById(params.id).lean();
+  const locobiz = await LocoBiz.findById(params._id).lean();
   // const locobiz = convertToSerializeableObject(locobizDoc);
 // if (!locobiz) {
 //   return (
@@ -26,7 +26,7 @@ const BusinessPage = async ({ params }) => {
   return (
     <>
       <div className="relative w-full">
-        <BusinessHeaderImage image={`/images/locobizimages/${locobiz.locobiz_profile_image}`} />
+        <BusinessHeaderImage image={locobiz.locobiz_profile_image} />
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
           <h1 className="text-white text-7xl font-bold">{locobiz.locobiz_name}</h1>
         </div>

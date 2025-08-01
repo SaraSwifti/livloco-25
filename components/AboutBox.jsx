@@ -1,14 +1,15 @@
+import connectDB from '@/config/database';
 import CurrentStatsBox from '@/components/CurrentStatsBox';
 // import NewMemLocal from '@/components/NewMemLocal';
-import connectDB from '@/config/database';
-import LocoBiz from '@/models/LocoBiz';
+
+import locoBiz from '@/models/LocoBiz';
 
 const AboutBox = async () => {
-  await connectDB()
+  await connectDB();
   //Get the latest 3 members general info without link
-  const recentBizs = await LocoBiz.find({})
+  const recentBizs = await locoBiz.find({})
     .sort({ createdAt: -1 })
-    .limit(5)
+    .limit(4)
     .lean()
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>

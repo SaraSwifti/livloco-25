@@ -312,8 +312,8 @@ const BusinessDetails = ({ locobiz }) => {
                             sizes='(max-width: 768px) 100vw, 33vw'
                           />
                         ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
+                          <div className="mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded">
+                           <span className="text-center w-full">No image available</span> 
                           </div>
                         )}
                       </div>
