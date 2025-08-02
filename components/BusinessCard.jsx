@@ -11,7 +11,7 @@ const BusinessCard = ({ locobiz }) => {
       <div className='rounded-xl pt-1 shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
             {/* {locobiz.locobiz_profile_image?.image ? ( */}
-           {locobiz.needs.need3?.image ? (
+           {locobiz.locobiz_profile_image && locobiz.locobiz_profile_image.trim() !== '' ? (
             <Image
           src={locobiz.locobiz_profile_image}
           // Make a component to insert alt tag for these per customer//

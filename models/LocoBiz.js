@@ -120,7 +120,8 @@ const LocoBizSchema = new Schema(
     },
     locobiz_profile_image: {
       type: String,
-        required: false,
+      required: false,
+        
     },
     farmers_market_location: {
       fm_location_post: {
@@ -265,7 +266,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+         
         },
         price: {
           type: String,
@@ -285,7 +287,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+           
         },
         price: {
           type: String,
@@ -305,7 +308,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+            
         },
         price: {
           type: String,
@@ -327,7 +331,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+            
         },
       },
       need2: {
@@ -342,7 +347,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+             
         },
       },
       need3: {
@@ -357,7 +363,8 @@ const LocoBizSchema = new Schema(
         },
         image: {
           type: String,
-            required: false,
+          required: false,
+           
         },
       },
     },

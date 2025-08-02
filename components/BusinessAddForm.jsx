@@ -1,3 +1,5 @@
+//livloco-25/components/BusinessAddForm.jsx
+
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -351,7 +353,7 @@ const BusinessAddForm = ({ userEmail }) => {
               Upload a profile image for your business if you have one.
             </label>
             <input
-              name='locobiz_profile_image' // Make sure this matches your hidden input!
+              // name='locobiz_profile_image' // Make sure this matches your hidden input!
               type='file'
               onChange={(e) => handleFileChange(e, 'profile')}
               className='mt-1 bg-white block w-full border rounded p-2'
@@ -486,11 +488,12 @@ const BusinessAddForm = ({ userEmail }) => {
                   </label>
                   <input
                     type='file'
-                    name={`selling.selling${index + 1}.image`}
+                    // name={`selling.selling${index + 1}.image`}
                     onChange={(e) => handleFileChange(e, `selling${index + 1}`)}
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
-                    accept='image/*'
                     id={`selling${index + 1}_image`}
+                    accept='image/*'
+                  
                   />
                   <input
                     type='hidden'
@@ -579,7 +582,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   </label>
                   <input
                     type='file'
-                    name={`needing.need${index + 1}.image`}
+                    // name={`needing.need${index + 1}.image`}
                     onChange={(e) => handleFileChange(e, `need${index + 1}`)}
                     id={`need${index + 1}_image`}
                     className='mt-1 block w-full border rounded p-2'

@@ -12,6 +12,18 @@ const BusinessPage = async ({ params }) => {
   await connectDB();
   
   const locobiz = await LocoBiz.findById(params._id).lean();
+
+  //   // If business not found, show fallback UI or redirect
+  // if (!locobiz) {
+  //   return (
+  //     <div className="text-center py-10">
+  //       <h2 className="text-2xl font-semibold">Business not found</h2>
+  //       <Link href="/businesses" className="text-blue-600 underline mt-4 inline-block">
+  //         Back to Listings
+  //       </Link>
+  //     </div>
+  //   );
+  // }
   // const locobiz = convertToSerializeableObject(locobizDoc);
 // if (!locobiz) {
 //   return (

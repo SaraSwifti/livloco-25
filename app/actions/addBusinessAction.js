@@ -1,3 +1,5 @@
+
+//livloco-25/app/actions/addBusinessAction.js
 'use server';
 import connectDB from '@/config/database';
 import LocoBiz from '@/models/LocoBiz';
@@ -35,6 +37,20 @@ async function addBusinessAction(formData) {
   // return await handleFileUpload(file); // Your upload logic
   // };
   
+const getImageUrlFromField = async (fieldValue) => {
+  if (!fieldValue || typeof fieldValue !== 'string') return '';
+  if (fieldValue.startsWith('http')) return fieldValue;
+  return '';
+};
+
+const profileImageUrl = await getImageUrlFromField(formData.get('locobiz_profile_image'));
+const selling1ImageUrl = await getImageUrlFromField(formData.get('selling.selling1.image'));
+const selling2ImageUrl = await getImageUrlFromField(formData.get('selling.selling2.image'));
+const selling3ImageUrl = await getImageUrlFromField(formData.get('selling.selling3.image'));
+const need1ImageUrl = await getImageUrlFromField(formData.get('needs.need1.image'));
+const need2ImageUrl = await getImageUrlFromField(formData.get('needs.need2.image'));
+const need3ImageUrl = await getImageUrlFromField(formData.get('needs.need3.image'));
+
   // Normalize phone to E.164 format (US-based)
 let phoneRaw = formData.get('phone') || '';
 let phoneDigits = phoneRaw.replace(/\D/g, '');
@@ -65,21 +81,6 @@ if (formData.get('locobiz_address.post_permission') === 'on') {
 }
   // using cloudinary url to store photos
   
-const profileImageFile = formData.get('locobiz_profile_image');
-const selling1ImageFile = formData.get('selling.selling1.image');
-const selling2ImageFile = formData.get('selling.selling2.image');
-const selling3ImageFile = formData.get('selling.selling3.image');
-const need1ImageFile = formData.get('needs.need1.image');
-const need2ImageFile = formData.get('needs.need2.image');
-const need3ImageFile = formData.get('needs.need3.image');
-
-const profileImageUrl = await fileToUrl(profileImageFile);
-const selling1ImageUrl = await fileToUrl(selling1ImageFile);
-const selling2ImageUrl = await fileToUrl(selling2ImageFile);
-const selling3ImageUrl = await fileToUrl(selling3ImageFile);
-const need1ImageUrl = await fileToUrl(need1ImageFile);
-const need2ImageUrl = await fileToUrl(need2ImageFile);
-const need3ImageUrl = await fileToUrl(need3ImageFile);
 
  //create businessData object with embedded members info
   const locobizData = {
@@ -167,8 +168,8 @@ const need3ImageUrl = await fileToUrl(need3ImageFile);
       selling3: {
         type: formData.get('selling.selling3.type'),
         description: formData.get('selling.selling3.description'),
-        image:selling2ImageUrl,
-        price: formData.get('selling.selling3.description'),
+        image:selling3ImageUrl,
+        price: formData.get('selling.selling3.price'),
       },
     },
     needs: {
@@ -190,7 +191,7 @@ const need3ImageUrl = await fileToUrl(need3ImageFile);
       },
     },
   
-    current_promotional: formData.get('current_promotional')
+    current_promotional: formData.get('current_promotional'),
     // locobiz_votes: {
     //   type: Number,
     // },
