@@ -1,3 +1,7 @@
+
+//livloco-25\app\businesses\page.jsx
+
+
 import Hero from '@/components/Hero';
 
 import connectDB from '@/config/database';

@@ -24,7 +24,7 @@ const BusinessDetails = ({ locobiz }) => {
               {(locobiz.current_promotional || '').trim() !== '' && (
                 <>
                   <h4 className='text-lg text-gray-400 font-semibold'>
-                    Current Promotion
+                    Current Promotional
                   </h4>
                   <h3 className='text-xl text-orange-800 font-bold'>{`${locobiz.current_promotional}`}</h3>
                 </>
@@ -90,7 +90,7 @@ const BusinessDetails = ({ locobiz }) => {
                       </p>
                       {locobiz.selling.selling1?.image ? (
                         <Image
-                          src={`/images/locobizimages/${locobiz.selling.selling1.image}`}
+                          src={locobiz.selling.selling1.image}
                           alt={locobiz.selling.selling1.description || 'Need item image'.slice(0, 100)}
                           className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                           width={600}
@@ -133,7 +133,7 @@ const BusinessDetails = ({ locobiz }) => {
                         </p>
                         {locobiz.selling.selling2?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locobiz.selling.selling2.image}`}
+                            src={locobiz.selling.selling2.image}
                             alt={locobiz.selling.selling2.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
@@ -176,7 +176,7 @@ const BusinessDetails = ({ locobiz }) => {
                         </p>
                         {locobiz.selling.selling3?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locobiz.selling.selling3.image}`}
+                            src={locobiz.selling.selling3.image}
                             alt={locobiz.selling.selling3.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
@@ -226,7 +226,7 @@ const BusinessDetails = ({ locobiz }) => {
                         </h3>
                         {locobiz.needs.need1?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locobiz.needs.need1.image}`}
+                            src={locobiz.needs.need1.image}
                             alt={locobiz.needs.need1.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
@@ -265,7 +265,7 @@ const BusinessDetails = ({ locobiz }) => {
                         </h3>
                         {locobiz.needs.need2?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locobiz.needs.need2.image}`}
+                            src={locobiz.needs.need2.image}
                             alt={locobiz.needs.need2.description || 'Selling item'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}
