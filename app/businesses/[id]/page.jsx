@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation'; // Optional for handling missing business
 import { FaArrowLeft } from 'react-icons/fa';
  
-const BusinessPage = async ({ params}) => {
+const BusinessPage = async ({ params }) => {
  
   await connectDB();
 

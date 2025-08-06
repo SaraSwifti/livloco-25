@@ -115,8 +115,9 @@ const LocoBizSchema = new Schema(
       type: String,
       unique: true,
       trim: true,
-      //match: /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
-      match: /regex/,
+      match: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
+     
+  
     },
     locobiz_profile_image: {
       type: String,

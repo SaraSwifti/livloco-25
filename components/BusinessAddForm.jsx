@@ -76,8 +76,26 @@ const BusinessAddForm = ({ userEmail }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     const form = new FormData(e.target)
+
+  const website = form.get('website');
+  if (website) {
+    let cleanWebsite = website.trim().replace(/\/$/, '');
+
+    // ✅ Client-side URL validation
+    if (!/^https?:\/\/[^\s$.?#].[^\s]*$/i.test(cleanWebsite)) {
+      alert('Please enter a valid website starting with https://');
+      return; // 🚫 Stop submission if invalid
+    }
+
+    // ✅ Ensure https:// is included
+    if (!/^https?:\/\//i.test(cleanWebsite)) {
+      cleanWebsite = `https://${cleanWebsite}`;
+    }
+
+    form.set('website', cleanWebsite); // Update the form value
+  }
+    
 
     // Inject image URLs into the FormData
     form.set('locobiz_profile_image', images.profile || '')
@@ -640,7 +658,7 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.biz_phone'
                   placeholder='+1234567890'
                   className='mt-1 bg-white w-full rounded border p-2'
-                  value={phoneDisplay}
+                  value={phone}
                   onChange={handlePhoneChange}
                 />
               </div>
