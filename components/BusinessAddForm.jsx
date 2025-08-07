@@ -61,6 +61,20 @@ const BusinessAddForm = ({ userEmail }) => {
   const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
   const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
   // const formData = new FormData(e.target);
+  //dropzone use state to include showing the name of the file that has been uploaded
+  const [uploadedFileNames, setUploadedFileNames] = useState({})
+
+  const handleDropzoneUpload = async (file, key) => {
+    if (!file) return
+
+    try {
+      const url = await uploadToCloudinary(file)
+      setImages((prev) => ({ ...prev, [key]: url }))
+      setUploadedFileNames((prev) => ({ ...prev, [key]: file.name }))
+    } catch (err) {
+      console.error('Cloudinary upload failed:', err)
+    }
+  }
 
   const maxLength = 500
   const handleFileChange = async (e, key) => {
@@ -362,29 +376,34 @@ const BusinessAddForm = ({ userEmail }) => {
 
           {/* Should they want to add a business profile image */}
           <div>
-            <label
+            {/* <label
               htmlFor='locobiz_profile_image'
               className='block text-sm font-medium'
             >
               Upload a profile image for your business if you have one.
-            </label>
+            </label> */}
             <DropzoneUploader
               label='Upload a profile image for your business if you have one.'
-              onUpload={(file) => handleFileUpload(file, 'profile')}
+              onUpload={(file) => handleDropzoneUpload(file, 'profile')}
+              uploadedFileName={uploadedFileNames['profile']}
+              className='hidden' // optional: keep for accessibility/fallback
+              id='locobiz_profile_image'
+              accept='image/*'
             />
-            <input
+            {/* <input
               // name='locobiz_profile_image' // Make sure this matches your hidden input!
               type='file'
               // className='mt-1 bg-white block w-full border rounded p-2'
               className='hidden' // optional: keep for accessibility/fallback
               id='locobiz_profile_image'
               accept='image/*'
-            />
+            /> */}
             <input
               type='hidden'
               name='locobiz_profile_image'
               // value={imageUrls['locobiz_profile_image'] || ''}
-              value={images.profile}
+              // value={images.profile}
+              value={images.locobiz_profile_image}
             />
           </div>
         </div>
@@ -502,17 +521,13 @@ const BusinessAddForm = ({ userEmail }) => {
 
                 {/* Image */}
                 <div>
-                  <label
-                    htmlFor={`selling${index + 1}_image`}
-                    className='block text-sm font-medium'
-                  >
-                    Upload image if you have one
-                  </label>
-                  <input
-                    type='file'
-                    // name={`selling.selling${index + 1}.image`}
-                    onChange={(e) => handleFileChange(e, `selling${index + 1}`)}
-                    className='mt-1 bg-gray-100 block w-full border rounded p-2'
+                  <DropzoneUploader
+                    label='Upload image if you have one'
+                    onUpload={(file) =>
+                      handleDropzoneUpload(file, `selling${index + 1}`)
+                    }
+                    uploadedFileName={uploadedFileNames[`selling${index + 1}`]}
+                    className='hidden'
                     id={`selling${index + 1}_image`}
                     accept='image/*'
                   />
@@ -595,23 +610,16 @@ const BusinessAddForm = ({ userEmail }) => {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor={`need${index + 1}_image`}
-                    className='block text-sm font-medium'
-                  >
-                    Upload image if you have one
-                  </label>
-                  <input
-                    type='file'
-                    // name={`needing.need${index + 1}.image`}
-                    onChange={(e) => handleFileChange(e, `need${index + 1}`)}
-                    id={`need${index + 1}_image`}
-                    className='mt-1 block w-full border rounded p-2'
-                    accept='image/*'
+                  <DropzoneUploader
+                    label='Upload image if you have one'
+                    onUpload={(file) =>
+                      handleDropzoneUpload(file, `need${index + 1}`)
+                    }
+                    uploadedFileName={uploadedFileNames[`need${index + 1}`]}
                   />
                   <input
                     type='hidden'
-                    name={`needing.need${index + 1}.image`}
+                    name={`needs.need${index + 1}.image`}
                     value={images[`need${index + 1}`] || ''}
                   />
                 </div>
