@@ -7,6 +7,7 @@ import { useState } from 'react'
 import AddBusLaterPopout from '@/components/AddBusLaterPopout'
 import uploadToCloudinary from '@/utils/uploadToCloudinary'
 import addBusinessAction from '@/app/actions/addBusinessAction'
+import DropzoneUploader from '@/components/DropzoneUploader'
 
 const daysOfWeek = [
   'monday',
@@ -30,18 +31,18 @@ const BusinessAddForm = ({ userEmail }) => {
     need1: '',
     need2: '',
     need3: '',
-  });
+  })
 
   //skip add business form.
-  const [description, setDescription] = useState('');
-  const [skipAddBusiness, setSkipAddBusiness] = useState(false);
+  const [description, setDescription] = useState('')
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
   //to handle phonnumber fomatting and saving as a string
-  const [phone, setPhone] = useState('');
-  const [phoneValue, setPhoneValue] = useState(''); // backend-safe version
+  const [phone, setPhone] = useState('')
+  const [phoneValue, setPhoneValue] = useState('') // backend-safe version
   //showpopout for directions later
-  const [showPopOut, setShowPopOut] = useState(false);
+  const [showPopOut, setShowPopOut] = useState(false)
   //handling uploading of file to wait before submission
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false)
   // mapping and states to toggle needs and selling section
 
   const [showSellNeedForm, setShowSellNeedForm] = useState(false)
@@ -49,19 +50,19 @@ const BusinessAddForm = ({ userEmail }) => {
     { id: 1 },
     { id: 2 },
     { id: 3 },
-  ]);
+  ])
 
   //image urls for cloudinary
-  const [imageUrls, setImageUrls] = useState({});
-  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  const [imageUrls, setImageUrls] = useState({})
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
   // storefront marketstand needed data
-  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false);
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
   // farmers market toggle state
-  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false);
-  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false);
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
+  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
   // const formData = new FormData(e.target);
 
-  const maxLength = 500;
+  const maxLength = 500
   const handleFileChange = async (e, key) => {
     const file = e.target.files[0]
     if (!file) return
@@ -71,31 +72,29 @@ const BusinessAddForm = ({ userEmail }) => {
       setImages((prev) => ({ ...prev, [key]: url }))
     } catch (err) {
       console.error('Cloudinary upload failed:', err)
-    };
-  
-  };
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault()
     const form = new FormData(e.target)
 
-  const website = form.get('website');
-  if (website) {
-    let cleanWebsite = website.trim().replace(/\/$/, '');
+    const website = form.get('website')
+    if (website) {
+      let cleanWebsite = website.trim().replace(/\/$/, '')
 
-    // ✅ Client-side URL validation
-    if (!/^https?:\/\/[^\s$.?#].[^\s]*$/i.test(cleanWebsite)) {
-      alert('Please enter a valid website starting with https://');
-      return; // 🚫 Stop submission if invalid
+      // ✅ Client-side URL validation
+      if (!/^https?:\/\/[^\s$.?#].[^\s]*$/i.test(cleanWebsite)) {
+        alert('Please enter a valid website starting with https://')
+        return // 🚫 Stop submission if invalid
+      }
+
+      // ✅ Ensure https:// is included
+      if (!/^https?:\/\//i.test(cleanWebsite)) {
+        cleanWebsite = `https://${cleanWebsite}`
+      }
+
+      form.set('website', cleanWebsite) // Update the form value
     }
-
-    // ✅ Ensure https:// is included
-    if (!/^https?:\/\//i.test(cleanWebsite)) {
-      cleanWebsite = `https://${cleanWebsite}`;
-    }
-
-    form.set('website', cleanWebsite); // Update the form value
-  }
-    
 
     // Inject image URLs into the FormData
     form.set('locobiz_profile_image', images.profile || '')
@@ -183,7 +182,6 @@ const BusinessAddForm = ({ userEmail }) => {
   //   console.error('Form submission failed:', err);
   //   alert('Something went wrong. Please try again.');
   //   };
-  
 
   return (
     // <form ={addBusinessAction} >
@@ -200,8 +198,8 @@ const BusinessAddForm = ({ userEmail }) => {
             className='w-5 h-5'
           />
           <label className='font-medium text-lg'>
-            Skip adding a business profile for now and just puruse being a Livloco
-            Co-op Member.
+            Skip adding a business profile for now and just puruse being a
+            Livloco Co-op Member.
             <span className=''>
               {' '}
               There is no additional charge to post a business and comes with
@@ -211,9 +209,9 @@ const BusinessAddForm = ({ userEmail }) => {
           {showPopOut && <AddBusLaterPopout onClose={handleClose} />}
         </div>
         <p>
-          (For LivLoco purposes only. Under no circumstances will Livloco sell or
-          share your information. However we cannot prevent anyone from copying
-          any information that you have voluntarily displayed)
+          (For LivLoco purposes only. Under no circumstances will Livloco sell
+          or share your information. However we cannot prevent anyone from
+          copying any information that you have voluntarily displayed)
         </p>
         {/* Business name */}
         <div className='bg-white p-4 rounded border space-y-4'>
@@ -325,10 +323,10 @@ const BusinessAddForm = ({ userEmail }) => {
               <span className='text-red-500'>* </span>
               Account Holder's Phone{' '}
               <span className='block font-normal text-md'>
-                This number will be associated with the account holder for account
-                verification purposes only. A business phone number can be added
-                later, but is not required as we will have Livloco inter app
-                messaging if you do not want to give your number out.{' '}
+                This number will be associated with the account holder for
+                account verification purposes only. A business phone number can
+                be added later, but is not required as we will have Livloco
+                inter app messaging if you do not want to give your number out.{' '}
               </span>
             </label>
             <input
@@ -370,11 +368,15 @@ const BusinessAddForm = ({ userEmail }) => {
             >
               Upload a profile image for your business if you have one.
             </label>
+            <DropzoneUploader
+              label='Upload a profile image for your business if you have one.'
+              onUpload={(file) => handleFileUpload(file, 'profile')}
+            />
             <input
               // name='locobiz_profile_image' // Make sure this matches your hidden input!
               type='file'
-              onChange={(e) => handleFileChange(e, 'profile')}
-              className='mt-1 bg-white block w-full border rounded p-2'
+              // className='mt-1 bg-white block w-full border rounded p-2'
+              className='hidden' // optional: keep for accessibility/fallback
               id='locobiz_profile_image'
               accept='image/*'
             />
@@ -444,7 +446,9 @@ const BusinessAddForm = ({ userEmail }) => {
                 {/* Type */}
 
                 <div>
-                  <label className='block text-sm font-medium  mb-1'>Type</label>
+                  <label className='block text-sm font-medium  mb-1'>
+                    Type
+                  </label>
                   <div className='flex items-center gap-6'>
                     <label
                       htmlFor={`selling${index + 1}_type_product`}
@@ -511,7 +515,6 @@ const BusinessAddForm = ({ userEmail }) => {
                     className='mt-1 bg-gray-100 block w-full border rounded p-2'
                     id={`selling${index + 1}_image`}
                     accept='image/*'
-                  
                   />
                   <input
                     type='hidden'
@@ -931,6 +934,6 @@ const BusinessAddForm = ({ userEmail }) => {
         </button>
       </div>
     </form>
-  );
-};
+  )
+}
 export default BusinessAddForm

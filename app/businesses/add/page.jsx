@@ -3,7 +3,7 @@
 // import User from '@/models/User';
 
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@//utils/authOptions';; 
+import { authOptions } from '@/utils/authOptions';
 
 import BusinessAddForm from "@/components/BusinessAddForm.jsx";
 
