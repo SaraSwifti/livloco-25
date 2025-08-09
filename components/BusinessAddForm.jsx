@@ -4,6 +4,9 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import SellingEntry from '@/components/SellingEntry'
+import NeedingEntry from '@/components/NeedingEntry'
+
 import AddBusLaterPopout from '@/components/AddBusLaterPopout'
 import uploadToCloudinary from '@/utils/uploadToCloudinary'
 import addBusinessAction from '@/app/actions/addBusinessAction'
@@ -53,14 +56,14 @@ const BusinessAddForm = ({ userEmail }) => {
   ])
 
   //image urls for cloudinary
-  const [imageUrls, setImageUrls] = useState({})
+
   const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
   // storefront marketstand needed data
   const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
   // farmers market toggle state
   const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
   const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
-  // const formData = new FormData(e.target);
+
   //dropzone use state to include showing the name of the file that has been uploaded
   const [uploadedFileNames, setUploadedFileNames] = useState({})
 
@@ -92,17 +95,24 @@ const BusinessAddForm = ({ userEmail }) => {
     e.preventDefault()
     const form = new FormData(e.target)
 
+    //  Require the Sell/Need toggle to be checked
+    if (!showSellNeedForm) {
+    alert('You must check the box to add your selling/needing profile before submitting.');
+    return;
+  }
+
+
     const website = form.get('website')
     if (website) {
       let cleanWebsite = website.trim().replace(/\/$/, '')
 
-      // ✅ Client-side URL validation
+      // Client-side URL validation
       if (!/^https?:\/\/[^\s$.?#].[^\s]*$/i.test(cleanWebsite)) {
         alert('Please enter a valid website starting with https://')
         return // 🚫 Stop submission if invalid
       }
 
-      // ✅ Ensure https:// is included
+      //  Ensure https:// is included
       if (!/^https?:\/\//i.test(cleanWebsite)) {
         cleanWebsite = `https://${cleanWebsite}`
       }
@@ -157,48 +167,7 @@ const BusinessAddForm = ({ userEmail }) => {
     router.push('/businesses') // redirect AFTER modal is closed
   }
 
-  //   //handling clientside Cloudinary images and files
-  //   const handleFileChange = async (e) => {
-  //     const file = e.target.files[0];
-  //     const fieldName = e.target.name;
-  //     if (!file) return;
-  // setIsUploading(true);
-  //     try {
-  //       const uploaded = await uploadToCloudinary(file);
-  //       setImageUrls((prev) => ({
-  //         ...prev,
-  //         [fieldName]: uploaded,
-  //       }));
-  //     } catch (err) {
-  //       console.error('Cloudinary upload failed:', err);
-  //       alert('Image upload failed');
-  //       e.target.value = ''; // Reset file input so user can reselect
-  //     }
-  //      setIsUploading(false);
-  //   };
-
-  // // const imageUrl = await uploadToCloudinary(file);
-  // // console.log('Cloudinary URL:', imageUrl);
-  // const handleSubmit = async (e) => {
-  // e.preventDefault(); // stop native form submission
-
-  // if (isUploading) {
-  //   alert('Please wait for image uploads to finish.');
-  //   return;
-  // }
-  // // Debug if needed
-  // // for (let pair of formData.entries()) console.log(pair[0], pair[1]);
-  //   const formData = new FormData(e.target);
-  // try {
-  //   await addBusinessAction(formData);
-  //   router.push('/businesses');
-  // } catch (err) {
-  //   console.error('Form submission failed:', err);
-  //   alert('Something went wrong. Please try again.');
-  //   };
-
   return (
-    // <form ={addBusinessAction} >
     <form onSubmit={handleSubmit}>
       <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
         <h2 className='text-3xl text-center font-semibold mb-6'>
@@ -234,7 +203,7 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='locobiz_name'
               className='block font-bold mb-2'
             >
-              <span className='text-red-500'>* </span>LocoBusiness Name
+              LocoBusiness Name <span className='text-red-500'>required</span>
             </label>
             <input
               type='text'
@@ -251,8 +220,8 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='locobiz_description'
               className='block text-gray-700 font-bold mb-2'
             >
-              <span className='text-red-500'>* </span>
               Description
+              <span className='text-red-500'> required</span>
             </label>
             <textarea
               id='locobiz_description'
@@ -274,9 +243,9 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='mem_zip'
               className='block font-bold mb-2'
             >
-              <span className='text-red-500'>* </span>
               So That Your Neighbors Can Find you in a Location Search if you
               don't have a storefront or stand.
+              <span className='text-red-500'> required</span>
             </label>
             <input
               type='text'
@@ -294,8 +263,8 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='account_owner_name'
               className='block font-bold mb-2'
             >
-              <span className='text-red-500'>* </span>
               Account Holder's Name
+              <span className='text-red-500'> required</span>
             </label>
             <input
               type='text'
@@ -326,7 +295,6 @@ const BusinessAddForm = ({ userEmail }) => {
               required
             />
           </div>
-          {/* Add here the option of checking a box and giving permission to email notify when there is a member message here */}
 
           {/* Account holder's phone number for validation */}
           <div className='mb-4'>
@@ -334,8 +302,8 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='phone'
               className='block font-bold mb-2'
             >
-              <span className='text-red-500'>* </span>
               Account Holder's Phone{' '}
+              <span className='text-red-500'> required</span>
               <span className='block font-normal text-md'>
                 This number will be associated with the account holder for
                 account verification purposes only. A business phone number can
@@ -376,12 +344,6 @@ const BusinessAddForm = ({ userEmail }) => {
 
           {/* Should they want to add a business profile image */}
           <div>
-            {/* <label
-              htmlFor='locobiz_profile_image'
-              className='block text-sm font-medium'
-            >
-              Upload a profile image for your business if you have one.
-            </label> */}
             <DropzoneUploader
               label='Upload a profile image for your business if you have one.'
               onUpload={(file) => handleDropzoneUpload(file, 'profile')}
@@ -390,20 +352,11 @@ const BusinessAddForm = ({ userEmail }) => {
               id='locobiz_profile_image'
               accept='image/*'
             />
-            {/* <input
-              // name='locobiz_profile_image' // Make sure this matches your hidden input!
-              type='file'
-              // className='mt-1 bg-white block w-full border rounded p-2'
-              className='hidden' // optional: keep for accessibility/fallback
-              id='locobiz_profile_image'
-              accept='image/*'
-            /> */}
+
             <input
               type='hidden'
               name='locobiz_profile_image'
-              // value={imageUrls['locobiz_profile_image'] || ''}
-              // value={images.profile}
-              value={images.locobiz_profile_image}
+              value={images.profile || ''}
             />
           </div>
         </div>
@@ -414,17 +367,19 @@ const BusinessAddForm = ({ userEmail }) => {
       <div className='flex flex-col p-2 gap-2'>
         <div className='flex items-center p-2 gap-3'>
           <input
-            id=''
-            name=''
             type='checkbox'
+            id='showSellNeedForm'
+            name='showSellNeedForm'
             checked={showSellNeedForm}
             onChange={(e) => setShowSellNeedForm(e.target.checked)}
             className='w-5 h-5'
-            required
           />
-          <label className='font-medium text-lg'>
-            <span className='text-red-500'>* </span>
-            Add Selling/Needing profile to make your LivLoco pofile Active
+          <label
+            htmlFor='showSellNeedForm'
+            className='font-medium text-lg'
+          >
+            Add Selling/Needing profile
+            <span className='text-red-500'> required</span>
           </label>
         </div>
         <h1>
@@ -440,104 +395,13 @@ const BusinessAddForm = ({ userEmail }) => {
 
             <h1 className='font-bold text-2xl'>Selling</h1>
             {sellingItems.map((item, index) => (
-              <div
+              <SellingEntry
                 key={item.id}
-                className='bg-white p-4 rounded border space-y-4'
-              >
-                <h3 className='text-lg font-semibold'>Selling {index + 1}</h3>
-                {/* Description */}
-                <div>
-                  <label
-                    htmlFor={`selling${index + 1}_description`}
-                    className='block text-sm font-medium text-black'
-                  >
-                    Description
-                  </label>
-                  <input
-                    placeholder='e.g. Grass-fed beef, CNC Services, Shoe Repair, Manure'
-                    id={`selling${index + 1}_description`}
-                    name={`selling.selling${index + 1}.description`}
-                    type='text'
-                    className='mt-1 block w-full bg-gray-100 border rounded p-2'
-                  />
-                </div>
-
-                {/* Type */}
-
-                <div>
-                  <label className='block text-sm font-medium  mb-1'>
-                    Type
-                  </label>
-                  <div className='flex items-center gap-6'>
-                    <label
-                      htmlFor={`selling${index + 1}_type_product`}
-                      className='flex items-center space-x-2'
-                    >
-                      <input
-                        type='radio'
-                        name={`selling.selling${index + 1}.type`}
-                        id={`selling${index + 1}_type_product`}
-                        value='product'
-                        defaultChecked
-                        className='text-blue-600'
-                        required
-                      />
-                      <span>Product</span>
-                    </label>
-
-                    <label
-                      htmlFor={`selling${index + 1}_type_service`}
-                      className='flex items-center space-x-2'
-                    >
-                      <input
-                        type='radio'
-                        name={`selling.selling${index + 1}.type`}
-                        id={`selling${index + 1}_type_service`}
-                        value='service'
-                        className='text-green-600'
-                        required
-                      />
-                      <span>Service</span>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div>
-                  <label
-                    htmlFor={`selling${index + 1}_price`}
-                    className='block text-sm font-medium'
-                  >
-                    Price
-                  </label>
-                  <input
-                    placeholder='$/bushel/bale, variable/job, free '
-                    id={`selling${index + 1}_price`}
-                    name={`selling.selling${index + 1}.price`}
-                    type='text'
-                    className='mt-1 bg-gray-100 block w-full border rounded p-2'
-                  />
-                </div>
-
-                {/* Image */}
-                <div>
-                  <DropzoneUploader
-                    label='Upload image if you have one'
-                    onUpload={(file) =>
-                      handleDropzoneUpload(file, `selling${index + 1}`)
-                    }
-                    uploadedFileName={uploadedFileNames[`selling${index + 1}`]}
-                    className='hidden'
-                    id={`selling${index + 1}_image`}
-                    accept='image/*'
-                  />
-                  <input
-                    type='hidden'
-                    name={`selling.selling${index + 1}.image`}
-                    value={images[`selling${index + 1}`] || ''}
-                  />
-                </div>
-              </div>
+                index={index}
+                images={images}
+                uploadedFileNames={uploadedFileNames}
+                handleDropzoneUpload={handleDropzoneUpload}
+              />
             ))}
 
             {/* the needing entry feilds */}
@@ -548,83 +412,16 @@ const BusinessAddForm = ({ userEmail }) => {
                 (no price input as seller determines price.)
               </span>
             </h1>
-            {needItems.map((item, index) => (
-              <div
-                key={item.id}
-                className='bg-white p-4 rounded border space-y-4'
-              >
-                <h3 className='text-lg font-semibold'>Need {index + 1}</h3>
+          {needItems.map((item, index) => (
+  <NeedingEntry
+    key={item.id}
+    index={index}
+    images={images}
+    uploadedFileNames={uploadedFileNames}
+    handleDropzoneUpload={handleDropzoneUpload}
+  />
+))}
 
-                {/* Description */}
-                <div>
-                  <label
-                    htmlFor={`need${index + 1}_description`}
-                    className='block text-sm font-medium'
-                  >
-                    Description
-                  </label>
-                  <input
-                    placeholder='Hedge Removal, Cement Work, Local Eggs'
-                    id={`need${index + 1}_description`}
-                    name={`needs.need${index + 1}.description`}
-                    type='text'
-                    className='mt-1 bg-gray-100 block w-full border rounded p-2'
-                  />
-                </div>
-
-                {/* Type */}
-                <div>
-                  <label className='block text-sm font-medium'>Type</label>
-                  <div className='flex items-center gap-6'>
-                    <label
-                      htmlFor={`need${index + 1}_type_product`}
-                      className='flex items-center space-x-2'
-                    >
-                      <input
-                        type='radio'
-                        id={`need${index + 1}_type_product`}
-                        name={`needs.need${index + 1}.type`}
-                        value='product'
-                        defaultChecked
-                        className='text-blue-600'
-                        required
-                      />
-                      <span>Product</span>
-                    </label>
-
-                    <label
-                      htmlFor={`need${index + 1}_type_service`}
-                      className='flex items-center space-x-2'
-                    >
-                      <input
-                        type='radio'
-                        id={`need${index + 1}_type_service`}
-                        name={`needs.need${index + 1}.type`}
-                        value='service'
-                        className='text-green-600'
-                        required
-                      />
-                      <span>Service</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <DropzoneUploader
-                    label='Upload image if you have one'
-                    onUpload={(file) =>
-                      handleDropzoneUpload(file, `need${index + 1}`)
-                    }
-                    uploadedFileName={uploadedFileNames[`need${index + 1}`]}
-                  />
-                  <input
-                    type='hidden'
-                    name={`needs.need${index + 1}.image`}
-                    value={images[`need${index + 1}`] || ''}
-                  />
-                </div>
-              </div>
-            ))}
           </div>
         </>
       ) : null}
@@ -691,13 +488,13 @@ const BusinessAddForm = ({ userEmail }) => {
 
               <div>
                 <label
-                  htmlFor='locobiz_address_line1'
+                  htmlFor='locobiz_address_line2'
                   className='block text-sm font-medium'
                 >
                   Address Line 2
                 </label>
                 <input
-                  id='locobiz_address_line1'
+                  id='locobiz_address_line2'
                   type='text'
                   name='locobiz_address.add_line2'
                   placeholder='Or short description of the farmstand.'
@@ -734,9 +531,6 @@ const BusinessAddForm = ({ userEmail }) => {
                   id='locobiz_state'
                   type='text'
                   name='locobiz_address.state'
-                  // value={formData.locobiz_address.state}
-                  // onChange={handleAddressChange}
-
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
               </div>
@@ -752,9 +546,6 @@ const BusinessAddForm = ({ userEmail }) => {
                   id='locobiz_address_zipcode'
                   type='text'
                   name='locobiz_address.zipcode'
-                  // value={formData.locobiz_address.zipcode}
-                  // onChange={handleAddressChange}
-
                   pattern='^\d{5}(-\d{4})?$'
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
@@ -773,7 +564,6 @@ const BusinessAddForm = ({ userEmail }) => {
                   name='locobiz_address.country'
                   value='USA'
                   readOnly
-                  // onChange={handleAddressChange}
                   className='mt-1  bg-white w-full rounded border p-2'
                 />
               </div>

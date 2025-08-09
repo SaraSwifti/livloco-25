@@ -1,36 +1,85 @@
 'use client'
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import logo from '@/assets/images/newlivlocologo.png'
-import profileDefault from '@/assets/images/profile.png'
-import { FaGoogle } from 'react-icons/fa'
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import logo from '@/assets/images/newlivlocologo.png';
+import profileDefault from '@/assets/images/profile.png';
+import { FaGoogle } from 'react-icons/fa';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Navbar = () => {
-  const { data: session } = useSession()
-  const profileImage = session?.user?.image
+  const { data: session } = useSession();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  const [providers, setProviders] = useState(null)
+  const profileImage = session?.user?.image;
+  const profileMenuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const mobileButtonRef = useRef(null);
 
-  const pathname = usePathname()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [providers, setProviders] = useState(null);
+  /// for closing mobile menue dropdown when item is selected or window is clicked into.
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders()
       setProviders(res)
-    }
+    };
 
-    setAuthProviders()
+    setAuthProviders();
 
     // NOTE: close mobile menu if the viewport size is changed
-    window.addEventListener('resize', () => {
-      setIsMobileMenuOpen(false)
-    })
-  }, [])
+    function handleResize() {
+      setIsMobileMenuOpen(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    //event listener should the mouse click outside of the profile dropdown and not chooe a item=> to close
+    function handleClickOutsideProfile(event) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuOpen(false);
+      };
+    };
+    document.addEventListener('mousedown', handleClickOutsideProfile);
+
+    // NEW: Close MOBILE menu when clicking outside
+    function handleClickOutsideMobile(event) {
+      if (!isMobileMenuOpen) return
+      const menu = mobileMenuRef.current
+      const button = mobileButtonRef.current
+      if (
+        menu &&
+        !menu.contains(event.target) &&
+        button &&
+        !button.contains(event.target)
+      ) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutsideMobile); // LINE 68 (NEW)
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mousedown', handleClickOutsideProfile);
+      document.removeEventListener('mousedown', handleClickOutsideMobile);
+
+
+    }
+  }, [isMobileMenuOpen]);
+// NEW: Close mobile menu on route change (pathname updates)
+  useEffect(() => {
+    setIsMobileMenuOpen(false)                 // LINE 81 (NEW)
+    setIsProfileMenuOpen(false)                // LINE 82 (NEW - nice UX)
+  }, [pathname]);
+
+  
 
   return (
     <nav className='bg-gray-800 border-b border-black py-3'>
@@ -43,8 +92,9 @@ const Navbar = () => {
               id='mobile-dropdown-button'
               className='relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
               aria-controls='mobile-menu'
-              aria-expanded='false'
+              aria-expanded={isMobileMenuOpen ? 'true' : 'false'}   
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                 ref={mobileButtonRef}
             >
               <span className='absolute -inset-0.5'></span>
               <span className='sr-only'>Open main menu</span>
@@ -111,6 +161,16 @@ const Navbar = () => {
                     LocoBusinesses
                   </Link>
                 )}
+                {session && (
+                  <Link
+                    href='/hostfarmmarkets'
+                    className={`${
+                      pathname === '/hostfarmmarkets' ? 'bg-black' : ''
+                    } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                  >
+                    LocoFarmers' Markets
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -136,6 +196,7 @@ const Navbar = () => {
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           {session && (
+            
             <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
               <Link
                 href='/messages'
@@ -161,7 +222,6 @@ const Navbar = () => {
                       d='M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0'
                     />
                   </svg>
-               
                 </button>
                 {/* <UnreadMesssageCount /> */}
                 <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>
@@ -170,7 +230,10 @@ const Navbar = () => {
                 </span>
               </Link>
               {/* <!-- Profile dropdown button --> */}
-              <div className='relative ml-3 z-50'>
+              <div
+                className='relative ml-3 z-50'
+                ref={profileMenuRef}
+              >
                 <div>
                   <button
                     type='button'
@@ -208,18 +271,21 @@ const Navbar = () => {
                       role='menuitem'
                       tabIndex='-1'
                       id='user-menu-item-0'
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Your LivLoco Profile and Membership Status
                     </Link>
                     <Link
                       href='/businesses/add'
                       className='block px-4 py-2 text-sm text-gray-700'
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Add Your LivLoco Business
                     </Link>
-                     <Link
+                    <Link
                       href='/businesses/edit'
                       className='block px-4 py-2 text-sm text-gray-700'
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Edit Your LivLoco Business
                     </Link>
@@ -230,6 +296,7 @@ const Navbar = () => {
                       role='menuitem'
                       tabIndex='-1'
                       id='user-menu-item-2'
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Saved LivLoco Businesses
                     </Link>
@@ -239,8 +306,8 @@ const Navbar = () => {
                       tabIndex='-1'
                       id='user-menu-item-2'
                       onClick={() => {
-                        setIsProfileMenuOpen(false);
-                        signOut();
+                        setIsProfileMenuOpen(false)
+                        signOut()
                       }}
                     >
                       Sign Out
@@ -255,13 +322,14 @@ const Navbar = () => {
 
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       {isMobileMenuOpen && (
-        <div id='mobile-menu'>
+        <div id='mobile-menu' ref={mobileMenuRef}>
           <div className='space-y-1 px-2 pb-3 pt-2'>
             <Link
               href='/'
               className={`${
                 pathname === '/' ? 'bg-black' : ''
               } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+            onClick={() => setIsMobileMenuOpen(false)} 
             >
               LocoHome
             </Link>
@@ -271,6 +339,7 @@ const Navbar = () => {
               className={`${
                 pathname === '/living' ? 'bg-black' : ''
               } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+            onClick={() => setIsMobileMenuOpen(false)} 
             >
               LocoLiving
             </Link>
@@ -280,24 +349,32 @@ const Navbar = () => {
                 className={`${
                   pathname === '/businesses' ? 'bg-black' : ''
                 } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+              onClick={() => setIsMobileMenuOpen(false)} 
               >
                 LocoBusinesses
               </Link>
             )}
-            {/* {session && (
-                            <Link
-                                href="/businesses/edit"
-                                className={`${pathname === '/businesses/add' ? 'bg-black' : ''} flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}>
-                                Edit YoLocoBusiness
-                            </Link>
-                            )} */}
+            {session && (
+              <Link
+                href='/hostfarmmarkets'
+                className={`${
+                  pathname === '/hostfarmmarkets' ? 'bg-black' : ''
+                } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+             onClick={() => setIsMobileMenuOpen(false)} 
+              >
+                LocoFarmers' Markets
+              </Link>
+            )}
             {!session && (
               <div>
                 {providers &&
                   Object.values(providers).map((provider) => (
                     <button
                       key={provider.id}
-                      onClick={() => signIn(provider.id)}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        signIn(provider.id)
+                      }}
                       className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'
                     >
                       <FaGoogle className='fa-brands fa-google mr-2'></FaGoogle>
