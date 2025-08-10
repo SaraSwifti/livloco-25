@@ -30,7 +30,7 @@ const StoreFront = ({ locobiz }) => {
             <div className='flex justify-center items-center'>
               <h1 className='text-xl text-green-900'>
                 {locobiz.locobiz_address.city}
-                {`, `} {locobiz.locobiz_address.state}
+                {`, `} {locobiz.locobiz_address.state_code}
                 {` `}
                 {locobiz.locobiz_address.zipcode}
               </h1>

@@ -2,15 +2,15 @@
 
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import SellingEntry from '@/components/SellingEntry'
-import NeedingEntry from '@/components/NeedingEntry'
-
-import AddBusLaterPopout from '@/components/AddBusLaterPopout'
-import uploadToCloudinary from '@/utils/uploadToCloudinary'
-import addBusinessAction from '@/app/actions/addBusinessAction'
-import DropzoneUploader from '@/components/DropzoneUploader'
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import SellingEntry from '@/components/SellingEntry';
+import NeedingEntry from '@/components/NeedingEntry';
+import StateSelect from '@/components/StateSelect';
+import AddBusLaterPopout from '@/components/AddBusLaterPopout';
+import uploadToCloudinary from '@/utils/uploadToCloudinary';
+import addBusinessAction from '@/app/actions/addBusinessAction';
+import DropzoneUploader from '@/components/DropzoneUploader';
 
 const daysOfWeek = [
   'monday',
@@ -92,8 +92,31 @@ const BusinessAddForm = ({ userEmail }) => {
     }
   }
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const form = new FormData(e.target)
+    e.preventDefault();
+    const form = new FormData(e.target);
+    //normalizing state values here
+    // storefront/farmstand
+const { state_code, state_name } = getNormalizedState(formData.get('locobiz_address.state'));
+
+const locobizAddress = {
+  // ...other fields...
+  state_code,        // canonical for queries
+  state_name,        // nice for display
+};
+
+// farmers market days (loop over your known day keys)
+const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const farmers_market_location = {};
+for (const day of days) {
+  const stateRaw = formData.get(`farmers_market_location.${day}.state`);
+  const norm = getNormalizedState(stateRaw);
+  farmers_market_location[day] = {
+    // ...name, city...
+    state_code: norm.state_code,
+    state_name: norm.state_name,
+  };
+}
+
 
     //  Require the Sell/Need toggle to be checked
     if (!showSellNeedForm) {
@@ -527,11 +550,12 @@ const BusinessAddForm = ({ userEmail }) => {
                 >
                   State
                 </label>
-                <input
+                <StateSelect
                   id='locobiz_state'
                   type='text'
                   name='locobiz_address.state'
                   className='mt-1  bg-white w-full rounded border p-2'
+                  required
                 />
               </div>
 
@@ -671,7 +695,7 @@ const BusinessAddForm = ({ userEmail }) => {
                     >
                       State
                     </label>
-                    <input
+                    <StateSelect
                       id={`farmers_market_location_${day}_state`}
                       name={`farmers_market_location.${day}.state`}
                       type='text'

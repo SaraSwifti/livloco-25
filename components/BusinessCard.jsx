@@ -40,7 +40,7 @@ const BusinessCard = ({ locobiz }) => {
               <h3 className='text-3xl font-bold'>{`${locobiz.locobiz_name}`}</h3>
               <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
               <FaMapMarkerAlt className=' text-orange-700 mt-1'></FaMapMarkerAlt>
-                <span className='text-black'>{locobiz.locobiz_address.city}{`, `} {locobiz.locobiz_address.state}</span>
+                <span className='text-black'>{locobiz.locobiz_address.city}{`, `} {locobiz.locobiz_address.state_name}</span>
                 
               </div>
            

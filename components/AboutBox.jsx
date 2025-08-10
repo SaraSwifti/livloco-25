@@ -45,7 +45,7 @@ const AboutBox = async () => {
                 small your business is.
               </li>
               <li className='text-xl/8 text-black'>
-                You can be a member without posting a business and just look
+                You can be a member without posting a LocoBusiness or LocoFarmers' Market, and just look
                 around.
               </li>
               <li className='text-xl/8 text-black'>
@@ -54,7 +54,7 @@ const AboutBox = async () => {
                 you are needing to make your business more locally sustainable.
               </li>
               <li className='text-xl/8 text-black'>
-             No Transactions- do those yourself. No dispearaging comment sections. If you didn't like the service, don't vote for them and don't use them again. It is that simple. 
+             No Transactions- do those between yourselves. No dispearaging comment sections. If you didn't like the service, don't vote for them and don't use them again. It is that simple. 
               </li>
             </ul>
             <br />

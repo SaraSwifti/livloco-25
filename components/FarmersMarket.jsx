@@ -1,6 +1,9 @@
-// import Locobiz from "@/models/Locobiz";
 
 const FarmersMarket = ({ locobiz }) => {
+//   const fm = locobiz?.farmers_market_location ?? {};
+// const stateFor = (day) =>
+//   fm[day]?.state_name ?? fm[day]?.state ?? fm[day]?.state_code ?? '';
+
   return (
     <div className='w-full px-4 sm:px-6 lg:px-8'>
       <h1 className='text-xl text-center font-bold text-green-900'>
@@ -45,7 +48,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.monday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.monday.state}`}
+                          {`${locobiz.farmers_market_location.monday.state_name}`}
                         </div>
                       </td>
                     </tr>
@@ -64,7 +67,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.tuesday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.tuesday.state}`}
+                          {`${locobiz.farmers_market_location.tuesday.state_name}`}
                         </div>
                       </td>
                     </tr>
@@ -82,7 +85,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.wednesday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.wednesday.state}`}
+                          {`${locobiz.farmers_market_location.wednesday.state_name}`}
                         </div>
                       </td>
                     </tr>
@@ -100,7 +103,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.thursday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.thursday.state}`}
+                          {`${locobiz.farmers_market_location.thursday.state_name}`}
                         </div>
                       </td>
   
@@ -119,7 +122,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.friday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.friday.state}`}
+                          {`${locobiz.farmers_market_location.friday.state_name}`}
                         </div>
                       </td>
                     </tr>
@@ -137,7 +140,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.saturday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.saturday.state}`}
+                          {`${locobiz.farmers_market_location.saturday.state_name}`}
                         </div>
                       </td>
                       </tr>
@@ -156,7 +159,7 @@ const FarmersMarket = ({ locobiz }) => {
                         <div>
                           {`${locobiz.farmers_market_location.sunday.city}`}
                           {', '}
-                          {`${locobiz.farmers_market_location.sunday.state}`}
+                          {`${locobiz.farmers_market_location.sunday.state_name}`}
                         </div>
                         </td>
                       </tr>
