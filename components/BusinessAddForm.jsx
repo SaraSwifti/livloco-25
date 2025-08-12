@@ -90,39 +90,55 @@ const BusinessAddForm = ({ userEmail }) => {
     } catch (err) {
       console.error('Cloudinary upload failed:', err)
     }
-  }
+  };
+
+  // Map of code -> full name. Keep it short or import if you have a shared file.
+// const US_STATE_NAMES = {
+//   AL:'Alabama', AK:'Alaska', AZ:'Arizona', AR:'Arkansas', CA:'California',
+//   CO:'Colorado', CT:'Connecticut', DE:'Delaware', FL:'Florida', GA:'Georgia',
+//   HI:'Hawaii', ID:'Idaho', IL:'Illinois', IN:'Indiana', IA:'Iowa',
+//   KS:'Kansas', KY:'Kentucky', LA:'Louisiana', ME:'Maine', MD:'Maryland',
+//   MA:'Massachusetts', MI:'Michigan', MN:'Minnesota', MS:'Mississippi',
+//   MO:'Missouri', MT:'Montana', NE:'Nebraska', NV:'Nevada', NH:'New Hampshire',
+//   NJ:'New Jersey', NM:'New Mexico', NY:'New York', NC:'North Carolina',
+//   ND:'North Dakota', OH:'Ohio', OK:'Oklahoma', OR:'Oregon', PA:'Pennsylvania',
+//   RI:'Rhode Island', SC:'South Carolina', SD:'South Dakota', TN:'Tennessee',
+//   TX:'Texas', UT:'Utah', VT:'Vermont', VA:'Virginia', WA:'Washington',
+//   WV:'West Virginia', WI:'Wisconsin', WY:'Wyoming'
+// };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     //normalizing state values here
     // storefront/farmstand
-const { state_code, state_name } = getNormalizedState(formData.get('locobiz_address.state'));
+    // const { state_code, state_name } = getNormalizedState(formData.get('locobiz_address.state'));
 
-const locobizAddress = {
-  // ...other fields...
-  state_code,        // canonical for queries
-  state_name,        // nice for display
-};
+    // const locobizAddress = {
+    //   // ...other fields...
+    //   state_code,        // canonical for queries
+    //   state_name,        // nice for display
+    // };
 
-// farmers market days (loop over your known day keys)
-const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-const farmers_market_location = {};
-for (const day of days) {
-  const stateRaw = formData.get(`farmers_market_location.${day}.state`);
-  const norm = getNormalizedState(stateRaw);
-  farmers_market_location[day] = {
-    // ...name, city...
-    state_code: norm.state_code,
-    state_name: norm.state_name,
-  };
-}
+    // farmers market days (loop over your known day keys)
+    // const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+    // const farmers_market_location = {};
+    // for (const day of days) {
+    //   const stateRaw = formData.get(`farmers_market_location.${day}.state`);
+    //   const norm = getNormalizedState(stateRaw);
+    //   farmers_market_location[day] = {
+    //     // ...name, city...
+    //     state_code: norm.state_code,
+    //     state_name: norm.state_name,
+    //   };
+    // }
 
 
     //  Require the Sell/Need toggle to be checked
     if (!showSellNeedForm) {
-    alert('You must check the box to add your selling/needing profile before submitting.');
-    return;
-  }
+      alert('You must check the box to add your selling/needing profile before submitting.');
+      return;
+    }
 
 
     const website = form.get('website')
@@ -138,35 +154,36 @@ for (const day of days) {
       //  Ensure https:// is included
       if (!/^https?:\/\//i.test(cleanWebsite)) {
         cleanWebsite = `https://${cleanWebsite}`
-      }
+      };
 
       form.set('website', cleanWebsite) // Update the form value
-    }
+    };
 
     // Inject image URLs into the FormData
-    form.set('locobiz_profile_image', images.profile || '')
-    form.set('selling.selling1.image', images.selling1 || '')
-    form.set('selling.selling2.image', images.selling2 || '')
-    form.set('selling.selling3.image', images.selling3 || '')
-    form.set('needs.need1.image', images.need1 || '')
-    form.set('needs.need2.image', images.need2 || '')
-    form.set('needs.need3.image', images.need3 || '')
-
+    form.set('locobiz_profile_image', images.profile || '');
+    form.set('selling.selling1.image', images.selling1 || '');
+    form.set('selling.selling2.image', images.selling2 || '');
+    form.set('selling.selling3.image', images.selling3 || '');
+    form.set('needs.need1.image', images.need1 || '');
+    form.set('needs.need2.image', images.need2 || '');
+    form.set('needs.need3.image', images.need3 || '');
+    //set locobiz as active for posting
+    form.set('locobiz_active', 'true');
     try {
       await addBusinessAction(form)
     } catch (err) {
       console.error('Form submission failed:', err)
-    }
-  }
+    };
+  };
 
   const formatPhoneDisplay = (value) => {
     const digits = value.replace(/\D/g, '').substring(0, 10)
     const len = digits.length
 
-    if (len < 4) return digits
-    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
-  }
+    if (len < 4) return digits;
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  };
 
   const handlePhoneChange = (e) => {
     const input = e.target.value
@@ -553,7 +570,7 @@ for (const day of days) {
                 <StateSelect
                   id='locobiz_state'
                   type='text'
-                  name='locobiz_address.state'
+                  name='locobiz_address.state_code'
                   className='mt-1  bg-white w-full rounded border p-2'
                   required
                 />
@@ -697,7 +714,7 @@ for (const day of days) {
                     </label>
                     <StateSelect
                       id={`farmers_market_location_${day}_state`}
-                      name={`farmers_market_location.${day}.state`}
+                      name={`farmers_market_location.${day}.state_code`}
                       type='text'
                       // value={data[day]?.state || ''}
                       // onChange={(e) => handleDayChange(e, day)}
