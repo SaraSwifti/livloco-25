@@ -10,7 +10,7 @@ import BusinessCard from '@/components/BusinessCard';
 
 const BusinessesPage = async () => {
     await connectDB();
-    const locobizs = await LocoBiz.find({}).lean();
+   const locobizs = await LocoBiz.find({ locobiz_active: true }).lean();
   return (
     <>
       <Hero />
@@ -20,8 +20,8 @@ const BusinessesPage = async () => {
             <p> No Businesses found </p>
           ) : (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-                {locobizs.filter((locobiz) => locobiz.locobiz_active) //for only businesses who make themselves active
-                  .map((locobiz) => (
+               
+                 {locobizs.map((locobiz) => (
                 <BusinessCard
                   key={locobiz._id}
                   locobiz={locobiz}

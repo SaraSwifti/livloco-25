@@ -1,7 +1,7 @@
 
 [
   {
-    "id": 1,
+    "_id": 1,
     "email": "grummet@gmail.com",
     "account_owner_name": "Esther Grummet",
     "phone": "616-558-1817",
@@ -32,13 +32,13 @@
       "tuesday_hours": "",
       "wednesday_hours": "",
       "thursday_hours": "",
-      "friday_hours": "",
+      "fr_iday_hours": "",
       "saturday_hours": "8-7",
       "sunday_hours": ""
     }
   },
   {
-    "id": 2,
+    "_id": 2,
     "email": "bakersdelight@mail.com",
     "account_owner_name": "Susan Lee",
     "phone": "567-890-1234",
@@ -69,13 +69,13 @@
       "tuesday_hours": "7-2",
       "wednesday_hours": "",
       "thursday_hours": "7-2",
-      "friday_hours": "",
+      "fr_iday_hours": "",
       "saturday_hours": "7-3",
       "sunday_hours": ""
     }
   },
   {
-    "id": 3,
+    "_id": 3,
     "email": "greenlawns@mail.com",
     "account_owner_name": "Mike Johnson",
     "phone": "456-789-1011",
@@ -106,13 +106,13 @@
       "tuesday_hours": "9-5",
       "wednesday_hours": "9-5",
       "thursday_hours": "",
-      "friday_hours": "9-5",
+      "fr_iday_hours": "9-5",
       "saturday_hours": "8-4",
       "sunday_hours": ""
     }
   },
   {
-    "id": 4,
+    "_id": 4,
     "email": "craftcove@mail.com",
     "account_owner_name": "Sarah Brown",
     "phone": "345-678-2345",
@@ -143,13 +143,13 @@
       "tuesday_hours": "",
       "wednesday_hours": "10-6",
       "thursday_hours": "10-6",
-      "friday_hours": "10-6",
+      "fr_iday_hours": "10-6",
       "saturday_hours": "9-5",
       "sunday_hours": "11-4"
     }
   },
   {
-    "id": 5,
+    "_id": 5,
     "email": "petpalace@mail.com",
     "account_owner_name": "John Smith",
     "phone": "678-901-2345",
@@ -180,13 +180,13 @@
       "tuesday_hours": "",
       "wednesday_hours": "9-5",
       "thursday_hours": "9-5",
-      "friday_hours": "9-5",
+      "fr_iday_hours": "9-5",
       "saturday_hours": "10-4",
       "sunday_hours": ""
     }
   },
   {
-    "id": 6,
+    "_id": 6,
     "email": "sunnyfields@mail.com",
     "account_owner_name": "Laura Bright",
     "phone": "789-123-4567",
@@ -217,13 +217,13 @@
       "tuesday_hours": "",
       "wednesday_hours": "",
       "thursday_hours": "8-3",
-      "friday_hours": "8-3",
+      "fr_iday_hours": "8-3",
       "saturday_hours": "7-2",
       "sunday_hours": ""
     }
   },
   {
-    "id": 7,
+    "_id": 7,
     "email": "coastalcatch@mail.com",
     "account_owner_name": "Peter Fisher",
     "phone": "901-234-5678",
@@ -254,7 +254,7 @@
       "tuesday_hours": "9-5",
       "wednesday_hours": "",
       "thursday_hours": "9-5",
-      "friday_hours": "9-5",
+      "fr_iday_hours": "9-5",
       "saturday_hours": "8-4",
       "sunday_hours": ""
     }

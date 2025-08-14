@@ -1,5 +1,6 @@
 // components/MarketCard.jsx
-import Image from 'next/image';
+// import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
@@ -30,22 +31,16 @@ const MarketCard = ({ market }) => {
     <Wrapper>
       <div className="rounded-xl pt-1 shadow-md relative bg-white">
         <div className="mt-5 flex justify-center items-center">
-          {hasImage ? (
-            <Image
-              src={market.hostfm_profile_image}
-              alt={`${market.hostfm_name || 'Market'} profile image`}
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="object-contain h-[200px] w-[300px] rounded-t-xl"
-              priority={false}
-            />
-          ) : (
-            <div className="mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded">
-              No image available
-            </div>
-          )}
-        </div>
+         <SafeImage
+  src={market.hostfm_profile_image}
+  alt={`${market.hostfm_name || 'Market'} profile image`}
+  sizes="100vw"
+  className="h-[200px] w-[300px] rounded-t-xl" // container size
+  imgClassName="object-contain"                 // apply to the <img>
+  cover={false}                                  // use contain, not cover
+  priority={false}
+          />
+          </div>
 
         <div className="p-4">
           <div className="text-center mb-4">
