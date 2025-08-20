@@ -1,38 +1,29 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import SafeImage from '@/components/SafeImage';
 
 import { FaMapMarkerAlt, FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
 
 
 const BusinessCard = ({ locobiz }) => {
+  if (!locobiz) return null;
   return (
     <>
       <Link href={`/businesses/${locobiz._id}`}>
       <div className='rounded-xl pt-1 shadow-md relative bg-white'>
         <div className='mt-5 flex justify-center items-center'>
-            {/* {locobiz.locobiz_profile_image?.image ? ( */}
-           {locobiz.locobiz_profile_image && locobiz.locobiz_profile_image.trim() !== '' ? (
-            <Image
+            
+            <SafeImage
           src={locobiz.locobiz_profile_image}
           // Make a component to insert alt tag for these per customer//
 
-          alt=''
-          width='0'
-          height='0'
+          alt={`${locobiz.locobiz_name || 'Business'} profile image`}
           sizes='100vw'
-          className='object-contain h-[200px] w-[300px] rounded-t-xl'
+            className='h-[200px] w-[300px] rounded-t-xl' // container size
+            imgClassName='object-contain' // apply to the <img>
+            cover={false} 
               />
-                  ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}
-            {/* ) : (
-                 <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}; */}
-            
+               
           </div>
         <div className='p-4'>
           <div className=' text-center mb-6'>

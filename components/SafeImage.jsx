@@ -5,9 +5,9 @@ import { useMemo, useState, useEffect } from 'react';
 
 
 const fallbackByRatio = {
-  '1/1': '/images/fallback-hazy-1x1.png',
-  '16/9': '/images/fallback-hazy-16x9.png',
-  '21/9': '/images/fallback-hazy-21x9.png',
+  '1/1': '/images/image-unavailable1x1.png',
+  '16/9': '/images/image-unavailable16x9.png',
+  '21/9': '/images/image-unavailable21x9.png',
 };
 
 /**
@@ -93,7 +93,8 @@ export default function SafeImage({
           <div className="flex h-full w-full items-center justify-center border rounded text-gray-500 italic">
             {fallbackText}
           </div>
-        ) : (
+     ) : (
+         <>
           <Image
             src={chosenFallback}
             alt={alt || 'fallback image'}
@@ -105,6 +106,12 @@ export default function SafeImage({
             onError={() => setFallbackErrored(true)}
             {...rest}
          />
+             <div className="absolute inset-0 flex items-center justify-center">
+            <span className=" text-white font-bold text-2xl px-4 py-2 rounded">
+              Image unavailable
+            </span>
+          </div>
+        </>
         )}
       </div>
     );
