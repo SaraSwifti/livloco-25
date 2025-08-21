@@ -26,7 +26,7 @@ export default function SafeImage({
   // Layout
   fill = true,                // use fill layout by default
   ratio = '16/9',             // aspect ratio used when fill=true
-  sizes = '100vw',
+  sizes="(max-width: 640px) 90vw, 300px",
   className = '',             // container classes
   imgClassName = '',          // actual <img> classes (e.g., object-cover)
   cover = true,               // object-fit cover vs contain

@@ -304,7 +304,7 @@ const BusinessDetails = ({ locobiz }) => {
                         </h3>
                         {locobiz.needs.need3?.image ? (
                           <Image
-                            src={`/images/locobizimages/${locobiz.needs.need1.image}`}
+                            src={`/images/locobizimages/${locobiz.needs.need3.image}`}
                            alt={locobiz.needs.need3.description || 'Need item image'.slice(0, 100)}
                             className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
                             width={600}

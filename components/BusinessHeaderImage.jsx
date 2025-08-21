@@ -7,22 +7,20 @@ const BusinessHeaderImage = ({ image }) => {
     <section>
       <div className='container-xl m-auto'>
         <div className='grid grid-cols-1'>
-          { image ? (
+          
             <SafeImage
               src={image}
               alt={`${biz.locobiz_name} header`}
               className='rounded-2xl'
               ratio="21/9"
+                 sizes="100vw"            // full-width hero: tell Next it's viewport-wide
+            priority={true}                 // heroes usually benefit from priority
             //   width={0}
             //   height={0}
             // sizes='100vw'
             // priority={true}
             />
-           ) : (
-            <div className="h-[400px] flex items-center justify-center border border-gray-300 text-gray-500 text-xl italic rounded">
-              
-            </div>
-          )}
+          
            
         </div>
       </div>

@@ -1,132 +1,108 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import SafeImage from '@/components/SafeImage';
-
 import { FaMapMarkerAlt, FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
+import PropTypes from 'prop-types';
+import React from 'react';
 
+const TypeIcon = ({ type }) => {
+  if (type === 'product') return <FaDollyFlatbed aria-hidden="true" className="mt-0.5" />;
+  if (type === 'service') return <FaClipboardList aria-hidden="true" className="mt-0.5" />;
+  return null;
+};
 
-const BusinessCard = ({ locobiz }) => {
-  if (!locobiz) return null;
+const hasText = (s) => typeof s === 'string' && s.trim().length > 0;
+
+const EntryList = ({ label, root, keys }) => {
+  const items = keys
+    .map((k) => root?.[k])
+    .filter(Boolean)
+    .filter((entry) => hasText(entry?.description));
+
+  if (items.length === 0) return null;
+
   return (
-    <>
-      <Link href={`/businesses/${locobiz._id}`}>
-      <div className='rounded-xl pt-1 shadow-md relative bg-white'>
-        <div className='mt-5 flex justify-center items-center'>
-            
-            <SafeImage
-          src={locobiz.locobiz_profile_image}
-          // Make a component to insert alt tag for these per customer//
-
-          alt={`${locobiz.locobiz_name || 'Business'} profile image`}
-          sizes='100vw'
-            className='h-[200px] w-[300px] rounded-t-xl' // container size
-            imgClassName='object-contain' // apply to the <img>
-            cover={false} 
-              />
-               
+    <section className="text-2xl text-black mb-4">
+      <div className="border border-gray-500 p-4 mb-5 rounded-xl">
+        <p className="font-bold mb-2">{label}</p>
+        {items.map((entry, idx) => (
+          <div key={idx} className="flex items-start gap-2 mb-2">
+            <TypeIcon type={entry?.type} />
+            <p className="leading-snug">{entry?.description?.trim()}</p>
           </div>
-        <div className='p-4'>
-          <div className=' text-center mb-6'>
-            
-              <h3 className='text-3xl font-bold'>{`${locobiz.locobiz_name}`}</h3>
-              <div className='flex align-middle gap-2 mb-4 lg:mb-0'>
-              <FaMapMarkerAlt className=' text-orange-700 mt-1'></FaMapMarkerAlt>
-                <span className='text-black'>{locobiz.locobiz_address.city}{`, `} {locobiz.locobiz_address.state_name}</span>
-                
-              </div>
-           
-          </div>
-            
-          {/* Selling list */}
-          
-            <div className='text-2xl gap-4 text-black mb-4'>
-            <div className='border border-gray-500 p-4 mb-5'>
-              <p className='mb-2 font-bold'>
-                Selling:
-                </p>
-                {locobiz.selling.selling1.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.selling.selling1.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.selling.selling1.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-                    <p className='mb-2'>{`${locobiz.selling.selling1.description}`}</p>
-                  </div>
-                )}
+        ))}
+      </div>
+    </section>
+  );
+};
 
-                {locobiz.selling.selling2.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.selling.selling2.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.selling.selling2.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-             
-                    <p className='mb-1'>{`${locobiz.selling.selling2.description}`}</p>
-                  
-                  </div>
-                )}
+const SELL_KEYS = ['selling1', 'selling2', 'selling3'];
+const NEED_KEYS = ['need1', 'need2', 'need3'];
 
-                {locobiz.selling.selling3.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.selling.selling3.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.selling.selling3.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-                    <p className='mb-1'>{`${locobiz.selling.selling3.description}`}</p>
-                  </div>
-                )}
+const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
+  if (!locobiz) return null;
+
+  const id = locobiz?._id;
+  const name = locobiz?.locobiz_name || 'Business';
+  const profileImage = locobiz?.locobiz_profile_image;
+  const city = locobiz?.locobiz_address?.city;
+  const stateName = locobiz?.locobiz_address?.state_name;
+
+  return (
+    <Link
+      href={`/businesses/${id}`}
+      className="group block rounded-xl shadow-md bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
+    >
+      <article className="rounded-xl pt-1">
+        <div className="mt-5 flex justify-center items-center">
+          <SafeImage
+            src={profileImage}
+            alt={`${name} profile image`}
+            className="h-[200px] w-[300px] rounded-t-xl"
+            imgClassName="object-contain"
+            cover={false}
+            sizes="(max-width: 640px) 90vw, 300px"
+          />
+        </div>
+
+        <div className="p-4">
+          <header className="text-center mb-6">
+            <h3 className="text-3xl font-bold">{name}</h3>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <FaMapMarkerAlt aria-hidden="true" className="text-orange-700 mt-0.5" />
+              <span className="text-black">
+                {city || '—'}
+                {city && stateName ? ', ' : ''}
+                {stateName || ''}
+              </span>
             </div>
-            </div>
-         
-          {/* Needing list */}
-          <div className=' text-2xl gap-4 text-black mb-4'>
-          <div className='border border-gray-500 p-4 mb-5'>
-                <p className='font-bold mb-2'>Needing:</p>
-                {locobiz.needs.need1.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.needs.need1.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.needs.need1.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-                    <p className='mb-1 '>{`${locobiz.needs.need1.description}`}</p>
-                  </div>
-                )}
+          </header>
 
-                {locobiz.needs.need2.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.needs.need2.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.needs.need2.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-                    <p className='mb-1'>{`${locobiz.needs.need2.description}`}</p>
-                  </div>
-                )}
+          <EntryList label="Selling:" root={locobiz?.selling} keys={SELL_KEYS} />
+          <EntryList label="Needing:" root={locobiz?.needs} keys={NEED_KEYS} />
+        </div>
+      </article>
+    </Link>
+  );
+});
 
-                {locobiz.needs.need3.description?.trim() && (
-                  <div className="flex items-center gap-2 mb-2">
-                    {locobiz.needs.need3.type === 'product' ? (
-                      <FaDollyFlatbed alt="Product Icon" className=" text-blue-800" />
-                    ) : locobiz.needs.need3.type === 'service' ? (
-                      <FaClipboardList alt="Service Icon" className=" text-green-800" />
-                    ) : null}
-                    <p className='mb-1'>{`${locobiz.needs.need3.description}`}</p>
-                  </div>
-                )}
-            </div>
-            </div>
+TypeIcon.propTypes = { type: PropTypes.string };
+EntryList.propTypes = {
+  label: PropTypes.string.isRequired,
+  root: PropTypes.object,
+  keys: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+BusinessCard.propTypes = {
+  locobiz: PropTypes.shape({
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    locobiz_name: PropTypes.string,
+    locobiz_profile_image: PropTypes.string,
+    locobiz_address: PropTypes.shape({
+      city: PropTypes.string,
+      state_name: PropTypes.string,
+    }),
+    selling: PropTypes.object,
+    needs: PropTypes.object,
+  }),
+};
 
-
-        </div> 
-          </div>
-          
-        </Link>
-    </>
-  )
-}
-export default BusinessCard
- 
+export default BusinessCard;

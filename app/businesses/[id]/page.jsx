@@ -14,12 +14,13 @@ import { FaArrowLeft } from 'react-icons/fa';
 const BusinessPage = async ({ params }) => {
  
   await connectDB();
-
-  //  // Optional: Guard against bad MongoDB ObjectId
-  // if (!mongoose.Types.ObjectId.isValid(params.id)) {
-  //   return notFound(); // or render your fallback UI here
-  // }
   const locobiz = await LocoBiz.findById(params.id).lean();
+  //  // Optional: Guard against bad MongoDB ObjectId
+
+  //  if (!mongoose.Types.ObjectId.isValid(params.id)) {
+  //    return notFound(); // or render your fallback UI here
+  //  }
+
 
     // If business not found, show fallback UI or redirect
   if (!locobiz) {
