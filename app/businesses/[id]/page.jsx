@@ -47,12 +47,25 @@ const BusinessPage = async ({ params }) => {
   return (
     <>
       <div className="relative w-full">
-        <BusinessHeaderImage image={locobiz.locobiz_profile_image ?? ''} />
-        <div className="absolute inset-0 bg-opacity-40 flex items-center justify-center">
-          <h1 className="text-white text-7xl font-bold">{locobiz.locobiz_name}</h1>
-        </div>
-           
-      </div>
+  <BusinessHeaderImage locobiz={locobiz} />
+
+  {/* dim layer */}
+  <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+
+  {/* title pinned in the upper third */}
+  <h1
+    className="
+      absolute inset-x-0
+      top-[12%] sm:top-[15%] md:top-[18%] lg:top-[22%]
+      z-10 text-center
+      text-white text-5xl md:text-7xl font-bold
+      drop-shadow-lg
+    "
+  >
+    {locobiz.locobiz_name}
+  </h1>
+</div>
+
       <section>
         {/* Go Back Arrow */}
         

@@ -1,14 +1,9 @@
-
-import FarmersMarket from '@/components/FarmersMarket';
-import BusinessContact from '@/components/BusinessContact';
-import StoreFront from '@/components/StoreFront';
-import Image from 'next/image';
-import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
-
-
-
-
-
+import FarmersMarket from '@/components/FarmersMarket'
+import BusinessContact from '@/components/BusinessContact'
+import StoreFront from '@/components/StoreFront'
+import Image from 'next/image'
+import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
+import ItemsGrid from './ItemsGrid'
 
 const BusinessDetails = ({ locobiz }) => {
   return (
@@ -33,19 +28,19 @@ const BusinessDetails = ({ locobiz }) => {
               {/* the key for goods and services */}
               <div className='mb-4 space-y-2'>
                 <div className='flex items-center text-blue-800'>
-                <FaDollyFlatbed
-                  alt='Product Icon'
-                  className='mr-1 mt-1.5 text-blue-800'
-                />
-                  <span className="text-sm font-medium"> = Products</span>
+                  <FaDollyFlatbed
+                    alt='Product Icon'
+                    className='mr-1 mt-1.5 text-blue-800'
+                  />
+                  <span className='text-sm font-medium'> = Products</span>
                 </div>
                 <div className='flex items-center text-blue-800'>
-                <FaClipboardList
-                  alt='Service Icon'
-                  className='mr-1 mt-1.5 text-green-800'
+                  <FaClipboardList
+                    alt='Service Icon'
+                    className='mr-1 mt-1.5 text-green-800'
                   />
                   <span className='text-sm font-medium'> = Services</span>
-                  </div>
+                </div>
               </div>
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
@@ -55,287 +50,48 @@ const BusinessDetails = ({ locobiz }) => {
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-full mx-auto'>
-            {/* Selling buying feature section */}
+            Selling buying feature section
             <div className='col-span-1 md:col-span-2 lg:col-span-2'>
-              <div className='p-4 border rounded shadow'>
+              {/* <div className='p-4 border rounded shadow'>
                 <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
                   Selling
-                </h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {/* Selling item 1 */}
-                  {locobiz.selling.selling1?.description?.trim() && (
-                  <div className='flex items-start gap-2'>
-                    {locobiz.selling.selling1.type === 'product' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaDollyFlatbed
-                          alt='Product Icon'
-                          className='mr-1 mt-1.5 text-blue-800'
-                          />
-                          
-                      </div>
-                    ) : locobiz.selling.selling1.type === 'service' ? (
-                      <div className='flex items-start gap-2'>
-                        <FaClipboardList
-                          alt='Service Icon'
-                          className='mr-1 mt-1.5 text-green-800'
-                        />{' '}
-                      </div>
-                    ) : null}
-                    <div className='flex flex-col'>
-                      <h3 className='text-xl text-left text-black'>
-                        {`${locobiz.selling.selling1.description}`}
-                      </h3>
-                      <p className='text-sm font-medium text-gray-900'>
-                        {locobiz.selling.selling1.price}
-                      </p>
-                      {locobiz.selling.selling1?.image ? (
-                        <Image
-                          src={locobiz.selling.selling1.image}
-                          alt={locobiz.selling.selling1.description || 'Need item image'.slice(0, 100)}
-                          className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                          width={600}
-                          height={400}
-                          sizes='(max-width: 768px) 100vw, 33vw'
-                        />
-                      ) : (
-                        <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                          No image available
-                        </div>
-                      )}
-                    </div>
-                    </div>
-                  )}
-                  
-                  {/* Selling item 2 */}
-                  {locobiz.selling.selling2?.description?.trim() && (
-                    <div className='flex items-start gap-2'>
-                      {locobiz.selling.selling2.type === 'product' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaDollyFlatbed
-                            alt='Product Icon'
-                            className='mr-1 mt-1.5 text-blue-800'
-                          />
-                        </div>
-                      ) : locobiz.selling.selling2.type === 'service' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaClipboardList
-                            alt='Service Icon'
-                            className='mr-1 mt-1.5 text-green-800'
-                          />
-                        </div>
-                      ) : null}
-                      <div className='flex flex-col'>
-                        <h3 className='text-xl text-black'>
-                          {`${locobiz.selling.selling2.description}`}
-                        </h3>
-                        <p className='text-sm font-medium text-gray-900'>
-                          {locobiz.selling.selling2.price}
-                        </p>
-                        {locobiz.selling.selling2?.image ? (
-                          <Image
-                            src={locobiz.selling.selling2.image}
-                            alt={locobiz.selling.selling2.description || 'Need item image'.slice(0, 100)}
-                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                            width={600}
-                            height={400}
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                          />
-                        ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* selling item 3 */}
-                  {locobiz.selling.selling3?.description?.trim() && (
-                    <div className='flex items-start gap-2'>
-                      {locobiz.selling.selling3.type === 'product' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaDollyFlatbed
-                            alt='Product Icon'
-                            className='mr-1 mt-1.5 text-blue-800'
-                          />
-                        </div>
-                      ) : locobiz.selling.selling3.type === 'service' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaClipboardList
-                            alt='Service Icon'
-                            className='mr-1 mt-1.5 text-green-800'
-                          />
-                        </div>
-                      ) : null}
-                      <div className='flex flex-col'>
-                        <h3 className='text-xl text-black'>
-                          {`${locobiz.selling.selling3.description}`}
-                        </h3>
-                        <p className='text-sm font-medium text-gray-900'>
-                          {locobiz.selling.selling3.price}
-                        </p>
-                        {locobiz.selling.selling3?.image ? (
-                          <Image
-                            src={locobiz.selling.selling3.image}
-                            alt={locobiz.selling.selling3.description || 'Need item image'.slice(0, 100)}
-                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                            width={600}
-                            height={400}
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                          />
-                        ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+                </h2> */}
+                <ItemsGrid
+                  title='Selling'
+                  entries={locobiz.selling}
+                  keys={['selling1', 'selling2', 'selling3']}
+                />
+              {/* </div> */}
             </div>
             {/* Buying list feature section */}
             <div className='col-span-1 md:col-span-2 lg:col-span-2'>
-              {/* Needing item 1 */}
-              <div className='p-4 border rounded shadow'>
-                <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
-                  Needing
-                </h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {/* Needing item 1 */}
-                  {locobiz.needs.need1?.description?.trim() && (
-                    <div className='flex items-start gap-2'>
-                      {locobiz.needs.need1.type === 'product' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaDollyFlatbed
-                            alt='Product Icon'
-                            className='mr-1 mt-1.5 text-blue-800'
-                          />
-                        </div>
-                      ) : locobiz.needs.need1.type === 'service' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaClipboardList
-                            alt='Service Icon'
-                            className='mr-1 mt-1.5 text-green-800'
-                          />
-                        </div>
-                      ) : null}
-                      <div className='flex flex-col'>
-                        <h3 className='text-xl text-left text-black'>
-                          {`${locobiz.needs.need1.description}`}
-                        </h3>
-                        {locobiz.needs.need1?.image ? (
-                          <Image
-                            src={locobiz.needs.need1.image}
-                            alt={locobiz.needs.need1.description || 'Need item image'.slice(0, 100)}
-                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                            width={600}
-                            height={400}
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                          />
-                        ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {/* Needing item 2 */}
-                  {locobiz.needs.need2?.description?.trim() && (
-                    <div className='flex items-start gap-2'>
-                      {locobiz.needs.need2.type === 'product' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaDollyFlatbed
-                            alt='Product Icon'
-                            className='mr-2 mt-1.5 text-blue-800'
-                          />
-                        </div>
-                      ) : locobiz.needs.need2.type === 'service' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaClipboardList
-                            alt='Service Icon'
-                            className='mr-2 mt-1.5 text-green-800'
-                          />
-                        </div>
-                      ) : null}
-                      <div className='flex flex-col'>
-                        <h3 className='text-xl text-black'>
-                          {`${locobiz.needs.need2.description}`}
-                        </h3>
-                        {locobiz.needs.need2?.image ? (
-                          <Image
-                            src={locobiz.needs.need2.image}
-                            alt={locobiz.needs.need2.description || 'Selling item'.slice(0, 100)}
-                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                            width={600}
-                            height={400}
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                          />
-                        ) : (
-                          <div className='mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded'>
-                            No image available
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {/* needing item 3 */}
-                  {locobiz.needs.need3?.description?.trim() && (
-                    <div className='flex items-start gap-2'>
-                      {locobiz.needs.need3.type === 'product' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaDollyFlatbed
-                            alt='Product Icon'
-                            className='mr-2 mt-1.5 text-blue-800'
-                          />
-                        </div>
-                      ) : locobiz.needs.need3.type === 'service' ? (
-                        <div className='flex items-start gap-2'>
-                          <FaClipboardList
-                            alt='Service Icon'
-                            className='mr-2 mt-1.5 text-green-800'
-                          />
-                        </div>
-                      ) : null}
-                      <div className='flex flex-col'>
-                        <h3 className='text-xl text-black'>
-                          {`${locobiz.needs.need3.description}`}
-                        </h3>
-                        {locobiz.needs.need3?.image ? (
-                          <Image
-                            src={`/images/locobizimages/${locobiz.needs.need3.image}`}
-                           alt={locobiz.needs.need3.description || 'Need item image'.slice(0, 100)}
-                            className='mt-2 object-cover w-full h-auto max-h-64 sm:max-h-80 rounded'
-                            width={600}
-                            height={400}
-                            sizes='(max-width: 768px) 100vw, 33vw'
-                          />
-                        ) : (
-                          <div className="mt-2 w-full h-40 flex items-center justify-center border border-gray-300 text-gray-500 text-sm italic rounded">
-                           <span className="text-center w-full">No image available</span> 
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <ItemsGrid
+                title='Needing'
+                entries={locobiz.needs}
+                keys={['need1', 'need2', 'need3']}
+              />
             </div>
           </div>
         </div>
 
         <div className='flex flex-col md:flex-row gap-6 mt-8'>
-        {/* Left Column: BusinessContact + StoreFront */}
-         <div className={locobiz?.farmers_market_location?.fm_location_post === true ? 'md:w-1/2' : 'md:w-full'}>
+          {/* Left Column: BusinessContact + StoreFront */}
+          <div
+            className={
+              locobiz?.farmers_market_location?.fm_location_post === true
+                ? 'md:w-1/2'
+                : 'md:w-full'
+            }
+          >
             <BusinessContact
               locobiz={locobiz}
               className='mb-6'
             />
-          {locobiz?.locobiz_address?.post_permission === true && (
-            <StoreFront locobiz={locobiz} />
-          )}</div>
-          
+            {locobiz?.locobiz_address?.post_permission === true && (
+              <StoreFront locobiz={locobiz} />
+            )}
+          </div>
+
           {/* If there is Farmers market details */}
           {locobiz?.farmers_market_location?.fm_location_post === true && (
             <div className='md:w-1/2'>

@@ -1,9 +1,18 @@
-
 const FarmersMarket = ({ locobiz }) => {
-//   const fm = locobiz?.farmers_market_location ?? {};
-// const stateFor = (day) =>
-//   fm[day]?.state_name ?? fm[day]?.state ?? fm[day]?.state_code ?? '';
+  //   const fm = locobiz?.farmers_market_location ?? {};
+  // const stateFor = (day) =>
+  //   fm[day]?.state_name ?? fm[day]?.state ?? fm[day]?.state_code ?? '';
+  const fm = locobiz?.farmers_market_location ?? {}
 
+  const days = [
+    ['monday', 'Monday'],
+    ['tuesday', 'Tuesday'],
+    ['wednesday', 'Wednesday'],
+    ['thursday', 'Thursday'],
+    ['friday', 'Friday'],
+    ['saturday', 'Saturday'],
+    ['sunday', 'Sunday'],
+  ]
   return (
     <div className='w-full px-4 sm:px-6 lg:px-8'>
       <h1 className='text-xl text-center font-bold text-green-900'>
@@ -34,136 +43,29 @@ const FarmersMarket = ({ locobiz }) => {
                   </tr>
                 </thead>
                 <tbody className='divide-y divide-gray-200 bg-white'>
-                  {/* conditional rendering of monday's farm market if not data is there */}
-                  {(
-                    locobiz?.farmers_market_location?.monday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Monday</p>
-                      </td>
-                      <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.monday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.monday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.monday.state_name}`}
-                        </div>
-                      </td>
-                    </tr>
-                  ) : null}
-
-                  {(
-                    locobiz?.farmers_market_location?.tuesday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Tuesday</p>
-                      </td>
-                      <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.tuesday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.tuesday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.tuesday.state_name}`}
-                        </div>
-                      </td>
-                    </tr>
-                  ) : null}
-                  {(
-                    locobiz?.farmers_market_location?.wednesday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap  py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Wednesday</p>
-                      </td>
-                       <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.wednesday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.wednesday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.wednesday.state_name}`}
-                        </div>
-                      </td>
-                    </tr>
-                  ) : null}
-                  {(
-                    locobiz?.farmers_market_location?.thursday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Thursday</p>
+                  {days.map(([key, label]) => {
+                    const row = fm?.[key]
+                    const name = (row?.farmers_market_name || '').trim()
+                    if (!name) return null
+                    const city = row?.city || ''
+                    const state =
+                      row?.state_name ?? row?.state ?? row?.state_code ?? ''
+                    return (
+                      <tr key={key}>
+                        <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
+                          <p>{label}</p>
                         </td>
                         <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.thursday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.thursday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.thursday.state_name}`}
-                        </div>
-                      </td>
-  
-                    </tr>
-                  ) : null}
-                  {(
-                    locobiz?.farmers_market_location?.friday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Friday</p>
-                      </td>
-                <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.friday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.friday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.friday.state_name}`}
-                        </div>
-                      </td>
-                    </tr>
-                  ) : null}
-                  {(
-                    locobiz?.farmers_market_location?.saturday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Saturday</p>
-                        </td>
-                        <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.saturday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.saturday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.saturday.state_name}`}
-                        </div>
-                      </td>
-                      </tr>
-                  ) : null}
-                  {(
-                    locobiz?.farmers_market_location?.sunday
-                      ?.farmers_market_name || ''
-                  ).trim() !== '' ? (
-                    <tr>
-                      <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                        <p>Sunday</p>
-                      </td>
-                      
-                      <td className='whitespace-nowrap text-center px-3 py-4 text-sm text-black'>
-                        <div>{`${locobiz.farmers_market_location.sunday.farmers_market_name}`}</div>
-                        <div>
-                          {`${locobiz.farmers_market_location.sunday.city}`}
-                          {', '}
-                          {`${locobiz.farmers_market_location.sunday.state_name}`}
-                        </div>
+                          <div>{name}</div>
+                          <div>
+                            {city}
+                            {city && state ? ', ' : ''}
+                            {state}
+                          </div>
                         </td>
                       </tr>
-                  ) : null}
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
