@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         
            
-        <footer className="bg-gray-800 text-white text-center p-4">
+        <footer className="bg-gray-800 text-white text-center mb-10 p-4 shrink-0">
           <div
             className=" bg-white rounded-lg shadow m-4 w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
           >

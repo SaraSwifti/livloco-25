@@ -46,7 +46,7 @@ const AboutBox = async () => {
               </li>
               <li className='text-xl/8 text-black'>
                 You can be a member without posting a LocoBusiness or LocoFarmers' Market, and just look
-                around.
+                around. Post one or the other should you change your mind, as it is included in the membership. 
               </li>
               <li className='text-xl/8 text-black'>
                 Yearly memberships are $35/year with the ability to post up to

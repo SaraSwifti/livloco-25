@@ -26,23 +26,23 @@ const MainLayout = ({ children }) => {
       className='h-full'
       lang='eng'
     >
-      <body
-        suppressHydrationWarning
-        className='flex flex-col min-h-screen'
-      >
+     <body
+  suppressHydrationWarning
+  className='flex flex-col min-h-screen'
+  style={{
+    backgroundImage: `url(${backdrop.src})`,
+    backgroundSize: 'auto',        // or e.g. '600px auto' to scale the tile
+    backgroundRepeat: 'repeat',    // tile the image
+    backgroundPosition: 'top center',
+  }}>
+
         <Navbar />
-          <main className="flex-grow"
-            style={{
-              backgroundImage: `url(${backdrop.src})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'repeat',
-              backgroundPosition: 'center',
-            }}>
+          <main className="flex-1">
+    <div className="px-4 py-8">{children}</div>
+  </main>
         
-            <div className="relative z-10 px-4 py-8">{children}</div>
             
-        </main>
-        <Footer className='' />
+        <Footer />
         </body>
         
       </html>

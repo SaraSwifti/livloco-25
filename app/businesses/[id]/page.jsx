@@ -12,9 +12,9 @@ import { notFound } from 'next/navigation'; // Optional for handling missing bus
 import { FaArrowLeft } from 'react-icons/fa';
  
 const BusinessPage = async ({ params }) => {
- 
+ const { id } = await params;
   await connectDB();
-  const locobiz = await LocoBiz.findById(params.id).lean();
+const locobiz = await LocoBiz.findById(id).lean(); 
   //  // Optional: Guard against bad MongoDB ObjectId
 
   //  if (!mongoose.Types.ObjectId.isValid(params.id)) {
@@ -33,17 +33,7 @@ const BusinessPage = async ({ params }) => {
       </div>
     );
   }
-  // const locobiz = convertToSerializeableObject(locobizDoc);
-// if (!locobiz) {
-//   return (
-//     <div className="text-center py-10">
-//       <h2 className="text-2xl font-semibold">Business not found</h2>
-//       <Link href="/businesses" className="text-blue-600 underline mt-4 inline-block">
-//         Back to Listings
-//       </Link>
-//     </div>
-//   );
-//   };
+
   return (
     <>
       <div className="relative w-full">
@@ -82,7 +72,7 @@ const BusinessPage = async ({ params }) => {
             </button>
         
       </section>
-      <section className='flex items-center justify-center h-screen'>
+      <section className="flex items-start justify-center py-10">
         <div className="container m-auto py-10 px-6 ">
           <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
             {/*Co-op mem business info*/}

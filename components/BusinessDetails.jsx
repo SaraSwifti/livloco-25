@@ -49,29 +49,19 @@ const BusinessDetails = ({ locobiz }) => {
               <p>Member since</p>
             </div>
           </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-full mx-auto'>
-            Selling buying feature section
-            <div className='col-span-1 md:col-span-2 lg:col-span-2'>
-              {/* <div className='p-4 border rounded shadow'>
-                <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4'>
-                  Selling
-                </h2> */}
-                <ItemsGrid
-                  title='Selling'
-                  entries={locobiz.selling}
-                  keys={['selling1', 'selling2', 'selling3']}
-                />
-              {/* </div> */}
-            </div>
-            {/* Buying list feature section */}
-            <div className='col-span-1 md:col-span-2 lg:col-span-2'>
-              <ItemsGrid
-                title='Needing'
-                entries={locobiz.needs}
-                keys={['need1', 'need2', 'need3']}
-              />
-            </div>
-          </div>
+          {/* Selling & Needing feature section */}
+          {/* Selling & Needing — contained and stacked */}
+<div className="w-full">
+  <div className="mb-6 text-center">
+    <h2 className="text-2xl font-semibold">What they’re selling & seeking</h2>
+  </div>
+
+  <div className="space-y-8">
+    <ItemsGrid title="Selling" entries={locobiz.selling} keys={['selling1','selling2','selling3']} />
+    <ItemsGrid title="Needing" entries={locobiz.needs} keys={['need1','need2','need3']} />
+  </div>
+</div>
+
         </div>
 
         <div className='flex flex-col md:flex-row gap-6 mt-8'>
