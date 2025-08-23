@@ -40,20 +40,25 @@ const locobiz = await LocoBiz.findById(id).lean();
   <BusinessHeaderImage locobiz={locobiz} />
 
   {/* dim layer */}
-  <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+  {/* bottom dim layer for readability */}
+<div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
-  {/* title pinned in the upper third */}
-  <h1
-    className="
-      absolute inset-x-0
-      top-[12%] sm:top-[15%] md:top-[18%] lg:top-[22%]
-      z-10 text-center
-      text-white text-5xl md:text-7xl font-bold
-      drop-shadow-lg
-    "
-  >
-    {locobiz.locobiz_name}
-  </h1>
+<h1
+  className="
+    absolute
+    left-4 sm:left-6 md:left-10
+    bottom-4 sm:bottom-6 md:bottom-8
+    z-10
+    text-left
+    text-white font-bold text-5xl md:text-7xl
+    [-webkit-text-stroke:1.5px_black]
+    [text-shadow:_-1px_0_#000,0_1px_#000,1px_0_#000,0_-1px_#000,_-1px_-1px_0_#000,1px_1px_0_#000,-1px_1px_0_#000,1px_-1px_0_#000]
+    pointer-events-none
+  "
+>
+  {locobiz.locobiz_name}
+</h1>
+
 </div>
 
       <section>

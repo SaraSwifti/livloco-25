@@ -42,11 +42,11 @@ export default function ItemsGrid({ title, entries, keys }) {
               <div className='flex items-start gap-2'>
                 <ItemIcon type={it.type} />
                 <div className='flex-1'>
-                  <h3 className='text-xl text-left text-black'>
+                  <h3 className='text-xl font-medium text-left text-black'>
                     {it.description}
                   </h3>
                   {it.price && (
-                    <p className='text-sm font-medium text-gray-900'>
+                    <p className='text-xl font-medium text-gray-900'>
                       {it.price}
                     </p>
                   )}

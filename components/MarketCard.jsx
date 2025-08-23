@@ -1,9 +1,10 @@
 // components/MarketCard.jsx
 // components/MarketCard.jsx
 
-import SafeImage from '@/components/SafeImage'
-import Link from 'next/link'
-import { FaMapMarkerAlt } from 'react-icons/fa'
+import SafeImage from '@/components/SafeImage';
+import Link from 'next/link';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import MappingPin from '@/components/MappingPin';
 
 const MarketCard = ({ market }) => {
   if (!market) return null
@@ -52,12 +53,17 @@ const MarketCard = ({ market }) => {
               <div className="mt-1 text-sm text-gray-600">{hostfm_type}</div>
             )}
 
-            {location && (
-              <div className="flex items-center justify-center gap-2 mt-3">
-                <FaMapMarkerAlt className="text-orange-700 mt-0.5" />
-                <span className="text-black">{location}</span>
-              </div>
-            )}
+<MappingPin
+  // try mem_zip; fall back to common zip fields for markets
+  memZip={market?.mem_zip || hostfm_address?.zipcode || hostfm_address?.zip}
+  city={city}
+  stateName={stateText}
+  className="justify-center mt-3 text-indigo-700 hover:text-indigo-800 underline decoration-dotted underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
+  mode="modal"     // or "link" to open Google Maps in a new tab
+  size="md"
+  // stopPropagation defaults to true — so the card's <Link> won't trigger
+/>
+
           </div>
         </div>
       </div>

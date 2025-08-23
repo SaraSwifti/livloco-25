@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import SafeImage from '@/components/SafeImage';
-import { FaMapMarkerAlt, FaClipboardList, FaDollyFlatbed } from 'react-icons/fa';
+import { ItemIcon } from '@/components/ItemIcon';
 import PropTypes from 'prop-types';
 import React from 'react';
+import MappingPin from '@/components/MappingPin';
 
-const TypeIcon = ({ type }) => {
-  if (type === 'product') return <FaDollyFlatbed aria-hidden="true" className="mt-0.5" />;
-  if (type === 'service') return <FaClipboardList aria-hidden="true" className="mt-0.5" />;
-  return null;
-};
+
 
 const hasText = (s) => typeof s === 'string' && s.trim().length > 0;
 
@@ -26,7 +23,7 @@ const EntryList = ({ label, root, keys }) => {
         <p className="font-bold mb-2">{label}</p>
         {items.map((entry, idx) => (
           <div key={idx} className="flex items-start gap-2 mb-2">
-            <TypeIcon type={entry?.type} />
+            <ItemIcon type={entry?.type} />
             <p className="leading-snug">{entry?.description?.trim()}</p>
           </div>
         ))}
@@ -65,17 +62,18 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
         </div>
 
         <div className="p-4">
-          <header className="text-center mb-6">
-            <h3 className="text-3xl font-bold">{name}</h3>
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <FaMapMarkerAlt aria-hidden="true" className="text-orange-700 mt-0.5" />
-              <span className="text-black">
-                {city || '—'}
-                {city && stateName ? ', ' : ''}
-                {stateName || ''}
-              </span>
-            </div>
-          </header>
+      <header className="text-center mb-6">
+  <h3 className="text-3xl font-bold">{name}</h3>
+   <MappingPin
+   memZip={locobiz?.mem_zip}
+   city={city}
+   stateName={stateName}
+   className="justify-center text-xl font-bold mt-2 text-indigo-700 hover:text-indigo-800 underline decoration-dotted underline-offset-4"
+   mode="modal"      // or "link" for new tab
+   size="md"
+   // stopPropagation defaults to true — so clicking the pin won’t navigate
+ />
+</header>
 
           <EntryList label="Selling:" root={locobiz?.selling} keys={SELL_KEYS} />
           <EntryList label="Needing:" root={locobiz?.needs} keys={NEED_KEYS} />
@@ -85,7 +83,7 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
   );
 });
 
-TypeIcon.propTypes = { type: PropTypes.string };
+ItemIcon.propTypes = { type: PropTypes.string };
 EntryList.propTypes = {
   label: PropTypes.string.isRequired,
   root: PropTypes.object,
