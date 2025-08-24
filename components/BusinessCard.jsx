@@ -54,10 +54,11 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
           <SafeImage
             src={profileImage}
             alt={`${name} profile image`}
-            className="h-[200px] w-[300px] rounded-t-xl"
+            className="h-[200px] w-[300px] rounded-t-xl pointer-events-none"
             imgClassName="object-contain"
             cover={false}
             sizes="(max-width: 640px) 90vw, 300px"
+            zoomOnClick={false} 
           />
         </div>
 

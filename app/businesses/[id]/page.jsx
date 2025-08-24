@@ -40,8 +40,8 @@ const locobiz = await LocoBiz.findById(id).lean();
   <BusinessHeaderImage locobiz={locobiz} />
 
   {/* dim layer */}
-  {/* bottom dim layer for readability */}
-<div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+  <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+
 
 <h1
   className="
@@ -77,7 +77,7 @@ const locobiz = await LocoBiz.findById(id).lean();
             </button>
         
       </section>
-      <section className="flex items-start justify-center py-10">
+      <section className="flex items-start justify-center">
         <div className="container m-auto py-10 px-6 ">
           <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
             {/*Co-op mem business info*/}

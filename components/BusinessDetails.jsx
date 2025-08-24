@@ -6,6 +6,11 @@ import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 import ItemsGrid from './ItemsGrid'
 
 const BusinessDetails = ({ locobiz }) => {
+  const hasStoreFront = locobiz?.locobiz_address?.post_permission === true
+  const hasFM = locobiz?.farmers_market_location?.fm_location_post === true
+  const gridMdCols =
+    hasStoreFront && hasFM ? 'md:grid-cols-2' : 'md:grid-cols-1'
+
   return (
     <>
       <section className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
@@ -19,7 +24,7 @@ const BusinessDetails = ({ locobiz }) => {
               memZip={locobiz?.mem_zip}
               city={locobiz?.locobiz_address?.city}
               stateName={locobiz?.locobiz_address?.state_name}
-              className="justify-center text-xl font-bold mt-2 text-indigo-700 hover:text-indigo-800 underline decoration-dotted underline-offset-4"
+              className='justify-center text-xl font-bold mt-2 text-indigo-700 hover:text-indigo-800 underline decoration-dotted underline-offset-4'
               mode='modal'
               size='md'
             />
@@ -75,7 +80,7 @@ const BusinessDetails = ({ locobiz }) => {
                 keys={['selling1', 'selling2', 'selling3']}
               />
               <ItemsGrid
-                title='Needing'
+                title='Seeking'
                 entries={locobiz.needs}
                 keys={['need1', 'need2', 'need3']}
               />
@@ -83,31 +88,21 @@ const BusinessDetails = ({ locobiz }) => {
           </div>
         </div>
 
-        <div className='flex flex-col md:flex-row gap-6 mt-8'>
-          {/* Left Column: BusinessContact + StoreFront */}
-          <div
-            className={
-              locobiz?.farmers_market_location?.fm_location_post === true
-                ? 'md:w-1/2'
-                : 'md:w-full'
-            }
-          >
-            <BusinessContact
-              locobiz={locobiz}
-              className='mb-6'
-            />
-            {locobiz?.locobiz_address?.post_permission === true && (
-              <StoreFront locobiz={locobiz} />
-            )}
-          </div>
-
-          {/* If there is Farmers market details */}
-          {locobiz?.farmers_market_location?.fm_location_post === true && (
-            <div className='md:w-1/2'>
-              <FarmersMarket locobiz={locobiz} />
-            </div>
-          )}
+        {/* Contact — always full width */}
+        <div className='mt-8 w-full'>
+          <BusinessContact
+            locobiz={locobiz}
+            className='mb-6'
+          />
         </div>
+
+        {/* StoreFront + FarmersMarket — responsive grid below contact */}
+        {(hasStoreFront || hasFM) && (
+          <div className={`mt-6 grid grid-cols-1 ${gridMdCols} gap-6`}>
+            {hasStoreFront && <StoreFront locobiz={locobiz} />}
+            {hasFM && <FarmersMarket locobiz={locobiz} />}
+          </div>
+        )}
       </section>
     </>
   )

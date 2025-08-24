@@ -129,7 +129,7 @@ export default function SafeImage({
               onClick={zoomOnClick ? openModal : undefined}
               {...imgRest}
             />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-non">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <span className="text-white font-bold text-2xl px-4 py-2 rounded">
                 Image Unavailable
               </span>

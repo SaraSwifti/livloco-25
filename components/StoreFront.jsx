@@ -1,101 +1,85 @@
+import { formatPhone } from '@/utils/formatPhone'
+import AddressLink from '@/components/AddressLink'
 
-import { formatPhone } from '@/utils/formatPhone';
+const DAYS = [
+  ['monday', 'Monday'],
+  ['tuesday', 'Tuesday'],
+  ['wednesday', 'Wednesday'],
+  ['thursday', 'Thursday'],
+  ['friday', 'Friday'],
+  ['saturday', 'Saturday'],
+  ['sunday', 'Sunday'],
+];
 
-const StoreFront = ({ locobiz }) => {
-    return ( 
+export default function StoreFront({ locobiz }) {
+  const addr = locobiz?.locobiz_address ?? {};
+  const hours = locobiz?.business_hours ?? {};
+  const hasPhone = Boolean(addr?.biz_phone);
 
-       
-          <div>
-            <h1 className='text-2xl pt-3 text-center font-bold text-green-900'>
-              {locobiz.locobiz_name}
-            </h1>
-            <h1 className='text-xl text-center  text-green-900'>
-              Physical Address and Hours
-            </h1>
-            <div className='flex justify-center items-center'>
-              <h1 className='text-xl text-green-900'>
-                {formatPhone(locobiz.locobiz_address.biz_phone)}
-              </h1>
-            </div>
-            <div className='flex justify-center items-center'>
-              <h1 className='text-xl text-green-900'>
-                {locobiz.locobiz_address.add_line1}
-              </h1>
-            </div>
-            <div className='flex justify-center items-center'>
-              <h1 className='text-xl text-green-900'>
-                {locobiz.locobiz_address.add_line2}
-              </h1>
-            </div>
-            <div className='flex justify-center items-center'>
-              <h1 className='text-xl text-green-900'>
-                {locobiz.locobiz_address.city}
-                {`, `} {locobiz.locobiz_address.state_code}
-                {` `}
-                {locobiz.locobiz_address.zipcode}
-              </h1>
-            </div>
+  return (
+    <section aria-labelledby="storefront-heading" className="mt-6">
+      <h2 id="storefront-heading" className="text-2xl pt-3 text-center font-bold text-black">
+        {locobiz?.locobiz_name ?? 'Storefront'}
+      </h2>
+      <p className="text-xl text-center text-black">
+        Physical Address and Hours of Farmstand or Storefront
+      </p>
 
-            <div className='mt-8 flow-root'>
-              <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-                <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
-                  <div className='overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg'>
-                    <table className='min-w-full divide-y divide-gray-300'>
-                      <tbody className='divide-y divide-gray-200 bg-white'>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Monday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.monday_hours}`}</td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Tuesday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.tuesday_hours}`}</td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Wednesday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.wednesday_hours}`}</td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Thursday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.thursday_hours}`}</td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Friday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.friday_hours}`}</td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Saturday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>
-                            ${locobiz.business_hours.saturday_hours}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='whitespace-nowrap py-4 px-3 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            <p>Sunday</p>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-black'>{`${locobiz.business_hours.sunday_hours}`}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+      {hasPhone && (
+        <div className="flex justify-center items-center">
+          <a
+            href={`tel:${addr.biz_phone}`}
+            className="text-xl text-green-900 hover:underline"
+          >
+            {formatPhone(addr.biz_phone)}
+          </a>
+        </div>
+      )}
+
+      <div className="flex justify-center items-center">
+        <AddressLink address={addr} mode="directions" className="text-xl" />
+      </div>
+
+      <div className="mt-8">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full align-middle sm:px-6 lg:px-8">
+             <div className="overflow-hidden sm:rounded-xl bg-white ring-1 ring-black/25 shadow-2xl transition-shadow duration-300">
+              <table className="min-w-full">
+                <caption className="sr-only">Weekly storefront hours</caption>
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-black">
+                      Day
+                    </th>
+                    <th scope="col" className="py-3.5 px-3 text-left text-sm font-semibold text-black">
+                      Hours
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 [&_tr:nth-child(odd)]:bg-gray-50 border-t-2 border-gray-700">
+                  {DAYS.map(([key, label]) => {
+                    const value = String(hours?.[`${key}_hours`] ?? '').trim();
+                    return (
+                      <tr key={key}>
+                        <th
+                          scope="row"
+                          className="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-gray-900"
+                        >
+                          {label}
+                        </th>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                          {value || '—'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
-           
-          
-     );
+        </div>
+      </div>
+    </section>
+  );
 }
- 
-export default StoreFront;
+

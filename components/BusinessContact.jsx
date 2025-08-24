@@ -5,7 +5,7 @@ const BusinessContact = ({ locobiz, className = '' }) => {
   return (
     <>
       <div className={className}>
-        <h1 className='text-xl text-center pb-4 font-bold'>
+        <h1 className='text-3xl text-center pb-4 font-bold'>
           {' '}
           Contact Information for {locobiz.locobiz_name}
         </h1>
