@@ -24,7 +24,7 @@ const MarketCard = ({ market }) => {
   // Abstracted wrapper (link if _id exists, div otherwise)
   const Wrapper = ({ children }) =>
     _id ? (
-      <Link href={`/markets/${_id}`} passHref>
+      <Link href={`/hostfarmmarkets/${_id}`} passHref>
         {children}
       </Link>
     ) : (
