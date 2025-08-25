@@ -11,7 +11,7 @@ export default function HostFMHeaderImage({ market }) {
     <section className="py-4">
       {/* scaled to match body width */}
       <div className="max-w-6xl mx-auto px-4">
-        <div className="relative overflow-hidden sm:rounded-xl ring-1 ring-black/10 shadow-2xl">
+       <div className="relative overflow-hidden sm:rounded-xl border-4 border-black shadow-2xl">
           {/* image (scaled, not full-bleed) */}
           <SafeImage
             src={src}

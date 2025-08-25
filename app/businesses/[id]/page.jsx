@@ -43,21 +43,7 @@ const locobiz = await LocoBiz.findById(id).lean();
   <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
 
 
-<h1
-  className="
-    absolute
-    left-4 sm:left-6 md:left-10
-    bottom-4 sm:bottom-6 md:bottom-8
-    z-10
-    text-left
-    text-white font-bold text-5xl md:text-7xl
-    [-webkit-text-stroke:1.5px_black]
-    [text-shadow:_-1px_0_#000,0_1px_#000,1px_0_#000,0_-1px_#000,_-1px_-1px_0_#000,1px_1px_0_#000,-1px_1px_0_#000,1px_-1px_0_#000]
-    pointer-events-none
-  "
->
-  {locobiz.locobiz_name}
-</h1>
+
 
 </div>
 
