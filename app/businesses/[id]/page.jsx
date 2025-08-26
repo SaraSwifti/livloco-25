@@ -25,7 +25,7 @@ const locobiz = await LocoBiz.findById(id).lean();
     // If business not found, show fallback UI or redirect
   if (!locobiz) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 border-4 border-black ">
         <h2 className="text-2xl font-semibold">Business not found</h2>
         <Link href="/businesses" className="text-blue-600 underline mt-4 inline-block">
           Back to Listings
@@ -52,7 +52,7 @@ const locobiz = await LocoBiz.findById(id).lean();
         
                <button
         type="button"
-        className="rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
+        className="border-4 border-black rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
       >         
           <Link
             href="/businesses"
@@ -65,15 +65,21 @@ const locobiz = await LocoBiz.findById(id).lean();
       </section>
       <section className="flex items-start justify-center">
         <div className="container m-auto py-10 px-6 ">
-          <div className="grid grid-cols-1 mb-5  md:grid-cols-70/30 w-full gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6 border-4 border-black ">
             {/*Co-op mem business info*/}
             <BusinessDetails locobiz={locobiz} />
              <section>
         {/* Go Back Arrow */}
+     
         
+      </section>
+            {/* <BusinessContact locobiz={locobiz} /> */}
+            
+          </div>
+              
                <button
         type="button"
-        className="rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
+        className="border-4 border-black rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white"
       >         
           <Link
             href="/businesses"
@@ -82,12 +88,6 @@ const locobiz = await LocoBiz.findById(id).lean();
             <FaArrowLeft className='mr-2' /> Back to Co-op Listings
             </Link>
             </button>
-        
-      </section>
-            {/* <BusinessContact locobiz={locobiz} /> */}
-            
-          </div>
-           
         </div>
       </section>
 

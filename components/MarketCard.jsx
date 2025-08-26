@@ -33,7 +33,7 @@ const MarketCard = ({ market }) => {
 
   return (
     <Wrapper>
-      <div className="rounded-xl pt-1 shadow-md relative bg-white">
+      <div className="rounded-xl pt-1 shadow-md relative bg-white ring-1 border-4 border-black ring-black/20">
         <div className="mt-5 flex justify-center items-center rounded-t-xl">
           <SafeImage
             src={hostfm_profile_image}

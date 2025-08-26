@@ -38,30 +38,14 @@
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-12",
-        "time": "10:45 AM – 2:05 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-09",
-        "time": "10:45 AM – 2:20 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-14",
-        "time": "12:15 PM – 4:08 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-11",
-        "time": "11:00 AM – 2:23 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-09-08",
-        "time": "9:00 AM – 1:07 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-10-13",
-        "time": "10:45 AM – 2:31 PM"
-      }
+      "dates": [
+        "2025-05-12",
+        "2025-06-09",
+        "2025-07-14",
+        "2025-08-11",
+        "2025-09-08",
+        "2025-10-13"
+      ]
     }
   },
   {
@@ -102,27 +86,14 @@
       "sunday_hours": ""
     },
     "hostfm_dates": {
-      "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-04-06",
-        "time": "9:45 AM – 12:52 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-05-04",
-        "time": "10:30 AM – 2:22 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-06-01",
-        "time": "8:30 AM – 12:02 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-07-06",
-        "time": "9:15 AM – 12:52 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-08-03",
-        "time": "10:15 AM – 2:25 PM"
-      }
+      "hostfm_randomdates": true,
+      "dates": [
+        "2025-04-06",
+        "2025-05-04",
+        "2025-06-01",
+        "2025-07-06",
+        "2025-08-03"
+      ]
     }
   },
   {
@@ -164,30 +135,14 @@
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-10",
-        "time": "6:30 PM – 10:06 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-14",
-        "time": "5:00 PM – 8:39 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-12",
-        "time": "5:15 PM – 8:52 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-09",
-        "time": "11:30 AM – 2:34 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-09-13",
-        "time": "10:15 AM – 2:34 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-10-11",
-        "time": "5:45 PM – 9:29 PM"
-      }
+      "dates": [
+        "2025-05-10",
+        "2025-06-14",
+        "2025-07-12",
+        "2025-08-09",
+        "2025-09-13",
+        "2025-10-11"
+      ]
     }
   },
   {
@@ -228,23 +183,13 @@
       "sunday_hours": ""
     },
     "hostfm_dates": {
-      "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-24",
-        "time": "5:15 PM – 9:05 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-21",
-        "time": "5:00 PM – 9:15 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-19",
-        "time": "6:45 PM – 10:28 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-23",
-        "time": "6:45 PM – 10:59 PM"
-      }
+      "hostfm_randomdates": true,
+      "dates": [
+        "2025-05-24T18:00:00Z",
+        "2025-06-21T18:00:00Z",
+        "2025-07-19T18:00:00Z",
+        "2025-08-23T18:00:00Z"
+      ]
     }
   },
   {
@@ -286,30 +231,14 @@
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-04-15",
-        "time": "10:00 AM – 2:04 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-05-13",
-        "time": "11:15 AM – 2:35 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-06-17",
-        "time": "11:15 AM – 4:14 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-07-15",
-        "time": "10:00 AM – 1:01 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-08-19",
-        "time": "9:30 AM – 1:19 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-09-16",
-        "time": "12:00 PM – 3:14 PM"
-      }
+      "dates": [
+        "2025-04-15",
+        "2025-05-13",
+        "2025-06-17",
+        "2025-07-15",
+        "2025-08-19",
+        "2025-09-16"
+      ]
     }
   }
 ]

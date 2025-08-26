@@ -45,10 +45,18 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
   const stateName = locobiz?.locobiz_address?.state_name;
 
   return (
-    <Link
+   
+     <Link
+
       href={`/businesses/${id}`}
-      className="group block rounded-xl shadow-md bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
-    >
+
+   className="group block rounded-xl shadow-md bg-white
+
+              border-4 border-black ring-1 ring-black/20
+
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
+
+ >
       <article className="rounded-xl pt-1">
         <div className="mt-5 flex justify-center items-center">
           <SafeImage
