@@ -23,16 +23,16 @@ function dayOfWeek(d) {
   }
 }
 
-export default function HostFMarketRandomDates({ datesObj = {} }) {
- // Build rows from fmrand_date1..N, sorted by ACTUAL date
-  const toTS = (d) => {
-    const t = Date.parse(d);
-    return Number.isNaN(t) ? Number.POSITIVE_INFINITY : t;
-  };
-  const entries = Object.entries(datesObj)
-    .filter(([k, v]) => k.startsWith('fmrand_date') && v && v.date);
-  entries.sort(([, a], [, b]) => toTS(a.date) - toTS(b.date));
-  const rows = entries.map(([, v]) => ({
+export default function HostFMarketRandomDates({ datesArr = [], legacyObj = {} }) {
+ // Prefer the new array; if empty, fall back to legacy fmrand_date* keys
+ const base = Array.isArray(datesArr) && datesArr.length
+   ? datesArr
+   : Object.entries(legacyObj)
+       .filter(([k, v]) => k.startsWith('fmrand_date') && v && v.date)
+       .sort(([, a], [, b]) => (Date.parse(a.date) || 9e15) - (Date.parse(b.date) || 9e15))
+       .map(([, v]) => v);
+
+ const rows = base.map((v) => ({
     day: dayOfWeek(v.date),
     date: fmtDate(v.date),
     time: (v.time || '').trim(),

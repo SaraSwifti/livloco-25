@@ -1,16 +1,14 @@
 [
-  {
-    "_id": 1,
+  {"_id": 1,
     "email": "grummet@gmail.com",
     "account_owner_name": "Esther Grummet",
     "phone": "616-558-1817",
-    "payment_confirmed": "true",
     "hostfm_profile_image": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
     "hostfm_active": true,
     "hostfm_name": "Kairos Flowers",
     "hostfm_description": "Flower Sales and Home Delivery Services",
     "hostfm_type": "Produce and Artisan Market",
-    "email_memmessage_notification": "true",
+    "email_memmessage_notification": true,
     "hostfm_address": {
       "hostfm_phone": "616-558-1817",
       "add_line1": "5913 68th street",
@@ -27,55 +25,55 @@
     "stall_size": "20'x 20'",
     "stall_included": "nothing",
     "hostfm_weekly_sched": {
-      "weekly_sched": "true",
+      "weekly_sched": false,
       "monday_hours": "8-5",
       "tuesday_hours": "",
       "wednesday_hours": "",
       "thursday_hours": "",
-      "fr_iday_hours": "",
+      "friday_hours": "",
       "saturday_hours": "8-7",
       "sunday_hours": ""
     },
     "hostfm_dates": {
-      "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-12",
-        "time": "10:45 AM – 2:05 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-09",
-        "time": "10:45 AM – 2:20 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-14",
-        "time": "12:15 PM – 4:08 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-11",
-        "time": "11:00 AM – 2:23 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-09-08",
-        "time": "9:00 AM – 1:07 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-10-13",
-        "time": "10:45 AM – 2:31 PM"
-      }
+      "hostfm_randomdates": true,
+      "dates": [
+        {
+          "date": "2025-05-12",
+          "time": "10:45 AM – 2:05 PM"
+        },
+        {
+          "date": "2025-06-09",
+          "time": "10:45 AM – 2:20 PM"
+        },
+        {
+          "date": "2025-07-14",
+          "time": "12:15 PM – 4:08 PM"
+        },
+        {
+          "date": "2025-08-11",
+          "time": "11:00 AM – 2:23 PM"
+        },
+        {
+          "date": "2025-09-08",
+          "time": "9:00 AM – 1:07 PM"
+        },
+        {
+          "date": "2025-10-13",
+          "time": "10:45 AM – 2:31 PM"
+        }
+      ]
     }
   },
-  {
-    "_id": 2,
+  {"_id": 2,
     "email": "info@riverbendmarket.org",
     "account_owner_name": "Marcus Lee",
     "phone": "505-331-4420",
-    "payment_confirmed": "true",
     "hostfm_profile_image": "https://res.cloudinary.com/demo/image/upload/woman.jpg",
     "hostfm_active": true,
     "hostfm_name": "Riverbend Farmers Market",
     "hostfm_description": "Local produce, baked goods, and live music.",
     "hostfm_type": "Community Farmers Market",
-    "email_memmessage_notification": "true",
+    "email_memmessage_notification": true,
     "hostfm_address": {
       "hostfm_phone": "505-331-4420",
       "add_line1": "1200 Rio Vista Ave",
@@ -92,51 +90,51 @@
     "stall_size": "10' x 10'",
     "stall_included": "one table",
     "hostfm_weekly_sched": {
-      "weekly_sched": "false",
+      "weekly_sched": false,
       "monday_hours": "",
       "tuesday_hours": "",
       "wednesday_hours": "",
       "thursday_hours": "",
-      "fr_iday_hours": "",
+      "friay_hours": "",
       "saturday_hours": "",
       "sunday_hours": ""
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-04-06",
-        "time": "9:45 AM – 12:52 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-05-04",
-        "time": "10:30 AM – 2:22 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-06-01",
-        "time": "8:30 AM – 12:02 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-07-06",
-        "time": "9:15 AM – 12:52 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-08-03",
-        "time": "10:15 AM – 2:25 PM"
-      }
+      "dates": [
+        {
+          "date": "2025-04-06",
+          "time": "9:45 AM – 12:52 PM"
+        },
+        {
+          "date": "2025-05-04",
+          "time": "10:30 AM – 2:22 PM"
+        },
+        {
+          "date": "2025-06-01",
+          "time": "8:30 AM – 12:02 PM"
+        },
+        {
+          "date": "2025-07-06",
+          "time": "9:15 AM – 12:52 PM"
+        },
+        {
+          "date": "2025-08-03",
+          "time": "10:15 AM – 2:25 PM"
+        }
+      ]
     }
   },
-  {
-    "_id": 3,
+  {"_id": 3,
     "email": "hello@redmesaartisan.com",
     "account_owner_name": "Aaliyah Park",
     "phone": "719-220-9981",
-    "payment_confirmed": "true",
     "hostfm_profile_image": "https://res.cloudinary.com/demo/image/upload/balloons.jpg",
     "hostfm_active": true,
     "hostfm_name": "Red Mesa Artisan Fair",
     "hostfm_description": "Handmade crafts and small-batch foods from regional makers.",
     "hostfm_type": "Artisan Market",
-    "email_memmessage_notification": "true",
+    "email_memmessage_notification": true,
     "hostfm_address": {
       "hostfm_phone": "719-220-9981",
       "add_line1": "42 Canyon View Rd",
@@ -153,55 +151,55 @@
     "stall_size": "10' x 20'",
     "stall_included": "power access",
     "hostfm_weekly_sched": {
-      "weekly_sched": "true",
+      "weekly_sched": true,
       "monday_hours": "",
       "tuesday_hours": "",
       "wednesday_hours": "12-6",
       "thursday_hours": "",
-      "fr_iday_hours": "",
+      "friday_hours": "",
       "saturday_hours": "9-3",
       "sunday_hours": ""
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-10",
-        "time": "6:30 PM – 10:06 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-14",
-        "time": "5:00 PM – 8:39 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-12",
-        "time": "5:15 PM – 8:52 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-09",
-        "time": "11:30 AM – 2:34 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-09-13",
-        "time": "10:15 AM – 2:34 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-10-11",
-        "time": "5:45 PM – 9:29 PM"
-      }
+      "dates": [
+        {
+          "date": "2025-05-10",
+          "time": "6:30 PM – 10:06 PM"
+        },
+        {
+          "date": "2025-06-14",
+          "time": "5:00 PM – 8:39 PM"
+        },
+        {
+          "date": "2025-07-12",
+          "time": "5:15 PM – 8:52 PM"
+        },
+        {
+          "date": "2025-08-09",
+          "time": "11:30 AM – 2:34 PM"
+        },
+        {
+          "date": "2025-09-13",
+          "time": "10:15 AM – 2:34 PM"
+        },
+        {
+          "date": "2025-10-11",
+          "time": "5:45 PM – 9:29 PM"
+        }
+      ]
     }
   },
-  {
-    "_id": 4,
+  {"_id":4,
     "email": "contact@desertbloommarket.com",
     "account_owner_name": "Rafael Ortiz",
     "phone": "928-555-3021",
-    "payment_confirmed": "true",
     "hostfm_profile_image": "https://res.cloudinary.com/demo/image/upload/kitten.jpg",
     "hostfm_active": true,
     "hostfm_name": "Desert Bloom Night Market",
     "hostfm_description": "Evening market featuring food trucks and local growers.",
     "hostfm_type": "Night Market",
-    "email_memmessage_notification": "true",
+    "email_memmessage_notification": true,
     "hostfm_address": {
       "hostfm_phone": "928-555-3021",
       "add_line1": "700 S Agave Blvd",
@@ -218,47 +216,47 @@
     "stall_size": "12' x 12'",
     "stall_included": "lighting",
     "hostfm_weekly_sched": {
-      "weekly_sched": "false",
+      "weekly_sched": false,
       "monday_hours": "",
       "tuesday_hours": "",
       "wednesday_hours": "",
       "thursday_hours": "",
-      "fr_iday_hours": "",
+      "friday_hours": "",
       "saturday_hours": "",
       "sunday_hours": ""
     },
     "hostfm_dates": {
       "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-05-24",
-        "time": "5:15 PM – 9:05 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-06-21",
-        "time": "5:00 PM – 9:15 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-07-19",
-        "time": "6:45 PM – 10:28 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-08-23",
-        "time": "6:45 PM – 10:59 PM"
-      }
+      "dates": [
+        {
+          "date": "2025-05-24",
+          "time": "5:15 PM – 9:05 PM"
+        },
+        {
+          "date": "2025-06-21",
+          "time": "5:00 PM – 9:15 PM"
+        },
+        {
+          "date": "2025-07-19",
+          "time": "6:45 PM – 10:28 PM"
+        },
+        {
+          "date": "2025-08-23",
+          "time": "6:45 PM – 10:59 PM"
+        }
+      ]
     }
   },
-  {
-    "_id": 5,
+  {"_id":5,
     "email": "market@highplainsco-op.org",
     "account_owner_name": "Nora Chavez",
     "phone": "575-440-7711",
-    "payment_confirmed": "true",
     "hostfm_profile_image": "https://res.cloudinary.com/demo/image/upload/couple.jpg",
     "hostfm_active": false,
     "hostfm_name": "High Plains Co-op Market",
     "hostfm_description": "Seasonal co-op market with rotating vendor stalls.",
     "hostfm_type": "Co-op Market",
-    "email_memmessage_notification": "true",
+    "email_memmessage_notification": true,
     "hostfm_address": {
       "hostfm_phone": "575-440-7711",
       "add_line1": "300 Sunflower Way",
@@ -275,41 +273,43 @@
     "stall_size": "10' x 15'",
     "stall_included": "tent",
     "hostfm_weekly_sched": {
-      "weekly_sched": "true",
+      "weekly_sched": false,
       "monday_hours": "",
       "tuesday_hours": "10-4",
       "wednesday_hours": "",
       "thursday_hours": "",
-      "fr_iday_hours": "10-2",
+      "friday_hours": "10-2",
       "saturday_hours": "",
       "sunday_hours": ""
     },
     "hostfm_dates": {
-      "hostfm_randomdates": false,
-      "fmrand_date1": {
-        "date": "2025-04-15",
-        "time": "10:00 AM – 2:04 PM"
-      },
-      "fmrand_date2": {
-        "date": "2025-05-13",
-        "time": "11:15 AM – 2:35 PM"
-      },
-      "fmrand_date3": {
-        "date": "2025-06-17",
-        "time": "11:15 AM – 4:14 PM"
-      },
-      "fmrand_date4": {
-        "date": "2025-07-15",
-        "time": "10:00 AM – 1:01 PM"
-      },
-      "fmrand_date5": {
-        "date": "2025-08-19",
-        "time": "9:30 AM – 1:19 PM"
-      },
-      "fmrand_date6": {
-        "date": "2025-09-16",
-        "time": "12:00 PM – 3:14 PM"
-      }
+      "hostfm_randomdates": true,
+      "dates": [
+        {
+          "date": "2025-04-15",
+          "time": "10:00 AM – 2:04 PM"
+        },
+        {
+          "date": "2025-05-13",
+          "time": "11:15 AM – 2:35 PM"
+        },
+        {
+          "date": "2025-06-17",
+          "time": "11:15 AM – 4:14 PM"
+        },
+        {
+          "date": "2025-07-15",
+          "time": "10:00 AM – 1:01 PM"
+        },
+        {
+          "date": "2025-08-19",
+          "time": "9:30 AM – 1:19 PM"
+        },
+        {
+          "date": "2025-09-16",
+          "time": "12:00 PM – 3:14 PM"
+        }
+      ]
     }
   }
 ]

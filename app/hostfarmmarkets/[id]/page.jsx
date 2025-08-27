@@ -74,18 +74,22 @@ export default async function HostFarmMarketPage({ params }) {
             {/* MARKET META: type, description, address + pin, phone, website */}
             <div className='bg-white p-6 rounded-lg shadow-md ring-1 ring-black/10'>
               <div className='flex flex-col items-center gap-2 text-center'>
-                <h1 className='text-3xl font-bold mb-1'>{market.hostfm_name}</h1>
+                <h1 className='text-3xl font-bold mb-1'>
+                  {market.hostfm_name}
+                </h1>
                 {market?.hostfm_type && (
                   <p className='text-2xl text-black'>{market.hostfm_type}</p>
                 )}
                 {market?.hostfm_description && (
-                  <p className='text-lg text-black'>{market.hostfm_description}</p>
+                  <p className='text-lg text-black'>
+                    {market.hostfm_description}
+                  </p>
                 )}
 
                 {/* Address (maps/directions) */}
                 <div className='mt-2'>
                   <AddressLink
-                    className="text-lg text-blue-800 hover:text-blue-900 underline"
+                    className='text-lg text-blue-800 hover:text-blue-900 underline'
                     address={{
                       add_line1: addr?.add_line1,
                       add_line2: addr?.add_line2,
@@ -108,59 +112,68 @@ export default async function HostFarmMarketPage({ params }) {
                   </a>
                 )}
 
-              {/* Actions row: Website | Messaging | Votes */}
-<div className="mt-4 w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
-  {/* 1) Website */}
-                  <div className="flex flex-col items-center">
+                {/* Actions row: Website | Messaging | Votes */}
+                <div className='mt-4 w-full grid grid-cols-1 sm:grid-cols-3 gap-4'>
+                  {/* 1) Website */}
+                  <div className='flex flex-col items-center'>
                     {/* conditional website link rendering */}
-    {site ? (
-      <Link
-        href={site}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-2xl font-bold space-x-2 text-blue-800 hover:text-blue-900 underline"
-        title={`Open website for ${market.hostfm_name}`}
-      >
-        <FaGlobe className='w-20 h-20 text-blue-800 hover:text-blue-900 cursor-pointer'/>
+                    {site ? (
+                      <Link
+                        href={site}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='inline-flex items-center gap-2 text-2xl font-bold space-x-2 text-blue-800 hover:text-blue-900 underline'
+                        title={`Open website for ${market.hostfm_name}`}
+                      >
+                        <FaGlobe className='w-20 h-20 text-blue-800 hover:text-blue-900 cursor-pointer' />
                         <span>{`${market.hostfm_name}'s Website`}</span>
-                        <FaExternalLinkAlt aria-hidden className="w-4 h-4 opacity-80" />
-      </Link>
-    ) : (
-      <span className="text-gray-500 italic">No website provided</span>
-    )}
-  </div>
+                        <FaExternalLinkAlt
+                          aria-hidden
+                          className='w-4 h-4 opacity-80'
+                        />
+                      </Link>
+                    ) : (
+                      <span className='text-gray-500 italic'>
+                        No website provided
+                      </span>
+                    )}
+                  </div>
 
-  {/* 2) Messaging placeholder */}
-  <div className="flex flex-col items-center">
-    <p className="text-sm font-semibold text-gray-700">Message</p>
-    <button
-      type="button"
-      disabled
-      className="mt-1 inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-40"
-      title="Messaging coming soon"
-    >
-      Coming soon
-    </button>
-  </div>
+                  {/* 2) Messaging placeholder */}
+                  <div className='flex flex-col items-center'>
+                    <p className='text-sm font-semibold text-gray-700'>
+                      Message
+                    </p>
+                    <button
+                      type='button'
+                      disabled
+                      className='mt-1 inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-40'
+                      title='Messaging coming soon'
+                    >
+                      Coming soon
+                    </button>
+                  </div>
 
-  {/* 3) Votes placeholder */}
-  <div className="flex flex-col items-center">
-    <p className="text-sm font-semibold text-gray-700">Votes received</p>
-    <div className="text-2xl font-bold text-gray-900">{market?.votes ?? 0}</div>
-    <button
-      type="button"
-      disabled
-      className="mt-1 inline-flex items-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-40"
-      title="Voting coming soon"
-    >
-      Vote
-    </button>
-  </div>
-</div>
-
+                  {/* 3) Votes placeholder */}
+                  <div className='flex flex-col items-center'>
+                    <p className='text-sm font-semibold text-gray-700'>
+                      Votes received
+                    </p>
+                    <div className='text-2xl font-bold text-gray-900'>
+                      {market?.votes ?? 0}
+                    </div>
+                    <button
+                      type='button'
+                      disabled
+                      className='mt-1 inline-flex items-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-40'
+                      title='Voting coming soon'
+                    >
+                      Vote
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-
             {/* Stall availability (conditional) */}
             {hasStall ? (
               <HostFMStallInfo market={market} />
@@ -171,11 +184,18 @@ export default async function HostFarmMarketPage({ params }) {
                 </p>
               </div>
             )}
-
             {/* Schedules (never both at once) */}
-            {showWeekly && <HostFMarketWeeklySch weekly={weekly} />}
-            {showRandom && <HostFMarketRandomDates datesObj={randomDatesObj} />}
-
+            {showWeekly && <HostFMarketWeeklySch weekly={weekly} />}+{' '}
+            {showRandom && (
+              <HostFMarketRandomDates
+                datesArr={
+                  Array.isArray(randomDatesObj?.dates)
+                    ? randomDatesObj.dates
+                    : []
+                }
+                legacyObj={randomDatesObj}
+              />
+            )}
             {!showWeekly && !showRandom && (
               <div className='bg-white p-6 rounded-lg shadow text-center'>
                 <p className='text-gray-700'>

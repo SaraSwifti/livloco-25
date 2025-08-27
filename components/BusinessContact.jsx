@@ -20,6 +20,7 @@ const BusinessContact = ({ locobiz, className = '' }) => {
               target='_blank'
               rel='noopener noreferrer'
               className='text-2xl font-bold inline-flex items-center space-x-2 text-blue-800 hover:text-blue-900 underline'
+              title={`Open website for ${locobiz.locobiz_name}`}
             >
               <FaGlobe className='w-6 h-6 text-blue-800 hover:text-blue-900 cursor-pointer' />
               <span>Website for {locobiz.locobiz_name}</span>
