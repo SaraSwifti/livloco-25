@@ -137,7 +137,7 @@ const Navbar = () => {
                 <Link
                   href='/'
                   className={`${
-                    pathname === '/' ? 'bg-black' : ''
+                    pathname === '/' ? 'bg-black border-b-4 border-white' : ''
                   } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                 >
                   LocoHome
@@ -145,7 +145,7 @@ const Navbar = () => {
                 <Link
                   href='/living'
                   className={`${
-                    pathname === '/living' ? 'bg-black' : ''
+                    pathname === '/living' ? 'bg-black border-b-4 border-white' : ''
                   } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                 >
                   LocoLiving
@@ -155,7 +155,7 @@ const Navbar = () => {
                   <Link
                     href='/businesses'
                     className={`${
-                      pathname === '/businesses' ? 'bg-black' : ''
+                      pathname === '/businesses' ? 'bg-black border-b-4 border-white' : ''
                     } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >
                     LocoBusinesses
@@ -165,7 +165,7 @@ const Navbar = () => {
                   <Link
                     href='/hostfarmmarkets'
                     className={`${
-                      pathname === '/hostfarmmarkets' ? 'bg-black' : ''
+                      pathname === '/hostfarmmarkets' ? 'bg-black border-b-4 border-white' : ''
                     } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >
                     LocoFarmers' Markets

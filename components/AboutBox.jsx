@@ -1,16 +1,19 @@
 import connectDB from '@/config/database';
 import CurrentStatsBox from '@/components/CurrentStatsBox';
-// import NewMemLocal from '@/components/NewMemLocal';
-
+import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay';
 import locoBiz from '@/models/LocoBiz';
 
 const AboutBox = async () => {
   await connectDB();
-  //Get the latest 3 members general info without link
+  //Get the latest (10 for now) members general info without link
   const recentBizs = await locoBiz.find({})
     .sort({ createdAt: -1 })
-    .limit(4)
-    .lean()
+    .limit(10)
+    .lean();
+  
+   const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true });
+  
+  
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>
       <div className='mx-auto rounded bg-white p-10 max-w-2xl lg:mx-0 lg:max-w-none'>
@@ -72,13 +75,9 @@ const AboutBox = async () => {
             <div className='bg-green-100 p-6 rounded-lg shadow-md'>
               <h2 className='text-4xl font-bold'>LivLoco's Current Stats</h2>
               {/* Make this counter dynamic */}
-              <h1 className='mt-2 mb-4 text-center'>
-                <span className='text-green-900 font-xxl'>300 </span>
-                {`members have joined so far`}
-              </h1>
-
-              <h1 className='text-2xl text-center underline'>
-                Our most recent members:
+              <LocoBizsCountDisplay  total={totalLocoBizs} />
+              <h1 className='text-2xl text-center font-bold'>
+                Our most recent members' LocoBusinesses and their locations:
               </h1>
               <br></br>
 
@@ -86,7 +85,9 @@ const AboutBox = async () => {
               {recentBizs.length === 0 ? (
                 <p>No Recent Loco Members Found</p>
               ) : (
-                recentBizs.map((locobiz) => (
+                  recentBizs
+                    .filter((locobiz) => locobiz.locobiz_active)
+                    .map((locobiz) => (
                   <CurrentStatsBox
                     key={locobiz._id}
                     locobiz={locobiz}
