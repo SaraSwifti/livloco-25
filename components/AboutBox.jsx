@@ -1,19 +1,25 @@
-import connectDB from '@/config/database';
-import CurrentStatsBox from '@/components/CurrentStatsBox';
-import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay';
-import locoBiz from '@/models/LocoBiz';
+import connectDB from '@/config/database'
+import CurrentStatsBox from '@/components/CurrentStatsBox'
+import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay'
+import MemberCountDisplay from '@/components/MemberCountDisplay'
+import User from '@/models/User'
+import locoBiz from '@/models/LocoBiz'
 
 const AboutBox = async () => {
-  await connectDB();
+  await connectDB()
   //Get the latest (10 for now) members general info without link
-  const recentBizs = await locoBiz.find({})
+  const recentBizs = await locoBiz
+    .find({})
     .sort({ createdAt: -1 })
     .limit(10)
-    .lean();
-  
-   const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true });
-  
-  
+    .lean()
+
+  const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true })
+  // Count members based on users; add a filter if “joined” means paid members only.
+  const totalUsers = await User.countDocuments({
+    /* payment_confirmed: true */
+  })
+
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>
       <div className='mx-auto rounded bg-white p-10 max-w-2xl lg:mx-0 lg:max-w-none'>
@@ -48,8 +54,10 @@ const AboutBox = async () => {
                 small your business is.
               </li>
               <li className='text-xl/8 text-black'>
-                You can be a member without posting a LocoBusiness or LocoFarmers' Market, and just look
-                around. Post one or the other should you change your mind, as it is included in the membership. 
+                You can be a member without posting a LocoBusiness or
+                LocoFarmers' Market, and just look around. Post one or the other
+                should you change your mind, as it is included in the
+                membership.
               </li>
               <li className='text-xl/8 text-black'>
                 Yearly memberships are $35/year with the ability to post up to
@@ -57,7 +65,9 @@ const AboutBox = async () => {
                 you are needing to make your business more locally sustainable.
               </li>
               <li className='text-xl/8 text-black'>
-             No Transactions- do those between yourselves. No dispearaging comment sections. If you didn't like the service, don't vote for them and don't use them again. It is that simple. 
+                No Transactions- do those between yourselves. No dispearaging
+                comment sections. If you didn't like the service, don't vote for
+                them and don't use them again. It is that simple.
               </li>
             </ul>
             <br />
@@ -75,7 +85,9 @@ const AboutBox = async () => {
             <div className='bg-green-100 p-6 rounded-lg shadow-md'>
               <h2 className='text-4xl font-bold'>LivLoco's Current Stats</h2>
               {/* Make this counter dynamic */}
-              <LocoBizsCountDisplay  total={totalLocoBizs} />
+              {/* NEW: Members counter based on total users */}
+              <MemberCountDisplay total={totalUsers} />
+              <LocoBizsCountDisplay total={totalLocoBizs} />
               <h1 className='text-2xl text-center font-bold'>
                 Our most recent members' LocoBusinesses and their locations:
               </h1>
@@ -85,14 +97,14 @@ const AboutBox = async () => {
               {recentBizs.length === 0 ? (
                 <p>No Recent Loco Members Found</p>
               ) : (
-                  recentBizs
-                    .filter((locobiz) => locobiz.locobiz_active)
-                    .map((locobiz) => (
-                  <CurrentStatsBox
-                    key={locobiz._id}
-                    locobiz={locobiz}
-                  />
-                ))
+                recentBizs
+                  .filter((locobiz) => locobiz.locobiz_active)
+                  .map((locobiz) => (
+                    <CurrentStatsBox
+                      key={locobiz._id}
+                      locobiz={locobiz}
+                    />
+                  ))
               )}
             </div>
           </div>

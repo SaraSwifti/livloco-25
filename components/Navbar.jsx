@@ -142,14 +142,14 @@ const Navbar = () => {
                 >
                   LocoHome
                 </Link>
-                <Link
+                {/* <Link
                   href='/living'
                   className={`${
                     pathname === '/living' ? 'bg-black border-b-4 border-white' : ''
                   } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                 >
                   LocoLiving
-                </Link>
+                </Link> */}
                 {/* I only want them to see the businesses if they are logged in */}
                 {session && (
                   <Link
@@ -334,7 +334,7 @@ const Navbar = () => {
               LocoHome
             </Link>
 
-            <Link
+            {/* <Link
               href='/living'
               className={`${
                 pathname === '/living' ? 'bg-black' : ''
@@ -342,7 +342,7 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)} 
             >
               LocoLiving
-            </Link>
+            </Link> */}
             {session && (
               <Link
                 href='/businesses'
