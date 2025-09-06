@@ -7,7 +7,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import MappingPin from '@/components/MappingPin';
 
 const MarketCard = ({ market }) => {
-  if (!market) return null
+  if (!market) return null;
 
   const {
     _id,

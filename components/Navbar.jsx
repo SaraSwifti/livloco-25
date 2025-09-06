@@ -1,42 +1,42 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import logo from '@/assets/images/newlivlocologo.png';
-import profileDefault from '@/assets/images/profile.png';
-import { FaGoogle } from 'react-icons/fa';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import logo from '@/assets/images/newlivlocologo.png'
+import profileDefault from '@/assets/images/profile.png'
+import { FaGoogle } from 'react-icons/fa'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
-  const profileImage = session?.user?.image;
-  const profileMenuRef = useRef(null);
-  const mobileMenuRef = useRef(null);
-  const mobileButtonRef = useRef(null);
+  const profileImage = session?.user?.image
+  const profileMenuRef = useRef(null)
+  const mobileMenuRef = useRef(null)
+  const mobileButtonRef = useRef(null)
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [providers, setProviders] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [providers, setProviders] = useState(null)
   /// for closing mobile menue dropdown when item is selected or window is clicked into.
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders()
       setProviders(res)
-    };
+    }
 
-    setAuthProviders();
+    setAuthProviders()
 
     // NOTE: close mobile menu if the viewport size is changed
     function handleResize() {
-      setIsMobileMenuOpen(false);
-    };
+      setIsMobileMenuOpen(false)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     //event listener should the mouse click outside of the profile dropdown and not chooe a item=> to close
     function handleClickOutsideProfile(event) {
@@ -44,10 +44,10 @@ const Navbar = () => {
         profileMenuRef.current &&
         !profileMenuRef.current.contains(event.target)
       ) {
-        setIsProfileMenuOpen(false);
-      };
-    };
-    document.addEventListener('mousedown', handleClickOutsideProfile);
+        setIsProfileMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutsideProfile)
 
     // NEW: Close MOBILE menu when clicking outside
     function handleClickOutsideMobile(event) {
@@ -63,23 +63,19 @@ const Navbar = () => {
         setIsMobileMenuOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutsideMobile); // LINE 68 (NEW)
+    document.addEventListener('mousedown', handleClickOutsideMobile) // LINE 68 (NEW)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      document.removeEventListener('mousedown', handleClickOutsideProfile);
-      document.removeEventListener('mousedown', handleClickOutsideMobile);
-
-
+      window.removeEventListener('resize', handleResize)
+      document.removeEventListener('mousedown', handleClickOutsideProfile)
+      document.removeEventListener('mousedown', handleClickOutsideMobile)
     }
-  }, [isMobileMenuOpen]);
-// NEW: Close mobile menu on route change (pathname updates)
+  }, [isMobileMenuOpen])
+  // NEW: Close mobile menu on route change (pathname updates)
   useEffect(() => {
-    setIsMobileMenuOpen(false)                 // LINE 81 (NEW)
-    setIsProfileMenuOpen(false)                // LINE 82 (NEW - nice UX)
-  }, [pathname]);
-
-  
+    setIsMobileMenuOpen(false) // LINE 81 (NEW)
+    setIsProfileMenuOpen(false) // LINE 82 (NEW - nice UX)
+  }, [pathname])
 
   return (
     <nav className='bg-gray-800 border-b border-black py-3'>
@@ -92,9 +88,9 @@ const Navbar = () => {
               id='mobile-dropdown-button'
               className='relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
               aria-controls='mobile-menu'
-              aria-expanded={isMobileMenuOpen ? 'true' : 'false'}   
+              aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                 ref={mobileButtonRef}
+              ref={mobileButtonRef}
             >
               <span className='absolute -inset-0.5'></span>
               <span className='sr-only'>Open main menu</span>
@@ -155,7 +151,9 @@ const Navbar = () => {
                   <Link
                     href='/businesses'
                     className={`${
-                      pathname === '/businesses' ? 'bg-black border-b-4 border-white' : ''
+                      pathname === '/businesses'
+                        ? 'bg-black border-b-4 border-white'
+                        : ''
                     } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >
                     LocoBusinesses
@@ -165,7 +163,9 @@ const Navbar = () => {
                   <Link
                     href='/hostfarmmarkets'
                     className={`${
-                      pathname === '/hostfarmmarkets' ? 'bg-black border-b-4 border-white' : ''
+                      pathname === '/hostfarmmarkets'
+                        ? 'bg-black border-b-4 border-white'
+                        : ''
                     } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >
                     LocoFarmers' Markets
@@ -196,7 +196,6 @@ const Navbar = () => {
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           {session && (
-            
             <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
               <Link
                 href='/messages'
@@ -322,18 +321,21 @@ const Navbar = () => {
 
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       {isMobileMenuOpen && (
-        <div id='mobile-menu' ref={mobileMenuRef}>
+        <div
+          id='mobile-menu'
+          ref={mobileMenuRef}
+        >
           <div className='space-y-1 px-2 pb-3 pt-2'>
             <Link
               href='/'
               className={`${
                 pathname === '/' ? 'bg-black' : ''
               } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
-            onClick={() => setIsMobileMenuOpen(false)} 
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               LocoHome
             </Link>
-
+            {/* will add the locoliving slogan after it has launched */}
             {/* <Link
               href='/living'
               className={`${
@@ -349,7 +351,7 @@ const Navbar = () => {
                 className={`${
                   pathname === '/businesses' ? 'bg-black' : ''
                 } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
-              onClick={() => setIsMobileMenuOpen(false)} 
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 LocoBusinesses
               </Link>
@@ -360,7 +362,7 @@ const Navbar = () => {
                 className={`${
                   pathname === '/hostfarmmarkets' ? 'bg-black' : ''
                 } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
-             onClick={() => setIsMobileMenuOpen(false)} 
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 LocoFarmers' Markets
               </Link>

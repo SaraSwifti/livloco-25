@@ -1,5 +1,5 @@
 [
-  {"_id": 1,
+  {
     "email": "grummet@gmail.com",
     "account_owner_name": "Esther Grummet",
     "phone": "616-558-1817",
@@ -64,7 +64,7 @@
       ]
     }
   },
-  {"_id": 2,
+  {
     "email": "info@riverbendmarket.org",
     "account_owner_name": "Marcus Lee",
     "phone": "505-331-4420",
@@ -125,7 +125,7 @@
       ]
     }
   },
-  {"_id": 3,
+  {
     "email": "hello@redmesaartisan.com",
     "account_owner_name": "Aaliyah Park",
     "phone": "719-220-9981",
@@ -190,7 +190,7 @@
       ]
     }
   },
-  {"_id":4,
+  {
     "email": "contact@desertbloommarket.com",
     "account_owner_name": "Rafael Ortiz",
     "phone": "928-555-3021",
@@ -247,7 +247,7 @@
       ]
     }
   },
-  {"_id":5,
+  {
     "email": "market@highplainsco-op.org",
     "account_owner_name": "Nora Chavez",
     "phone": "575-440-7711",

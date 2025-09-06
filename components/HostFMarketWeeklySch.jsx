@@ -12,7 +12,6 @@ const DAYS = [
 export default function HostFMarketWeeklySch({ weekly = {} }) {
   // Handle the known data typo "fr_iday_hours" gracefully
   const getHours = (key) => {
-    if (key === 'friday') return weekly?.friday_hours ?? weekly?.fr_iday_hours ?? '';
     return weekly?.[`${key}_hours`] ?? '';
   };
 

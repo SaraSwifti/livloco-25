@@ -1,12 +1,19 @@
 
 import Hero from '@/components/Hero';
 import MarketCard from '@/components/MarketCard';
-import markets from '@/app/hostfmarkets.json'; // adjust path if your JSON lives elsewhere
+// import markets from '@/app/hostfmarkets.json'; // adjust path if your JSON lives elsewhere
+import connectDB from '@/config/database';
+import HostFMarket from '@/models/HostFMarket';
 
-const HostFarmMarketsPage =  () => {
+const HostFarmMarketsPage = async () => {
+  await connectDB();
       // Filter to only active markets per requirement.
     // const hostmarkets =  markets.find({ hostfm_active: true }).lean();
-    
+     // only active; change filter if you want all
+  const markets = await HostFMarket
+    .find({ hostfm_active: true })
+    .sort({ createdAt: -1 })
+    .lean();
     return ( 
         <>
         <Hero />
