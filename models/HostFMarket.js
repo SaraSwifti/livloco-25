@@ -25,11 +25,12 @@ const ZIP_REGEX = /^\d{5}(-\d{4})?$/;
 const AddressSchema = new Schema(
   {
     hostfm_phone: { type: String, trim: true },
-    add_line1: { type: String, trim: true },
+    add_line1: { type: String, required: true, trim: true },
     add_line2: { type: String, trim: true },
-    city: { type: String, trim: true },
+    city: { type: String, required: true, trim: true },
     zipcode: {
       type: String,
+      required: true,
       trim: true,
       set: (v) => (v == null ? v : String(v).trim()),
       validate: {
@@ -38,7 +39,7 @@ const AddressSchema = new Schema(
       },
     },
     country: { type: String, trim: true, default: 'USA' },
-    state_code: { type: String, trim: true, uppercase: true, minlength: 2, maxlength: 2 },
+    state_code: { type: String, required: true, trim: true, uppercase: true, minlength: 2, maxlength: 2 },
     state_name: { type: String, trim: true },
   },
   { _id: false }

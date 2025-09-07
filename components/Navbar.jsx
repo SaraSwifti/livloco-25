@@ -281,6 +281,13 @@ const Navbar = () => {
                     >
                       Add Your LivLoco Business
                     </Link>
+                     <Link
+                      href='/hostfarmmarkets/add'
+                      className='block px-4 py-2 text-sm text-gray-700'
+                      onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                      Add Your LivLoco Hosted Farm Market
+                    </Link>
                     <Link
                       href='/businesses/edit'
                       className='block px-4 py-2 text-sm text-gray-700'

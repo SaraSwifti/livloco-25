@@ -92,46 +92,12 @@ const BusinessAddForm = ({ userEmail }) => {
     }
   };
 
-  // Map of code -> full name. Keep it short or import if you have a shared file.
-// const US_STATE_NAMES = {
-//   AL:'Alabama', AK:'Alaska', AZ:'Arizona', AR:'Arkansas', CA:'California',
-//   CO:'Colorado', CT:'Connecticut', DE:'Delaware', FL:'Florida', GA:'Georgia',
-//   HI:'Hawaii', ID:'Idaho', IL:'Illinois', IN:'Indiana', IA:'Iowa',
-//   KS:'Kansas', KY:'Kentucky', LA:'Louisiana', ME:'Maine', MD:'Maryland',
-//   MA:'Massachusetts', MI:'Michigan', MN:'Minnesota', MS:'Mississippi',
-//   MO:'Missouri', MT:'Montana', NE:'Nebraska', NV:'Nevada', NH:'New Hampshire',
-//   NJ:'New Jersey', NM:'New Mexico', NY:'New York', NC:'North Carolina',
-//   ND:'North Dakota', OH:'Ohio', OK:'Oklahoma', OR:'Oregon', PA:'Pennsylvania',
-//   RI:'Rhode Island', SC:'South Carolina', SD:'South Dakota', TN:'Tennessee',
-//   TX:'Texas', UT:'Utah', VT:'Vermont', VA:'Virginia', WA:'Washington',
-//   WV:'West Virginia', WI:'Wisconsin', WY:'Wyoming'
-// };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    //normalizing state values here
-    // storefront/farmstand
-    // const { state_code, state_name } = getNormalizedState(formData.get('locobiz_address.state'));
-
-    // const locobizAddress = {
-    //   // ...other fields...
-    //   state_code,        // canonical for queries
-    //   state_name,        // nice for display
-    // };
-
-    // farmers market days (loop over your known day keys)
-    // const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-    // const farmers_market_location = {};
-    // for (const day of days) {
-    //   const stateRaw = formData.get(`farmers_market_location.${day}.state`);
-    //   const norm = getNormalizedState(stateRaw);
-    //   farmers_market_location[day] = {
-    //     // ...name, city...
-    //     state_code: norm.state_code,
-    //     state_name: norm.state_name,
-    //   };
-    // }
+ 
 
 
     //  Require the Sell/Need toggle to be checked
@@ -323,7 +289,7 @@ const BusinessAddForm = ({ userEmail }) => {
               htmlFor='email'
               className='block font-bold mb-2'
             >
-              Email Address
+              Email Address (will not be published but used for member messaging alerts)
             </label>
             <input
               type='email'

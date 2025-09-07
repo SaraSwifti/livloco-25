@@ -1,6 +1,5 @@
+//businesses/add/page.jsx
 
-// import connectDB from '@/config/database';
-// import User from '@/models/User';
 
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/authOptions';
