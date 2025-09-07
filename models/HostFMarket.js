@@ -82,8 +82,9 @@ const HostFMarketSchema = new Schema(
   {
     // Account / contact
     email: { type: String, trim: true, lowercase: true },
-    account_owner_name: { type: String, trim: true },
-    phone: { type: String, trim: true },
+    //moving these to the user or member data
+    // account_owner_name: { type: String, trim: true },
+    // phone: { type: String, trim: true },
 
     // Identity / visibility
     hostfm_profile_image: {
