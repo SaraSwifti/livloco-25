@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import completeOnboardingAction from '@/app/actions/completeOnboardingAction';
 
 const toE164 = (v) => {
-  const d = String(v || '').replace(/\D/g, '').slice(0,10);
+  const d = String(v || '').replace(/\D/g, '').slice(0, 10);
   return d ? `+1${d}` : '';
 };
 
@@ -18,10 +18,10 @@ export default function OnboardingForm({ email }) {
   const [choice, setChoice] = useState('none'); // 'none' | 'locobiz' | 'hostfmarket'
 
   const formatPhone = (s) => {
-    const d = s.replace(/\D/g,'').slice(0,10);
+    const d = s.replace(/\D/g, '').slice(0, 10);
     if (d.length < 4) return d;
-    if (d.length < 7) return `(${d.slice(0,3)}) ${d.slice(3)}`;
-    return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+    if (d.length < 7) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+    return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
   };
 
   const submit = async (e) => {
@@ -38,45 +38,127 @@ export default function OnboardingForm({ email }) {
     else router.push('/profile');
   };
 
+  // shared input styles
+  const inputCx =
+    'w-full rounded-lg bg-gray-50 text-black placeholder-gray-500 ' +
+    'border border-gray-200 py-2.5 px-3 ' +
+    'focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20';
+
   return (
-    <form onSubmit={submit} className="space-y-6">
-      <div>
-        <label className="block font-semibold mb-1">Email</label>
-        <input type="email" value={email} readOnly className="border rounded w-full py-2 px-3 bg-gray-100" />
-      </div>
+    <div className="bg-white text-black rounded-xl shadow-sm ring-1 ring-black/10 p-6">
+      <form onSubmit={submit} className="space-y-6">
+        {/* Email (read-only) */}
+        <div>
+          <div className="flex items-center justify-between mb-1">
+            <label className="font-semibold">Email</label>
+            <span className="text-xs text-gray-500">from your sign-in</span>
+          </div>
+          <input
+            type="email"
+            value={email}
+            readOnly
+            className={`${inputCx} bg-gray-100 cursor-not-allowed`}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="full_name" className="block font-semibold mb-1">Your name</label>
-        <input id="full_name" value={fullName} onChange={(e)=>setFullName(e.target.value)} required className="border rounded w-full py-2 px-3" />
-      </div>
+        {/* Name (required) */}
+        <div>
+          <label htmlFor="full_name" className="block font-semibold mb-1">
+            Your name <span className="text-red-600">*</span>
+          </label>
+          <input
+            id="full_name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+            autoComplete="name"
+            placeholder="First and last name"
+            className={inputCx}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="phone" className="block font-semibold mb-1">Phone (for 2-step)</label>
-        <input id="phone" value={phoneDisplay} onChange={(e)=>setPhoneDisplay(formatPhone(e.target.value))} placeholder="(555) 123-4567" required className="border rounded w-full py-2 px-3" />
-      </div>
+        {/* Phone (required) */}
+        <div>
+          <label htmlFor="phone" className="block font-semibold mb-1">
+            Phone (for 2-step) <span className="text-red-600">*</span>
+          </label>
+          <input
+            id="phone"
+            value={phoneDisplay}
+            onChange={(e) => setPhoneDisplay(formatPhone(e.target.value))}
+            placeholder="(555) 123-4567"
+            required
+            inputMode="tel"
+            autoComplete="tel"
+            className={inputCx}
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            We store this as +1XXXXXXXXXX to support verification.
+          </p>
+        </div>
 
-      <label className="inline-flex items-center gap-2">
-        <input type="checkbox" checked={alerts} onChange={(e)=>setAlerts(e.target.checked)} />
-        <span>Email me when I get an in-app message</span>
-      </label>
+        {/* Email alert opt-in */}
+        <div className="bg-gray-50/80 rounded-lg border border-gray-200 p-3">
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={alerts}
+              onChange={(e) => setAlerts(e.target.checked)}
+              className="h-4 w-4 accent-black"
+            />
+            <span>Email me when I get an in-app message</span>
+          </label>
+        </div>
 
-      <fieldset className="space-y-3">
-        <legend className="font-semibold">Choose a profile type (optional)</legend>
-        <label className="inline-flex items-center gap-2">
-          <input type="radio" name="choice" value="none" checked={choice==='none'} onChange={()=>setChoice('none')} />
-          <span>Skip for now</span>
-        </label>
-        <label className="block">
-          <input type="radio" name="choice" value="locobiz" checked={choice==='locobiz'} onChange={()=>setChoice('locobiz')} /> LocoBusiness (one per user)
-        </label>
-        <label className="block">
-          <input type="radio" name="choice" value="hostfmarket" checked={choice==='hostfmarket'} onChange={()=>setChoice('hostfmarket')} /> Hosted Farmers Market (one per user)
-        </label>
-      </fieldset>
+        {/* Profile choice */}
+        <fieldset className="bg-gray-50/80 rounded-lg border border-gray-200 p-3 space-y-3">
+          <legend className="font-semibold px-1">Choose a profile type (optional)</legend>
 
-      <button type="submit" className="rounded bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2">
-        Save & Continue
-      </button>
-    </form>
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="radio"
+              name="choice"
+              value="none"
+              checked={choice === 'none'}
+              onChange={() => setChoice('none')}
+              className="h-4 w-4 accent-black"
+            />
+            <span>Skip for now</span>
+          </label>
+
+          <label className="block">
+            <input
+              type="radio"
+              name="choice"
+              value="locobiz"
+              checked={choice === 'locobiz'}
+              onChange={() => setChoice('locobiz')}
+              className="mr-2 h-4 w-4 align-middle accent-black"
+            />
+            <span className="align-middle">LocoBusiness (one per user)</span>
+          </label>
+
+          <label className="block">
+            <input
+              type="radio"
+              name="choice"
+              value="hostfmarket"
+              checked={choice === 'hostfmarket'}
+              onChange={() => setChoice('hostfmarket')}
+              className="mr-2 h-4 w-4 align-middle accent-black"
+            />
+            <span className="align-middle">Hosted Farmers Market (one per user)</span>
+          </label>
+        </fieldset>
+
+        <button
+          type="submit"
+          className="w-full rounded-lg bg-black hover:bg-black/90 text-white font-semibold py-3"
+          title="Save & Continue"
+        >
+          Save & Continue
+        </button>
+      </form>
+    </div>
   );
 }

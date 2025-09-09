@@ -1,9 +1,9 @@
 
 //utils/getSessionUser.js
 import { getServerSession } from 'next-auth';
-import { authOptions } from "@/utils/authOptions";
+import { authOptions } from '@/utils/authOptions';
 
-const getSessionUser = async () => {
+export async function getSessionUser() {
     
    
         const session = await getServerSession(authOptions);
