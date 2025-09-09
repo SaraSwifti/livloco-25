@@ -9,27 +9,40 @@ import { FaGoogle } from 'react-icons/fa'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Navbar = () => {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
+  //this is to check user route and permissions on mem profile. 
+  const [me, setMe] = useState(null);
 
-  const profileImage = session?.user?.image
-  const profileMenuRef = useRef(null)
-  const mobileMenuRef = useRef(null)
-  const mobileButtonRef = useRef(null)
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  const [providers, setProviders] = useState(null)
+  const profileImage = session?.user?.image;
+  const profileMenuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const mobileButtonRef = useRef(null);
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [providers, setProviders] = useState(null);
   /// for closing mobile menue dropdown when item is selected or window is clicked into.
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
     const setAuthProviders = async () => {
       const res = await getProviders()
       setProviders(res)
-    }
+    };
 
-    setAuthProviders()
+    setAuthProviders();
+
+    // fetch current user document
+   const loadMe = async () => {
+    try {
+       const r = await fetch('/api/me', { cache: 'no-store' })
+     const j = await r.json()
+      setMe(j.user || null)
+     } catch {}
+   }
+    if (session) loadMe();
 
     // NOTE: close mobile menu if the viewport size is changed
     function handleResize() {
@@ -264,38 +277,40 @@ const Navbar = () => {
                     aria-labelledby='user-menu-button'
                     tabIndex='-1'
                   >
-                    <Link
-                      href='/profile'
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      role='menuitem'
-                      tabIndex='-1'
-                      id='user-menu-item-0'
-                      onClick={() => setIsProfileMenuOpen(false)}
-                    >
-                      Your LivLoco Profile and Membership Status
-                    </Link>
-                    <Link
-                      href='/businesses/add'
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      onClick={() => setIsProfileMenuOpen(false)}
-                    >
-                      Add Your LivLoco Business
-                    </Link>
-                     <Link
-                      href='/hostfarmmarkets/add'
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      onClick={() => setIsProfileMenuOpen(false)}
-                    >
-                      Add Your LivLoco Hosted Farm Market
-                    </Link>
-                    <Link
-                      href='/businesses/edit'
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      onClick={() => setIsProfileMenuOpen(false)}
-                    >
-                      Edit Your LivLoco Business
-                    </Link>
+                    <Link href='/profile' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                     Your Profile & Membership
+                   </Link>
 
+                   {/* Guide users who haven't chosen yet */}
+                   {me?.profile_choice === 'none' && (
+                     <Link href='/onboarding' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                       Complete Onboarding (choose profile)
+                     </Link>
+                   )}
+
+                   {/* LocoBusiness choice */}
+                   {me?.profile_choice === 'locobiz' && !me?.locobiz && (
+                     <Link href='/businesses/add' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                       Add Your LocoBusiness
+                     </Link>
+                   )}
+                   {me?.locobiz && (
+                     <Link href='/businesses/edit' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                       Edit Your LocoBusiness
+                     </Link>
+                   )}
+
+                   {/* Host Farmers Market choice */}
+                   {me?.profile_choice === 'hostfmarket' && !me?.hostfmarket && (
+                     <Link href='/hostfarmmarkets/add' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                       Add Your Hosted Farm Market
+                     </Link>
+                   )}
+                   {me?.hostfmarket && (
+                     <Link href='/hostfarmmarkets' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                       Edit Your Hosted Farm Market
+                     </Link>
+                   )}
                     <Link
                       href='/businesses/saved'
                       className='block px-4 py-2 text-sm text-black'

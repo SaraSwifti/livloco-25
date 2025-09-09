@@ -3,9 +3,33 @@
 import connectDB from '@/config/database';
 import HostFMarket from '@/models/HostFMarket';
 
+const session = await auth();
+const email = session?.user?.email;
+// cant figure out exactly where this should go from here
+const user = await User.findOne({ email });
+if (!user) throw new Error('Not signed in');
+
+// deny if user already has a Business
+const existingBiz = await LocoBiz.findOne({ owner: user._id }).lean();
+if (existingBiz) throw new Error('You already created a LocoBusiness. You can only own one profile.');
+
+// deny if user already has a Host Market
+const existingFM = await HostFMarket.findOne({ owner: user._id }).lean();
+if (existingFM) throw new Error('You already created a Host Farmers Market.');
+
+// set ownership + persist
+data.owner = user._id;
+const doc = new HostFMarket(data);
+await doc.save();
+
+// reflect association on the User doc (optional but handy)
+await User.updateOne({ _id: user._id }, { $set: { hostfmarket: doc._id, profile_choice: 'hostfmarket' } });
+///to here
+
 export default async function addHostMarketAction(form) {
   await connectDB();
 
+  
   // Build a plain object from FormData (handles dot-paths)
   const data = {};
   for (const [k, v] of form.entries()) {

@@ -24,7 +24,7 @@ const ZIP_REGEX = /^\d{5}(-\d{4})?$/;
 
 const AddressSchema = new Schema(
   {
-    hostfm_phone: { type: String, trim: true },
+    hostfm_phone: { type: String,match: /^\+1\d{10}$/, trim: true },
     add_line1: { type: String, required: true, trim: true },
     add_line2: { type: String, trim: true },
     city: { type: String, required: true, trim: true },
@@ -81,6 +81,7 @@ const HostfmDatesSchema = new Schema(
 const HostFMarketSchema = new Schema(
   {
     // Account / contact
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
     email: { type: String, trim: true, lowercase: true },
     //moving these to the user or member data
     // account_owner_name: { type: String, trim: true },

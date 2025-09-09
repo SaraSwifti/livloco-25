@@ -1,36 +1,66 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose'
 
-const UserSchema = new Schema({
+const UserSchema = new Schema(
+  {
     email: {
-        type: String,
-        unique: [true, 'Email already exists'],
-        required: [true, 'Email is required'],
-        trim: true,
-        lowercase: true
+      type: String,
+      unique: [true, 'Email already exists'],
+      required: [true, 'Email is required'],
+      trim: true,
+      lowercase: true,
     },
     username: {
-        type: String,
-        required: [true, 'Username is required']
+      type: String,
+      required: [true, 'Username is required'],
     },
     image: {
-        type: String
+      type: String,
+    },
+    full_name: { type: String, trim: true, default: '' },
+    phone: { type: String, trim: true, match: /^\+1\d{10}$/ }, // E.164 US
+    email_memmessage_notification: { type: Boolean, default: false },
+    profile_choice: {
+      type: String,
+      enum: ['none', 'locobiz', 'hostfmarket'],
+      default: 'none',
+    },
+    locobiz: { type: Schema.Types.ObjectId, ref: 'LocoBiz', sparse: true },
+    hostfmarket: {
+      type: Schema.Types.ObjectId,
+      ref: 'HostFMarket',
+      sparse: true,
     },
     payment_confirmed: {
-            type: Boolean,
-            required: true, 
-            default: false
-        },
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    full_name: { type: String, trim: true, default: '' },
+    phone: { type: String, trim: true, match: /^\1\d{10}$/ }, // E.164 US
+    email_memmessage_notification: { type: Boolean, default: false },
+    profile_choice: {
+      type: String,
+      enum: ['none', 'locobiz', 'hostfmarket'],
+      default: 'none',
+    },
+    locobiz: { type: Schema.Types.ObjectId, ref: 'LocoBiz', sparse: true },
+    hostfmarket: {
+      type: Schema.Types.ObjectId,
+      ref: 'HostFMarket',
+      sparse: true,
+    },
     bookmarks: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'LocoBiz'
-        },
-        
-    ]
-}, {
-    timestamps: true
-});
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'LocoBiz',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+)
 
-const User = models.User || model('User', UserSchema);
+const User = models.User || model('User', UserSchema)
 
-export default User;
+export default User

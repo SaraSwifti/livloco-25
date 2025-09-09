@@ -29,6 +29,7 @@ const stateFields = {
 
 const LocoBizSchema = new Schema(
   {
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
     account_owner_name: {
       type: String,
       required: true,
