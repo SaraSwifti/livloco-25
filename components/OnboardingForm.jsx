@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import completeOnboardingAction from '@/app/actions/completeOnboardingAction';
+import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 
 const toE164 = (v) => {
   const d = String(v || '').replace(/\D/g, '').slice(0, 10);
@@ -16,7 +17,7 @@ export default function OnboardingForm({ email }) {
   const [phoneDisplay, setPhoneDisplay] = useState('');
   const [alerts, setAlerts] = useState(false);
   const [choice, setChoice] = useState('none'); // 'none' | 'locobiz' | 'hostfmarket'
-
+const [showSkipPopout, setShowSkipPopout] = useState(false);
   const formatPhone = (s) => {
     const d = s.replace(/\D/g, '').slice(0, 10);
     if (d.length < 4) return d;
@@ -34,9 +35,15 @@ export default function OnboardingForm({ email }) {
     form.set('profile_choice', choice);
 
     const res = await completeOnboardingAction(form);
+   if (choice === 'none') {
+      // User chose to skip now — show the popout instead of navigating immediately
+      setShowSkipPopout(true);
+      return; // don't push yet; let the user read/close the popout
+    }
     if (res?.redirect) router.push(res.redirect);
-    else router.push('/profile');
-  };
+    else router.push('/businesses'); // better default than /profile
+   };
+  
 
   // shared input styles
   const inputCx =
@@ -123,7 +130,7 @@ export default function OnboardingForm({ email }) {
               onChange={() => setChoice('none')}
               className="h-4 w-4 accent-black"
             />
-            <span>Skip for now</span>
+            <span>Skip for now. I want to be a Livloco Co-op member and just peruse</span>
           </label>
 
           <label className="block">
@@ -159,6 +166,16 @@ export default function OnboardingForm({ email }) {
           Save & Continue
         </button>
       </form>
+{showSkipPopout && (
+        <AddBusLaterPopout
+          onClose={() => {
+            setShowSkipPopout(false);
+            router.push('/businesses'); // or '/' if you prefer
+          }}
+        />
+      )}
+
+
     </div>
   );
 }

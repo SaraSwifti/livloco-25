@@ -1,52 +1,49 @@
-import backdrop from '@/assets/images/sunflowers.png';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import AuthProvider from '@/components/AuthProvider';
+import backdrop from '@/assets/images/sunflowers.png'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import AuthProvider from '@/components/AuthProvider'
 
-import '@/assets/styles/global.css';
+import '@/assets/styles/global.css'
 
 // hydrateRoot(
 //   document.getElementById('root'),
 //   <App />
 // );
 
-
-
 export const metadata = {
   title: 'Livloco',
-  keywords: 'local, living, sustainable, micro-economies, LivLoco, Livlo.co, local, economies, businesses, business',
+  keywords:
+    'local, living, sustainable, micro-economies, LivLoco, Livlo.co, local, economies, businesses, business',
   description:
     'local businesses finding local businesses, creating local economies right where you live',
 }
 
 const MainLayout = ({ children }) => {
   return (
-    <AuthProvider>
     <html
       className='h-full'
       lang='eng'
     >
-     <body
-  suppressHydrationWarning
-  className='flex flex-col min-h-screen'
-  style={{
-    backgroundImage: `url(${backdrop.src})`,
-    backgroundSize: 'auto',        // or e.g. '600px auto' to scale the tile
-    backgroundRepeat: 'repeat',    // tile the image
-    backgroundPosition: 'top center',
-  }}>
+      <body
+        suppressHydrationWarning
+        className='flex flex-col min-h-screen'
+        style={{
+          backgroundImage: `url(${backdrop.src})`,
+          backgroundSize: 'auto', // or e.g. '600px auto' to scale the tile
+          backgroundRepeat: 'repeat', // tile the image
+          backgroundPosition: 'top center',
+        }}
+      >
+        <AuthProvider>
+          <Navbar />
+          <main className='flex-1'>
+            <div className='px-4 py-8'>{children}</div>
+          </main>
 
-        <Navbar />
-          <main className="flex-1">
-    <div className="px-4 py-8">{children}</div>
-  </main>
-        
-            
-        <Footer />
-        </body>
-        
-      </html>
-      </AuthProvider>
+          <Footer />
+        </AuthProvider>
+      </body>
+    </html>
   )
 }
 

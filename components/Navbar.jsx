@@ -196,7 +196,7 @@ const Navbar = () => {
                   Object.values(providers).map((provider, index) => (
                     <button
                       key={index}
-                      onClick={() => signIn(provider.id)}
+                      onClick={() => signIn(provider.id, { callbackUrl: '/onboarding' })}
                       className='flex items-center text-black bg-white hover:bg-gray-500 hover:text-white rounded-md px-3 py-2'
                     >
                       <FaGoogle className='text-black mr-2' />
@@ -397,7 +397,7 @@ const Navbar = () => {
                       key={provider.id}
                       onClick={() => {
                         setIsMobileMenuOpen(false)
-                        signIn(provider.id)
+                        signIn(provider.id, { callbackUrl: '/onboarding' })
                       }}
                       className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'
                     >

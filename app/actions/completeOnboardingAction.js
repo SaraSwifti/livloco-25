@@ -36,15 +36,15 @@ export default async function completeOnboardingAction(form) {
   );
 
   // Optional: steer to chosen creation flow if not already owned
-  if (profile_choice === 'locobiz') {
-    const existingFM = await HostFMarket.findOne({ owner: user._id }).lean();
-    if (!existingFM && !user.locobiz) return { redirect: '/businesses/add' };
-  }
-  if (profile_choice === 'hostfmarket') {
-    const existingBiz = await LocoBiz.findOne({ owner: user._id }).lean();
-    if (!existingBiz && !user.hostfmarket) return { redirect: '/hostfarmmarkets/add' };
-  }
+  // if (profile_choice === 'locobiz') {
+  //   const existingFM = await HostFMarket.findOne({ owner: user._id }).lean();
+  //   if (!existingFM && !user.locobiz) return { redirect: '/businesses/add' };
+  // }
+  // if (profile_choice === 'hostfmarket') {
+  //   const existingBiz = await LocoBiz.findOne({ owner: user._id }).lean();
+  //   if (!existingBiz && !user.hostfmarket) return { redirect: '/hostfarmmarkets/add' };
+  // }
 
-  return { redirect: '/profile' };
+  return { redirect: '/businesses' };
 }
 
