@@ -34,7 +34,7 @@ const AboutBox = async () => {
             <div className='text-xl/8 text-black'>
               <p className='text-xl/8 text-black'>
                 Knowing your neighbor, local business, community, their needs.
-                Growing in our sustainability interdependence, ....peace.
+                Growing in our sustainability, interdependence, ....peace.
               </p>
             </div>
             <br />
@@ -50,7 +50,7 @@ const AboutBox = async () => {
             </h3>
             <ul className='list-disc ml-6 space-y-2'>
               <li className='text-xl/8 text-black'>
-                Everyone has a seat at the table, regardless of how large or
+                <span className="font-bold text-2xl">Everyone has a seat at the table,</span> regardless of how large or
                 small your business is.
               </li>
               <li className='text-xl/8 text-black'>
@@ -65,9 +65,10 @@ const AboutBox = async () => {
                 you are needing to make your business more locally sustainable.
               </li>
               <li className='text-xl/8 text-black'>
-                No Transactions- do those between yourselves. No dispearaging
+                No Transactions- do those between yourselves.</li>
+               <li className='text-xl/8 text-black'> No dispearaging
                 comment sections. If you didn't like the service, don't vote for
-                them and don't use them again. It is that simple.
+                them and don't use them again. <span className="font-bold text-2xl">It is that simple.</span>
               </li>
             </ul>
             <br />

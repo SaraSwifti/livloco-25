@@ -1,50 +1,82 @@
 // app/actions/completeOnboardingAction.js
-'use server';
+// 'use server';
 
-import connectDB from '@/config/database';
-import User from '@/models/User';
-import LocoBiz from '@/models/LocoBiz';
-import HostFMarket from '@/models/HostFMarket';
-import { getSessionUser } from '@/utils/getSessionUser';
+// import connectDB from '@/config/database';
+// import User from '@/models/User';
+// import LocoBiz from '@/models/LocoBiz';
+// import HostFMarket from '@/models/HostFMarket';
+// import { getSessionUser } from '@/utils/getSessionUser';
 
-const toBool = (x) => x === true || String(x).toLowerCase() === 'true';
+// const toBool = (x) => x === true || String(x).toLowerCase() === 'true';
 
-export default async function completeOnboardingAction(form) {
-  await connectDB();
+// export default async function completeOnboardingAction(form) {
+//   await connectDB();
 
-  const sess = await getSessionUser();
-  if (!sess?.userEmail) return { redirect: '/' };
+//   const sess = await getSessionUser();
+//   if (!sess?.userEmail) return { redirect: '/' };
 
-  const email = sess.userEmail;
-  const full_name = String(form.get('full_name') || '').trim();
-  const phone = String(form.get('phone') || ''); // already E.164 from client
-  const emailAlerts = toBool(form.get('email_memmessage_notification'));
-  const profile_choice = String(form.get('profile_choice') || 'none');
+//   const email = sess.userEmail;
+//   const full_name = String(form.get('full_name') || '').trim();
+//   const phone = String(form.get('phone') || ''); // already E.164 from client
+//   const emailAlerts = toBool(form.get('email_memmessage_notification'));
+//   const profile_choice = String(form.get('profile_choice') || 'none');
 
-  // Upsert & store onboarding info
-  const user = await User.findOneAndUpdate(
+//   // Upsert & store onboarding info
+//   const user = await User.findOneAndUpdate(
+//     { email },
+//     {
+//       $set: {
+//         full_name,
+//         phone,
+//         email_memmessage_notification: emailAlerts,
+//         profile_choice,
+//       },
+//     },
+//     { new: true, upsert: true }
+//   );
+
+//   // Optional: steer to chosen creation flow if not already owned
+//   // if (profile_choice === 'locobiz') {
+//   //   const existingFM = await HostFMarket.findOne({ owner: user._id }).lean();
+//   //   if (!existingFM && !user.locobiz) return { redirect: '/businesses/add' };
+//   // }
+//   // if (profile_choice === 'hostfmarket') {
+//   //   const existingBiz = await LocoBiz.findOne({ owner: user._id }).lean();
+//   //   if (!existingBiz && !user.hostfmarket) return { redirect: '/hostfarmmarkets/add' };
+//   // }
+
+//   return { redirect: '/businesses' };
+// }
+
+'use server'
+
+import connectDB from '@/config/database'
+import User from '@/models/User'
+
+export default async function completeOnboardingAction(formData) {
+  const email = formData.get('email')
+  const full_name = formData.get('full_name')?.trim()
+  const phone = formData.get('phone')
+  const alerts = formData.get('email_memmessage_notification') === 'true'
+  const choice = formData.get('profile_choice') // 'locobiz' | 'hostfmarket' | 'none'
+
+  await connectDB()
+
+  // upsert the user’s base profile details
+  await User.updateOne(
     { email },
-    {
-      $set: {
-        full_name,
-        phone,
-        email_memmessage_notification: emailAlerts,
-        profile_choice,
-      },
-    },
-    { new: true, upsert: true }
-  );
+    { $set: { full_name, phone, email_memmessage_notification: alerts } },
+    { upsert: true }
+  )
 
-  // Optional: steer to chosen creation flow if not already owned
-  // if (profile_choice === 'locobiz') {
-  //   const existingFM = await HostFMarket.findOne({ owner: user._id }).lean();
-  //   if (!existingFM && !user.locobiz) return { redirect: '/businesses/add' };
-  // }
-  // if (profile_choice === 'hostfmarket') {
-  //   const existingBiz = await LocoBiz.findOne({ owner: user._id }).lean();
-  //   if (!existingBiz && !user.hostfmarket) return { redirect: '/hostfarmmarkets/add' };
-  // }
-
-  return { redirect: '/businesses' };
+  // Decide where to send them next
+  if (choice === 'locobiz') {
+    return { redirect: '/businesses/add' }
+  }
+  if (choice === 'hostfmarket') {
+    return { redirect: '/hostfarmmarkets/add' }
+  }
+  // Skip for now (or anything else): land on the businesses page
+  return { redirect: '/businesses' }
 }
 

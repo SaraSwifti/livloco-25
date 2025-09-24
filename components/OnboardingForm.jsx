@@ -40,8 +40,16 @@ const [showSkipPopout, setShowSkipPopout] = useState(false);
       setShowSkipPopout(true);
       return; // don't push yet; let the user read/close the popout
     }
-    if (res?.redirect) router.push(res.redirect);
-    else router.push('/businesses'); // better default than /profile
+    // if (res?.redirect) router.push(res.redirect);
+    // else router.push('/businesses'); // better default than /profile
+      if (res?.redirect) {
+        router.push(res.redirect)
+        return
+      }
+      // Fallback (shouldn’t happen if server action returns redirect)
+      if (choice === 'locobiz') return router.push('/businesses/add')
+      if (choice === 'hostfmarket') return router.push('/hostfarmmarkets/add')
+      return router.push('/businesses')
    };
   
 
