@@ -247,6 +247,7 @@ const Navbar = () => {
                 ref={profileMenuRef}
               >
                 <div>
+                  
                   <button
                     type='button'
                     className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
@@ -281,36 +282,10 @@ const Navbar = () => {
                      Your Profile & Membership
                    </Link>
 
-                   {/* Guide users who haven't chosen yet */}
-                   {me?.profile_choice === 'none' && (
-                     <Link href='/onboarding' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
-                       Complete Onboarding (choose profile)
-                     </Link>
-                   )}
+                   
 
-                   {/* LocoBusiness choice */}
-                   {me?.profile_choice === 'locobiz' && !me?.locobiz && (
-                     <Link href='/businesses/add' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
-                       Add Your LocoBusiness
-                     </Link>
-                   )}
-                   {me?.locobiz && (
-                     <Link href='/businesses/edit' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
-                       Edit Your LocoBusiness
-                     </Link>
-                   )}
-
-                   {/* Host Farmers Market choice */}
-                   {me?.profile_choice === 'hostfmarket' && !me?.hostfmarket && (
-                     <Link href='/hostfarmmarkets/add' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
-                       Add Your Hosted Farm Market
-                     </Link>
-                   )}
-                   {me?.hostfmarket && (
-                     <Link href='/hostfarmmarkets' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
-                       Edit Your Hosted Farm Market
-                     </Link>
-                   )}
+                   
+                  
                     <Link
                       href='/businesses/saved'
                       className='block px-4 py-2 text-sm text-black'

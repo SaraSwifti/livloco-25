@@ -19,6 +19,7 @@ export default async function OnboardingPage() {
   return (
     <section className="max-w-3xl bg-white border-rounded mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Finish setting up your account</h1>
+      This is where they will fill out their onboarding form, use a coupon, pay for their membership,Etc.
       <p className="text-gray-600 mb-6">
         We pre-filled your email. Add your name and phone for two-step, and choose a profile (or skip).
       </p>

@@ -4,7 +4,7 @@ const MemberCountDisplay = ({ total }) => {
     <h1 className="mt-2 text-black text-xl font-bold mb-4 text-center">
       Members who have joined so far!
             </h1>
-             <h1 className="mt-2 text-black text-xl font-bold mb-4 text-center">
+             <h1 className="mt-2 text-blue-700 text-4xl font-bold mb-4 text-center">
       {total}
      
             </h1>

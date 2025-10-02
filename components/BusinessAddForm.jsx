@@ -1,13 +1,13 @@
 //livloco-25/components/BusinessAddForm.jsx
 
 'use client'
-
+import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice'; // hypothetical import
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import SellingEntry from '@/components/SellingEntry';
 import NeedingEntry from '@/components/NeedingEntry';
 import StateSelect from '@/components/StateSelect';
-// import AddBusLaterPopout from '@/components/AddBusLaterPopout';
+import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import addBusinessAction from '@/app/actions/addBusinessAction';
 import DropzoneUploader from '@/components/DropzoneUploader';
@@ -42,6 +42,7 @@ const BusinessAddForm = ({ userEmail }) => {
   //to handle phonnumber fomatting and saving as a string
   const [phone, setPhone] = useState('')
   const [phoneValue, setPhoneValue] = useState(''); // backend-safe version
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
   //showpopout for directions later
   const [showPopOut, setShowPopOut] = useState(false);
   //handling uploading of file to wait before submission
@@ -55,6 +56,7 @@ const BusinessAddForm = ({ userEmail }) => {
     { id: 3 },
   ]);
 
+  
   //image urls for cloudinary
 
   const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }]);
@@ -158,20 +160,21 @@ const BusinessAddForm = ({ userEmail }) => {
     setPhoneValue(`+1${digits}`)
   }
 
-  // const handleSkipPopOutCheckbox = (e) => {
-  //   const checked = e.target.checked
-  //   setSkipAddBusiness(checked)
+  const handleSkipPopOutCheckbox = (e) => {
+    const checked = e.target.checked
+    setSkipAddBusiness(checked)
 
-  //   if (checked) {
-  //     setShowPopOut(true) // Show the popout
-  //     // router.push('/businesses') // Navigate immediately
-  //   }
-  // }
+    if (checked) {
+      setShowPopOut(true); // Show the popout
+      // router.push('/businesses') // Navigate immediately
+      
+    }
+  }
   // Handle close of popout
-  // const handleClose = () => {
-  //   setShowPopOut(false)
-  //   router.push('/businesses') // redirect AFTER modal is closed
-  // }
+  const handleClose = () => {
+    setShowPopOut(false)
+    router.push('/businesses') // redirect AFTER modal is closed
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -179,7 +182,7 @@ const BusinessAddForm = ({ userEmail }) => {
         <h2 className='text-3xl text-center font-semibold mb-6'>
           Add Your LocoBusiness
         </h2>
-        {/* <div className='flex items-center p-2 gap-3'>
+        <div className='flex items-center p-2 gap-3'>
           <input
             type='checkbox'
             checked={skipAddBusiness}
@@ -196,7 +199,7 @@ const BusinessAddForm = ({ userEmail }) => {
             </span>
           </label>
           {showPopOut && <AddBusLaterPopout onClose={handleClose} />}
-        </div> */}
+        </div>
         <p>
           (For LivLoco purposes only. Under no circumstances will Livloco sell
           or share your information. However we cannot prevent anyone from
