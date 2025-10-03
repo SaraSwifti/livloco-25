@@ -17,7 +17,7 @@ export default async function OnboardingPage() {
   if (complete) redirect('/businesses');
 
   return (
-    <section className="max-w-3xl bg-white border-rounded mx-auto px-4 py-8">
+    <section className="max-w-3xl border-4 border-black bg-white rounded-lg mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Finish setting up your account</h1>
       This is where they will fill out their onboarding form, use a coupon, pay for their membership,Etc.
       <p className="text-gray-600 mb-6">

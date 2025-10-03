@@ -91,7 +91,7 @@ const Navbar = () => {
   }, [pathname])
 
   return (
-    <nav className='bg-gray-800 border-b border-black py-3'>
+  <nav className='relative z-50 bg-gray-800 border-b border-black py-3'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
         <div className='relative flex h-20 items-center justify-between'>
           <div className='absolute inset-y-0 left-0 flex items-center md:hidden'>

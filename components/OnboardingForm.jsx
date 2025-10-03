@@ -54,10 +54,12 @@ const [showSkipPopout, setShowSkipPopout] = useState(false);
   
 
   // shared input styles
-  const inputCx =
-    'w-full rounded-lg bg-gray-50 text-black placeholder-gray-500 ' +
-    'border border-gray-200 py-2.5 px-3 ' +
-    'focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black/20';
+  
+const inputCx =
+  'w-full rounded-lg bg-gray-50 text-black placeholder-gray-500 ' +
+  'border border-gray-700 py-2.5 px-3 shadow-sm ' +
+  'focus:outline-none focus:ring-2 focus:ring-black focus:border-black shadow-md';
+
 
   return (
     <div className="bg-white text-black rounded-xl shadow-sm ring-1 ring-black/10 p-6">
@@ -165,7 +167,9 @@ const [showSkipPopout, setShowSkipPopout] = useState(false);
             <span className="align-middle">Hosted Farmers Market (one per user)</span>
           </label>
         </fieldset>
-
+        <div className="text-sm text-gray-500">
+          <h1 className="text-3xl font-bold">Placeholder for payment method</h1>
+          </div>
         <button
           type="submit"
           className="w-full rounded-lg bg-black hover:bg-black/90 text-white font-semibold py-3"

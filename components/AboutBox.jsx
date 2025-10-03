@@ -1,9 +1,11 @@
-import connectDB from '@/config/database'
-import CurrentStatsBox from '@/components/CurrentStatsBox'
-import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay'
-import MemberCountDisplay from '@/components/MemberCountDisplay'
-import User from '@/models/User'
-import locoBiz from '@/models/LocoBiz'
+import connectDB from '@/config/database';
+import CurrentStatsBox from '@/components/CurrentStatsBox';
+import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay';
+import MemberCountDisplay from '@/components/MemberCountDisplay';
+import FarmersMarketCountDisplay from '@/components/FarmersMarkCountDisplay';
+import User from '@/models/User';
+import locoBiz from '@/models/LocoBiz';
+import hostFMarkets from '@/models/HostFMarket';
 
 const AboutBox = async () => {
   await connectDB()
@@ -14,11 +16,13 @@ const AboutBox = async () => {
     .limit(10)
     .lean()
 
-  const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true })
+  const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true });
+  const totalFarmersMarkets = await hostFMarkets.countDocuments({ 
+hostfm_active: true });
   // Count members based on users; add a filter if “joined” means paid members only.
   const totalUsers = await User.countDocuments({
     /* payment_confirmed: true */
-  })
+  });
 
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>
@@ -89,6 +93,8 @@ const AboutBox = async () => {
               {/* NEW: Members counter based on total users */}
               <MemberCountDisplay total={totalUsers} />
               <LocoBizsCountDisplay total={totalLocoBizs} />
+              <FarmersMarketCountDisplay total={totalFarmersMarkets} />
+
               <h1 className='text-2xl text-center font-bold'>
                 Our most recent members' LocoBusinesses and their locations:
               </h1>

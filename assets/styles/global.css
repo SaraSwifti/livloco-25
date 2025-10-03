@@ -28,25 +28,31 @@ body,
 body {
   background-repeat: repeat;
   background-position: top center;
+  z-index: 0;
   background-size: var(--backdrop-tile-size) auto;
 }
 
 /* soft hazy overlay to mute the busy pattern and keep content readable */
 .backdrop-overlay {
   position: absolute;
-  inset: 0; 
+  inset: 0;
   background: linear-gradient(var(--backdrop-muted), var(--backdrop-muted));
-  pointer-events: none; 
+  pointer-events: none !important;
   mix-blend-mode: normal;
+  z-index: -1;
 }
 
 /* content sits above overlay */
 .backdrop-content {
   position: relative;
-  z-index: 10;
- 
+  z-index: 20; /* ensure content is above overlay and other decorative layers */
 }
 
+/* Force all interactive elements inside the content to receive pointer events */
+.backdrop-content,
+.backdrop-content * {
+  pointer-events: auto !important;
+}
 /* helper utilities to tweak tile size at different breakpoints */
 @media (min-width: 768px) {
   :root {
