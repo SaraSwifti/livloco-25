@@ -29,18 +29,27 @@ const MainLayout = ({ children }) => {
         className='flex flex-col min-h-screen'
         style={{
           backgroundImage: `url(${backdrop.src})`,
-          backgroundSize: 'auto', // or e.g. '600px auto' to scale the tile
+          /* use CSS variable for size in global.css */
+          backgroundSize: 'var(--backdrop-tile-size) auto',
           backgroundRepeat: 'repeat', // tile the image
           backgroundPosition: 'top center',
         }}
       >
         <AuthProvider>
           <Navbar />
-          <main className='flex-1'>
-            <div className='px-4 py-8'>{children}</div>
-          </main>
 
-          <Footer />
+          {/* backdrop wrapper provides muted overlay and keeps content above the overlay */}
+          <div className='backdrop-wrap backdrop-vignette'>
+            <div
+              className='backdrop-overlay'
+              aria-hidden='true'
+            />
+            <main className='flex-1 backdrop-content'>
+              <div className='px-4 py-8'>{children}</div>
+            </main>
+
+            <Footer />
+          </div>
         </AuthProvider>
       </body>
     </html>
