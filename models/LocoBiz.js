@@ -131,7 +131,6 @@ const LocoBizSchema = new Schema(
     },
     website: {
       type: String,
-      unique: true,
       trim: true,
       match: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
     },
@@ -394,6 +393,12 @@ LocoBizSchema.pre('save', function (next) {
 
   next();
 });
+
+// Ensure website is unique only when it exists (ignore null/undefined)
+LocoBizSchema.index(
+  { website: 1 },
+  { unique: true, partialFilterExpression: { website: { $type: 'string' } } }
+);
 
 const LocoBiz = models.LocoBiz || model('LocoBiz', LocoBizSchema)
 
