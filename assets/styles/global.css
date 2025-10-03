@@ -5,7 +5,7 @@
 @tailwind utilities; */
 :root {
   /* control tile size and overlay color */
-  --backdrop-tile-size: 240px; /* increase to make pattern larger */
+  --backdrop-tile-size: 100vh; /* increase to make pattern larger */
   --backdrop-muted: rgba(250, 247, 240, 0.72); /* soft hazy overlay */
   --backdrop-darken: rgba(0, 0, 0, 0.04); /* subtle vignette if needed */
 }
@@ -20,7 +20,7 @@ body,
 /* body already gets the image from layout.jsx inline style; we use an overlay wrapper */
 .backdrop-wrap {
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh; /* allow children to control height in flex layouts */
 }
 
 /* the tiled background is applied to body via inline style; scale the tile with background-size
@@ -34,10 +34,9 @@ body {
 /* soft hazy overlay to mute the busy pattern and keep content readable */
 .backdrop-overlay {
   position: absolute;
-  inset: 0; /* top:0;right:0;bottom:0;left:0 */
+  inset: 0; 
   background: linear-gradient(var(--backdrop-muted), var(--backdrop-muted));
-  pointer-events: none; /* allow clicks through to page */
-  z-index: 0;
+  pointer-events: none; 
   mix-blend-mode: normal;
 }
 
@@ -45,6 +44,7 @@ body {
 .backdrop-content {
   position: relative;
   z-index: 10;
+ 
 }
 
 /* helper utilities to tweak tile size at different breakpoints */
