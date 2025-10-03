@@ -44,7 +44,7 @@ const MainLayout = ({ children }) => {
          
            
             
-            <main className='flex-1 backdrop-content'>
+            <main className='flex-1 backdrop-content backdrop-overlay'>
               <div className='px-4 py-8'>{children}</div>
             </main>
 
