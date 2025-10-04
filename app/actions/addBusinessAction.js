@@ -1,297 +1,649 @@
-//livloco-25/app/actions/addBusinessAction.js
-'use server'
-import connectDB from '@/config/database'
-import LocoBiz from '@/models/LocoBiz'
-import { getSessionUser } from '@/utils/getSessionUser'
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+// livloco-25/components/BusinessAddForm.jsx
+'use client'
+
+import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice' // client helper that POSTs to /api/update-profile-choice
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import SellingEntry from '@/components/SellingEntry'
+import NeedingEntry from '@/components/NeedingEntry'
+import StateSelect from '@/components/StateSelect'
+import AddBusLaterPopout from '@/components/AddBusLaterPopout'
 import uploadToCloudinary from '@/utils/uploadToCloudinary'
-import { STATE_CODE_SET } from '@/components/StateSelect'
+import addBusinessAction from '@/app/actions/addBusinessAction'
+import DropzoneUploader from '@/components/DropzoneUploader'
 
-const CODE_TO_NAME = {
-  AL: 'Alabama',
-  AK: 'Alaska',
-  AZ: 'Arizona',
-  AR: 'Arkansas',
-  CA: 'California',
-  CO: 'Colorado',
-  CT: 'Connecticut',
-  DE: 'Delaware',
-  FL: 'Florida',
-  GA: 'Georgia',
-  HI: 'Hawaii',
-  ID: 'Idaho',
-  IL: 'Illinois',
-  IN: 'Indiana',
-  IA: 'Iowa',
-  KS: 'Kansas',
-  KY: 'Kentucky',
-  LA: 'Louisiana',
-  ME: 'Maine',
-  MD: 'Maryland',
-  MA: 'Massachusetts',
-  MI: 'Michigan',
-  MN: 'Minnesota',
-  MS: 'Mississippi',
-  MO: 'Missouri',
-  MT: 'Montana',
-  NE: 'Nebraska',
-  NV: 'Nevada',
-  NH: 'New Hampshire',
-  NJ: 'New Jersey',
-  NM: 'New Mexico',
-  NY: 'New York',
-  NC: 'North Carolina',
-  ND: 'North Dakota',
-  OH: 'Ohio',
-  OK: 'Oklahoma',
-  OR: 'Oregon',
-  PA: 'Pennsylvania',
-  RI: 'Rhode Island',
-  SC: 'South Carolina',
-  SD: 'South Dakota',
-  TN: 'Tennessee',
-  TX: 'Texas',
-  UT: 'Utah',
-  VT: 'Vermont',
-  VA: 'Virginia',
-  WA: 'Washington',
-  WV: 'West Virginia',
-  WI: 'Wisconsin',
-  WY: 'Wyoming',
-}
+const daysOfWeek = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+]
 
-function getNormalizedState(codeMaybe) {
-  if (!codeMaybe) return { state_code: '', state_name: '' }
-  const code = String(codeMaybe).trim().toUpperCase()
-  if (!STATE_CODE_SET.has(code)) throw new Error(`Invalid state code: ${code}`)
-  return { state_code: code, state_name: CODE_TO_NAME[code] }
-}
+const BusinessAddForm = ({ userEmail }) => {
+  const router = useRouter()
 
-const fileToUrl = async (file) => {
-  if (
-    !file ||
-    !(file instanceof File) ||
-    file.size === 0 ||
-    file.name === 'undefined'
-  ) {
-    return null
-  }
-  return await uploadToCloudinary(file) // returns Cloudinary URL
-}
+  // images
+  const [images, setImages] = useState({
+    profile: '',
+    selling1: '',
+    selling2: '',
+    selling3: '',
+    need1: '',
+    need2: '',
+    need3: '',
+  })
 
-async function addBusinessAction(formData) {
-  await connectDB()
+  // misc state
+  const [description, setDescription] = useState('')
+  const [phone, setPhone] = useState('')
+  const [phoneValue, setPhoneValue] = useState('') // backend-safe version
+  const [skipAddBusiness, setSkipAddBusiness] = useState(false)
+  const [showPopOut, setShowPopOut] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [showSellNeedForm, setShowSellNeedForm] = useState(false)
+  const [sellingItems, setSellingItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  const [needItems, setNeedItems] = useState([{ id: 1 }, { id: 2 }, { id: 3 }])
+  const [showStoreFrontForm, setShowStoreFrontForm] = useState(false)
+  const [showFarmersMarketForm, setShowFarmersMarketForm] = useState(false)
+  const [showLocoBizUrl, setShowLocoBizUrl] = useState(false)
+  const [uploadedFileNames, setUploadedFileNames] = useState({})
 
-  const sessionUser = await getSessionUser()
-
-  if (!sessionUser || !sessionUser.userId) {
-    throw new Error('User ID is required')
-  }
-
-  //not sure if I should bring in the userEmail to add to the account holder here or not. Currently it is comming in through DB connect in the biz add form.
-
-  const { userId } = sessionUser
-
-  //to ensure that I am not uploading empty files of data
-  // const getFileUrlOrNull = async (file) => {
-  // if (!file || file.size === 0 || file.name === 'undefined') return null;
-  // return await handleFileUpload(file); // Your upload logic
-  // };
-
-  const getImageUrlFromField = async (fieldValue) => {
-    if (!fieldValue || typeof fieldValue !== 'string') return ''
-    if (fieldValue.startsWith('http')) return fieldValue
-    return ''
-  }
-
-  const profileImageUrl = await getImageUrlFromField(
-    formData.get('locobiz_profile_image')
-  )
-  const selling1ImageUrl = await getImageUrlFromField(
-    formData.get('selling.selling1.image')
-  )
-  const selling2ImageUrl = await getImageUrlFromField(
-    formData.get('selling.selling2.image')
-  )
-  const selling3ImageUrl = await getImageUrlFromField(
-    formData.get('selling.selling3.image')
-  )
-  const need1ImageUrl = await getImageUrlFromField(
-    formData.get('needs.need1.image')
-  )
-  const need2ImageUrl = await getImageUrlFromField(
-    formData.get('needs.need2.image')
-  )
-  const need3ImageUrl = await getImageUrlFromField(
-    formData.get('needs.need3.image')
-  )
-
-  // Normalize phone to E.164 format (US-based)
-  let phoneRaw = formData.get('phone') || ''
-  let phoneDigits = phoneRaw.replace(/\D/g, '')
-  let phone = phoneDigits.length === 10 ? `+1${phoneDigits}` : phoneDigits
-
-  // Normalize business phone (if provided)
-  let bizPhoneRaw = formData.get('locobiz_address.biz_phone') || ''
-  let bizPhoneDigits = bizPhoneRaw.replace(/\D/g, '')
-  let biz_phone =
-    bizPhoneDigits.length === 10 ? `+1${bizPhoneDigits}` : bizPhoneDigits
-
-  // build the locobiz_address object only if posting is permitted
-  let locobizAddress = null
-
-  if (formData.get('locobiz_address.post_permission') === 'on') {
-    // build the locobiz_address object only if posting is permitted
-    locobizAddress = {
-      post_permission: formData.get('locobiz_address.post_permission'),
-      biz_phone: biz_phone,
-      add_line1: formData.get('locobiz_address.add_line1'),
-      add_line2: formData.get('locobiz_address.add_line2'),
-      city: formData.get('locobiz_address.city'),
-      state: formData.get('locobiz_address.state'),
-      zipcode: formData.get('locobiz_address.zipcode'),
-      country: formData.get('locobiz_address.country'),
+  const handleDropzoneUpload = async (file, key) => {
+    if (!file) return
+    try {
+      setIsUploading(true)
+      const url = await uploadToCloudinary(file)
+      setImages((prev) => ({ ...prev, [key]: url }))
+      setUploadedFileNames((prev) => ({ ...prev, [key]: file.name }))
+    } catch (err) {
+      console.error('Cloudinary upload failed:', err)
+    } finally {
+      setIsUploading(false)
     }
   }
-  // using cloudinary url to store photos
 
-  //create businessData object with embedded members info
-  const locobizData = {
-    // required owner field expected by the LocoBiz Mongoose schema
-    owner: userId,
-account_owner_name: formData.get('account_owner_name'),
-
-    phone: phone,
-    mem_zip: formData.get('mem_zip'),
-    // payment_confirmed:,
-    // locobiz_active:,
-    locobiz_name: formData.get('locobiz_name'),
-    locobiz_description: formData.get('locobiz_description'),
-    ...(locobizAddress && { locobiz_address: locobizAddress }),
-    business_hours: {
-      monday_hours: formData.get('business_hours.monday_hours'),
-      tuesday_hours: formData.get('business_hours.tuesday_hours'),
-      wednesday_hours: formData.get('business_hours.wednesday_hours'),
-      thursday_hours: formData.get('business_hours.thursday_hours'),
-      friday_hours: formData.get('business_hours.friday_hours'),
-      saturday_hours: formData.get('business_hours.saturday_hours'),
-      sunday_hours: formData.get('business_hours.sunday_hours'),
-    },
-    website: formData.get('website'),
-    locobiz_profile_image: profileImageUrl,
-    farmers_market_location: {
-      fm_location_post: formData.get(
-        'farmers_market_location.farmers_market_location'
-      ),
-      monday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.monday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.monday.city'),
-        state: formData.get('farmers_market_location.monday.state'),
-        zip: formData.get('farmers_market_location.monday.zip'),
-      },
-      tuesday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.tuesday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.tuesday.city'),
-        state: formData.get('farmers_market_location.tuesday.state'),
-        zip: formData.get('farmers_market_location.tuesday.zip'),
-      },
-      wednesday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.wednesday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.wednesday.city'),
-        state: formData.get('farmers_market_location.wednesday.state'),
-        zip: formData.get('farmers_market_location.wednesday.zip'),
-      },
-      thursday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.thursday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.thursday.city'),
-        state: formData.get('farmers_market_location.thursday.state'),
-        zip: formData.get('farmers_market_location.thursday.zip'),
-      },
-      friday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.friday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.friday.city'),
-        state: formData.get('farmers_market_location.friday.state'),
-        zip: formData.get('farmers_market_location.friday.zip'),
-      },
-      saturday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.saturday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.saturday.city'),
-        state: formData.get('farmers_market_location.saturday.state'),
-        zip: formData.get('farmers_market_location.saturday.zip'),
-      },
-      sunday: {
-        farmers_market_name: formData.get(
-          'farmers_market_location.sunday.farmers_market_name'
-        ),
-        city: formData.get('farmers_market_location.sunday.city'),
-        state: formData.get('farmers_market_location.sunday.state'),
-        zip: formData.get('farmers_market_location.sunday.zip'),
-      },
-    },
-    selling: {
-      selling1: {
-        type: formData.get('selling.selling1.type'),
-        description: formData.get('selling.selling1.description'),
-        image: selling1ImageUrl,
-        price: formData.get('selling.selling1.price'),
-      },
-      selling2: {
-        type: formData.get('selling.selling2.type'),
-        description: formData.get('selling.selling2.description'),
-        image: selling2ImageUrl,
-        price: formData.get('selling.selling2.price'),
-      },
-      selling3: {
-        type: formData.get('selling.selling3.type'),
-        description: formData.get('selling.selling3.description'),
-        image: selling3ImageUrl,
-        price: formData.get('selling.selling3.price'),
-      },
-    },
-    needs: {
-      need1: {
-        description: formData.get('needs.need1.description'),
-        image: need1ImageUrl,
-        type: formData.get('needs.need1.type'),
-      },
-      need2: {
-        type: formData.get('needs.need2.type'),
-        description: formData.get('needs.need2.description'),
-        image: need2ImageUrl,
-      },
-      need3: {
-        type: formData.get('needs.need3.type'),
-        description: formData.get('needs.need3.description'),
-        image: need3ImageUrl,
-      },
-    },
-
-    current_promotional: formData.get('current_promotional'),
-    // locobiz_votes: {
-    //   type: Number,
-    // },
+  const maxLength = 500
+  const handleFileChange = async (e, key) => {
+    const file = e.target.files[0]
+    if (!file) return
+    try {
+      setIsUploading(true)
+      const url = await uploadToCloudinary(file)
+      setImages((prev) => ({ ...prev, [key]: url }))
+    } catch (err) {
+      console.error('Cloudinary upload failed:', err)
+    } finally {
+      setIsUploading(false)
+    }
   }
-  //not sure if this is correct in adding a business as they are only going to be able to add one.
 
-  const newLocoBiz = new LocoBiz(locobizData)
-  await newLocoBiz.save()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const form = new FormData(e.target)
 
-  revalidatePath('/', 'layout')
+    // Require the Sell/Need toggle to be checked
+    if (!showSellNeedForm) {
+      alert('You must check the box to add your selling/needing profile before submitting.')
+      return
+    }
 
-  redirect(`/businesses/${newLocoBiz._id}`)
+    const website = form.get('website')
+    if (website) {
+      let cleanWebsite = String(website).trim().replace(/\/$/, '')
+
+      // Client-side URL validation
+      if (!/^https?:\/\/[^\s$.?#].[^\s]*$/i.test(cleanWebsite)) {
+        alert('Please enter a valid website starting with https://')
+        return
+      }
+
+      // Ensure https:// is included
+      if (!/^https?:\/\//i.test(cleanWebsite)) {
+        cleanWebsite = `https://${cleanWebsite}`
+      }
+      form.set('website', cleanWebsite)
+    }
+
+    // Inject image URLs into the FormData
+    form.set('locobiz_profile_image', images.profile || '')
+    form.set('selling.selling1.image', images.selling1 || '')
+    form.set('selling.selling2.image', images.selling2 || '')
+    form.set('selling.selling3.image', images.selling3 || '')
+    form.set('needs.need1.image', images.need1 || '')
+    form.set('needs.need2.image', images.need2 || '')
+    form.set('needs.need3.image', images.need3 || '')
+
+    // Set the new business as active for posting
+    form.set('locobiz_active', 'true')
+
+    // IMPORTANT: We do NOT set profile_choice here at all.
+    // The skip checkbox persists 'none' immediately (see handler below).
+    // No fallback to 'locobiz' anywhere.
+
+    try {
+      await addBusinessAction(form)
+    } catch (err) {
+      console.error('Form submission failed:', err)
+    }
+  }
+
+  const formatPhoneDisplay = (value) => {
+    const digits = value.replace(/\D/g, '').substring(0, 10)
+    const len = digits.length
+    if (len < 4) return digits
+    if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+
+  const handlePhoneChange = (e) => {
+    const input = e.target.value
+    const digits = input.replace(/\D/g, '').slice(0, 10)
+    setPhone(formatPhoneDisplay(digits))
+    setPhoneValue(`+1${digits}`)
+  }
+
+  // ✅ Skip checkbox: immediately persist profile_choice='none' when checked.
+  // If later unchecked, we do NOT revert in the DB to anything else.
+  const handleSkipProfileCheckbox = async (e) => {
+    const checked = e.target.checked
+    setSkipAddBusiness(checked)
+
+    if (checked) {
+      try {
+        await updateUserProfileChoice({ email: userEmail, profile_choice: 'none' })
+      } catch (err) {
+        console.error('Failed to save profile_choice=none:', err)
+      }
+      setShowPopOut(true) // show guidance, then we’ll navigate on close
+    } else {
+      // Do nothing to DB when unchecking; "none" remains stored.
+      setShowPopOut(false)
+    }
+  }
+
+  const handleClose = () => {
+    setShowPopOut(false)
+    router.push('/businesses') // redirect AFTER modal is closed
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+        <h2 className='text-3xl text-center font-semibold mb-6'>
+          Add Your LocoBusiness
+        </h2>
+
+        {/* Skip Add Business (immediately sets profile_choice='none') */}
+        <div className='flex items-center p-2 gap-3'>
+          <input
+            type='checkbox'
+            checked={skipAddBusiness}
+            onChange={handleSkipProfileCheckbox}
+            className='w-5 h-5'
+          />
+          <label className='font-medium text-lg'>
+            Skip adding a business profile for now and just peruse being a
+            Livloco Co-op Member.
+            <span>
+              {' '}
+              There is no additional charge to post a business and it comes with
+              every membership.
+            </span>
+          </label>
+          {showPopOut && <AddBusLaterPopout onClose={handleClose} />}
+        </div>
+
+        <p>
+          (For LivLoco purposes only. Under no circumstances will Livloco sell
+          or share your information. However we cannot prevent anyone from
+          copying any information that you have voluntarily displayed)
+        </p>
+
+        {/* Business name */}
+        <div className='bg-white p-4 rounded border space-y-4'>
+          <div className='mb-4'>
+            <label htmlFor='locobiz_name' className='block font-bold mb-2'>
+              LocoBusiness Name <span className='text-red-500'>required</span>
+            </label>
+            <input
+              type='text'
+              id='locobiz_name'
+              name='locobiz_name'
+              className='border rounded w-full py-2 px-3 mb-2'
+              placeholder=''
+              required
+            />
+          </div>
+
+          {/* Biz Description */}
+          <div className='mb-4'>
+            <label htmlFor='locobiz_description' className='block text-gray-700 font-bold mb-2'>
+              Description <span className='text-red-500'> required</span>
+            </label>
+            <textarea
+              id='locobiz_description'
+              name='locobiz_description'
+              className='border rounded w-full py-2 px-3'
+              rows='4'
+              placeholder='Add an optional description of your property'
+              required
+              maxLength={500}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div className='text-sm text-gray-500 text-right'>
+              {description.length}/{maxLength} characters
+            </div>
+          </div>
+
+          {/* Member zip */}
+          <div>
+            <label htmlFor='mem_zip' className='block font-bold mb-2'>
+              So That Your Neighbors Can Find you in a Location Search if you
+              don't have a storefront or stand.
+              <span className='text-red-500'> required</span>
+            </label>
+            <input
+              type='text'
+              id='mem_zip'
+              name='mem_zip'
+              pattern='^\\d{5}(-\\d{4})?$'
+              className='border rounded w-full py-2 px-3 mb-2'
+              title='Enter a valid 5-digit ZIP code (e.g., 48846 or 48846-1234)'
+              required
+            />
+          </div>
+
+          {/* Account Holder's Name */}
+          <div className='mb-4'>
+            <label htmlFor='account_owner_name' className='block font-bold mb-2'>
+              Account Holder's Name
+              <span className='text-red-500'> required</span>
+            </label>
+            <input
+              type='text'
+              id='account_owner_name'
+              name='account_owner_name'
+              className='border rounded w-full py-2 px-3'
+              placeholder='Name'
+              pattern='^[a-zA-Z\\s]{2,}$'
+              title='Name should contain only letters and be at least 2 characters long.'
+              required
+            />
+          </div>
+
+          {/* Email (from sign-in) */}
+          <div className='mb-4'>
+            <label htmlFor='email' className='block font-bold mb-2'>
+              Email Address (will not be published but used for member messaging alerts)
+            </label>
+            <input
+              type='email'
+              id='email'
+              name='email'
+              value={userEmail}
+              readOnly
+              className='border rounded w-full py-2 px-3'
+              required
+            />
+          </div>
+
+          {/* Account holder's phone number */}
+          <div className='mb-4'>
+            <label htmlFor='phone' className='block font-bold mb-2'>
+              Account Holder's Phone <span className='text-red-500'> required</span>
+              <span className='block font-normal text-md'>
+                This number will be associated with the account holder for
+                account verification purposes only. A business phone number can
+                be added later, but is not required as we will have Livloco
+                inter app messaging if you do not want to give your number out.
+              </span>
+            </label>
+            <input
+              type='tel'
+              id='phone'
+              name='phone'
+              className='border rounded w-full py-2 px-3'
+              placeholder='(123) 456-7890'
+              value={phone}
+              onChange={handlePhoneChange}
+              required
+            />
+          </div>
+
+          <div className='mb-4'>
+            <label htmlFor='current_promotional' className='block font-bold mb-2'>
+              Current Promotional
+              <span className='block font-normal text-md'>
+                Do you have any co-op member discounts or promotionals that you
+                would like to add to your business profile?
+              </span>
+            </label>
+            <input
+              type='text'
+              id='current_promotional'
+              name='current_promotional'
+              className='border rounded w-full py-2 px-3 mb-2'
+              placeholder='e.g 10% off flower subscriptions, $1 off when you bring your own bag'
+            />
+          </div>
+
+          {/* Profile image (optional) */}
+          <div>
+            <DropzoneUploader
+              label='Upload a profile image for your business if you have one.'
+              onUpload={(file) => handleDropzoneUpload(file, 'profile')}
+              uploadedFileName={uploadedFileNames['profile']}
+              className='hidden'
+              id='locobiz_profile_image'
+              accept='image/*'
+            />
+            <input type='hidden' name='locobiz_profile_image' value={images.profile || ''} />
+          </div>
+        </div>
+      </div>
+
+      {/* Selling & Needing toggle and sections */}
+      <div className='flex flex-col p-2 gap-2'>
+        <div className='flex items-center p-2 gap-3'>
+          <input
+            type='checkbox'
+            id='showSellNeedForm'
+            name='showSellNeedForm'
+            checked={showSellNeedForm}
+            onChange={(e) => setShowSellNeedForm(e.target.checked)}
+            className='w-5 h-5'
+          />
+          <label htmlFor='showSellNeedForm' className='font-medium text-lg'>
+            Add Selling/Needing profile
+            <span className='text-red-500'> required</span>
+          </label>
+        </div>
+        <h1>
+          This data is required to post your LivLoco business as it is the
+          backbone of being a contributing member of an interdependent local
+          economy.
+        </h1>
+      </div>
+
+      {showSellNeedForm ? (
+        <>
+          <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+            <h1 className='font-bold text-2xl'>Selling</h1>
+            {sellingItems.map((item, index) => (
+              <SellingEntry
+                key={item.id}
+                index={index}
+                images={images}
+                uploadedFileNames={uploadedFileNames}
+                handleDropzoneUpload={handleDropzoneUpload}
+              />
+            ))}
+
+            <h1 className='font-bold text-2xl'>
+              Needing <span className='text-sm'>(no price input; seller determines price.)</span>
+            </h1>
+            {needItems.map((item, index) => (
+              <NeedingEntry
+                key={item.id}
+                index={index}
+                images={images}
+                uploadedFileNames={uploadedFileNames}
+                handleDropzoneUpload={handleDropzoneUpload}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {/* Storefront / farmstand */}
+      <div className='flex p-2 items-center gap-3'>
+        <input
+          id='locobiz_storefront_post_permission'
+          name='locobiz_address.post_permission'
+          type='checkbox'
+          checked={showStoreFrontForm}
+          onChange={(e) => setShowStoreFrontForm(e.target.checked)}
+          className='w-5 h-5'
+          value='true'
+        />
+        <label htmlFor='locobiz_storefront_post_permission' className='font-medium text-lg'>
+          Add storefront/farmstand address and hours if you have one.
+        </label>
+      </div>
+
+      {showStoreFrontForm ? (
+        <>
+          <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+            <h2 className='text-xl font-bold'>Storefront/Farmstand Address</h2>
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+              <div>
+                <label htmlFor='biz_phone' className='block text-sm font-medium'>
+                  LocoBiz Phone
+                </label>
+                <input
+                  id='biz_phone'
+                  type='tel'
+                  name='locobiz_address.biz_phone'
+                  placeholder='+1234567890'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                  value={phone}
+                  onChange={handlePhoneChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_address_line1' className='block text-sm font-medium'>
+                  Locobiz Address Line 1
+                </label>
+                <input
+                  id='locobiz_address_line1'
+                  type='text'
+                  name='locobiz_address.add_line1'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_address_line2' className='block text-sm font-medium'>
+                  Address Line 2
+                </label>
+                <input
+                  id='locobiz_address_line2'
+                  type='text'
+                  name='locobiz_address.add_line2'
+                  placeholder='Or short description of the farmstand.'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_city' className='block text-sm font-medium'>
+                  City
+                </label>
+                <input
+                  type='text'
+                  id='locobiz_city'
+                  name='locobiz_address.city'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_state' className='block text-sm font-medium'>
+                  State
+                </label>
+                <StateSelect
+                  id='locobiz_state'
+                  type='text'
+                  name='locobiz_address.state_code'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_address_zipcode' className='block text-sm font-medium'>
+                  Zip Code
+                </label>
+                <input
+                  id='locobiz_address_zipcode'
+                  type='text'
+                  name='locobiz_address.zipcode'
+                  pattern='^\\d{5}(-\\d{4})?$'
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+
+              <div>
+                <label htmlFor='locobiz_address_country' className='block text-sm font-medium'>
+                  Country (test driving it here first)
+                </label>
+                <input
+                  id='locobiz_address_country'
+                  type='text'
+                  name='locobiz_address.country'
+                  value='USA'
+                  readOnly
+                  className='mt-1 bg-white w-full rounded border p-2'
+                />
+              </div>
+            </div>
+
+            <h2 className='text-xl font-bold mt-6'>LocoBiz Business Hours</h2>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+              {daysOfWeek.map((day) => (
+                <div key={day}>
+                  <label htmlFor={`store_hours_${day}_hours`} className='block text-sm font-medium capitalize'>
+                    {day}&apos;s Hours
+                  </label>
+                  <input
+                    type='text'
+                    id={`store_hours_${day}_hours`}
+                    name={`business_hours.${day}_hours`}
+                    placeholder='e.g., 9am - 5pm, closed, keypad entry'
+                    className='mt-1 w-full bg-white rounded border p-2'
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {/* Farmers Market days and location */}
+      <div className='flex p-2 items-center space-x-2'>
+        {/* Hidden fallback value if checkbox is unchecked */}
+        <input type='hidden' name='farmers_market_location.fm_location_post' value='false' />
+        <input
+          id='fm_location_post'
+          name='farmers_market_location.fm_location_post'
+          type='checkbox'
+          checked={showFarmersMarketForm}
+          onChange={(e) => setShowFarmersMarketForm(e.target.checked)}
+          value='true'
+          className='w-5 h-5'
+        />
+        <label htmlFor='fm_location_post' className='font-medium text-lg'>
+          Add Farmers Market locations if you attend any.
+        </label>
+      </div>
+
+      {showFarmersMarketForm ? (
+        <>
+          <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+            <h2 className='text-xl font-bold mt-4'>Farmers Market Locations</h2>
+            {daysOfWeek.map((day) => (
+              <div key={day} className='border bg-white rounded p-4 mb-4'>
+                <h3 className='text-lg font-semibold capitalize mb-2'>{day}</h3>
+                <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+                  <div>
+                    <label
+                      htmlFor={`farmers_market_location_${day}_farmers_market_name`}
+                      className='block text-sm font-medium'
+                    >
+                      Market Name
+                    </label>
+                    <input
+                      id={`farmers_market_location_${day}_farmers_market_name`}
+                      type='text'
+                      name={`farmers_market_location.${day}.farmers_market_name`}
+                      className='mt-1 w-full border rounded p-2'
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor={`farmers_market_location_${day}_city`} className='block text-sm font-medium'>
+                      City
+                    </label>
+                    <input
+                      id={`farmers_market_location_${day}_city`}
+                      name={`farmers_market_location.${day}.city`}
+                      type='text'
+                      className='mt-1 w-full border rounded p-2'
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor={`farmers_market_location_${day}_state`} className='block text-sm font-medium'>
+                      State
+                    </label>
+                    <StateSelect
+                      id={`farmers_market_location_${day}_state`}
+                      name={`farmers_market_location.${day}.state_code`}
+                      type='text'
+                      className='mt-1 w-full border rounded p-2'
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {/* Website toggle */}
+      <div className='flex p-2 items-center pb-4 gap-3'>
+        <input
+          type='checkbox'
+          checked={showLocoBizUrl}
+          onChange={(e) => setShowLocoBizUrl(e.target.checked)}
+          className='w-5 h-5'
+        />
+        <label className='font-medium text-lg'>Add your business webpage if you have one.</label>
+      </div>
+
+      {showLocoBizUrl ? (
+        <>
+          <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
+            <label htmlFor='website' className='block text-sm font-medium text-gray-700'>
+              Website URL
+            </label>
+            <input
+              type='url'
+              id='website'
+              name='website'
+              placeholder='https://example.com'
+              className='w-full bg-white border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500'
+            />
+          </div>
+        </>
+      ) : null}
+
+      {/* Submit */}
+      <div className='p-3'>
+        <button
+          className='bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
+          type='submit'
+          disabled={isUploading}
+          title={isUploading ? 'Uploading images…' : 'Add LocoBusiness'}
+        >
+          {isUploading ? 'Uploading…' : 'Add LocoBusiness'}
+        </button>
+      </div>
+    </form>
+  )
 }
 
-export default addBusinessAction
+export default BusinessAddForm

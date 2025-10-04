@@ -8,12 +8,43 @@ import StateSelect from '@/components/StateSelect';
 import DropzoneUploader from '@/components/DropzoneUploader';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import addHostMarketAction from '@/app/actions/addHostMarketAction';
+import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice';
+import AddBusLaterPopout from '@/components/AddBusLaterPopout';
+
 
 // Days list (used for weekly schedule input names)
-const DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const [skipHostMarket, setSkipHostMarket] = useState(false);
+const [showSkipPopout, setShowSkipPopout] = useState(false);
+
 
 // Max number of random dates allowed
 const MAX_DATES = 6;
+// When checked: immediately persist profile_choice='none', show popout.
+// Unchecking later does NOT revert anything in the DB.
+const handleSkipProfileCheckbox = async (e) => {
+  const checked = e.target.checked;
+  setSkipHostMarket(checked);
+
+  if (checked) {
+    try {
+      await updateUserProfileChoice({ email: userEmail, profile_choice: 'none' });
+    } catch (err) {
+      console.error('Failed to save profile_choice=none:', err);
+    }
+    setShowSkipPopout(true);
+  } else {
+    // Do nothing to DB on uncheck; keep 'none' persisted.
+    setShowSkipPopout(false);
+  }
+};
+
+const handleCloseSkipPopout = () => {
+  setShowSkipPopout(false);
+  // same pattern as BusinessAddForm: navigate after closing the popout
+  router.push('/hostfarmmarkets');
+};
+
 
 // Phone helpers (same UX as BusinessAddForm)
 const formatPhoneDisplay = (value) => {
@@ -167,6 +198,26 @@ export default function HostMarketsAddForm({ userEmail }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
+      {/* Skip creating a Host Market profile now */}
+<div className="bg-gray-100 p-4 rounded border">
+  <div className="flex items-center gap-3">
+    <input
+      id="skip_host_market_profile"
+      type="checkbox"
+      className="h-5 w-5"
+      checked={skipHostMarket}
+      onChange={handleSkipProfileCheckbox}
+    />
+    <label htmlFor="skip_host_market_profile" className="font-medium text-lg">
+      Skip adding a Hosted Farmers&rsquo; Market profile for now and just peruse as a LivLoco Co-op Member.
+    </label>
+  </div>
+
+  {showSkipPopout && (
+    <AddBusLaterPopout onClose={handleCloseSkipPopout} />
+  )}
+</div>
+
       {/* Intro / policy */}
       <div className="bg-gray-100 p-4 rounded border">
         <div>
