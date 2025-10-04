@@ -17,7 +17,8 @@ export default function OnboardingForm({ email }) {
   const [phoneDisplay, setPhoneDisplay] = useState('');
   const [alerts, setAlerts] = useState(false);
   const [choice, setChoice] = useState('none'); // 'none' | 'locobiz' | 'hostfmarket'
-const [showSkipPopout, setShowSkipPopout] = useState(false);
+  const [showSkipPopout, setShowSkipPopout] = useState(false);
+
   const formatPhone = (s) => {
     const d = s.replace(/\D/g, '').slice(0, 10);
     if (d.length < 4) return d;
@@ -32,39 +33,29 @@ const [showSkipPopout, setShowSkipPopout] = useState(false);
     form.set('full_name', fullName.trim());
     form.set('phone', toE164(phoneDisplay));
     form.set('email_memmessage_notification', alerts ? 'true' : 'false');
-    form.set('profile_choice', choice);
+    // Always persist 'none' on onboarding regardless of radio selection
+    form.set('profile_choice', 'none');
 
-    const res = await completeOnboardingAction(form);
-   if (choice === 'none') {
-      // User chose to skip now — show the popout instead of navigating immediately
+    await completeOnboardingAction(form);
+
+    // Redirect logic is client-side only and does not change DB yet
+    if (choice === 'none') {
       setShowSkipPopout(true);
-      return; // don't push yet; let the user read/close the popout
+      return;
     }
-    // if (res?.redirect) router.push(res.redirect);
-    // else router.push('/businesses'); // better default than /profile
-      if (res?.redirect) {
-        router.push(res.redirect)
-        return
-      }
-      // Fallback (shouldn’t happen if server action returns redirect)
-      if (choice === 'locobiz') return router.push('/businesses/add')
-      if (choice === 'hostfmarket') return router.push('/hostfarmmarkets/add')
-      return router.push('/businesses')
-   };
-  
+    if (choice === 'locobiz') return router.push('/businesses/add');
+    if (choice === 'hostfmarket') return router.push('/hostfarmmarkets/add');
+    return router.push('/businesses');
+  };
 
-  // shared input styles
-  
-const inputCx =
-  'w-full rounded-lg bg-gray-50 text-black placeholder-gray-500 ' +
-  'border border-gray-700 py-2.5 px-3 shadow-sm ' +
-  'focus:outline-none focus:ring-2 focus:ring-black focus:border-black shadow-md';
-
+  const inputCx =
+    'w-full rounded-lg bg-gray-50 text-black placeholder-gray-500 ' +
+    'border border-gray-700 py-2.5 px-3 shadow-sm ' +
+    'focus:outline-none focus:ring-2 focus:ring-black focus:border-black shadow-md';
 
   return (
     <div className="bg-white text-black rounded-xl shadow-sm ring-1 ring-black/10 p-6">
       <form onSubmit={submit} className="space-y-6">
-        {/* Email (read-only) */}
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="font-semibold">Email</label>
@@ -74,11 +65,10 @@ const inputCx =
             type="email"
             value={email}
             readOnly
-            className={`${inputCx} bg-gray-100 cursor-not-allowed`}
+            className={inputCx + ' bg-gray-100 cursor-not-allowed'}
           />
         </div>
 
-        {/* Name (required) */}
         <div>
           <label htmlFor="full_name" className="block font-semibold mb-1">
             Your name <span className="text-red-600">*</span>
@@ -94,7 +84,6 @@ const inputCx =
           />
         </div>
 
-        {/* Phone (required) */}
         <div>
           <label htmlFor="phone" className="block font-semibold mb-1">
             Phone (for 2-step) <span className="text-red-600">*</span>
@@ -114,7 +103,6 @@ const inputCx =
           </p>
         </div>
 
-        {/* Email alert opt-in */}
         <div className="bg-gray-50/80 rounded-lg border border-gray-200 p-3">
           <label className="inline-flex items-center gap-2">
             <input
@@ -127,7 +115,6 @@ const inputCx =
           </label>
         </div>
 
-        {/* Profile choice */}
         <fieldset className="bg-gray-50/80 rounded-lg border border-gray-200 p-3 space-y-3">
           <legend className="font-semibold px-1">Choose a profile type (optional)</legend>
 
@@ -167,9 +154,11 @@ const inputCx =
             <span className="align-middle">Hosted Farmers Market (one per user)</span>
           </label>
         </fieldset>
+
         <div className="text-sm text-gray-500">
           <h1 className="text-3xl font-bold">Placeholder for payment method</h1>
-          </div>
+        </div>
+
         <button
           type="submit"
           className="w-full rounded-lg bg-black hover:bg-black/90 text-white font-semibold py-3"
@@ -178,16 +167,16 @@ const inputCx =
           Save & Continue
         </button>
       </form>
-{showSkipPopout && (
+
+      {showSkipPopout && (
         <AddBusLaterPopout
           onClose={() => {
             setShowSkipPopout(false);
-            router.push('/businesses'); // or '/' if you prefer
+            // Redirect to businesses page after closing popout
+            router.push('/businesses');
           }}
         />
       )}
-
-
     </div>
   );
 }
