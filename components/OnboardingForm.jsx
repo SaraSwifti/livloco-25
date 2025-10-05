@@ -99,7 +99,7 @@ export default function OnboardingForm({ email }) {
             className={inputCx}
           />
           <p className="mt-1 text-xs text-gray-500">
-            We store this as +1XXXXXXXXXX to support verification.
+            No one will ever get this information directly from Livloco unless you post is in your profile. 
           </p>
         </div>
 
@@ -127,9 +127,9 @@ export default function OnboardingForm({ email }) {
               onChange={() => setChoice('none')}
               className="h-4 w-4 accent-black"
             />
-            <span>Skip for now. I want to be a Livloco Co-op member and just peruse</span>
+            <span>Skip for now. I just want to be a Livloco Co-op member and just peruse other members' LocoBusinesses.</span>
           </label>
-
+          <h1 className='font-semibold'>Each Livloco member can add one of these two choices below, at no additional cost to your yearly Livloco Co-op fees. These can also be added later in the profile section, when you are ready. </h1>
           <label className="block">
             <input
               type="radio"
@@ -139,7 +139,7 @@ export default function OnboardingForm({ email }) {
               onChange={() => setChoice('locobiz')}
               className="mr-2 h-4 w-4 align-middle accent-black"
             />
-            <span className="align-middle">LocoBusiness (one per user)</span>
+            <span className="align-middle">LocoBusiness</span>
           </label>
 
           <label className="block">
@@ -151,7 +151,7 @@ export default function OnboardingForm({ email }) {
               onChange={() => setChoice('hostfmarket')}
               className="mr-2 h-4 w-4 align-middle accent-black"
             />
-            <span className="align-middle">Hosted Farmers Market (one per user)</span>
+            <span className="align-middle">Hosted Farmers Market</span>
           </label>
         </fieldset>
 

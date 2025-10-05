@@ -29,38 +29,50 @@ const stateFields = {
 
 const LocoBizSchema = new Schema(
   {
+    // One business per user (kept unique). If you want multiple later, drop unique here.
     owner: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
+
+    // Now optional; we’ll default from User.full_name in the server action.
     account_owner_name: {
       type: String,
-      required: true,
+      required: false,
+      trim: true,
     },
+
+    // No longer unique or required. If present, must be E.164.
     phone: {
       type: String,
-      required: true,
-      unique: true,
+      required: false,
+      unique: false,
       match: /^\+1\d{10}$/,
       trim: true,
     },
+
     mem_zip: {
       type: String,
       required: true,
-      match: /^\d{5}(-\d{4})?$/, // Validates ZIP or ZIP+4
+      match: /^\d{5}(-\d{4})?$/,
     },
+
     payment_confirmed: {
       type: Boolean,
       required: true,
       default: false,
     },
+
     locobiz_active: {
       type: Boolean,
       default: false,
     },
-    locobiz_name: String,
-    locobiz_description: String,
+
+    locobiz_name: { type: String, trim: true },
+    locobiz_description: { type: String, trim: true },
+
     email_memmessage_notification: {
       type: Boolean,
       default: false,
     },
+
     locobiz_address: {
       post_permission: {
         type: Boolean,
@@ -71,22 +83,13 @@ const LocoBizSchema = new Schema(
         match: /^\+1\d{10}$/,
         trim: true,
       },
-      add_line1: {
-        type: String,
-        trim: true,
-      },
-      add_line2: {
-        type: String,
-        trim: true,
-      },
-      city: {
-        type: String,
-        trim: true,
-      },
+      add_line1: { type: String, trim: true },
+      add_line2: { type: String, trim: true },
+      city: { type: String, trim: true },
       ...stateFields,
       zipcode: {
         type: String,
-        match: /^\d{5}(-\d{4})?$/, // U.S. ZIP Code format (5-digit or 9-digit ZIP+4)
+        match: /^\d{5}(-\d{4})?$/,
       },
       country: {
         type: String,
@@ -95,293 +98,61 @@ const LocoBizSchema = new Schema(
         trim: true,
       },
     },
+
     business_hours: {
-      post_permission: {
-        type: Boolean,
-        default: false,
-      },
-      monday_hours: {
-        type: String,
-        trim: true,
-      },
-      tuesday_hours: {
-        type: String,
-        trim: true,
-      },
-      wednesday_hours: {
-        type: String,
-        trim: true,
-      },
-      thursday_hours: {
-        type: String,
-        trim: true,
-      },
-      friday_hours: {
-        type: String,
-        trim: true,
-      },
-      saturday_hours: {
-        type: String,
-        trim: true,
-      },
-      sunday_hours: {
-        type: String,
-        trim: true,
-      },
+      post_permission: { type: Boolean, default: false },
+      monday_hours: { type: String, trim: true },
+      tuesday_hours: { type: String, trim: true },
+      wednesday_hours: { type: String, trim: true },
+      thursday_hours: { type: String, trim: true },
+      friday_hours: { type: String, trim: true },
+      saturday_hours: { type: String, trim: true },
+      sunday_hours: { type: String, trim: true },
     },
+
     website: {
       type: String,
       trim: true,
       match: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
     },
-    locobiz_profile_image: {
-      type: String,
-      required: false,
-    },
+
+    locobiz_profile_image: { type: String },
+
     farmers_market_location: {
-      fm_location_post: {
-        type: Boolean,
-        default: false,
-      },
-      monday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      tuesday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      wednesday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      thursday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      friday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      saturday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
-      sunday: {
-        farmers_market_name: {
-          type: String,
-          trim: true,
-        },
-        city: {
-          type: String,
-          trim: true,
-        },
-        ...stateFields,
-        zip: {
-          type: String,
-          trim: true,
-        },
-      },
+      fm_location_post: { type: Boolean, default: false },
+      monday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      tuesday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      wednesday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      thursday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      friday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      saturday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
+      sunday: { farmers_market_name: { type: String, trim: true }, city: { type: String, trim: true }, ...stateFields, zip: { type: String, trim: true } },
     },
+
     selling: {
-      selling1: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-        price: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-      },
-      selling2: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-        price: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-      },
-      selling3: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-        price: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-      },
+      selling1: { type: { type: String }, description: { type: String, trim: true }, image: { type: String }, price: { type: String, trim: true } },
+      selling2: { type: { type: String }, description: { type: String, trim: true }, image: { type: String }, price: { type: String, trim: true } },
+      selling3: { type: { type: String }, description: { type: String, trim: true }, image: { type: String }, price: { type: String, trim: true } },
     },
+
     needs: {
-      need1: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-      },
-      need2: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-      },
-      need3: {
-        type: {
-          type: String,
-          required: false,
-        },
-        description: {
-          type: String,
-          trim: true,
-          required: false,
-        },
-        image: {
-          type: String,
-          required: false,
-        },
-      },
+      need1: { type: { type: String }, description: { type: String, trim: true }, image: { type: String } },
+      need2: { type: { type: String }, description: { type: String, trim: true }, image: { type: String } },
+      need3: { type: { type: String }, description: { type: String, trim: true }, image: { type: String } },
     },
-    current_promotional: {
-      type: String,
-      trim: true,
-      required: false,
-    },
-    locobiz_votes: {
-      type: Number,
-      required: false,
-    },
+
+    current_promotional: { type: String, trim: true },
+    locobiz_votes: { type: Number },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-  
 // Auto-derive state_name from state_code
 LocoBizSchema.pre('save', function (next) {
-  // Business address
   if (this.locobiz_address?.state_code) {
     this.locobiz_address.state_name =
       US_STATE_NAMES[this.locobiz_address.state_code] || this.locobiz_address.state_name;
   }
-
-    // Farmers market locations
   const days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
   days.forEach(day => {
     if (this.farmers_market_location?.[day]?.state_code) {
@@ -390,16 +161,14 @@ LocoBizSchema.pre('save', function (next) {
         this.farmers_market_location[day].state_name;
     }
   });
-
   next();
 });
 
-// Ensure website is unique only when it exists (ignore null/undefined)
+// Keep website unique when present (ignore null/undefined)
 LocoBizSchema.index(
   { website: 1 },
   { unique: true, partialFilterExpression: { website: { $type: 'string' } } }
 );
 
-const LocoBiz = models.LocoBiz || model('LocoBiz', LocoBizSchema)
-
-export default LocoBiz
+const LocoBiz = models.LocoBiz || model('LocoBiz', LocoBizSchema);
+export default LocoBiz;

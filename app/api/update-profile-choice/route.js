@@ -1,7 +1,7 @@
 // File: app/api/update-profile-choice/route.js
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/auth/authOptions'
+import { authOptions } from '@/api/auth/authOptions'
 import connectDB from '@/config/database'
 import User from '@/models/User'
 import mongoose from 'mongoose'

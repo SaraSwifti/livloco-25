@@ -3,7 +3,7 @@
 
 import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import SellingEntry from '@/components/SellingEntry';
 import NeedingEntry from '@/components/NeedingEntry';
 import StateSelect from '@/components/StateSelect';
@@ -14,8 +14,17 @@ import DropzoneUploader from '@/components/DropzoneUploader';
 
 const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
-export default function BusinessAddForm({ userEmail }) {
+const toDisplayFromE164 = (e164) => {
+  const s = String(e164 || '');
+  const m = s.match(/^\+1(\d{3})(\d{3})(\d{4})$/);
+  if (!m) return '';
+  return `(${m[1]}) ${m[2]}-${m[3]}`;
+};
+
+export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164 }) {
   const router = useRouter();
+
+  const initialPhoneDisplay = useMemo(() => toDisplayFromE164(userPhoneE164), [userPhoneE164]);
 
   const [images, setImages] = useState({
     profile: '',
@@ -23,7 +32,14 @@ export default function BusinessAddForm({ userEmail }) {
     need1: '', need2: '', need3: '',
   });
   const [description, setDescription] = useState('');
-  const [phone, setPhone] = useState('');
+
+  // Account holder info comes from the user profile (read-only, not required here)
+  const [ownerName] = useState(userFullName || '');
+  const [accountPhoneDisplay] = useState(initialPhoneDisplay);
+
+  // Optional storefront phone (independent from account holder phone)
+  const [bizPhoneDisplay, setBizPhoneDisplay] = useState('');
+
   const [skipAddBusiness, setSkipAddBusiness] = useState(false);
   const [showPopOut, setShowPopOut] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -56,10 +72,10 @@ export default function BusinessAddForm({ userEmail }) {
     return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
   };
 
-  const handlePhoneChange = (e) => {
+  const handleBizPhoneChange = (e) => {
     const input = e.target.value;
     const digits = input.replace(/\D/g, '').slice(0, 10);
-    setPhone(formatPhoneDisplay(digits));
+    setBizPhoneDisplay(formatPhoneDisplay(digits));
   };
 
   const handleSkipPopOutCheckbox = (e) => {
@@ -81,6 +97,15 @@ export default function BusinessAddForm({ userEmail }) {
       alert('You must check the box to add your selling/needing profile before submitting.');
       return;
     }
+
+    //User Name is required by onboarding, send it; otherwise server will fallback from User
+    form.set('account_owner_name', ownerName || '');
+
+    // User phone is required by onboarding, send it; otherwise server will fallback from User
+    form.set('phone', accountPhoneDisplay || '');
+
+    // User email is propogated from sign-ing and is required. Will pin it here in the bizness owers field. 
+    form.set('email', userEmail || '');
 
     const website = form.get('website');
     if (website) {
@@ -104,7 +129,6 @@ export default function BusinessAddForm({ userEmail }) {
 
     try {
       const res = await addBusinessAction(form);
-      // Now and only now, set profile_choice = 'locobiz'
       await updateUserProfileChoice({ email: userEmail, profile_choice: 'locobiz' });
       router.push('/businesses');
     } catch (err) {
@@ -160,7 +184,7 @@ export default function BusinessAddForm({ userEmail }) {
 
           <div>
             <label htmlFor='mem_zip' className='block font-bold mb-2'>
-              ZIP for location search <span className='text-red-500'> required</span>
+              ZIP for location search (even if you don't have a store front)<span className='text-red-500'> required</span>
             </label>
             <input
               type='text'
@@ -175,40 +199,52 @@ export default function BusinessAddForm({ userEmail }) {
 
           <div className='mb-4'>
             <label htmlFor='account_owner_name' className='block font-bold mb-2'>
-              Account Holder&apos;s Name <span className='text-red-500'> required</span>
+              Account Holder&apos;s Name
             </label>
             <input
               type='text'
               id='account_owner_name'
               name='account_owner_name'
-              className='border rounded w-full py-2 px-3'
-              pattern='^[a-zA-Z\s]{2,}$'
-              title='Name should contain only letters and be at least 2 characters long.'
-              required
+              className='border rounded w-full py-2 px-3 bg-gray-100 cursor-not-allowed'
+              value={ownerName}
+              readOnly
+              aria-readonly='true'
+              placeholder='(from your profile)'
             />
+            
           </div>
-
           <div className='mb-4'>
-            <label htmlFor='email' className='block font-bold mb-2'>
-              Email (for member messaging alerts)
+            <label htmlFor='account_owner_name' className='block font-bold mb-2'>
+              Account Holder&apos;s Email
             </label>
-            <input type='email' id='email' name='email' value={userEmail} readOnly className='border rounded w-full py-2 px-3' required />
+            <input
+              type='text'
+              id='email'
+              name='email'
+              className='border rounded w-full py-2 px-3 bg-gray-100 cursor-not-allowed'
+              value={userEmail}
+              readOnly
+              aria-readonly='true'
+              placeholder='(from your profile)'
+            />
+            
           </div>
 
           <div className='mb-4'>
             <label htmlFor='phone' className='block font-bold mb-2'>
-              Account Holder&apos;s Phone <span className='text-red-500'> required</span>
+              Account Holder&apos;s Phone
             </label>
             <input
               type='tel'
               id='phone'
               name='phone'
-              className='border rounded w-full py-2 px-3'
+              className='border rounded w-full py-2 px-3 bg-gray-100 cursor-not-allowed'
               placeholder='(123) 456-7890'
-              value={phone}
-              onChange={handlePhoneChange}
-              required
+              value={accountPhoneDisplay}
+              readOnly
+              aria-readonly='true'
             />
+            
           </div>
 
           <div className='mb-4'>
@@ -259,7 +295,7 @@ export default function BusinessAddForm({ userEmail }) {
           {sellingItems.map((item, index) => (
             <SellingEntry key={item.id} index={index} images={images} uploadedFileNames={uploadedFileNames} handleDropzoneUpload={handleDropzoneUpload} />
           ))}
-          <h1 className='font-bold text-2xl'>Needing <span className='text-sm'>(no price input)</span></h1>
+          <h1 className='font-bold text-2xl'>Needing</h1>
           {needItems.map((item, index) => (
             <NeedingEntry key={item.id} index={index} images={images} uploadedFileNames={uploadedFileNames} handleDropzoneUpload={handleDropzoneUpload} />
           ))}
@@ -286,8 +322,8 @@ export default function BusinessAddForm({ userEmail }) {
           <h2 className='text-xl font-bold'>Storefront/Farmstand Address</h2>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <div>
-              <label htmlFor='biz_phone' className='block text-sm font-medium'>LocoBiz Phone</label>
-              <input id='biz_phone' type='tel' name='locobiz_address.biz_phone' placeholder='+1234567890' className='mt-1 bg-white w-full rounded border p-2' value={phone} onChange={handlePhoneChange} />
+              <label htmlFor='biz_phone' className='block text-sm font-medium'>LocoBiz Phone (optional)</label>
+              <input id='biz_phone' type='tel' name='locobiz_address.biz_phone' placeholder='(123) 456-7890' className='mt-1 bg-white w-full rounded border p-2' value={bizPhoneDisplay} onChange={handleBizPhoneChange} />
             </div>
             <div>
               <label htmlFor='locobiz_address_line1' className='block text-sm font-medium'>Address Line 1</label>
@@ -341,7 +377,7 @@ export default function BusinessAddForm({ userEmail }) {
               <h3 className='text-lg font-semibold capitalize mb-2'>{day}</h3>
               <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
                 <div>
-                  <label htmlFor={`farmers_market_location_${day}_farmers_market_name`} className='block text-sm font-medium'>Market Name</label>
+                  <label htmlFor={`farmers_market_location_${day}_farmers_market_name`} className='block text sm font-medium'>Market Name</label>
                   <input id={`farmers_market_location_${day}_farmers_market_name`} type='text' name={`farmers_market_location.${day}.farmers_market_name`} className='mt-1 w-full border rounded p-2' />
                 </div>
                 <div>

@@ -10,7 +10,7 @@ import User from '@/models/User';
  * Returns a lower-cased email or null if no session.
  */
 async function getSessionEmail() {
-  // NextAuth v5 style: auth() exported from your central auth file (e.g., /auth.ts)
+  // NextAuth v5 style
   try {
     const mod = await import('@/auth');
     if (mod?.auth) {
@@ -35,12 +35,9 @@ function toE164US(input) {
   if (!s) return '';
   const digits = s.replace(/\D/g, '');
   if (!digits) return '';
-  // 10 digits -> assume US, prefix +1
-  if (digits.length === 10) return `+1${digits}`;
-  // 11 digits and starts with 1 -> +1##########
-  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`;
-  // Already looks like +E.164
-  if (s.startsWith('+') && /^\+\d{10,15}$/.test(s)) return s;
+  if (digits.length === 10) return `+1${digits}`;         // 10 digits -> US
+  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`; // 1##########
+  if (s.startsWith('+') && /^\+\d{10,15}$/.test(s)) return s;            // already E.164
   return '';
 }
 
@@ -66,22 +63,19 @@ export default async function addBusinessAction(form) {
     set(data, k, v);
   }
 
-  // Use session for ownership; fall back to email in form (dev only)
+  // Resolve user/owner from session (or form email as dev fallback)
   let email = await getSessionEmail();
   if (!email) {
     const emailFromForm = form.get('email');
     if (emailFromForm) email = String(emailFromForm).toLowerCase();
   }
-  if (!email) {
-    throw new Error('Unauthorized: no session and no email provided.');
-  }
+  if (!email) throw new Error('Unauthorized: no session and no email provided.');
 
-  const owner = await User.findOne({ email }, { _id: 1 }).lean();
-  if (!owner?._id) {
-    throw new Error('User not found for the current email.');
-  }
-  data.owner = owner._id;
-  data.email = email;
+  const userDoc = await User.findOne({ email }).lean();
+  if (!userDoc?._id) throw new Error('User not found for the current email.');
+
+  data.owner = userDoc._id;
+  data.email = email; // pinned; not unique at LocoBiz level
 
   // Coerce booleans for known flags
   const toBool = (x) => x === true || String(x).toLowerCase() === 'true';
@@ -90,18 +84,28 @@ export default async function addBusinessAction(form) {
     data.locobiz_address.post_permission = toBool(data.locobiz_address.post_permission);
   }
 
+  // Default account data from User if missing
+  if (!data.account_owner_name || !String(data.account_owner_name).trim()) {
+    data.account_owner_name = userDoc.full_name || '';
+  }
+  if (!data.phone || !String(data.phone).trim()) {
+    data.phone = userDoc.phone || '';
+  }
+
   // Normalize website (optional safeguard)
   if (data.website && typeof data.website === 'string') {
     data.website = data.website.replace(/\/$/, '');
   }
 
-  // Normalize phone fields to E.164 (schema-friendly)
+  // Normalize phone fields to E.164 (schema-friendly) if provided
   if (data.phone) {
     const norm = toE164US(data.phone);
     if (!norm) {
-      throw new Error('Invalid phone format. Please enter a valid US number like (616) 555-1212.');
+      // Not required; drop invalid rather than failing save
+      data.phone = undefined;
+    } else {
+      data.phone = norm;
     }
-    data.phone = norm;
   }
   if (data.locobiz_address?.biz_phone) {
     const normBiz = toE164US(data.locobiz_address.biz_phone);
