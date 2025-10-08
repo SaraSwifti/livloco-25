@@ -104,7 +104,7 @@ async function addBusinessAction(formData) {
       sunday_hours: formData.get('business_hours.sunday_hours'),
     },
 
-    website,
+    ...(website && { website }),
     locobiz_profile_image: profileImageUrl,
 
     farmers_market_location, // FIX #3 applied everywhere
@@ -124,32 +124,26 @@ async function addBusinessAction(formData) {
     current_promotional: formData.get('current_promotional'),
   };
 
-  // const newLocoBiz = new LocoBiz(locobizData);
-  // await newLocoBiz.save();
+  // --- Save with friendly error reporting ---
+  try {
+    const newLocoBiz = await LocoBiz.create(locobizData);
 
-  revalidatePath('/', 'layout');
-  return { id: String(newLocoBiz._id) };
+    revalidatePath('/', 'layout');
+    return { ok: true, id: String(newLocoBiz._id) };
+  } catch (err) {
+    // Helpful logging on the server
+    console.error('addBusinessAction error:', err);
 
-    // --- Save with friendly error reporting ---
-  // try {
-  //   const newLocoBiz = await LocoBiz.create(locobizData);
+    // Friendly duplicate-key message
+    if (err?.code === 11000) {
+      const field = Object.keys(err.keyPattern || {})[0] || 'a unique field';
+      return { ok: false, error: `Duplicate value for ${field}. Please change it and try again.` };
+    }
 
-  //   revalidatePath('/', 'layout');
-  //   return { ok: true, id: String(newLocoBiz._id) };
-  // } catch (err) {
-  //   // Helpful logging on the server
-  //   console.error('addBusinessAction error:', err);
-
-  //   // Friendly duplicate-key message
-  //   if (err?.code === 11000) {
-  //     const field = Object.keys(err.keyPattern || {})[0] || 'a unique field';
-  //     return { ok: false, error: `Duplicate value for ${field}. Please change it and try again.` };
-  //   }
-
-  //   // Fall back to the error message if present
-  //   const msg = err?.message || 'Unknown error while saving your business.';
-  //   return { ok: false, error: msg };
-  // }
+    // Fall back to the error message if present
+    const msg = err?.message || 'Unknown error while saving your business.';
+    return { ok: false, error: msg };
+  }
 
 
 

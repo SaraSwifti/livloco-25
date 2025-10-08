@@ -130,8 +130,14 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
 
     try {
       const res = await addBusinessAction(form);
-      // await updateUserProfileChoice({ profile_choice: 'locobiz' });
-     
+
+      if (res.ok) {
+        // Success - redirect to businesses page
+        router.push('/businesses');
+      } else {
+        // Server returned an error
+        alert(res.error || 'There was a problem saving your business. Please try again.');
+      }
     } catch (err) {
       console.error('Form submission failed:', err);
       alert('There was a problem saving your business. Please check your inputs and try again.');
@@ -185,7 +191,7 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
 
           <div>
             <label htmlFor='mem_zip' className='block font-bold mb-2'>
-              ZIP for location search (even if you don't have a store front)<span className='text-red-500'> required</span>
+              ZIP for location search (Even if you don't have a store front, your neighbors need to know your vicinity.)<span className='text-red-500'> required</span>
             </label>
             <input
               type='text'
@@ -286,6 +292,7 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
           />
           <label htmlFor='showSellNeedForm' className='font-medium text-lg'>
             Add Selling/Needing profile <span className='text-red-500'> required</span>
+            <br /><span className='text-black'> (This is what keeps us in the co-op working together!)</span>
           </label>
         </div>
       </div>

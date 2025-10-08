@@ -23,9 +23,8 @@ const ZIP_REGEX = /^\d{5}(-\d{4})?$/;
 /* ------------------------------- Sub-schemas ------------------------------ */
 
 const AddressSchema = new Schema(
-  {owner: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
-
-    hostfm_phone: { type: String,match: /^\+1\d{10}$/, trim: true },
+  {
+    hostfm_phone: { type: String, match: /^\+1\d{10}$/, trim: true },
     add_line1: { type: String, required: true, trim: true },
     add_line2: { type: String, trim: true },
     city: { type: String, required: true, trim: true },

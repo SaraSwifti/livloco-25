@@ -164,11 +164,7 @@ LocoBizSchema.pre('save', function (next) {
   next();
 });
 
-// Keep website unique when present (ignore null/undefined)
-LocoBizSchema.index(
-  { website: 1 },
-  { unique: true, partialFilterExpression: { website: { $type: 'string' } } }
-);
+// Website is not unique - multiple businesses can share the same website
 
 const LocoBiz = models.LocoBiz || model('LocoBiz', LocoBizSchema);
 export default LocoBiz;
