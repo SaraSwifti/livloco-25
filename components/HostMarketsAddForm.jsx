@@ -7,7 +7,7 @@ import StateSelect from '@/components/StateSelect';
 import DropzoneUploader from '@/components/DropzoneUploader';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import addHostMarketAction from '@/app/actions/addHostMarketAction';
-import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice';
+import updateUserProfileChoice from '@/app/actions/updateUserProfileChoiceAction';
 import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 
 const DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];

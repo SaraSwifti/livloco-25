@@ -1,7 +1,7 @@
 // components/BusinessAddForm.jsx
 'use client';
 
-import updateUserProfileChoice from '@/app/actions/updateUserProfileChoice';
+
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import SellingEntry from '@/components/SellingEntry';
@@ -11,6 +11,7 @@ import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import addBusinessAction from '@/app/actions/addBusinessAction';
 import DropzoneUploader from '@/components/DropzoneUploader';
+// import updateUserProfileChoice from '@/app/actions/updateUserProfileChoiceAction';
 
 const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
 
@@ -129,8 +130,8 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
 
     try {
       const res = await addBusinessAction(form);
-      await updateUserProfileChoice({ email: userEmail, profile_choice: 'locobiz' });
-      router.push('/businesses');
+      // await updateUserProfileChoice({ profile_choice: 'locobiz' });
+     
     } catch (err) {
       console.error('Form submission failed:', err);
       alert('There was a problem saving your business. Please check your inputs and try again.');
