@@ -19,25 +19,11 @@ const UserSchema = new Schema(
     full_name: { type: String, trim: true, default: '' },
     phone: { type: String, trim: true, match: /^\+1\d{10}$/ }, // E.164 US
     email_memmessage_notification: { type: Boolean, default: false },
-    profile_choice: {
-      type: String,
-      enum: ['none', 'locobiz', 'hostfmarket'],
-      default: 'none',
-    },
-    locobiz: { type: Schema.Types.ObjectId, ref: 'LocoBiz', sparse: true },
-    hostfmarket: {
-      type: Schema.Types.ObjectId,
-      ref: 'HostFMarket',
-      sparse: true,
-    },
     payment_confirmed: {
       type: Boolean,
       required: true,
       default: false,
     },
-    full_name: { type: String, trim: true, default: '' },
-    phone: { type: String, trim: true, match: /^\1\d{10}$/ }, // E.164 US
-    email_memmessage_notification: { type: Boolean, default: false },
     profile_choice: {
       type: String,
       enum: ['none', 'locobiz', 'hostfmarket'],

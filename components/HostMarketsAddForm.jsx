@@ -7,7 +7,6 @@ import StateSelect from '@/components/StateSelect';
 import DropzoneUploader from '@/components/DropzoneUploader';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
 import addHostMarketAction from '@/app/actions/addHostMarketAction';
-import updateUserProfileChoice from '@/app/actions/updateUserProfileChoiceAction';
 import AddBusLaterPopout from '@/components/AddBusLaterPopout';
 
 const DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
@@ -110,6 +109,7 @@ export default function HostMarketsAddForm({ userEmail }) {
     if (site) form.set('hostfm_website', site); else form.delete('hostfm_website');
 
     form.set('hostfm_active', 'true');
+    form.set('stall_avail', stallAvail ? 'true' : 'false');
     const weekly = scheduleMode === 'weekly';
     form.set('hostfm_weekly_sched.weekly_sched', weekly ? 'true' : 'false');
     form.set('hostfm_dates.hostfm_randomdates', weekly ? 'false' : 'true');
@@ -134,10 +134,14 @@ export default function HostMarketsAddForm({ userEmail }) {
     }
 
     try {
-      await addHostMarketAction(form);
-      // After a successful add, set profile_choice = 'hostfmarket'
-      await updateUserProfileChoice({ email: userEmail, profile_choice: 'hostfmarket' });
-      router.push('/hostfarmmarkets');
+      const res = await addHostMarketAction(form);
+
+      if (res.ok) {
+        // Success - user profile is automatically updated in addHostMarketAction
+        router.push('/hostfarmmarkets');
+      } else {
+        alert(res.error || 'There was a problem saving your market. Please try again.');
+      }
     } catch (err) {
       console.error('Submission failed:', err);
       alert('There was a problem saving your market. Please check your inputs and try again.');
@@ -146,7 +150,7 @@ export default function HostMarketsAddForm({ userEmail }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
-      <div className="bg-gray-100 p-4 rounded border">
+      <div className="bg-white p-4 rounded border">
         <div className="flex items-center gap-3">
           <input
             id="skip_host_market_profile"
@@ -162,7 +166,7 @@ export default function HostMarketsAddForm({ userEmail }) {
         {showSkipPopout && <AddBusLaterPopout onClose={handleCloseSkipPopout} />}
       </div>
 
-      <div className="bg-gray-100 p-4 rounded border">
+      <div className="bg-white p-4 rounded border">
         <div>
           <h1 className="text-3xl font-bold mb-4">Host Your Own Farmers' Market</h1>
           <p className="text-black text-xl mb-6">
@@ -171,8 +175,8 @@ export default function HostMarketsAddForm({ userEmail }) {
           </p>
         </div>
         <p className="text-black">
-          LivLoco will never sell or share private account information. Public
-          profile fields (name, address, schedule) will be visible to visitors.
+          LivLoco will never sell or share private account information. However, public
+          profile fields (name, address, schedule) will be visible to visitors when shared. 
         </p>
       </div>
 
@@ -185,24 +189,24 @@ export default function HostMarketsAddForm({ userEmail }) {
         </div>
 
         <div>
-          <label htmlFor="hostfm_description" className="block font-bold mb-1">
+          <label htmlFor="hostfm_description"  className="block font-bold mb-1">
             Description <span className="text-red-500">required</span>
           </label>
-          <textarea id="hostfm_description" name="hostfm_description" required rows={4} className="border rounded w-full py-2 px-3" placeholder="Tell us about your market..." maxLength={500} />
+          <textarea id="hostfm_description" name="hostfm_description" required rows={4} className="border rounded w-full py-2 px-3" placeholder="Tell us about your market...where and why do you exist?" maxLength={500} />
         </div>
 
         <div>
           <label htmlFor="hostfm_type" className="block font-bold mb-1">
             Market Type
           </label>
-          <input id="hostfm_type" name="hostfm_type" type="text" className="border rounded w-full py-2 px-3" placeholder="e.g., Produce and Artisan Market" />
+          <input id="hostfm_type" name="hostfm_type" type="text" className="border rounded w-full py-2 px-3" placeholder="e.g., Produce and Artisan Market,  Farmers Market, Flower Market, Food Truck Gathering..." />
         </div>
       </div>
 
       <div className="bg-white p-4 rounded border space-y-2">
         <label className="block font-bold mb-1">Profile Image</label>
         <DropzoneUploader
-          label="Upload a profile image for your market"
+          label="Upload a profile image for your market if you have one but not required"
           onUpload={handleDropzoneUpload}
           uploadedFileName={uploadedFileName}
           accept="image/*"
@@ -293,7 +297,7 @@ export default function HostMarketsAddForm({ userEmail }) {
             </div>
             <div>
               <label htmlFor="stall_included" className="block font-bold mb-1">Included</label>
-              <input id="stall_included" name="stall_included" className="border rounded w-full py-2 px-3" placeholder="e.g., nothing" />
+              <input id="stall_included" name="stall_included" className="border rounded w-full py-2 px-3" placeholder="e.g., electric, nothing" />
             </div>
           </div>
         )}

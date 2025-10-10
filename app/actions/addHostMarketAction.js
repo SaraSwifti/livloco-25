@@ -3,9 +3,23 @@
 
 import connectDB from '@/config/database';
 import HostFMarket from '@/models/HostFMarket';
+import User from '@/models/User';
+import { getSessionUser } from '@/utils/getSessionUser';
 
 export default async function addHostMarketAction(form) {
   await connectDB();
+
+  const sessionUser = await getSessionUser();
+  if (!sessionUser || !sessionUser.userId) {
+    throw new Error('User ID is required');
+  }
+  const { userId } = sessionUser;
+
+  // Check if user already has a HostFMarket
+  const existingMarket = await HostFMarket.findOne({ owner: userId });
+  if (existingMarket) {
+    return { ok: false, error: 'You already have a hosted farmers market. Each user can only create one market.' };
+  }
 
   const data = {};
   for (const [k, v] of form.entries()) {
@@ -49,8 +63,30 @@ export default async function addHostMarketAction(form) {
   // Remove display-only field
   if (data.hostfm_address?.hostfm_phone_display) delete data.hostfm_address.hostfm_phone_display;
 
-  const doc = new HostFMarket(data);
-  await doc.save();
+  // Set the owner
+  data.owner = userId;
 
-  return { ok: true, id: String(doc._id) };
+  try {
+    const doc = new HostFMarket(data);
+    await doc.save();
+
+    // Update User profile with the new host farm market reference
+    await User.findByIdAndUpdate(userId, {
+      profile_choice: 'hostfmarket',
+      hostfmarket: doc._id
+    });
+
+    return { ok: true, id: String(doc._id) };
+  } catch (err) {
+    console.error('addHostMarketAction error:', err);
+
+    // Handle duplicate owner error
+    if (err?.code === 11000 && err?.keyPattern?.owner) {
+      return { ok: false, error: 'You already have a hosted farmers market. Each user can only create one market.' };
+    }
+
+    // Handle other errors
+    const msg = err?.message || 'Unknown error while saving your market.';
+    return { ok: false, error: msg };
+  }
 }

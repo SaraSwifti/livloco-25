@@ -67,7 +67,7 @@ export default async function HostFarmMarketPage(props) {
       <section className="max-w-6xl mx-auto px-4">
         <Link
           href="/hostfarmmarkets"
-          className="inline-flex items-center rounded-md bg-white/80 px-3.5 py-2.5 text-lg my-4 font-semibold text-black shadow-sm hover:bg-white"
+          className="inline-flex items-center bg-white/80 px-3.5 py-2.5 text-lg my-4 font-semibold text-black shadow-sm p-4 rounded border hover:bg-white"
         >
           <FaArrowLeft className="mr-2" /> Back to Markets
         </Link>
@@ -77,7 +77,7 @@ export default async function HostFarmMarketPage(props) {
         <div className="max-w-6xl w-full mx-auto px-4 pb-10">
           <div className="grid grid-cols-1 gap-6">
             {/* Meta */}
-            <div className="bg-white p-6 rounded-lg shadow-md ring-1 ring-black/10">
+            <div className="bg-white p-4 border rounded-lg shadow-md ring-1 ring-black/10">
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-3xl font-bold mb-1">{market.hostfm_name}</h1>
 
@@ -134,20 +134,20 @@ export default async function HostFarmMarketPage(props) {
                         <FaExternalLinkAlt className="w-4 h-4 opacity-80" aria-hidden />
                       </Link>
                     ) : (
-                      <span className="text-gray-500 italic">No website provided</span>
+                      <span className="text-black italic">No website at this time.</span>
                     )}
                   </div>
 
                   {/* Messaging placeholder */}
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-semibold text-gray-700">Message</p>
+                  
                     <button
                       type="button"
                       disabled
-                      className="mt-1 inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-40"
-                      title="Messaging coming soon"
+                      className="mt-1 inline-flex items-center rounded-md border bg-green-500 px-3 py-1.5 text-sm font-semibold text-black hover:bg-green-900 "
+                      title="Messaging this Co-op member"
                     >
-                      Coming soon
+                      Message this Livloco Co-op Member
                     </button>
                   </div>
 
@@ -172,11 +172,11 @@ export default async function HostFarmMarketPage(props) {
             {hasStall ? (
               <HostFMStallInfo market={market} />
             ) : (
-              <div className="bg-white p-6 rounded-lg shadow text-center">
-                <p className="text-lg text-gray-700">
+              <div className="bg-white p-6 border-4 rounded-lg shadow text-center">
+                <p className="text-lg text-black">
                   No stall availability for vendors at this time.
                 </p>
-              </div>
+              </div> 
             )}
 
             {/* Schedule (never both) */}

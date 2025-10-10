@@ -1,33 +1,19 @@
-//businesses/add/page.jsx
+// app/businesses/add/page.jsx
 
-// app/(whatever)/businesses/add/page.jsx
-
-import BusinessAddForm from "@/components/BusinessAddForm.jsx";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions"; // keep your existing path
-import connectDB from "@/config/database";
-import User from "@/models/User";
+import BusinessAddForm from '@/components/BusinessAddForm.jsx';
+import { getUserProfileData } from '@/utils/getUserProfileData';
+import { redirect } from 'next/navigation';
 
 export default async function AddBusinessPage() {
-  // 1) Session first
-  const session = await getServerSession(authOptions);
-  const sessionUser = session?.user || {};
+  // Get user profile data (includes auth check)
+  const userData = await getUserProfileData();
 
-  let userEmail = (sessionUser.email || "").toLowerCase();
-  let userFullName = sessionUser.full_name || "";
-  let userPhoneE164 = sessionUser.phone || ""; // e.g. "+16165551212"
-
-  // 2) Fallback to DB profile if session doesn't include these fields
-  if (userEmail && (!userFullName || !userPhoneE164)) {
-    await connectDB();
-    const u = await User.findOne({ email: userEmail })
-      .select("full_name phone")
-      .lean();
-    if (u) {
-      if (!userFullName) userFullName = u.full_name || "";
-      if (!userPhoneE164) userPhoneE164 = u.phone || "";
-    }
+  // Redirect to sign-in if not authenticated
+  if (!userData) {
+    redirect('/api/auth/signin?callbackUrl=/businesses/add');
   }
+
+  const { userEmail, userFullName, userPhoneE164 } = userData;
 
   return (
     <section>

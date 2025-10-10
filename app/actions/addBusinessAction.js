@@ -2,6 +2,7 @@
 'use server';
 import connectDB from '@/config/database';
 import LocoBiz from '@/models/LocoBiz';
+import User from '@/models/User';
 import { getSessionUser } from '@/utils/getSessionUser';
 import { revalidatePath } from 'next/cache';
 import uploadToCloudinary from '@/utils/uploadToCloudinary';
@@ -16,6 +17,12 @@ async function addBusinessAction(formData) {
     throw new Error('User ID is required');
   }
   const { userId } = sessionUser;
+
+  // Check if user already has a LocoBiz
+  const existingBiz = await LocoBiz.findOne({ owner: userId });
+  if (existingBiz) {
+    return { ok: false, error: 'You already have a business listing. Each user can only create one business.' };
+  }
 
   // -------- Images (already fine) ----------
   const getImageUrlFromField = async (v) => {
@@ -127,6 +134,12 @@ async function addBusinessAction(formData) {
   // --- Save with friendly error reporting ---
   try {
     const newLocoBiz = await LocoBiz.create(locobizData);
+
+    // Update User profile with the new business reference
+    await User.findByIdAndUpdate(userId, {
+      profile_choice: 'locobiz',
+      locobiz: newLocoBiz._id
+    });
 
     revalidatePath('/', 'layout');
     return { ok: true, id: String(newLocoBiz._id) };
