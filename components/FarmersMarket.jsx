@@ -27,10 +27,10 @@ export default function FarmersMarket({ locobiz }) {
     return (
       <section aria-labelledby="fm-heading" className="w-full px-4 sm:px-6 lg:px-8">
         <h2 id="fm-heading" className="text-2xl text-center font-bold text-black">
-          Farmers Market Schedule
+          Market or Location Schedule
         </h2>
         <p className="mt-2 text-center text-gray-600">
-          No farmers market schedule posted for {locobiz?.locobiz_name ?? 'this business'}.
+          No market or location schedule posted for {locobiz?.locobiz_name ?? 'this business'}.
         </p>
       </section>
     );
@@ -39,7 +39,7 @@ export default function FarmersMarket({ locobiz }) {
   return (
     <section aria-labelledby="fm-heading" className="w-full px-4 sm:px-6 lg:px-8">
       <h2 id="fm-heading" className="text-2xl text-center font-bold text-black">
-        Farmers Market Schedule for {locobiz?.locobiz_name ?? 'this business'}
+        Market/Location Schedule for {locobiz?.locobiz_name ?? 'this business'}
       </h2>
 
       <div className="mt-6">
@@ -60,13 +60,13 @@ export default function FarmersMarket({ locobiz }) {
                       scope="col"
                       className="py-3.5 px-3 text-left text-sm font-semibold text-black"
                     >
-                      Market
+                      Market/Location
                     </th>
                     <th
                       scope="col"
                       className="py-3.5 px-3 text-left text-sm font-semibold text-black"
                     >
-                      Location
+                      City and State
                     </th>
                   </tr>
                 </thead>

@@ -374,7 +374,7 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
       <div className='flex p-2 items-center space-x-2'>
         <input type='hidden' name='farmers_market_location.fm_location_post' value='false' />
         <input id='fm_location_post' name='farmers_market_location.fm_location_post' type='checkbox' checked={showFarmersMarketForm} onChange={(e) => setShowFarmersMarketForm(e.target.checked)} value='true' className='w-5 h-5' />
-        <label htmlFor='fm_location_post' className='font-medium text-lg'>Add Farmers Market locations if you attend any.</label>
+        <label htmlFor='fm_location_post' className='font-medium text-lg'>Add your attendance at farmers' market locations if you attend any. This is also a great place to add where your food truck is going to be thorughout the week.</label>
       </div>
 
       {showFarmersMarketForm && (

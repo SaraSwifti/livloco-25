@@ -2,7 +2,7 @@ import connectDB from '@/config/database';
 import CurrentStatsBox from '@/components/CurrentStatsBox';
 import LocoBizsCountDisplay from '@/components/LocoBizsCountDisplay';
 import MemberCountDisplay from '@/components/MemberCountDisplay';
-import FarmersMarketCountDisplay from '@/components/FarmersMarkCountDisplay';
+import HostFarmersMarketCountDisplay from '@/components/HostFarmersMarkCountDisplay';
 import User from '@/models/User';
 import locoBiz from '@/models/LocoBiz';
 import hostFMarkets from '@/models/HostFMarket';
@@ -93,7 +93,7 @@ hostfm_active: true });
               {/* NEW: Members counter based on total users */}
               <MemberCountDisplay total={totalUsers} />
               <LocoBizsCountDisplay total={totalLocoBizs} />
-              <FarmersMarketCountDisplay total={totalFarmersMarkets} />
+              <HostFarmersMarketCountDisplay total={totalFarmersMarkets} />
 
               <h1 className='text-2xl text-center font-bold'>
                 Our most recent members' LocoBusinesses and their locations:
