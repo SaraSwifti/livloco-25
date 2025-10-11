@@ -11,7 +11,7 @@ export default function HostFMStallInfo({ market }) {
 
   return (
     <section className="w-full">
-      <div className="bg-white  p-6 rounded-lg ring-1 ring-black/10 shadow-2xl">
+      <div className="bg-white p-6 border rounded-lg shadow-md ring-1 ring-black/10">
         <h2 className="text-2xl font-bold text-black mb-4 text-center">Stall Availability</h2>
         <dl className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div>

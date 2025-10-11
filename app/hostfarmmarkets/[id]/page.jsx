@@ -147,7 +147,7 @@ export default async function HostFarmMarketPage(props) {
                       className="mt-1 inline-flex items-center rounded-md border bg-green-500 px-3 py-1.5 text-sm font-semibold text-black hover:bg-green-900 "
                       title="Messaging this Co-op member"
                     >
-                      Message this Livloco Co-op Member
+                      {`Send ${market.hostfm_name} an in-app message`}
                     </button>
                   </div>
 
@@ -172,11 +172,11 @@ export default async function HostFarmMarketPage(props) {
             {hasStall ? (
               <HostFMStallInfo market={market} />
             ) : (
-              <div className="bg-white p-6 border-4 rounded-lg shadow text-center">
+              <div className="bg-white p-6 border rounded-lg shadow-md ring-1 ring-black/10 text-center">
                 <p className="text-lg text-black">
                   No stall availability for vendors at this time.
                 </p>
-              </div> 
+              </div>
             )}
 
             {/* Schedule (never both) */}

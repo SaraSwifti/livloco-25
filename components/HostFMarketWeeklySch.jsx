@@ -20,7 +20,7 @@ export default function HostFMarketWeeklySch({ weekly = {} }) {
     
       <div className="mt-6 -mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full align-middle sm:px-6 lg:px-8">
-          <div className="overflow-hidden sm:rounded-xl p-6 bg-white ring-1 ring-black/25 shadow-2xl">
+          <div className="overflow-hidden p-6 bg-white border rounded-lg shadow-md ring-1 ring-black/10">
              <h2 className="text-2xl text-center font-bold pt-6 text-black">Weekly Schedule</h2>
 
             <table className="min-w-full ">
