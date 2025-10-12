@@ -272,6 +272,7 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
               label='Upload a profile image for your business if you have one.'
               onUpload={(file) => handleDropzoneUpload(file, 'profile')}
               uploadedFileName={uploadedFileNames['profile']}
+              existingImageUrl={images.profile}
               id='locobiz_profile_image'
               accept='image/*'
             />

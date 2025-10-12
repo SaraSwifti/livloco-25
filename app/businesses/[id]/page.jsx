@@ -28,7 +28,7 @@ const locobiz = await LocoBiz.findById(id).lean();
       <div className="text-center py-10 border-4 border-black ">
         <h2 className="text-2xl font-semibold">Business not found</h2>
         <Link href="/businesses" className="text-blue-600 underline mt-4 inline-block">
-          Back to Listings
+          Back to Livloco Listings
         </Link>
       </div>
     );
@@ -58,7 +58,7 @@ const locobiz = await LocoBiz.findById(id).lean();
             href="/businesses"
             className="text-black hover:text-xl flex items-center"
           >
-            <FaArrowLeft className='mr-2' /> Back to Co-op Listings
+            <FaArrowLeft className='mr-2' /> Back to LocoBusiness Listings
             </Link>
             </button>
         

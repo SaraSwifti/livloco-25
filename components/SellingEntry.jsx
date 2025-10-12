@@ -2,7 +2,7 @@
 
 import DropzoneUploader from '@/components/DropzoneUploader'
 
-const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }) => {
+const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, initialData }) => {
   return (
     <div className='bg-white p-4 rounded border space-y-4'>
       <h3 className='text-lg font-semibold'>Selling {index + 1}</h3>
@@ -21,6 +21,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
           name={`selling.selling${index + 1}.description`}
           type='text'
           className='mt-1 block w-full bg-gray-100 border rounded p-2'
+          defaultValue={initialData?.description || ''}
         />
       </div>
 
@@ -39,7 +40,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
                 name={`selling.selling${index + 1}.type`}
                 id={`selling${index + 1}_type_${type}`}
                 value={type}
-                defaultChecked={type === 'product'}
+                defaultChecked={initialData?.type ? initialData.type === type : type === 'product'}
                 className={`text-${type === 'product' ? 'blue' : 'green'}-600`}
                 required
               />
@@ -63,6 +64,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
           name={`selling.selling${index + 1}.price`}
           type='text'
           className='mt-1 bg-gray-100 block w-full border rounded p-2'
+          defaultValue={initialData?.price || ''}
         />
       </div>
 
@@ -77,6 +79,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
           className='hidden'
           id={`selling${index + 1}_image`}
           accept='image/*'
+          existingImageUrl={images[`selling${index + 1}`]}
         />
         <input
           type='hidden'

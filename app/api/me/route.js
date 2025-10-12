@@ -10,7 +10,7 @@ export async function GET() {
 
   await connectDB();
   const user = await User.findOne({ email: sess.userEmail })
-    .select('full_name phone email_memmessage_notification profile_choice locobiz hostfmarket')
+    .select('_id full_name phone email_memmessage_notification profile_choice locobiz hostfmarket')
     .lean();
 
   return NextResponse.json({ user });

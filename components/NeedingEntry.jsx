@@ -2,7 +2,7 @@
 
 import DropzoneUploader from '@/components/DropzoneUploader'
 
-const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }) => {
+const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, initialData }) => {
   return (
     <div className='bg-white p-4 rounded border space-y-4'>
       <h3 className='text-lg font-semibold'>Need {index + 1}</h3>
@@ -21,6 +21,7 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
           name={`needs.need${index + 1}.description`}
           type='text'
           className='mt-1 bg-gray-100 block w-full border rounded p-2'
+          defaultValue={initialData?.description || ''}
         />
       </div>
 
@@ -39,7 +40,7 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
                 id={`need${index + 1}_type_${type}`}
                 name={`needs.need${index + 1}.type`}
                 value={type}
-                defaultChecked={type === 'product'}
+                defaultChecked={initialData?.type ? initialData.type === type : type === 'product'}
                 className={`text-${type === 'product' ? 'blue' : 'green'}-600`}
                 required
               />
@@ -57,6 +58,7 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload }
             handleDropzoneUpload(file, `need${index + 1}`)
           }
           uploadedFileName={uploadedFileNames[`need${index + 1}`]}
+          existingImageUrl={images[`need${index + 1}`]}
         />
         <input
           type='hidden'

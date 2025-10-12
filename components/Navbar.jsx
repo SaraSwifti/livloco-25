@@ -278,7 +278,11 @@ const Navbar = () => {
                     aria-labelledby='user-menu-button'
                     tabIndex='-1'
                   >
-                    <Link href='/profile' className='block px-4 py-2 text-sm text-gray-700' onClick={()=>setIsProfileMenuOpen(false)}>
+                    <Link
+                      href={me?._id ? `/profile/${me._id}` : '/profile'}
+                      className='block px-4 py-2 text-sm text-gray-700'
+                      onClick={()=>setIsProfileMenuOpen(false)}
+                    >
                      Your Profile & Membership
                    </Link>
 
@@ -362,6 +366,17 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 LocoFarmers' Markets
+              </Link>
+            )}
+            {session && (
+              <Link
+                href={me?._id ? `/profile/${me._id}` : '/profile'}
+                className={`${
+                  pathname.startsWith('/profile') ? 'bg-black' : ''
+                } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Your Profile & Membership
               </Link>
             )}
             {!session && (

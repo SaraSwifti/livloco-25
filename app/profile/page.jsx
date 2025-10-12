@@ -1,13 +1,29 @@
+// app/profile/page.jsx
 
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import connectDB from '@/config/database';
+import User from '@/models/User';
+import { authOptions } from '@/utils/authOptions';
 
-const ProfilePage = () => {
-    return (<section className="max-w-3xl bg-white border-rounded mx-auto px-4 py-8">
-        <div className="text-2xl font-bold">Profile Page</div>
-        
-        <h1>This is where they can see their profile info, edit/add businesses/markets, etc.</h1>
-        <h1>This is where they will be able to see how many people have clicked into their profile card</h1>
-        <h1>The can also view their profile as how it appears and see how many votes they have</h1>
-    </section>);
+export default async function ProfilePage() {
+  // Get session to verify user is authenticated
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    redirect('/api/auth/signin');
+  }
+
+  await connectDB();
+
+  // Find user by email and redirect to their profile/[id] page
+  const userEmail = (session.user.email || '').toLowerCase();
+  const user = await User.findOne({ email: userEmail }).select('_id').lean();
+
+  if (!user) {
+    redirect('/');
+  }
+
+  // Redirect to the user's specific profile page
+  redirect(`/profile/${user._id}`);
 }
-
-export default ProfilePage;

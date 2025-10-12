@@ -209,11 +209,11 @@ export default function HostMarketsAddForm({ userEmail }) {
           label="Upload a profile image for your market if you have one but not required"
           onUpload={handleDropzoneUpload}
           uploadedFileName={uploadedFileName}
+          existingImageUrl={profileUrl}
           accept="image/*"
         />
         <input type="hidden" name="hostfm_profile_image" value={profileUrl} />
       </div>
-
       <div className="bg-white p-4 rounded border grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="email" className="block font-bold mb-1">
