@@ -23,8 +23,16 @@ async function deleteHostMarketAction() {
       return { ok: false, error: 'No market found to delete.' };
     }
 
+    const marketId = existingMarket._id;
+
+    // Remove this market from all users' voted_markets arrays
+    await User.updateMany(
+      { voted_markets: marketId },
+      { $pull: { voted_markets: marketId } }
+    );
+
     // Delete the market
-    await HostFMarket.findByIdAndDelete(existingMarket._id);
+    await HostFMarket.findByIdAndDelete(marketId);
 
     // Update user profile_choice to 'none' and remove hostfmarket reference
     await User.findByIdAndUpdate(userId, {

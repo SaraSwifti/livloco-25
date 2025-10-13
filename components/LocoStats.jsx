@@ -2,12 +2,15 @@
 'use client';
 
 export default function LocoStats({ user }) {
-  // Placeholder data - will be implemented with actual tracking later
+  // Get actual vote counts from the arrays
+  const businessVotes = user?.locobiz?.locobiz_votes?.length ?? 0;
+  const marketVotes = user?.hostfmarket?.hostfm_votes?.length ?? 0;
+
   const stats = {
-    businessClicks: 0,
-    marketClicks: 0,
-    businessVotes: user?.locobiz?.votes ?? 0,
-    marketVotes: user?.hostfmarket?.votes ?? 0,
+    businessClicks: 0, // Placeholder for future click tracking
+    marketClicks: 0,   // Placeholder for future click tracking
+    businessVotes,
+    marketVotes,
   };
 
   const hasLocoBiz = user?.profile_choice === 'locobiz' && user?.locobiz;
@@ -87,7 +90,7 @@ export default function LocoStats({ user }) {
         <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-800">
             <strong>Note:</strong> Click tracking will be implemented in a future update.
-            Votes are currently displayed from your listing data.
+            Vote counts are updated in real-time from your profile.
           </p>
         </div>
       )}

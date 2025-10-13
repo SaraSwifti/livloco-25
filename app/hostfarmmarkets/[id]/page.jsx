@@ -6,12 +6,16 @@ import mongoose from 'mongoose';
 
 import connectDB from '@/config/database';
 import HostFMarket from '@/models/HostFMarket';
+import User from '@/models/User';
 
 import HostFMHeaderImage from '@/components/HostFMHeaderImage';
 import HostFMarketWeeklySch from '@/components/HostFMarketWeeklySch';
 import HostFMarketRandomDates from '@/components/HostFMarketRandomDates';
 import HostFMStallInfo from '@/components/HostFMStallInfo';
 import AddressLink from '@/components/AddressLink';
+import VoteButton from '@/components/VoteButton';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/utils/authOptions';
 
 // helpers
 const toBool = (v) =>
@@ -44,6 +48,23 @@ export default async function HostFarmMarketPage(props) {
 
   // Convert ObjectId/Date → strings/primitives
   const market = JSON.parse(JSON.stringify(doc));
+
+  // Get current user session to check if they've voted
+  const session = await getServerSession(authOptions);
+  let currentUser = null;
+  let hasVoted = false;
+
+  if (session?.user?.email) {
+    currentUser = await User.findOne({ email: session.user.email })
+      .select('_id voted_markets')
+      .lean();
+
+    if (currentUser && doc) {
+      hasVoted = currentUser.voted_markets?.some(
+        (marketId) => marketId.toString() === id
+      ) || false;
+    }
+  }
 
   const weekly = market?.hostfm_weekly_sched ?? {};
   const hasWeekly = toBool(weekly?.weekly_sched);
@@ -151,18 +172,16 @@ export default async function HostFarmMarketPage(props) {
                     </button>
                   </div>
 
-                  {/* Votes placeholder */}
+                  {/* Vote Button */}
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-semibold text-gray-700">Votes received</p>
-                    <div className="text-2xl font-bold text-gray-900">{market?.votes ?? 0}</div>
-                    <button
-                      type="button"
-                      disabled
-                      className="mt-1 inline-flex items-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-40"
-                      title="Voting coming soon"
-                    >
-                      Vote
-                    </button>
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Votes received</p>
+                    <VoteButton
+                      id={id}
+                      type="market"
+                      initialVoteCount={doc.hostfm_votes?.length || 0}
+                      initialHasVoted={hasVoted}
+                      isLoggedIn={!!session?.user}
+                    />
                   </div>
                 </div>
               </div>

@@ -124,6 +124,9 @@ const HostFMarketSchema = new Schema(
     // Scheduling
     hostfm_weekly_sched: { type: WeeklyScheduleSchema, default: () => ({}) },
     hostfm_dates: { type: HostfmDatesSchema, default: () => ({}) },
+
+    // Array of user IDs who have voted for this farmers market
+    hostfm_votes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

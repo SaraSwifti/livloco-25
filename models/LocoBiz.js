@@ -142,7 +142,9 @@ const LocoBizSchema = new Schema(
     },
 
     current_promotional: { type: String, trim: true },
-    locobiz_votes: { type: Number },
+
+    // Array of user IDs who have voted for this business
+    locobiz_votes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

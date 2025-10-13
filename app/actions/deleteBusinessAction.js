@@ -23,8 +23,16 @@ async function deleteBusinessAction() {
       return { ok: false, error: 'No business found to delete.' };
     }
 
+    const businessId = existingBiz._id;
+
+    // Remove this business from all users' voted_businesses arrays
+    await User.updateMany(
+      { voted_businesses: businessId },
+      { $pull: { voted_businesses: businessId } }
+    );
+
     // Delete the business
-    await LocoBiz.findByIdAndDelete(existingBiz._id);
+    await LocoBiz.findByIdAndDelete(businessId);
 
     // Update user profile_choice to 'none' and remove locobiz reference
     await User.findByIdAndUpdate(userId, {

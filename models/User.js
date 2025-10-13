@@ -41,6 +41,16 @@ const UserSchema = new Schema(
         ref: 'LocoBiz',
       },
     ],
+
+    // Track which businesses and markets this user has voted for
+    voted_businesses: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'LocoBiz' }],
+      default: []
+    },
+    voted_markets: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'HostFMarket' }],
+      default: []
+    },
   },
   {
     timestamps: true,
