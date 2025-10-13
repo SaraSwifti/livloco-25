@@ -127,6 +127,9 @@ const HostFMarketSchema = new Schema(
 
     // Array of user IDs who have voted for this farmers market
     hostfm_votes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+
+    // Track number of times the market card has been clicked
+    card_clicks: { type: Number, default: 0 },
   },
   {
     timestamps: true,

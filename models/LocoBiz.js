@@ -145,6 +145,9 @@ const LocoBizSchema = new Schema(
 
     // Array of user IDs who have voted for this business
     locobiz_votes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+
+    // Track number of times the business card has been clicked
+    card_clicks: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

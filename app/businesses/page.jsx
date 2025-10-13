@@ -11,17 +11,21 @@ import BusinessCard from '@/components/BusinessCard';
 const BusinessesPage = async () => {
     await connectDB();
    const locobizs = await LocoBiz.find({ locobiz_active: true }).lean();
+
+   // Convert MongoDB ObjectIds to strings for Client Components
+   const serializedLocobizs = JSON.parse(JSON.stringify(locobizs));
+
   return (
     <>
       <Hero />
       <section className='px-4 py-6'>
         <div className='container-xl lg:container m-auto px-4 py-6'>
-          {locobizs.length === 0 ? (
+          {serializedLocobizs.length === 0 ? (
             <p> No Businesses found </p>
           ) : (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-               
-                 {locobizs.map((locobiz) => (
+
+                 {serializedLocobizs.map((locobiz) => (
                 <BusinessCard
                   key={locobiz._id}
                   locobiz={locobiz}

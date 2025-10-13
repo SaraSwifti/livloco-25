@@ -37,6 +37,17 @@ export default function BusinessEditForm({ businessData, userEmail, userFullName
     need2: businessData?.needs?.need2?.image || '',
     need3: businessData?.needs?.need3?.image || '',
   });
+
+  // Track which images should be deleted
+  const [deleteImage, setDeleteImage] = useState({
+    profile: false,
+    selling1: false,
+    selling2: false,
+    selling3: false,
+    need1: false,
+    need2: false,
+    need3: false,
+  });
   const [description, setDescription] = useState(businessData?.locobiz_description || '');
 
   // Account holder info comes from the user profile (read-only, not required here)
@@ -300,6 +311,27 @@ export default function BusinessEditForm({ businessData, userEmail, userFullName
                 accept='image/*'
                 existingImageUrl={images.profile}
               />
+              {images.profile && !uploadedFileNames['profile'] && (
+                <div className='mt-2 flex items-center gap-2'>
+                  <input
+                    type='checkbox'
+                    id='delete_profile_image'
+                    checked={deleteImage.profile}
+                    onChange={(e) => {
+                      setDeleteImage(prev => ({ ...prev, profile: e.target.checked }));
+                      if (e.target.checked) {
+                        setImages(prev => ({ ...prev, profile: '' }));
+                      } else {
+                        setImages(prev => ({ ...prev, profile: businessData?.locobiz_profile_image || '' }));
+                      }
+                    }}
+                    className='w-4 h-4'
+                  />
+                  <label htmlFor='delete_profile_image' className='text-sm text-red-600 font-medium cursor-pointer'>
+                    Delete and do not use an image at this time.
+                  </label>
+                </div>
+              )}
               <input type='hidden' name='locobiz_profile_image' value={images.profile || ''} />
             </div>
           </div>
@@ -333,6 +365,9 @@ export default function BusinessEditForm({ businessData, userEmail, userFullName
                 uploadedFileNames={uploadedFileNames}
                 handleDropzoneUpload={handleDropzoneUpload}
                 initialData={businessData?.selling?.[`selling${index + 1}`]}
+                deleteImage={deleteImage}
+                setDeleteImage={setDeleteImage}
+                setImages={setImages}
               />
             ))}
             <h1 className='font-bold text-2xl'>Needing</h1>
@@ -344,6 +379,9 @@ export default function BusinessEditForm({ businessData, userEmail, userFullName
                 uploadedFileNames={uploadedFileNames}
                 handleDropzoneUpload={handleDropzoneUpload}
                 initialData={businessData?.needs?.[`need${index + 1}`]}
+                deleteImage={deleteImage}
+                setDeleteImage={setDeleteImage}
+                setImages={setImages}
               />
             ))}
           </div>

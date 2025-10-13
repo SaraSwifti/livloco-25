@@ -17,7 +17,10 @@ import { authOptions } from '@/utils/authOptions';
 const BusinessPage = async ({ params }) => {
  const { id } = await params;
   await connectDB();
-const locobiz = await LocoBiz.findById(id).lean();
+const doc = await LocoBiz.findById(id).lean();
+
+  // Convert MongoDB ObjectIds to strings for Client Components
+  const locobiz = doc ? JSON.parse(JSON.stringify(doc)) : null;
 
   // Get current user session to check if they've voted
   const session = await getServerSession(authOptions);
@@ -29,7 +32,7 @@ const locobiz = await LocoBiz.findById(id).lean();
       .select('_id voted_businesses')
       .lean();
 
-    if (currentUser && locobiz) {
+    if (currentUser && doc) {
       hasVoted = currentUser.voted_businesses?.some(
         (businessId) => businessId.toString() === id
       ) || false;

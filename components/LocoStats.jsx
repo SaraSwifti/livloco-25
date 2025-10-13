@@ -6,9 +6,13 @@ export default function LocoStats({ user }) {
   const businessVotes = user?.locobiz?.locobiz_votes?.length ?? 0;
   const marketVotes = user?.hostfmarket?.hostfm_votes?.length ?? 0;
 
+  // Get actual click counts from the profile data
+  const businessClicks = user?.locobiz?.card_clicks ?? 0;
+  const marketClicks = user?.hostfmarket?.card_clicks ?? 0;
+
   const stats = {
-    businessClicks: 0, // Placeholder for future click tracking
-    marketClicks: 0,   // Placeholder for future click tracking
+    businessClicks,
+    marketClicks,
     businessVotes,
     marketVotes,
   };
@@ -85,12 +89,12 @@ export default function LocoStats({ user }) {
         </div>
       )}
 
-      {/* Note about click tracking */}
+      {/* Note about stats */}
       {(hasLocoBiz || hasHostFMarket) && (
         <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-800">
-            <strong>Note:</strong> Click tracking will be implemented in a future update.
-            Vote counts are updated in real-time from your profile.
+            <strong>Note:</strong> Click and vote counts are tracked in real-time from your profile.
+            Card clicks show how many times users have viewed your full profile page.
           </p>
         </div>
       )}

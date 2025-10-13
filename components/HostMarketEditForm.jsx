@@ -38,6 +38,7 @@ export default function HostMarketEditForm({ marketData, userEmail }) {
 
   const [profileUrl, setProfileUrl] = useState(marketData?.hostfm_profile_image || '');
   const [uploadedFileName, setUploadedFileName] = useState('');
+  const [deleteProfileImage, setDeleteProfileImage] = useState(false);
 
   const [addrPhoneDisplay, setAddrPhoneDisplay] = useState('');
   const [showWebsite, setShowWebsite] = useState(false);
@@ -284,6 +285,27 @@ export default function HostMarketEditForm({ marketData, userEmail }) {
             uploadedFileName={uploadedFileName}
             accept="image/*"
           />
+          {profileUrl && !uploadedFileName && (
+            <div className='mt-2 flex items-center gap-2'>
+              <input
+                type='checkbox'
+                id='delete_profile_image'
+                checked={deleteProfileImage}
+                onChange={(e) => {
+                  setDeleteProfileImage(e.target.checked);
+                  if (e.target.checked) {
+                    setProfileUrl('');
+                  } else {
+                    setProfileUrl(marketData?.hostfm_profile_image || '');
+                  }
+                }}
+                className='w-4 h-4'
+              />
+              <label htmlFor='delete_profile_image' className='text-sm text-red-600 font-medium cursor-pointer'>
+                Delete and do not use an image at this time.
+              </label>
+            </div>
+          )}
           <input type="hidden" name="hostfm_profile_image" value={profileUrl} />
         </div>
 

@@ -2,7 +2,9 @@
 
 import DropzoneUploader from '@/components/DropzoneUploader'
 
-const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, initialData }) => {
+const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, initialData, deleteImage, setDeleteImage, setImages }) => {
+  const imageKey = `need${index + 1}`;
+
   return (
     <div className='bg-white p-4 rounded border space-y-4'>
       <h3 className='text-lg font-semibold'>Need {index + 1}</h3>
@@ -56,15 +58,36 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
         <DropzoneUploader
           label='Upload image if you have one'
           onUpload={(file) =>
-            handleDropzoneUpload(file, `need${index + 1}`)
+            handleDropzoneUpload(file, imageKey)
           }
-          uploadedFileName={uploadedFileNames[`need${index + 1}`]}
-          existingImageUrl={images[`need${index + 1}`]}
+          uploadedFileName={uploadedFileNames[imageKey]}
+          existingImageUrl={images[imageKey]}
         />
+        {images[imageKey] && !uploadedFileNames[imageKey] && (
+          <div className='mt-2 flex items-center gap-2'>
+            <input
+              type='checkbox'
+              id={`delete_${imageKey}_image`}
+              checked={deleteImage?.[imageKey] || false}
+              onChange={(e) => {
+                setDeleteImage(prev => ({ ...prev, [imageKey]: e.target.checked }));
+                if (e.target.checked) {
+                  setImages(prev => ({ ...prev, [imageKey]: '' }));
+                } else {
+                  setImages(prev => ({ ...prev, [imageKey]: initialData?.image || '' }));
+                }
+              }}
+              className='w-4 h-4'
+            />
+            <label htmlFor={`delete_${imageKey}_image`} className='text-sm text-red-600 font-medium cursor-pointer'>
+              Delete and do not use an image at this time.
+            </label>
+          </div>
+        )}
         <input
           type='hidden'
           name={`needs.need${index + 1}.image`}
-          value={images[`need${index + 1}`] || ''}
+          value={images[imageKey] || ''}
         />
       </div>
     </div>

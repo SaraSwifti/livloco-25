@@ -1,9 +1,12 @@
+'use client'
+
 import Link from 'next/link';
 import SafeImage from '@/components/SafeImage';
 import { ItemIcon } from '@/components/ItemIcon';
 import PropTypes from 'prop-types';
 import React from 'react';
 import MappingPin from '@/components/MappingPin';
+import { incrementBusinessClickAction } from '@/app/actions/incrementBusinessClickAction';
 
 
 
@@ -44,10 +47,21 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
   const city = locobiz?.locobiz_address?.city;
   const stateName = locobiz?.locobiz_address?.state_name;
 
-  return (
-   
-     <Link
+  const handleCardClick = async () => {
+    if (id) {
+      try {
+        await incrementBusinessClickAction(id);
+      } catch (error) {
+        console.error('Failed to track click:', error);
+        // Don't block navigation on error
+      }
+    }
+  };
 
+  return (
+
+     <Link
+      onClick={handleCardClick}
       href={`/businesses/${id}`}
 
    className="group block rounded-xl shadow-md bg-white

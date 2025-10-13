@@ -1,10 +1,11 @@
 // components/MarketCard.jsx
-// components/MarketCard.jsx
+'use client'
 
 import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import MappingPin from '@/components/MappingPin';
+import { incrementMarketClickAction } from '@/app/actions/incrementMarketClickAction';
 
 const MarketCard = ({ market }) => {
   if (!market) return null;
@@ -21,10 +22,21 @@ const MarketCard = ({ market }) => {
   const stateText = state_name || state || state_code || ''
   const location = [city, stateText].filter(Boolean).join(', ')
 
+  const handleCardClick = async () => {
+    if (_id) {
+      try {
+        await incrementMarketClickAction(_id);
+      } catch (error) {
+        console.error('Failed to track click:', error);
+        // Don't block navigation on error
+      }
+    }
+  };
+
   // Abstracted wrapper (link if _id exists, div otherwise)
   const Wrapper = ({ children }) =>
     _id ? (
-      <Link href={`/hostfarmmarkets/${_id}`} passHref>
+      <Link href={`/hostfarmmarkets/${_id}`} onClick={handleCardClick} passHref>
         {children}
       </Link>
     ) : (
