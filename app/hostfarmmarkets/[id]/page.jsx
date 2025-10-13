@@ -174,7 +174,7 @@ export default async function HostFarmMarketPage(props) {
 
                   {/* Vote Button */}
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Votes received</p>
+                    <p className="text-lg font-semibold text-black mb-2">Votes received</p>
                     <VoteButton
                       id={id}
                       type="market"

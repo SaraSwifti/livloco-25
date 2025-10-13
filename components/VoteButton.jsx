@@ -79,6 +79,7 @@ const VoteButton = ({
       >
         <FaThumbsUp className={`text-lg ${hasVoted ? 'text-white' : 'text-gray-600'}`} />
         <span className='text-lg'>{voteCount}</span>
+        {hasVoted && <span className='text-sm ml-1'>You Voted</span>}
       </button>
     </div>
   )

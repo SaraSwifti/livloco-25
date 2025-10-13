@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 import BusinessHeaderImage from '@/components/BusinessHeaderImage';
 import BusinessDetails from '@/components/BusinessDetails';
 // import BusinessContact from '@/components/BusinessContact';
-import VoteButton from '@/components/VoteButton';
 import connectDB from "@/config/database";
 import LocoBiz from '@/models/LocoBiz';
 import User from '@/models/User';
@@ -69,7 +68,7 @@ const locobiz = await LocoBiz.findById(id).lean();
 </div>
 
       <section>
-        {/* Go Back Arrow and Vote Button */}
+        {/* Go Back Arrow */}
         <div className="flex items-center justify-between m-5">
                <button
         type="button"
@@ -82,15 +81,6 @@ const locobiz = await LocoBiz.findById(id).lean();
             <FaArrowLeft className='mr-2' /> Back to LocoBusiness Listings
             </Link>
             </button>
-
-            {/* Vote Button */}
-            <VoteButton
-              id={id}
-              type="business"
-              initialVoteCount={locobiz.locobiz_votes?.length || 0}
-              initialHasVoted={hasVoted}
-              isLoggedIn={!!session?.user}
-            />
         </div>
 
       </section>
@@ -98,7 +88,15 @@ const locobiz = await LocoBiz.findById(id).lean();
         <div className="container m-auto py-10 px-6 ">
           <div className="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6 border-4 border-black ">
             {/*Co-op mem business info*/}
-            <BusinessDetails locobiz={locobiz} />
+            <BusinessDetails
+              locobiz={locobiz}
+              voteData={{
+                id: id,
+                voteCount: locobiz.locobiz_votes?.length || 0,
+                hasVoted: hasVoted,
+                isLoggedIn: !!session?.user
+              }}
+            />
              <section>
         {/* Go Back Arrow */}
      

@@ -2,10 +2,11 @@ import FarmersMarket from '@/components/FarmersMarket'
 import BusinessContact from '@/components/BusinessContact'
 import StoreFront from '@/components/StoreFront'
 import MappingPin from '@/components/MappingPin'
+import VoteButton from '@/components/VoteButton'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 import ItemsGrid from './ItemsGrid'
 
-const BusinessDetails = ({ locobiz }) => {
+const BusinessDetails = ({ locobiz, voteData }) => {
   const hasStoreFront = locobiz?.locobiz_address?.post_permission === true
   const hasFM = locobiz?.farmers_market_location?.fm_location_post === true
   const gridMdCols =
@@ -60,7 +61,18 @@ const BusinessDetails = ({ locobiz }) => {
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
               <p>LocoMember Messaging button</p>
-              <p>votes</p>
+              {voteData && (
+                <div className="flex flex-col items-center">
+                    <p className="text-lg font-semibold text-black mb-2">Votes received</p>
+                  <VoteButton
+                    id={voteData.id}
+                    type="business"
+                    initialVoteCount={voteData.voteCount}
+                    initialHasVoted={voteData.hasVoted}
+                    isLoggedIn={voteData.isLoggedIn}
+                  />
+                </div>
+              )}
               <p>Member since</p>
             </div>
           </div>
