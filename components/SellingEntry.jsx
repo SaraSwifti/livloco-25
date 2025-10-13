@@ -13,7 +13,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           htmlFor={`selling${index + 1}_description`}
           className='block text-sm font-medium text-black'
         >
-          Description
+          Description {index === 0 && <span className='text-red-500'>required</span>}
         </label>
         <input
           placeholder='e.g. Grass-fed beef, CNC Services'
@@ -22,6 +22,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           type='text'
           className='mt-1 block w-full bg-gray-100 border rounded p-2'
           defaultValue={initialData?.description || ''}
+          required={index === 0}
         />
       </div>
 

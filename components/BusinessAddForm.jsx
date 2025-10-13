@@ -99,13 +99,35 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
       return;
     }
 
+    // Check if selling1 and need1 descriptions are filled
+    const selling1Description = form.get('selling.selling1.description');
+    const need1Description = form.get('needs.need1.description');
+
+    if (!selling1Description || selling1Description.trim() === '') {
+      const confirmContinue = confirm(
+        'Warning: "Selling 1" description is required. Please fill it out before submitting to avoid losing your entered data. Click OK to go back and fill it out, or Cancel to continue anyway (not recommended).'
+      );
+      if (confirmContinue) {
+        return; // Stop submission, let user fill out the form
+      }
+    }
+
+    if (!need1Description || need1Description.trim() === '') {
+      const confirmContinue = confirm(
+        'Warning: "Need 1" description is required. Please fill it out before submitting to avoid losing your entered data. Click OK to go back and fill it out, or Cancel to continue anyway (not recommended).'
+      );
+      if (confirmContinue) {
+        return; // Stop submission, let user fill out the form
+      }
+    }
+
     //User Name is required by onboarding, send it; otherwise server will fallback from User
     form.set('account_owner_name', ownerName || '');
 
     // User phone is required by onboarding, send it; otherwise server will fallback from User
     form.set('phone', accountPhoneDisplay || '');
 
-    // User email is propogated from sign-ing and is required. Will pin it here in the bizness owers field. 
+    // User email is propogated from sign-ing and is required. Will pin it here in the bizness owers field.
     form.set('email', userEmail || '');
 
     const website = form.get('website');
@@ -292,8 +314,8 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
             className='w-5 h-5'
           />
           <label htmlFor='showSellNeedForm' className='font-medium text-lg'>
-            Add Selling/Needing profile <span className='text-red-500'> required</span>
-            <br /><span className='text-black'> (This is what keeps us in the co-op working together!)</span>
+            Add Selling/Needing profile <span className='text-red-500'>Minimum of 1 Selling and 1 Need required</span>
+            <br /><span className='text-black'> (This is what keeps the co-op working together!)</span>
           </label>
         </div>
       </div>

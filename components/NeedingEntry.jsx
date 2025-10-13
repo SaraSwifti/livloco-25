@@ -13,7 +13,7 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           htmlFor={`need${index + 1}_description`}
           className='block text-sm font-medium'
         >
-          Description
+          Description {index === 0 && <span className='text-red-500'>required</span>}
         </label>
         <input
           placeholder='Hedge Removal, Cement Work, Local Eggs'
@@ -22,6 +22,7 @@ const NeedingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           type='text'
           className='mt-1 bg-gray-100 block w-full border rounded p-2'
           defaultValue={initialData?.description || ''}
+          required={index === 0}
         />
       </div>
 
