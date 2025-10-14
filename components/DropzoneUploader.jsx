@@ -36,6 +36,7 @@ const DropzoneUploader = ({ label, onUpload, uploadedFileName, existingImageUrl 
               src={existingImageUrl}
               alt='Current uploaded image'
               fill
+              sizes='128px'
               className='object-cover rounded border border-gray-300'
             />
           </div>

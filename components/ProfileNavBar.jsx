@@ -14,8 +14,82 @@ export default function ProfileNavBar({ user }) {
   const tabs = [
     { id: 'stats', label: 'LocoStats' },
     { id: 'business', label: 'LocoBiz/LocoMarket Add/Edit' },
+    { id: 'listing', label: 'Your Listing' },
     { id: 'membership', label: 'LocoMembership and Renewal' },
   ];
+
+  // Determine what to render in listing tab based on profile_choice
+  const renderListingTab = () => {
+    const profileChoice = user?.profile_choice;
+
+    // If no profile choice, show message
+    if (profileChoice === 'none') {
+      return (
+        <div className="text-center py-8">
+          <p className="text-gray-600 mb-4">
+            You haven't created a listing yet. Please select a profile type in the "LocoBiz/LocoMarket Add/Edit" tab.
+          </p>
+          <button
+            onClick={() => setActiveTab('business')}
+            className="bg-black hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded-full transition-colors"
+          >
+            Go to Add/Edit
+          </button>
+        </div>
+      );
+    }
+
+    // If locobiz, show button to view business listing
+    if (profileChoice === 'locobiz' && user.locobiz) {
+      const businessId = typeof user.locobiz === 'object' ? user.locobiz._id : user.locobiz;
+      return (
+        <div className="text-center py-8 space-y-4">
+          <p className="text-gray-600 text-lg">
+            View your LocoBusiness listing as visitors see it
+          </p>
+          <button
+            onClick={() => router.push(`/businesses/${businessId}`)}
+            className="bg-black hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-full transition-colors"
+          >
+            View Your LocoBusiness Listing
+          </button>
+        </div>
+      );
+    }
+
+    // If hostfmarket, show button to view market listing
+    if (profileChoice === 'hostfmarket' && user.hostfmarket) {
+      const marketId = typeof user.hostfmarket === 'object' ? user.hostfmarket._id : user.hostfmarket;
+      return (
+        <div className="text-center py-8 space-y-4">
+          <p className="text-gray-600 text-lg">
+            View your LocoMarket listing as visitors see it
+          </p>
+          <button
+            onClick={() => router.push(`/hostfarmmarkets/${marketId}`)}
+            className="bg-black hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-full transition-colors"
+          >
+            View Your LocoMarket Listing
+          </button>
+        </div>
+      );
+    }
+
+    // If profile choice is set but listing doesn't exist yet
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-600 mb-4">
+          Your listing hasn't been created yet. Please create it in the "LocoBiz/LocoMarket Add/Edit" tab.
+        </p>
+        <button
+          onClick={() => setActiveTab('business')}
+          className="bg-black hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded-full transition-colors"
+        >
+          Go to Add/Edit
+        </button>
+      </div>
+    );
+  };
 
   // Determine what to render in business tab based on profile_choice
   const renderBusinessTab = () => {
@@ -141,6 +215,7 @@ export default function ProfileNavBar({ user }) {
       <div className="p-6">
         {activeTab === 'stats' && <LocoStats user={user} />}
         {activeTab === 'business' && renderBusinessTab()}
+        {activeTab === 'listing' && renderListingTab()}
         {activeTab === 'membership' && <UserMembershipStats />}
       </div>
     </div>

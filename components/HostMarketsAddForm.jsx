@@ -136,9 +136,9 @@ export default function HostMarketsAddForm({ userEmail }) {
     try {
       const res = await addHostMarketAction(form);
 
-      if (res.ok) {
-        // Success - user profile is automatically updated in addHostMarketAction
-        router.push('/hostfarmmarkets');
+      if (res.ok && res.id) {
+        // Success - redirect to the new market detail page
+        router.push(`/hostfarmmarkets/${res.id}`);
       } else {
         alert(res.error || 'There was a problem saving your market. Please try again.');
       }

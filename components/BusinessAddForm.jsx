@@ -153,9 +153,9 @@ export default function BusinessAddForm({ userEmail, userFullName, userPhoneE164
     try {
       const res = await addBusinessAction(form);
 
-      if (res.ok) {
-        // Success - redirect to businesses page
-        router.push('/businesses');
+      if (res.ok && res.id) {
+        // Success - redirect to the new business detail page
+        router.push(`/businesses/${res.id}`);
       } else {
         // Server returned an error
         alert(res.error || 'There was a problem saving your business. Please try again.');
