@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import connectDB from '@/config/database'
 import User from '@/models/User'
 import LocoBiz from '@/models/LocoBiz'
+import mongoose from 'mongoose'
 
 /**
  * Toggle save/unsave for a business.
