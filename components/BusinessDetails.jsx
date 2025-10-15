@@ -3,10 +3,12 @@ import BusinessContact from '@/components/BusinessContact'
 import StoreFront from '@/components/StoreFront'
 import MappingPin from '@/components/MappingPin'
 import VoteButton from '@/components/VoteButton'
+import SaveButton from '@/components/SaveButton'
+import MemberSince from '@/components/MemberSince'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 import ItemsGrid from './ItemsGrid'
 
-const BusinessDetails = ({ locobiz, voteData }) => {
+const BusinessDetails = ({ locobiz, voteData, saveData }) => {
   const hasStoreFront = locobiz?.locobiz_address?.post_permission === true
   const hasFM = locobiz?.farmers_market_location?.fm_location_post === true
   const gridMdCols =
@@ -17,8 +19,10 @@ const BusinessDetails = ({ locobiz, voteData }) => {
       <section className='bg-white p-6 rounded-lg shadow-md text-center md:text-left'>
         <div className='p-4'>
           <div className='flex flex-col items-center justify-center mb-3'>
-            <h1 className='text-3xl font-bold mb-1'>{locobiz.locobiz_name}</h1>
+            <h1 className='text-5xl font-bold mb-1'>{locobiz.locobiz_name}</h1>
             <h1 className='text-2xl'>{locobiz.locobiz_description}</h1>
+            <MemberSince createdAt={locobiz.createdAt} />
+
 
             {/* NEW: location pin */}
             <MappingPin
@@ -61,19 +65,30 @@ const BusinessDetails = ({ locobiz, voteData }) => {
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
               <p>LocoMember Messaging button</p>
-              {voteData && (
-                <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center gap-2 mt-4">
+                {voteData && (
+                  <>
                     <p className="text-lg font-semibold text-black mb-2">Votes received</p>
-                  <VoteButton
-                    id={voteData.id}
-                    type="business"
-                    initialVoteCount={voteData.voteCount}
-                    initialHasVoted={voteData.hasVoted}
-                    isLoggedIn={voteData.isLoggedIn}
-                  />
-                </div>
-              )}
-              <p>Member since</p>
+                    <div className="flex gap-2">
+                      <VoteButton
+                        id={voteData.id}
+                        type="business"
+                        initialVoteCount={voteData.voteCount}
+                        initialHasVoted={voteData.hasVoted}
+                        isLoggedIn={voteData.isLoggedIn}
+                      />
+                      {saveData && (
+                        <SaveButton
+                          id={saveData.id}
+                          type="business"
+                          initialHasSaved={saveData.hasSaved}
+                          isLoggedIn={saveData.isLoggedIn}
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
           {/* Selling & Needing feature section */}

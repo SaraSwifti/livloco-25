@@ -14,6 +14,8 @@ import HostFMarketRandomDates from '@/components/HostFMarketRandomDates';
 import HostFMStallInfo from '@/components/HostFMStallInfo';
 import AddressLink from '@/components/AddressLink';
 import VoteButton from '@/components/VoteButton';
+import SaveButton from '@/components/SaveButton';
+import MemberSince from '@/components/MemberSince';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/utils/authOptions';
 
@@ -49,18 +51,23 @@ export default async function HostFarmMarketPage(props) {
   // Convert ObjectId/Date → strings/primitives
   const market = JSON.parse(JSON.stringify(doc));
 
-  // Get current user session to check if they've voted
+  // Get current user session to check if they've voted and saved
   const session = await getServerSession(authOptions);
   let currentUser = null;
   let hasVoted = false;
+  let hasSaved = false;
 
   if (session?.user?.email) {
     currentUser = await User.findOne({ email: session.user.email })
-      .select('_id voted_markets')
+      .select('_id voted_markets saved_markets')
       .lean();
 
     if (currentUser && doc) {
       hasVoted = currentUser.voted_markets?.some(
+        (marketId) => marketId.toString() === id
+      ) || false;
+
+      hasSaved = currentUser.saved_markets?.some(
         (marketId) => marketId.toString() === id
       ) || false;
     }
@@ -101,6 +108,7 @@ export default async function HostFarmMarketPage(props) {
             <div className="bg-white p-4 border rounded-lg shadow-md ring-1 ring-black/10">
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-3xl font-bold mb-1">{market.hostfm_name}</h1>
+                <MemberSince createdAt={market.createdAt} />
 
                 {market?.hostfm_type && (
                   <p className="text-2xl text-black">{market.hostfm_type}</p>
@@ -161,7 +169,7 @@ export default async function HostFarmMarketPage(props) {
 
                   {/* Messaging placeholder */}
                   <div className="flex flex-col items-center">
-                  
+
                     <button
                       type="button"
                       disabled
@@ -172,16 +180,24 @@ export default async function HostFarmMarketPage(props) {
                     </button>
                   </div>
 
-                  {/* Vote Button */}
-                  <div className="flex flex-col items-center">
+                  {/* Vote and Save Buttons */}
+                  <div className="flex flex-col items-center gap-2">
                     <p className="text-lg font-semibold text-black mb-2">Votes received</p>
-                    <VoteButton
-                      id={id}
-                      type="market"
-                      initialVoteCount={doc.hostfm_votes?.length || 0}
-                      initialHasVoted={hasVoted}
-                      isLoggedIn={!!session?.user}
-                    />
+                    <div className="flex gap-2">
+                      <VoteButton
+                        id={id}
+                        type="market"
+                        initialVoteCount={doc.hostfm_votes?.length || 0}
+                        initialHasVoted={hasVoted}
+                        isLoggedIn={!!session?.user}
+                      />
+                      <SaveButton
+                        id={id}
+                        type="market"
+                        initialHasSaved={hasSaved}
+                        isLoggedIn={!!session?.user}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

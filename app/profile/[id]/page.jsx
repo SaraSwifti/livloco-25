@@ -7,6 +7,7 @@ import connectDB from '@/config/database';
 import User from '@/models/User';
 import { authOptions } from '@/utils/authOptions';
 import ProfileNavBar from '@/components/ProfileNavBar';
+import MemberSince from '@/components/MemberSince';
 
 export default async function UserProfilePage(props) {
   const { id } = await props.params;
@@ -48,6 +49,9 @@ export default async function UserProfilePage(props) {
           <h1 className="text-3xl font-bold text-center mb-2">
             {user.full_name || 'User Profile'}
           </h1>
+          <div className="text-center">
+            <MemberSince createdAt={user.createdAt} />
+          </div>
           <p className="text-center text-gray-600">{user.email}</p>
         </div>
 

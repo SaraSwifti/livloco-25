@@ -35,6 +35,17 @@ const UserSchema = new Schema(
       ref: 'HostFMarket',
       sparse: true,
     },
+    // Track saved businesses and markets
+    saved_businesses: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'LocoBiz' }],
+      default: []
+    },
+    saved_markets: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'HostFMarket' }],
+      default: []
+    },
+
+    // Legacy bookmarks field (keeping for backwards compatibility)
     bookmarks: [
       {
         type: Schema.Types.ObjectId,

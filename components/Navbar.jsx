@@ -298,7 +298,7 @@ const Navbar = () => {
                       id='user-menu-item-2'
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      Saved LivLoco Businesses
+                      Saved LivLoco Businesses and Markets
                     </Link>
                     <button
                       className='block px-4 py-2 text-sm text-gray-700'

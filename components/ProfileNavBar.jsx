@@ -15,7 +15,7 @@ export default function ProfileNavBar({ user }) {
     { id: 'stats', label: 'LocoStats' },
     { id: 'business', label: 'LocoBiz/LocoMarket Add/Edit' },
     { id: 'listing', label: 'Your Listing' },
-    { id: 'membership', label: 'LocoMembership and Renewal' },
+    { id: 'membership', label: 'LocoMembership Profile and Renewal' },
   ];
 
   // Determine what to render in listing tab based on profile_choice

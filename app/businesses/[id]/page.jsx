@@ -22,18 +22,23 @@ const doc = await LocoBiz.findById(id).lean();
   // Convert MongoDB ObjectIds to strings for Client Components
   const locobiz = doc ? JSON.parse(JSON.stringify(doc)) : null;
 
-  // Get current user session to check if they've voted
+  // Get current user session to check if they've voted and saved
   const session = await getServerSession(authOptions);
   let currentUser = null;
   let hasVoted = false;
+  let hasSaved = false;
 
   if (session?.user?.email) {
     currentUser = await User.findOne({ email: session.user.email })
-      .select('_id voted_businesses')
+      .select('_id voted_businesses saved_businesses')
       .lean();
 
     if (currentUser && doc) {
       hasVoted = currentUser.voted_businesses?.some(
+        (businessId) => businessId.toString() === id
+      ) || false;
+
+      hasSaved = currentUser.saved_businesses?.some(
         (businessId) => businessId.toString() === id
       ) || false;
     }
@@ -97,6 +102,11 @@ const doc = await LocoBiz.findById(id).lean();
                 id: id,
                 voteCount: locobiz.locobiz_votes?.length || 0,
                 hasVoted: hasVoted,
+                isLoggedIn: !!session?.user
+              }}
+              saveData={{
+                id: id,
+                hasSaved: hasSaved,
                 isLoggedIn: !!session?.user
               }}
             />
