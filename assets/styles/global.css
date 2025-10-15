@@ -4,10 +4,6 @@
 @tailwind components;
 @tailwind utilities; */
 :root {
-  /* control tile size and overlay color */
-  --backdrop-tile-size: 100vh; /* increase to make pattern larger */
-  --backdrop-muted: rgba(250, 247, 240, 0.72); /* soft hazy overlay */
-  --backdrop-darken: rgba(0, 0, 0, 0.04); /* subtle vignette if needed */
 }
 
 /* ensure html/body expand and use our backgrounds */
@@ -17,67 +13,25 @@ body,
   height: 100%;
 }
 
-/* body already gets the image from layout.jsx inline style; we use an overlay wrapper */
-.backdrop-wrap {
-  position: relative;
-  min-height: 100vh; /* allow children to control height in flex layouts */
-}
+/* Remove decorative backdrop wrappers */
 
-/* the tiled background is applied to body via inline style; scale the tile with background-size
-	 we'll also provide a CSS fallback in case inline image doesn't expose .src */
 body {
-  background-repeat: repeat;
-  background-position: top center;
-  z-index: 0;
-  background-size: var(--backdrop-tile-size) auto;
+  background: #ffffff;
 }
 
 /* soft hazy overlay to mute the busy pattern and keep content readable */
-.backdrop-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(var(--backdrop-muted), var(--backdrop-muted));
-  pointer-events: none !important;
-  mix-blend-mode: normal;
-  z-index: -1;
-}
+/* Remove overlay */
 
 /* content sits above overlay */
-.backdrop-content {
-  position: relative;
-  z-index: 20; /* ensure content is above overlay and other decorative layers */
-}
+/* Remove backdrop content stacking */
 
 /* Force all interactive elements inside the content to receive pointer events */
-.backdrop-content,
-.backdrop-content * {
-  pointer-events: auto !important;
-}
+/* No pointer-event overrides needed */
 /* helper utilities to tweak tile size at different breakpoints */
-@media (min-width: 768px) {
-  :root {
-    --backdrop-tile-size: 320px;
-  }
-}
-@media (min-width: 1280px) {
-  :root {
-    --backdrop-tile-size: 420px;
-  }
-}
+/* Remove backdrop sizing rules */
 
 /* optional subtle vignette to further soften edges */
-.backdrop-vignette::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    closest-side,
-    transparent 60%,
-    rgba(0, 0, 0, 0.02)
-  );
-  pointer-events: none;
-  z-index: 5;
-}
+/* Remove vignette */
 
 /* keep existing Tailwind directives intact if you enable them */
 /* @tailwind base; */

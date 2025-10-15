@@ -1,9 +1,8 @@
-import backdrop from '@/assets/images/sunflowers.png';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import AuthProvider from '@/components/AuthProvider';
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import AuthProvider from '@/components/AuthProvider'
 
-import '@/assets/styles/global.css';
+import '@/assets/styles/global.css'
 
 // hydrateRoot(
 //   document.getElementById('root'),
@@ -19,41 +18,25 @@ export const metadata = {
 }
 
 const MainLayout = ({ children }) => {
-  return ( 
+  return (
     <html
       className='h-full'
       lang='eng'
     >
-      
       <body
         suppressHydrationWarning
-        className='backdrop-wrap backdrop-vignetteflex flex-col min-h-screen'
-               
-        style={{
-          backgroundImage: `url(${backdrop.src})`,
-          /* use CSS variable for size in global.css */
-          backgroundSize: 'auto',
-          backgroundRepeat: 'repeat', // tile the image
-          backgroundPosition: 'top center',
-        }}
-      ><AuthProvider>
-       
+        className='flex flex-col min-h-screen bg-white'
+      >
+        <AuthProvider>
           <Navbar />
-
           {/* backdrop wrapper provides muted overlay and keeps content above the overlay */}
-         
-           
-            
-            <main className='flex-1 backdrop-content backdrop-overlay'>
-              <div className='px-4 py-8'>{children}</div>
-            </main>
-
-          <Footer /> </AuthProvider>
-
-        </body>
-     
+          <main className='flex-1'>
+            <div className='px-4 py-8'>{children}</div>
+          </main>
+          <Footer />{' '}
+        </AuthProvider>
+      </body>
     </html>
- 
   )
 }
 
