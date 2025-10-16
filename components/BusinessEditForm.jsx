@@ -189,6 +189,12 @@ export default function BusinessEditForm({
       form.set('website', cleanWebsite)
     }
 
+    // Ensure farmers_market_location.fm_location_post is captured regardless of hidden input ordering
+    form.set(
+      'farmers_market_location.fm_location_post',
+      showFarmersMarketForm ? 'true' : 'false'
+    )
+
     form.set('locobiz_profile_image', images.profile || '')
     form.set('selling.selling1.image', images.selling1 || '')
     form.set('selling.selling2.image', images.selling2 || '')
@@ -202,8 +208,8 @@ export default function BusinessEditForm({
       const res = await editBusinessAction(form)
 
       if (res.ok) {
-        // Success - redirect to businesses page
-        router.push('/businesses')
+        const targetId = res.id || businessData?.id
+        router.push(targetId ? `/businesses/${targetId}` : '/businesses')
       } else {
         // Server returned an error
         alert(

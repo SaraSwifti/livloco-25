@@ -234,8 +234,10 @@ export default function HostMarketEditForm({ marketData, userEmail }) {
       const res = await editHostMarketAction(form)
 
       if (res.ok) {
-        // Success - redirect to host markets page
-        router.push('/hostfarmmarkets')
+        const targetId = res.id || marketData?.id
+        router.push(
+          targetId ? `/hostfarmmarkets/${targetId}` : '/hostfarmmarkets'
+        )
         router.refresh()
       } else {
         alert(
