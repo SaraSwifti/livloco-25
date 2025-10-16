@@ -7,13 +7,20 @@ import HostFMarket from '@/models/HostFMarket';
 
 const HostFarmMarketsPage = async () => {
   await connectDB();
-      // Filter to only active markets per requirement.
+  
+  let markets = [];
+  try {
+    // Filter to only active markets per requirement.
     // const hostmarkets =  markets.find({ hostfm_active: true }).lean();
      // only active; change filter if you want all
-  const markets = await HostFMarket
-    .find({ hostfm_active: true })
-    .sort({ createdAt: -1 })
-    .lean();
+    markets = await HostFMarket
+      .find({ hostfm_active: true })
+      .sort({ createdAt: -1 })
+      .lean();
+  } catch (error) {
+    console.log('Error fetching markets:', error);
+    markets = [];
+  }
 
   // Convert MongoDB ObjectIds to strings for Client Components
   const serializedMarkets = JSON.parse(JSON.stringify(markets));

@@ -5,12 +5,12 @@ import mongoose from "mongoose";
 let connected = false;
 
 const connectDB = async () => {
+    // Check if MONGODB_URI is available
+    if (!process.env.MONGODB_URI) {
+        console.log('MONGODB_URI is not defined, skipping database connection');
+        return;
+    }
 
-    ///this was suggested to add however did not solve the problem.
-//     mongoose.connect(process.env.MONGODB_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
     //only fields specified are saved to the database with strictQuery
     mongoose.set('strictQuery', true);
 
@@ -23,8 +23,9 @@ const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI);
         connected = true;
+        console.log('MongoDB connected successfully');
     } catch (error) {
-        console.log(error);
+        console.log('MongoDB connection error:', error);
     }
 
      // Run the fixer exactly once per process

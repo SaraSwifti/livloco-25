@@ -10,7 +10,14 @@ import BusinessCard from '@/components/BusinessCard';
 
 const BusinessesPage = async () => {
     await connectDB();
-   const locobizs = await LocoBiz.find({ locobiz_active: true }).lean();
+    
+    let locobizs = [];
+    try {
+        locobizs = await LocoBiz.find({ locobiz_active: true }).lean();
+    } catch (error) {
+        console.log('Error fetching businesses:', error);
+        locobizs = [];
+    }
 
    // Convert MongoDB ObjectIds to strings for Client Components
    const serializedLocobizs = JSON.parse(JSON.stringify(locobizs));

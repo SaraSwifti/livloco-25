@@ -9,9 +9,15 @@ export async function GET() {
   if (!sess?.userEmail) return NextResponse.json({ user: null });
 
   await connectDB();
-  const user = await User.findOne({ email: sess.userEmail })
-    .select('_id full_name phone email_memmessage_notification profile_choice locobiz hostfmarket')
-    .lean();
+  
+  let user = null;
+  try {
+    user = await User.findOne({ email: sess.userEmail })
+      .select('_id full_name phone email_memmessage_notification profile_choice locobiz hostfmarket')
+      .lean();
+  } catch (error) {
+    console.log('Error fetching user:', error);
+  }
 
   return NextResponse.json({ user });
 }
