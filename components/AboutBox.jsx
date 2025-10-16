@@ -9,20 +9,30 @@ import hostFMarkets from '@/models/HostFMarket';
 
 const AboutBox = async () => {
   await connectDB()
-  //Get the latest (10 for now) members general info without link
-  const recentBizs = await locoBiz
-    .find({})
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .lean()
+  
+  let recentBizs = []
+  let totalLocoBizs = 0
+  let totalFarmersMarkets = 0
+  let totalUsers = 0
+  
+  try {
+    //Get the latest (10 for now) members general info without link
+    recentBizs = await locoBiz
+      .find({})
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .lean()
 
-  const totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true });
-  const totalFarmersMarkets = await hostFMarkets.countDocuments({ 
-hostfm_active: true });
-  // Count members based on users; add a filter if “joined” means paid members only.
-  const totalUsers = await User.countDocuments({
-    /* payment_confirmed: true */
-  });
+    totalLocoBizs = await locoBiz.countDocuments({ locobiz_active: true });
+    totalFarmersMarkets = await hostFMarkets.countDocuments({ 
+    hostfm_active: true });
+    // Count members based on users; add a filter if "joined" means paid members only.
+    totalUsers = await User.countDocuments({
+      /* payment_confirmed: true */
+    });
+  } catch (error) {
+    console.log('Error fetching stats for AboutBox:', error);
+  }
 
   return (
     <div className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'>
