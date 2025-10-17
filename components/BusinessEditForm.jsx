@@ -168,6 +168,70 @@ export default function BusinessEditForm({
       return
     }
 
+    // Validate farmers market location fields if any market name is provided
+    if (showFarmersMarketForm) {
+      const days = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+      ]
+
+      for (const day of days) {
+        const marketName = form.get(
+          `farmers_market_location.${day}.farmers_market_name`
+        )
+        if (marketName && marketName.trim() !== '') {
+          const addLine1 = form.get(`farmers_market_location.${day}.add_line1`)
+          const city = form.get(`farmers_market_location.${day}.city`)
+          const stateCode = form.get(
+            `farmers_market_location.${day}.state_code`
+          )
+          const zipcode = form.get(`farmers_market_location.${day}.zipcode`)
+
+          if (!addLine1 || addLine1.trim() === '') {
+            alert(
+              `Please provide the street address (Line 1) for ${day}'s farmers market location.`
+            )
+            return
+          }
+
+          if (!city || city.trim() === '') {
+            alert(
+              `Please provide the city for ${day}'s farmers market location.`
+            )
+            return
+          }
+
+          if (!stateCode || stateCode.trim() === '') {
+            alert(
+              `Please provide the state for ${day}'s farmers market location.`
+            )
+            return
+          }
+
+          if (!zipcode || zipcode.trim() === '') {
+            alert(
+              `Please provide the ZIP code for ${day}'s farmers market location.`
+            )
+            return
+          }
+
+          // Validate ZIP code format
+          const zipPattern = /^\d{5}(-\d{4})?$/
+          if (!zipPattern.test(zipcode)) {
+            alert(
+              `Please provide a valid ZIP code format (e.g., 12345 or 12345-6789) for ${day}'s farmers market location.`
+            )
+            return
+          }
+        }
+      }
+    }
+
     //User Name is required by onboarding, send it; otherwise server will fallback from User
     form.set('account_owner_name', ownerName || '')
 
@@ -679,26 +743,27 @@ export default function BusinessEditForm({
             htmlFor='fm_location_post'
             className='font-medium text-lg'
           >
-            Add your attendance at farmers' market locations if you attend any.
-            This is also a great place to add where your food truck is going to
-            be thorughout the week.
+            Add any farmers’ markets you attend or list your food truck’s weekly
+            locations.
           </label>
         </div>
 
         {showFarmersMarketForm && (
           <div className='mt-4 bg-gray-200 space-y-4 border p-4 rounded-md'>
-            <h2 className='text-xl font-bold mt-4'>Farmers Market Locations</h2>
+            <h2 className='text-xl font-bold mt-4'>
+              Farmers' Market Locations
+            </h2>
             {daysOfWeek.map((day) => (
               <div
                 key={day}
                 className='border bg-white rounded p-4 mb-4'
               >
                 <h3 className='text-lg font-semibold capitalize mb-2'>{day}</h3>
-                <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                   <div>
                     <label
                       htmlFor={`farmers_market_location_${day}_farmers_market_name`}
-                      className='block text sm font-medium'
+                      className='block text-sm font-medium'
                     >
                       Market Name
                     </label>
@@ -710,6 +775,42 @@ export default function BusinessEditForm({
                       defaultValue={
                         businessData?.farmers_market_location?.[day]
                           ?.farmers_market_name || ''
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`farmers_market_location_${day}_add_line1`}
+                      className='block text-sm font-medium'
+                    >
+                      Street Address Line 1
+                    </label>
+                    <input
+                      id={`farmers_market_location_${day}_add_line1`}
+                      type='text'
+                      name={`farmers_market_location.${day}.add_line1`}
+                      className='mt-1 w-full border rounded p-2'
+                      defaultValue={
+                        businessData?.farmers_market_location?.[day]
+                          ?.add_line1 || ''
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`farmers_market_location_${day}_add_line2`}
+                      className='block text-sm font-medium'
+                    >
+                      Street Address Line 2
+                    </label>
+                    <input
+                      id={`farmers_market_location_${day}_add_line2`}
+                      type='text'
+                      name={`farmers_market_location.${day}.add_line2`}
+                      className='mt-1 w-full border rounded p-2'
+                      defaultValue={
+                        businessData?.farmers_market_location?.[day]
+                          ?.add_line2 || ''
                       }
                     />
                   </div>
@@ -745,6 +846,25 @@ export default function BusinessEditForm({
                       defaultValue={
                         businessData?.farmers_market_location?.[day]
                           ?.state_code || ''
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`farmers_market_location_${day}_zipcode`}
+                      className='block text-sm font-medium'
+                    >
+                      ZIP Code
+                    </label>
+                    <input
+                      id={`farmers_market_location_${day}_zipcode`}
+                      type='text'
+                      name={`farmers_market_location.${day}.zipcode`}
+                      pattern='^\d{5}(-\d{4})?$'
+                      className='mt-1 w-full border rounded p-2'
+                      defaultValue={
+                        businessData?.farmers_market_location?.[day]?.zipcode ||
+                        ''
                       }
                     />
                   </div>
