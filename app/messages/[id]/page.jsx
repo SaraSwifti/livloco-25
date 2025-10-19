@@ -1,11 +1,12 @@
 import { Suspense } from 'react'
 import MessagesNavBar from '@/components/MessagesNavBar'
-import MessageList from '@/components/MessageList'
+import MessageThread from '@/components/MessageThread'
 import { getSessionUser } from '@/utils/getSessionUser'
 import { redirect } from 'next/navigation'
 
-const MessagesPage = async () => {
+const MessageThreadPage = async ({ params }) => {
   const sessionUser = await getSessionUser()
+  const { id } = await params
 
   if (!sessionUser?.userId) {
     redirect('/api/auth/signin')
@@ -17,14 +18,17 @@ const MessagesPage = async () => {
       <Suspense
         fallback={
           <div className='flex items-center justify-center h-64'>
-            <div className='text-gray-500'>Loading...</div>
+            <div className='text-gray-500'>Loading conversation...</div>
           </div>
         }
       >
-        <MessageList currentUserId={sessionUser.userId} />
+        <MessageThread
+          threadId={id}
+          currentUserId={sessionUser.userId}
+        />
       </Suspense>
     </div>
   )
 }
 
-export default MessagesPage
+export default MessageThreadPage

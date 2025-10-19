@@ -8,7 +8,12 @@ import MemberSince from '@/components/MemberSince'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 import ItemsGrid from './ItemsGrid'
 
-const BusinessDetails = ({ locobiz, voteData, saveData }) => {
+const BusinessDetails = ({
+  locobiz,
+  voteData,
+  saveData,
+  messageButtonProps,
+}) => {
   const hasStoreFront = locobiz?.locobiz_address?.post_permission === true
   const hasFM = locobiz?.farmers_market_location?.fm_location_post === true
   const gridMdCols =
@@ -22,7 +27,6 @@ const BusinessDetails = ({ locobiz, voteData, saveData }) => {
             <h1 className='text-5xl font-bold mb-1'>{locobiz.locobiz_name}</h1>
             <h1 className='text-2xl'>{locobiz.locobiz_description}</h1>
             <MemberSince createdAt={locobiz.createdAt} />
-
 
             {/* NEW: location pin */}
             <MappingPin
@@ -64,15 +68,13 @@ const BusinessDetails = ({ locobiz, voteData, saveData }) => {
               </div>
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
-              <p>LocoMember Messaging button</p>
-              <div className="flex flex-col items-center gap-2 mt-4">
+              <div className='flex flex-col items-center gap-2 mt-4'>
                 {voteData && (
                   <>
-                 
-                    <div className="flex gap-2">
+                    <div className='flex gap-2'>
                       <VoteButton
                         id={voteData.id}
-                        type="business"
+                        type='business'
                         initialVoteCount={voteData.voteCount}
                         initialHasVoted={voteData.hasVoted}
                         isLoggedIn={voteData.isLoggedIn}
@@ -80,7 +82,7 @@ const BusinessDetails = ({ locobiz, voteData, saveData }) => {
                       {saveData && (
                         <SaveButton
                           id={saveData.id}
-                          type="business"
+                          type='business'
                           initialHasSaved={saveData.hasSaved}
                           isLoggedIn={saveData.isLoggedIn}
                         />
@@ -120,6 +122,7 @@ const BusinessDetails = ({ locobiz, voteData, saveData }) => {
           <BusinessContact
             locobiz={locobiz}
             className='mb-6'
+            messageButtonProps={messageButtonProps}
           />
         </div>
 

@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
 import MessagesNavBar from '@/components/MessagesNavBar'
-import MessageList from '@/components/MessageList'
+import BlockedUsersList from '@/components/BlockedUsersList'
 import { getSessionUser } from '@/utils/getSessionUser'
 import { redirect } from 'next/navigation'
 
-const MessagesPage = async () => {
+const BlockedUsersPage = async () => {
   const sessionUser = await getSessionUser()
 
   if (!sessionUser?.userId) {
@@ -21,10 +21,10 @@ const MessagesPage = async () => {
           </div>
         }
       >
-        <MessageList currentUserId={sessionUser.userId} />
+        <BlockedUsersList currentUserId={sessionUser.userId} />
       </Suspense>
     </div>
   )
 }
 
-export default MessagesPage
+export default BlockedUsersPage

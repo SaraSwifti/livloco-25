@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { FaGlobe, FaExternalLinkAlt } from 'react-icons/fa'
+import MessageButton from './MessageButton'
 
-const BusinessContact = ({ locobiz, className = '' }) => {
+const BusinessContact = ({ locobiz, className = '', messageButtonProps }) => {
   return (
     <>
       <div className={className}>
@@ -9,10 +10,12 @@ const BusinessContact = ({ locobiz, className = '' }) => {
           {' '}
           Contact Information for {locobiz.locobiz_name}
         </h1>
-        {/* This is where I am going to add the chance to message the member through the platform */}
-        <h1 className='text-center'>
-          This is where they will message the member on Livloco platform
-        </h1>
+        {/* Message Button */}
+        {messageButtonProps && (
+          <div className='flex justify-center items-center mb-4'>
+            <MessageButton {...messageButtonProps} />
+          </div>
+        )}
         {(locobiz?.website || '').trim() !== '' ? (
           <div className='flex justify-center items-center'>
             <Link
@@ -24,13 +27,14 @@ const BusinessContact = ({ locobiz, className = '' }) => {
             >
               <FaGlobe className='w-6 h-6 text-blue-800 hover:text-blue-900 cursor-pointer' />
               <span>Website for {locobiz.locobiz_name}</span>
-            
-               <FaExternalLinkAlt aria-hidden className="w-4 h-4 opacity-80" />
+
+              <FaExternalLinkAlt
+                aria-hidden
+                className='w-4 h-4 opacity-80'
+              />
             </Link>
           </div>
         ) : null}
-
-
       </div>
     </>
   )

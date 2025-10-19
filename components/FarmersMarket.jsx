@@ -79,17 +79,19 @@ export default function FarmersMarket({ locobiz }) {
   return (
     <section
       aria-labelledby='fm-heading'
-      className='w-full px-4 sm:px-6 lg:px-8'
+      className='mt-6'
     >
       <h2
         id='fm-heading'
-        className='text-2xl text-center font-bold text-black'
+        className='text-2xl pt-3 text-center font-bold text-black'
       >
-        Market/Food Truck Location Schedule for{' '}
-        {locobiz?.locobiz_name ?? 'this business'}
+        Market/Food Truck Location Schedule
       </h2>
+      <p className='text-3xl text-center font-bold text-black'>
+        for {locobiz?.locobiz_name ?? 'this business'}
+      </p>
 
-      <div className='mt-6'>
+      <div className='mt-20'>
         <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
           <div className='inline-block min-w-full align-middle sm:px-6 lg:px-8'>
             <div className='overflow-hidden sm:rounded-xl bg-white ring-1 ring-black/25 shadow-2xl transition-shadow duration-300'>
