@@ -15,6 +15,9 @@ export const metadata = {
     'local, living, sustainable, micro-economies, LivLoco, Livlo.co, local, economies, businesses, business',
   description:
     'local businesses finding local businesses, creating local economies right where you live',
+  icons: {
+    icon: '/icon.ico',
+  },
 }
 
 const MainLayout = ({ children }) => {
@@ -23,6 +26,9 @@ const MainLayout = ({ children }) => {
       className='h-full'
       lang='eng'
     >
+      <head>
+        <link rel="icon" href="/icon.ico" />
+      </head>
       <body
         suppressHydrationWarning
         className='flex flex-col min-h-screen bg-white'

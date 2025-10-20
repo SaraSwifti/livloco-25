@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import LocoStats from './LocoStats'
 import ProfileChoiceSelector from './ProfileChoiceSelector'
 import UserMembershipStats from '@/app/membership/[id]/page'
+import ProfileEditForm from './ProfileEditForm'
 
 export default function ProfileNavBar({ user }) {
   const router = useRouter()
@@ -192,6 +193,32 @@ export default function ProfileNavBar({ user }) {
     )
   }
 
+  // Render membership tab content
+  const renderMembershipTab = () => {
+    return (
+      <div className='space-y-8'>
+        {/* Profile Edit Form */}
+        <div>
+          <h2 className='text-2xl font-bold text-center mb-6'>
+            Profile Settings
+          </h2>
+          <ProfileEditForm user={user} />
+        </div>
+
+        {/* Divider */}
+        <div className='border-t border-gray-200'></div>
+
+        {/* Membership Stats */}
+        <div>
+          <h2 className='text-2xl font-bold text-center mb-6'>
+            Membership Information
+          </h2>
+          <UserMembershipStats />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className='bg-white border rounded-lg shadow-md ring-1 ring-black/10'>
       {/* Tab Navigation */}
@@ -225,7 +252,7 @@ export default function ProfileNavBar({ user }) {
         {activeTab === 'stats' && <LocoStats user={user} />}
         {activeTab === 'business' && renderBusinessTab()}
         {activeTab === 'listing' && renderListingTab()}
-        {activeTab === 'membership' && <UserMembershipStats />}
+        {activeTab === 'membership' && renderMembershipTab()}
       </div>
     </div>
   )
