@@ -49,23 +49,7 @@ const BusinessDetails = ({
                 </>
               )}
 
-              {/* the key for goods and services */}
-              <div className='mb-4 space-y-2'>
-                <div className='flex items-center text-blue-800'>
-                  <FaDollyFlatbed
-                    alt='Product Icon'
-                    className='mr-1 mt-1.5 text-blue-800'
-                  />
-                  <span className='text-sm font-medium'> = Products</span>
-                </div>
-                <div className='flex items-center text-blue-800'>
-                  <FaClipboardList
-                    alt='Service Icon'
-                    className='mr-1 mt-1.5 text-green-800'
-                  />
-                  <span className='text-sm font-medium'> = Services</span>
-                </div>
-              </div>
+              
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
               <div className='flex flex-col items-center gap-2 mt-4'>

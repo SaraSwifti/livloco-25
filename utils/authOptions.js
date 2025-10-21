@@ -17,19 +17,25 @@ export const authOptions = {
     // Runs on initial sign-in (account exists). Safe place to touch DB once.
     async jwt({ token, account, profile }) {
       if (account && profile?.email) {
-        await connectDB()
-        let user = await User.findOne({ email: profile.email })
-        if (!user) {
-          const username = (profile.name || profile.email).slice(0, 20)
-          user = await User.create({
-            email: profile.email,
-            username,
-            image: profile.picture,
-          })
+        try {
+          await connectDB()
+          let user = await User.findOne({ email: profile.email }).maxTimeMS(10000) // 10 second timeout
+          if (!user) {
+            const username = (profile.name || profile.email).slice(0, 20)
+            user = await User.create({
+              email: profile.email,
+              username,
+              image: profile.picture,
+            })
+          }
+          token.uid = user._id.toString()
+          token.email = user.email
+          token.complete = !!(user.full_name && user.phone)
+        } catch (error) {
+          console.error('Database error during authentication:', error)
+          // Don't fail authentication, but log the error
+          // The user can still sign in, but profile data won't be saved until DB is available
         }
-        token.uid = user._id.toString()
-        token.email = user.email
-        token.complete = !!(user.full_name && user.phone)
       }
       return token
     },

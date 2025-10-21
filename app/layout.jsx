@@ -16,7 +16,7 @@ export const metadata = {
   description:
     'local businesses finding local businesses, creating local economies right where you live',
   icons: {
-    icon: '/icon.ico',
+    icon: '/icon.ico?v=2',
   },
 }
 
@@ -27,7 +27,10 @@ const MainLayout = ({ children }) => {
       lang='eng'
     >
       <head>
-        <link rel="icon" href="/icon.ico" />
+        <link
+          rel='icon'
+          href='/icon.ico?v=2'
+        />
       </head>
       <body
         suppressHydrationWarning

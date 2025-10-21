@@ -69,6 +69,40 @@ export default function MessageList({ currentUserId }) {
 
   return (
     <div className='max-w-4xl mx-auto p-6'>
+      {/* Maximum messages limit notice */}
+      <div className='mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'>
+        <div className='flex items-start gap-3'>
+          <div className='text-blue-600 text-xl'>📋</div>
+          <div>
+            <h4 className='font-semibold text-blue-800'>
+              Maximum Messages Limit
+            </h4>
+            <p className='text-sm text-blue-700 mt-1'>
+              All members are limited to 20 message threads per user. Please
+              delete and clean up your messaging list if you are in need of more
+              space.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Auto-deletion warning */}
+      <div className='mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
+        <div className='flex items-start gap-3'>
+          <div className='text-yellow-600 text-xl'>⚠️</div>
+          <div>
+            <h4 className='font-semibold text-yellow-800'>
+              Auto-Deletion Notice
+            </h4>
+            <p className='text-sm text-yellow-700 mt-1'>
+              Message threads are automatically deleted after 6 months from the
+              last message, or if a member is deleted, whichever comes first.
+              Messages are limited to 100 characters.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {threads.length === 0 ? (
         <div className='text-center py-12'>
           <div className='text-gray-500 text-lg mb-4'>No conversations yet</div>
@@ -148,23 +182,6 @@ export default function MessageList({ currentUserId }) {
           })}
         </div>
       )}
-
-      {/* Auto-deletion warning */}
-      <div className='mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg'>
-        <div className='flex items-start gap-3'>
-          <div className='text-yellow-600 text-xl'>⚠️</div>
-          <div>
-            <h4 className='font-semibold text-yellow-800'>
-              Auto-Deletion Notice
-            </h4>
-            <p className='text-sm text-yellow-700 mt-1'>
-              Message threads are automatically deleted after 6 months from the
-              last message, or if a member is deleted, whichever comes first.
-              Messages are limited to 100 characters.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

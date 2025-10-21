@@ -172,19 +172,16 @@ async function addBusinessAction(formData) {
 
     selling: {
       selling1: {
-        type: formData.get('selling.selling1.type'),
         description: formData.get('selling.selling1.description'),
         image: selling1ImageUrl,
         price: formData.get('selling.selling1.price'),
       },
       selling2: {
-        type: formData.get('selling.selling2.type'),
         description: formData.get('selling.selling2.description'),
         image: selling2ImageUrl,
         price: formData.get('selling.selling2.price'),
       },
       selling3: {
-        type: formData.get('selling.selling3.type'),
         description: formData.get('selling.selling3.description'),
         image: selling3ImageUrl,
         price: formData.get('selling.selling3.price'),
@@ -193,17 +190,14 @@ async function addBusinessAction(formData) {
 
     needs: {
       need1: {
-        type: formData.get('needs.need1.type'),
         description: formData.get('needs.need1.description'),
         image: need1ImageUrl,
       },
       need2: {
-        type: formData.get('needs.need2.type'),
         description: formData.get('needs.need2.description'),
         image: need2ImageUrl,
       },
       need3: {
-        type: formData.get('needs.need3.type'),
         description: formData.get('needs.need3.description'),
         image: need3ImageUrl,
       },

@@ -2,8 +2,17 @@
 
 import DropzoneUploader from '@/components/DropzoneUploader'
 
-const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, initialData, deleteImage, setDeleteImage, setImages }) => {
-  const imageKey = `selling${index + 1}`;
+const SellingEntry = ({
+  index,
+  images,
+  uploadedFileNames,
+  handleDropzoneUpload,
+  initialData,
+  deleteImage,
+  setDeleteImage,
+  setImages,
+}) => {
+  const imageKey = `selling${index + 1}`
 
   return (
     <div className='bg-white p-4 rounded border space-y-4'>
@@ -15,7 +24,8 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           htmlFor={`selling${index + 1}_description`}
           className='block text-sm font-medium text-black'
         >
-          Description {index === 0 && <span className='text-red-500'>required</span>}
+          Description{' '}
+          {index === 0 && <span className='text-red-500'>required</span>}
         </label>
         <input
           placeholder='e.g. Grass-fed beef, CNC Services'
@@ -26,31 +36,6 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
           defaultValue={initialData?.description || ''}
           required={index === 0}
         />
-      </div>
-
-      {/* Type */}
-      <div>
-        <label className='block text-sm font-medium mb-1'>Type</label>
-        <div className='flex items-center gap-6'>
-          {['product', 'service'].map((type) => (
-            <label
-              key={type}
-              htmlFor={`selling${index + 1}_type_${type}`}
-              className='flex items-center space-x-2'
-            >
-              <input
-                type='radio'
-                name={`selling.selling${index + 1}.type`}
-                id={`selling${index + 1}_type_${type}`}
-                value={type}
-                defaultChecked={initialData?.type ? initialData.type === type : type === 'product'}
-                className={`text-${type === 'product' ? 'blue' : 'green'}-600`}
-                required
-              />
-              <span>{type.charAt(0).toUpperCase() + type.slice(1)}</span>
-            </label>
-          ))}
-        </div>
       </div>
 
       {/* Price */}
@@ -75,9 +60,7 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
       <div>
         <DropzoneUploader
           label='Upload image if you have one'
-          onUpload={(file) =>
-            handleDropzoneUpload(file, imageKey)
-          }
+          onUpload={(file) => handleDropzoneUpload(file, imageKey)}
           uploadedFileName={uploadedFileNames[imageKey]}
           className='hidden'
           id={`selling${index + 1}_image`}
@@ -91,16 +74,25 @@ const SellingEntry = ({ index, images, uploadedFileNames, handleDropzoneUpload, 
               id={`delete_${imageKey}_image`}
               checked={deleteImage?.[imageKey] || false}
               onChange={(e) => {
-                setDeleteImage(prev => ({ ...prev, [imageKey]: e.target.checked }));
+                setDeleteImage((prev) => ({
+                  ...prev,
+                  [imageKey]: e.target.checked,
+                }))
                 if (e.target.checked) {
-                  setImages(prev => ({ ...prev, [imageKey]: '' }));
+                  setImages((prev) => ({ ...prev, [imageKey]: '' }))
                 } else {
-                  setImages(prev => ({ ...prev, [imageKey]: initialData?.image || '' }));
+                  setImages((prev) => ({
+                    ...prev,
+                    [imageKey]: initialData?.image || '',
+                  }))
                 }
               }}
               className='w-4 h-4'
             />
-            <label htmlFor={`delete_${imageKey}_image`} className='text-sm text-red-600 font-medium cursor-pointer'>
+            <label
+              htmlFor={`delete_${imageKey}_image`}
+              className='text-sm text-red-600 font-medium cursor-pointer'
+            >
               Delete and do not use an image at this time.
             </label>
           </div>

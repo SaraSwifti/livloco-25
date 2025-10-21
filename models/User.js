@@ -1,5 +1,8 @@
 import { Schema, model, models } from 'mongoose'
 
+// Import LocoBiz to ensure it's registered before User model references it
+import './LocoBiz.js'
+
 const UserSchema = new Schema(
   {
     email: {
@@ -38,11 +41,11 @@ const UserSchema = new Schema(
     // Track saved businesses and markets
     saved_businesses: {
       type: [{ type: Schema.Types.ObjectId, ref: 'LocoBiz' }],
-      default: []
+      default: [],
     },
     saved_markets: {
       type: [{ type: Schema.Types.ObjectId, ref: 'HostFMarket' }],
-      default: []
+      default: [],
     },
 
     // Legacy bookmarks field (keeping for backwards compatibility)
@@ -56,11 +59,11 @@ const UserSchema = new Schema(
     // Track which businesses and markets this user has voted for
     voted_businesses: {
       type: [{ type: Schema.Types.ObjectId, ref: 'LocoBiz' }],
-      default: []
+      default: [],
     },
     voted_markets: {
       type: [{ type: Schema.Types.ObjectId, ref: 'HostFMarket' }],
-      default: []
+      default: [],
     },
   },
   {

@@ -60,6 +60,34 @@ export async function POST(request) {
       )
     }
 
+    // Check if sender has 20 or more message threads
+    const senderThreadCount = await MessageThread.countDocuments({
+      participants: sessionUser.userId,
+    })
+
+    if (senderThreadCount >= 20) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            'Your messaging box is full. Please delete unnecessary messages.',
+        },
+        { status: 400 }
+      )
+    }
+
+    // Check if recipient has 20 or more message threads
+    const recipientThreadCount = await MessageThread.countDocuments({
+      participants: recipientId,
+    })
+
+    if (recipientThreadCount >= 20) {
+      return NextResponse.json(
+        { success: false, error: "This member's message box is full" },
+        { status: 400 }
+      )
+    }
+
     // Check if a thread already exists between these two users (regardless of posting)
     const existingThread = await MessageThread.findOne({
       participants: { $all: [sessionUser.userId, recipientId] },

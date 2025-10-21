@@ -278,19 +278,16 @@ const LocoBizSchema = new Schema(
 
     selling: {
       selling1: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
         price: { type: String, trim: true },
       },
       selling2: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
         price: { type: String, trim: true },
       },
       selling3: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
         price: { type: String, trim: true },
@@ -299,17 +296,14 @@ const LocoBizSchema = new Schema(
 
     needs: {
       need1: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
       },
       need2: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
       },
       need3: {
-        type: { type: String },
         description: { type: String, trim: true },
         image: { type: String },
       },

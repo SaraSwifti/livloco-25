@@ -85,17 +85,11 @@ export default function BusinessEditForm({
     const selling = businessData?.selling || {}
     const needs = businessData?.needs || {}
     return (
-      selling.selling1?.type ||
       selling.selling1?.description ||
-      selling.selling2?.type ||
       selling.selling2?.description ||
-      selling.selling3?.type ||
       selling.selling3?.description ||
-      needs.need1?.type ||
       needs.need1?.description ||
-      needs.need2?.type ||
       needs.need2?.description ||
-      needs.need3?.type ||
       needs.need3?.description
     )
   }, [businessData])
