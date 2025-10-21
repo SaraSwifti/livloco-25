@@ -1,24 +1,24 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 /* ------------------------- Helpers & Validators ------------------------- */
 
 // Allow empty values, otherwise enforce http/https URL
 const isHttpUrl = (v) => {
-  if (v === undefined || v === null) return true;
-  const s = String(v).trim();
-  if (s === '') return true; // treat empty as "not provided"
+  if (v === undefined || v === null) return true
+  const s = String(v).trim()
+  if (s === '') return true // treat empty as "not provided"
   try {
-    const u = new URL(s);
-    return u.protocol === 'http:' || u.protocol === 'https:';
+    const u = new URL(s)
+    return u.protocol === 'http:' || u.protocol === 'https:'
   } catch {
-    return false;
+    return false
   }
-};
+}
 
 // US ZIP (5-digit or ZIP+4)
-const ZIP_REGEX = /^\d{5}(-\d{4})?$/;
+const ZIP_REGEX = /^\d{5}(-\d{4})?$/
 
 /* ------------------------------- Sub-schemas ------------------------------ */
 
@@ -35,15 +35,28 @@ const AddressSchema = new Schema(
       set: (v) => (v == null ? v : String(v).trim()),
       validate: {
         validator: (v) => v == null || v === '' || ZIP_REGEX.test(v),
-        message: (props) => `Invalid ZIP code "${props.value}". Use 12345 or 12345-6789.`,
+        message: (props) =>
+          `Invalid ZIP code "${props.value}". Use 12345 or 12345-6789.`,
       },
     },
+    // Coordinates for distance calculations
+    coordinates: {
+      latitude: { type: Number, min: -90, max: 90 },
+      longitude: { type: Number, min: -180, max: 180 },
+    },
     country: { type: String, trim: true, default: 'USA' },
-    state_code: { type: String, required: true, trim: true, uppercase: true, minlength: 2, maxlength: 2 },
+    state_code: {
+      type: String,
+      required: true,
+      trim: true,
+      uppercase: true,
+      minlength: 2,
+      maxlength: 2,
+    },
     state_name: { type: String, trim: true },
   },
   { _id: false }
-);
+)
 
 const WeeklyScheduleSchema = new Schema(
   {
@@ -52,12 +65,12 @@ const WeeklyScheduleSchema = new Schema(
     tuesday_hours: { type: String, trim: true, default: '' },
     wednesday_hours: { type: String, trim: true, default: '' },
     thursday_hours: { type: String, trim: true, default: '' },
-    friday_hours: { type: String, trim: true, default: '' },   // ✅ fixed key
+    friday_hours: { type: String, trim: true, default: '' }, // ✅ fixed key
     saturday_hours: { type: String, trim: true, default: '' },
     sunday_hours: { type: String, trim: true, default: '' },
   },
   { _id: false }
-);
+)
 
 const RandomDateSchema = new Schema(
   {
@@ -66,7 +79,7 @@ const RandomDateSchema = new Schema(
     time: { type: String, trim: true, default: '' }, // e.g., "10:45 AM – 2:05 PM"
   },
   { _id: false }
-);
+)
 
 const HostfmDatesSchema = new Schema(
   {
@@ -74,14 +87,20 @@ const HostfmDatesSchema = new Schema(
     dates: { type: [RandomDateSchema], default: [] },
   },
   { _id: false }
-);
+)
 
 /* --------------------------------- Main ---------------------------------- */
 
 const HostFMarketSchema = new Schema(
   {
     // Account / contact
-    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true, index: true },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      unique: true,
+      index: true,
+    },
     email: { type: String, trim: true, lowercase: true },
     //moving these to the user or member data
     // account_owner_name: { type: String, trim: true },
@@ -93,7 +112,8 @@ const HostFMarketSchema = new Schema(
       trim: true,
       validate: {
         validator: isHttpUrl,
-        message: (props) => `Invalid image URL "${props.value}". Use http(s)://...`,
+        message: (props) =>
+          `Invalid image URL "${props.value}". Use http(s)://...`,
       },
     },
     hostfm_active: { type: Boolean, default: false },
@@ -111,14 +131,15 @@ const HostFMarketSchema = new Schema(
       trim: true,
       validate: {
         validator: isHttpUrl,
-        message: (props) => `Invalid website URL "${props.value}". Use http(s)://...`,
+        message: (props) =>
+          `Invalid website URL "${props.value}". Use http(s)://...`,
       },
     },
 
     // Stalls
     stall_avail: { type: Boolean, default: false },
     stall_pricing: { type: String, trim: true }, // e.g., "free"
-    stall_size: { type: String, trim: true },    // e.g., "20' x 20'"
+    stall_size: { type: String, trim: true }, // e.g., "20' x 20'"
     stall_included: { type: String, trim: true },
 
     // Scheduling
@@ -135,9 +156,9 @@ const HostFMarketSchema = new Schema(
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    collection: 'hostfmarkets'
+    collection: 'hostfmarkets',
   }
-);
+)
 
 /* ----------------------------- Data hygiene ------------------------------ */
 
@@ -146,29 +167,31 @@ const STATE_MAP = new Map([
   ['MI', 'Michigan'],
   ['NM', 'New Mexico'],
   // ['CA', 'California'], ...
-]);
+])
 
 HostFMarketSchema.pre('validate', function (next) {
   try {
-    const addr = this.hostfm_address;
+    const addr = this.hostfm_address
     if (addr?.state_code && !addr.state_name) {
-      const name = STATE_MAP.get(String(addr.state_code).toUpperCase());
-      if (name) addr.state_name = name;
+      const name = STATE_MAP.get(String(addr.state_code).toUpperCase())
+      if (name) addr.state_name = name
     }
-    next();
+    next()
   } catch (err) {
-    next(err);
+    next(err)
   }
-});
+})
 
 /* -------------------------------- Indexes -------------------------------- */
 
-HostFMarketSchema.index({ hostfm_active: 1 });
-HostFMarketSchema.index({ 'hostfm_address.state_code': 1, 'hostfm_address.city': 1 });
-HostFMarketSchema.index({ hostfm_name: 'text', hostfm_description: 'text' });
+HostFMarketSchema.index({ hostfm_active: 1 })
+HostFMarketSchema.index({
+  'hostfm_address.state_code': 1,
+  'hostfm_address.city': 1,
+})
+HostFMarketSchema.index({ hostfm_name: 'text', hostfm_description: 'text' })
 
 /* -------------------------------- Export --------------------------------- */
 
 export default mongoose.models.HostFMarket ||
-  mongoose.model('HostFMarket', HostFMarketSchema);
-
+  mongoose.model('HostFMarket', HostFMarketSchema)

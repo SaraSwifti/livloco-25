@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import MappingPin from '@/components/MappingPin'
 import { incrementBusinessClickAction } from '@/app/actions/incrementBusinessClickAction'
+import { formatDistance } from '@/utils/location'
 
 const hasText = (s) => typeof s === 'string' && s.trim().length > 0
 
@@ -83,6 +84,11 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
         <div className='p-4'>
           <header className='text-center mb-6'>
             <h3 className='text-3xl font-bold'>{name}</h3>
+            {locobiz?.distance && (
+              <div className='text-sm text-blue-600 font-medium mb-2'>
+                📍 {formatDistance(locobiz.distance)} away
+              </div>
+            )}
             <MappingPin
               memZip={locobiz?.mem_zip}
               city={city}

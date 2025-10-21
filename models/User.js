@@ -22,6 +22,16 @@ const UserSchema = new Schema(
     full_name: { type: String, trim: true, default: '' },
     phone: { type: String, trim: true, match: /^\+1\d{10}$/ }, // E.164 US
     email_memmessage_notification: { type: Boolean, default: false },
+
+    // Location preferences for search
+    location_preferences: {
+      latitude: { type: Number, min: -90, max: 90 },
+      longitude: { type: Number, min: -180, max: 180 },
+      zipcode: { type: String, match: /^\d{5}(-\d{4})?$/ },
+      city: { type: String, trim: true },
+      state: { type: String, trim: true },
+      last_updated: { type: Date, default: Date.now },
+    },
     payment_confirmed: {
       type: Boolean,
       required: true,
