@@ -101,9 +101,9 @@ export default function SearchFilters({
   }
 
   return (
-    <div className='bg-white rounded-lg shadow-md p-6 mb-6'>
+    <div className='bg-transparent rounded-lg p-2 mb-2'>
       {/* Search Bar */}
-      <div className='mb-4'>
+      <div className='mb-2'>
         <div className='relative'>
           <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
           <input
@@ -111,16 +111,16 @@ export default function SearchFilters({
             placeholder={searchPlaceholder}
             value={filters.query}
             onChange={(e) => handleInputChange('query', e.target.value)}
-            className='w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            className='w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
           />
         </div>
       </div>
 
       {/* Location and Distance */}
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-4'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mb-2'>
         {/* Distance Filter */}
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
+          <label className='block text-sm font-medium text-black mb-2'>
             Distance
           </label>
           <select
@@ -133,7 +133,7 @@ export default function SearchFilters({
                   : parseInt(e.target.value)
               )
             }
-            className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+            className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
           >
             <option value={5}>5 miles</option>
             <option value={10}>10 miles</option>
@@ -149,10 +149,10 @@ export default function SearchFilters({
         <div className='flex items-center'>
           <FaMapMarkerAlt className='text-blue-500 mr-2' />
           <div>
-            <p className='text-sm font-medium text-gray-700'>
+            <p className='text-sm font-medium text-black'>
               {isLoadingLocation ? 'Getting location...' : 'Location'}
             </p>
-            <p className='text-xs text-gray-500'>
+            <p className='text-xs text-black'>
               {userLocation
                 ? `Source: ${userLocation.source}`
                 : 'Location not available'}
@@ -163,7 +163,7 @@ export default function SearchFilters({
         {/* Zipcode Input */}
         {showLocationInput && (
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>
+            <label className='block text-sm font-medium text-black mb-2'>
               Zipcode
             </label>
             <div className='flex'>
@@ -172,7 +172,7 @@ export default function SearchFilters({
                 placeholder='12345'
                 value={filters.zipcode}
                 onChange={(e) => handleInputChange('zipcode', e.target.value)}
-                className='flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                className='flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
                 maxLength={10}
               />
               <button
@@ -188,7 +188,7 @@ export default function SearchFilters({
       </div>
 
       {/* Advanced Filters Toggle */}
-      <div className='flex items-center justify-between mb-4'>
+      <div className='flex items-center justify-between mb-2'>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
           className='flex items-center text-blue-600 hover:text-blue-800'
@@ -208,9 +208,9 @@ export default function SearchFilters({
 
       {/* Advanced Filters */}
       {showAdvanced && (
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 pt-4 border-t border-gray-200'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mb-2 pt-2 border-t border-gray-200'>
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>
+            <label className='block text-sm font-medium text-black mb-2'>
               State
             </label>
             <input
@@ -218,13 +218,13 @@ export default function SearchFilters({
               placeholder='e.g., CA'
               value={filters.state}
               onChange={(e) => handleInputChange('state', e.target.value)}
-              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
               maxLength={2}
             />
           </div>
 
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>
+            <label className='block text-sm font-medium text-black mb-2'>
               City
             </label>
             <input
@@ -232,18 +232,18 @@ export default function SearchFilters({
               placeholder='e.g., Los Angeles'
               value={filters.city}
               onChange={(e) => handleInputChange('city', e.target.value)}
-              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
             />
           </div>
 
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>
+            <label className='block text-sm font-medium text-black mb-2'>
               Sort By
             </label>
             <select
               value={filters.sortBy}
               onChange={(e) => handleInputChange('sortBy', e.target.value)}
-              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white'
             >
               <option value='distance'>Distance</option>
               <option value='name'>Name</option>
@@ -254,7 +254,7 @@ export default function SearchFilters({
       )}
 
       {/* Results Summary */}
-      <div className='text-sm text-gray-600'>
+      <div className='text-sm text-black'>
         {userLocation ? (
           <span>
             {filters.distance === 'unlimited'

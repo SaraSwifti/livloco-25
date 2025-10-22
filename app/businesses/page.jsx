@@ -1,6 +1,5 @@
 //livloco-25\app\businesses\page.jsx
 
-import Hero from '@/components/Hero'
 import connectDB from '@/config/database'
 import LocoBiz from '@/models/LocoBiz'
 import SearchableBusinessList from '@/components/SearchableBusinessList'
@@ -21,7 +20,6 @@ const BusinessesPage = async () => {
 
   return (
     <>
-      <Hero />
       <SearchableBusinessList initialBusinesses={serializedLocobizs} />
     </>
   )
