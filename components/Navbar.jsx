@@ -92,7 +92,7 @@ const Navbar = () => {
   }, [pathname])
 
   return (
-    <nav className='relative z-50 bg-gray-800 border-b border-black py-3'>
+    <nav className='relative z-50 bg-white border-b border-gray-300 py-3'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
         <div className='relative flex h-20 items-center justify-between'>
           <div className='absolute inset-y-0 left-0 flex items-center md:hidden'>
@@ -100,7 +100,7 @@ const Navbar = () => {
             <button
               type='button'
               id='mobile-dropdown-button'
-              className='relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
+              className='relative inline-flex items-center justify-center rounded-md p-2 text-black hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black'
               aria-controls='mobile-menu'
               aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -137,7 +137,7 @@ const Navbar = () => {
                 alt='LivLoco logo'
               />
 
-              <span className='hidden md:block text-white text-2xl font-bold ml-2'>
+              <span className='hidden md:block text-black text-2xl font-bold ml-2'>
                 The Livlo.co Co-op
               </span>
             </Link>
@@ -147,8 +147,10 @@ const Navbar = () => {
                 <Link
                   href='/'
                   className={`${
-                    pathname === '/' ? 'bg-black border-b-4 border-white' : ''
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === '/'
+                      ? 'bg-gray-200 border-b-4 border-black'
+                      : ''
+                  } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
                 >
                   LocoHome
                 </Link>
@@ -166,9 +168,9 @@ const Navbar = () => {
                     href='/businesses'
                     className={`${
                       pathname === '/businesses'
-                        ? 'bg-black border-b-4 border-white'
+                        ? 'bg-gray-200 border-b-4 border-black'
                         : ''
-                    } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
                   >
                     LocoBusinesses
                   </Link>
@@ -178,9 +180,9 @@ const Navbar = () => {
                     href='/hostfarmmarkets'
                     className={`${
                       pathname === '/hostfarmmarkets'
-                        ? 'bg-black border-b-4 border-white'
+                        ? 'bg-gray-200 border-b-4 border-black'
                         : ''
-                    } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
                   >
                     LocoFarmers' Markets
                   </Link>
@@ -200,9 +202,9 @@ const Navbar = () => {
                       onClick={() =>
                         signIn(provider.id, { callbackUrl: '/onboarding' })
                       }
-                      className='flex items-center text-black bg-white hover:bg-gray-500 hover:text-white rounded-md px-3 py-2'
+                      className='flex items-center text-white bg-black hover:bg-gray-800 hover:text-white rounded-md px-3 py-2'
                     >
-                      <FaGoogle className='text-black mr-2' />
+                      <FaGoogle className='text-white mr-2' />
                       <span>Login or Register</span>
                     </button>
                   ))}
@@ -219,15 +221,15 @@ const Navbar = () => {
               >
                 <button
                   type='button'
-                  className='relative rounded-full bg-gray-800 p-1 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                  className='relative rounded-full bg-gray-100 p-1 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white'
                 >
                   <span className='absolute -inset-1.5'></span>
                   <span className='sr-only'>View Messages</span>
                   <span className='relative inline-block h-7 w-7'>
-                    {/* Solid (fill) layer appears on hover to turn inside white */}
-                    <HiChatBubbleLeft className='absolute inset-0 h-7 w-7 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-150' />
-                    {/* Outline layer stays on top and changes to darker mustard on hover */}
-                    <HiOutlineChatBubbleLeft className='relative h-7 w-7 text-yellow-200 group-hover:text-yellow-700 transition-colors duration-150' />
+                    {/* Solid (fill) layer appears on hover to turn inside black */}
+                    <HiChatBubbleLeft className='absolute inset-0 h-7 w-7 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-150' />
+                    {/* Outline layer stays on top and changes to darker on hover */}
+                    <HiOutlineChatBubbleLeft className='relative h-7 w-7 text-gray-600 group-hover:text-black transition-colors duration-150' />
                   </span>
                 </button>
                 <UnreadMessageCount />
@@ -240,7 +242,7 @@ const Navbar = () => {
                 <div>
                   <button
                     type='button'
-                    className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                    className='relative flex rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white'
                     id='user-menu-button'
                     aria-expanded='false'
                     aria-haspopup='true'
@@ -249,7 +251,7 @@ const Navbar = () => {
                     <span className='absolute -inset-1.5'></span>
                     <span className='sr-only'>Open user menu</span>
                     <Image
-                      className='h-8 w-8 text-white rounded-full'
+                      className='h-8 w-8 text-black rounded-full'
                       src={profileImage || profileDefault}
                       alt='user profile image'
                       width={40}
@@ -316,8 +318,8 @@ const Navbar = () => {
             <Link
               href='/'
               className={`${
-                pathname === '/' ? 'bg-black' : ''
-              } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+                pathname === '/' ? 'bg-gray-200' : ''
+              } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               LocoHome
@@ -336,8 +338,8 @@ const Navbar = () => {
               <Link
                 href='/businesses'
                 className={`${
-                  pathname === '/businesses' ? 'bg-black' : ''
-                } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+                  pathname === '/businesses' ? 'bg-gray-200' : ''
+                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 LocoBusinesses
@@ -347,8 +349,8 @@ const Navbar = () => {
               <Link
                 href='/hostfarmmarkets'
                 className={`${
-                  pathname === '/hostfarmmarkets' ? 'bg-black' : ''
-                } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+                  pathname === '/hostfarmmarkets' ? 'bg-gray-200' : ''
+                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 LocoFarmers' Markets
@@ -358,8 +360,8 @@ const Navbar = () => {
               <Link
                 href={me?._id ? `/profile/${me._id}` : '/profile'}
                 className={`${
-                  pathname.startsWith('/profile') ? 'bg-black' : ''
-                } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
+                  pathname.startsWith('/profile') ? 'bg-gray-200' : ''
+                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Your Profile & Membership
@@ -375,7 +377,7 @@ const Navbar = () => {
                         setIsMobileMenuOpen(false)
                         signIn(provider.id, { callbackUrl: '/onboarding' })
                       }}
-                      className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'
+                      className='flex items-center text-white bg-black hover:bg-gray-800 hover:text-white rounded-md px-3 py-2 my-5'
                     >
                       <FaGoogle className='fa-brands fa-google mr-2'></FaGoogle>
                       <span>Login or Register</span>

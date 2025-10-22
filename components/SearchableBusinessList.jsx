@@ -102,7 +102,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
     <div className='-mx-4 -mt-8'>
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
-        <div className='w-full bg-gradient-to-br from-green-600 via-green-700 to-blue-700 relative'>
+        <div className='w-full bg-gradient-to-r from-green-600 via-green-500 to-blue-600 relative'>
           <div className='max-w-7xl py-4 pb-1 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
             {/* Logo: top-center on mobile, right 1/4 on md+ */}
             <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
@@ -128,7 +128,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
           </div>
 
           {/* Search Filters with white form fields */}
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 relative z-10'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-2 relative z-10'>
             <div className='bg-transparent rounded-lg p-2'>
               <SearchFilters
                 onFiltersChange={handleFiltersChange}
@@ -142,7 +142,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
           {/* Wavy bottom design */}
           <div className='absolute bottom-0 left-0 w-full overflow-hidden'>
             <svg
-              className='relative block w-full h-20'
+              className='relative block w-full h-10'
               data-name='Layer 1'
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 1200 120'

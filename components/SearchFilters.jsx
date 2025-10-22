@@ -101,7 +101,7 @@ export default function SearchFilters({
   }
 
   return (
-    <div className='bg-transparent rounded-lg p-2 mb-2'>
+    <div className='bg-transparent rounded-lg p-2 mb-1'>
       {/* Search Bar */}
       <div className='mb-2'>
         <div className='relative'>
@@ -199,7 +199,7 @@ export default function SearchFilters({
 
         <button
           onClick={clearFilters}
-          className='flex items-center text-gray-600 hover:text-gray-800'
+          className='flex items-center text-black hover:text-gray-800'
         >
           <FaTimes className='mr-2' />
           Clear All
@@ -252,23 +252,6 @@ export default function SearchFilters({
           </div>
         </div>
       )}
-
-      {/* Results Summary */}
-      <div className='text-sm text-black'>
-        {userLocation ? (
-          <span>
-            {filters.distance === 'unlimited'
-              ? 'Showing results anywhere in the USA'
-              : `Showing results within ${filters.distance} miles of your location`}
-            {filters.query && ` matching "${filters.query}"`}
-          </span>
-        ) : (
-          <span>
-            Showing all results
-            {filters.query && ` matching "${filters.query}"`}
-          </span>
-        )}
-      </div>
     </div>
   )
 }
