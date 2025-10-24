@@ -31,10 +31,10 @@ const CouponSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    minimumOrderAmount: {
-      type: Number,
-      default: 0,
-      min: 0,
+    zipcodeRestriction: {
+      type: String,
+      trim: true,
+      match: /^\d{5}(-\d{4})?$/,
     },
 
     // Usage limits
@@ -80,10 +80,12 @@ const CouponSchema = new mongoose.Schema(
       enum: ['all', 'businesses', 'markets', 'specific'],
       default: 'all',
     },
-    specificItems: [{
-      type: mongoose.Schema.Types.ObjectId,
-      refPath: 'specificItemsType',
-    }],
+    specificItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'specificItemsType',
+      },
+    ],
     specificItemsType: {
       type: String,
       enum: ['LocoBiz', 'HostFMarket'],
@@ -124,19 +126,20 @@ CouponSchema.index({ createdBy: 1 })
 CouponSchema.index({ applicableTo: 1 })
 
 // Virtual for checking if coupon is currently valid
-CouponSchema.virtual('isValid').get(function() {
+CouponSchema.virtual('isValid').get(function () {
   const now = new Date()
-  return this.isActive && 
-         this.validFrom <= now && 
-         this.validUntil >= now &&
-         (this.usageLimit === null || this.usageCount < this.usageLimit)
+  return (
+    this.isActive &&
+    this.validFrom <= now &&
+    this.validUntil >= now &&
+    (this.usageLimit === null || this.usageCount < this.usageLimit)
+  )
 })
 
 // Virtual for remaining uses
-CouponSchema.virtual('remainingUses').get(function() {
+CouponSchema.virtual('remainingUses').get(function () {
   if (this.usageLimit === null) return null
   return Math.max(0, this.usageLimit - this.usageCount)
 })
 
 export default mongoose.models.Coupon || mongoose.model('Coupon', CouponSchema)
-

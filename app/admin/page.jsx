@@ -9,6 +9,8 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [coupons, setCoupons] = useState([])
   const [showCreateForm, setShowCreateForm] = useState(false)
+  const [showEditForm, setShowEditForm] = useState(false)
+  const [editingCoupon, setEditingCoupon] = useState(null)
   const [statusMessage, setStatusMessage] = useState('')
   const router = useRouter()
 
@@ -123,6 +125,11 @@ export default function AdminDashboard() {
       console.error('Error updating coupon:', error)
       alert('Failed to update coupon')
     }
+  }
+
+  const editCoupon = (coupon) => {
+    setEditingCoupon(coupon)
+    setShowEditForm(true)
   }
 
   if (isLoading) {
@@ -310,9 +317,9 @@ export default function AdminDashboard() {
                             ? `${coupon.discountValue}%`
                             : `$${coupon.discountValue}`}
                         </div>
-                        {coupon.minimumOrderAmount > 0 && (
+                        {coupon.zipcodeRestriction && (
                           <div className='text-sm text-gray-500'>
-                            Min: ${coupon.minimumOrderAmount}
+                            Zipcode: {coupon.zipcodeRestriction}
                           </div>
                         )}
                       </td>
@@ -352,6 +359,12 @@ export default function AdminDashboard() {
                       <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
                         <div className='flex space-x-2'>
                           <button
+                            onClick={() => editCoupon(coupon)}
+                            className='text-blue-600 hover:text-blue-900'
+                          >
+                            Edit
+                          </button>
+                          <button
                             onClick={() =>
                               toggleCouponStatus(coupon._id, coupon.isActive)
                             }
@@ -390,6 +403,22 @@ export default function AdminDashboard() {
           }}
         />
       )}
+
+      {/* Edit Coupon Modal */}
+      {showEditForm && editingCoupon && (
+        <EditCouponModal
+          coupon={editingCoupon}
+          onClose={() => {
+            setShowEditForm(false)
+            setEditingCoupon(null)
+          }}
+          onSuccess={() => {
+            setShowEditForm(false)
+            setEditingCoupon(null)
+            fetchCoupons()
+          }}
+        />
+      )}
     </div>
   )
 }
@@ -402,7 +431,7 @@ function CreateCouponModal({ onClose, onSuccess }) {
     description: '',
     discountType: 'percentage',
     discountValue: '',
-    minimumOrderAmount: '',
+    zipcodeRestriction: '',
     usageLimit: '',
     usageLimitPerUser: '1',
     validFrom: '',
@@ -550,17 +579,20 @@ function CreateCouponModal({ onClose, onSuccess }) {
             </div>
             <div>
               <label className='block text-sm font-medium text-gray-700 mb-1'>
-                Min Order Amount
+                Zipcode Restriction
               </label>
               <input
-                type='number'
-                name='minimumOrderAmount'
-                value={formData.minimumOrderAmount}
+                type='text'
+                name='zipcodeRestriction'
+                value={formData.zipcodeRestriction}
                 onChange={handleChange}
-                min='0'
+                pattern='^\d{5}(-\d{4})?$'
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                placeholder='0'
+                placeholder='12345 or 12345-6789'
               />
+              <p className='text-xs text-gray-500 mt-1'>
+                Leave empty for no zipcode restriction
+              </p>
             </div>
           </div>
 
@@ -660,6 +692,287 @@ function CreateCouponModal({ onClose, onSuccess }) {
               className='px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg transition-colors duration-200'
             >
               {isSubmitting ? 'Creating...' : 'Create Coupon'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+// Edit Coupon Modal Component
+function EditCouponModal({ coupon, onClose, onSuccess }) {
+  const [formData, setFormData] = useState({
+    code: coupon.code || '',
+    name: coupon.name || '',
+    description: coupon.description || '',
+    discountType: coupon.discountType || 'percentage',
+    discountValue: coupon.discountValue || '',
+    zipcodeRestriction: coupon.zipcodeRestriction || '',
+    usageLimit: coupon.usageLimit || '',
+    usageLimitPerUser: coupon.usageLimitPerUser || '1',
+    validFrom: coupon.validFrom
+      ? new Date(coupon.validFrom).toISOString().slice(0, 16)
+      : '',
+    validUntil: coupon.validUntil
+      ? new Date(coupon.validUntil).toISOString().slice(0, 16)
+      : '',
+    isActive: coupon.isActive !== undefined ? coupon.isActive : true,
+    isPublic: coupon.isPublic !== undefined ? coupon.isPublic : true,
+    applicableTo: coupon.applicableTo || 'all',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch(`/api/admin/coupons/${coupon._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        onSuccess()
+        alert('Coupon updated successfully!')
+      } else {
+        alert(result.error || 'Failed to update coupon')
+      }
+    } catch (error) {
+      console.error('Error updating coupon:', error)
+      alert('Failed to update coupon')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
+  }
+
+  return (
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+      <div className='bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto'>
+        <div className='flex items-center justify-between mb-6'>
+          <h3 className='text-lg font-semibold text-gray-900'>
+            Edit Coupon: {coupon.code}
+          </h3>
+          <button
+            onClick={onClose}
+            className='text-gray-400 hover:text-gray-600'
+          >
+            ✕
+          </button>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className='space-y-4'
+        >
+          <div className='grid grid-cols-2 gap-4'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Coupon Code *
+              </label>
+              <input
+                type='text'
+                name='code'
+                value={formData.code}
+                onChange={handleChange}
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                placeholder='SAVE20'
+              />
+            </div>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Coupon Name *
+              </label>
+              <input
+                type='text'
+                name='name'
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                placeholder='20% Off Sale'
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className='block text-sm font-medium text-gray-700 mb-1'>
+              Description
+            </label>
+            <textarea
+              name='description'
+              value={formData.description}
+              onChange={handleChange}
+              rows={2}
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              placeholder='Optional description...'
+            />
+          </div>
+
+          <div className='grid grid-cols-3 gap-4'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Discount Type *
+              </label>
+              <select
+                name='discountType'
+                value={formData.discountType}
+                onChange={handleChange}
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              >
+                <option value='percentage'>Percentage</option>
+                <option value='fixed_amount'>Fixed Amount</option>
+              </select>
+            </div>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Discount Value *
+              </label>
+              <input
+                type='number'
+                name='discountValue'
+                value={formData.discountValue}
+                onChange={handleChange}
+                required
+                min='0'
+                max={formData.discountType === 'percentage' ? '100' : undefined}
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                placeholder={
+                  formData.discountType === 'percentage' ? '20' : '10'
+                }
+              />
+            </div>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Zipcode Restriction
+              </label>
+              <input
+                type='text'
+                name='zipcodeRestriction'
+                value={formData.zipcodeRestriction}
+                onChange={handleChange}
+                pattern='^\d{5}(-\d{4})?$'
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                placeholder='12345 or 12345-6789'
+              />
+              <p className='text-xs text-gray-500 mt-1'>
+                Leave empty for no zipcode restriction
+              </p>
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-4'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Usage Limit
+              </label>
+              <input
+                type='number'
+                name='usageLimit'
+                value={formData.usageLimit}
+                onChange={handleChange}
+                min='1'
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                placeholder='Leave empty for unlimited'
+              />
+            </div>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Per User Limit
+              </label>
+              <input
+                type='number'
+                name='usageLimitPerUser'
+                value={formData.usageLimitPerUser}
+                onChange={handleChange}
+                min='1'
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              />
+            </div>
+          </div>
+
+          <div className='grid grid-cols-2 gap-4'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Valid From *
+              </label>
+              <input
+                type='datetime-local'
+                name='validFrom'
+                value={formData.validFrom}
+                onChange={handleChange}
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              />
+            </div>
+            <div>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>
+                Valid Until *
+              </label>
+              <input
+                type='datetime-local'
+                name='validUntil'
+                value={formData.validUntil}
+                onChange={handleChange}
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+              />
+            </div>
+          </div>
+
+          <div className='flex items-center space-x-6'>
+            <label className='flex items-center'>
+              <input
+                type='checkbox'
+                name='isActive'
+                checked={formData.isActive}
+                onChange={handleChange}
+                className='mr-2'
+              />
+              <span className='text-sm text-gray-700'>Active</span>
+            </label>
+            <label className='flex items-center'>
+              <input
+                type='checkbox'
+                name='isPublic'
+                checked={formData.isPublic}
+                onChange={handleChange}
+                className='mr-2'
+              />
+              <span className='text-sm text-gray-700'>Public</span>
+            </label>
+          </div>
+
+          <div className='flex justify-end space-x-3 pt-4'>
+            <button
+              type='button'
+              onClick={onClose}
+              className='px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors duration-200'
+            >
+              Cancel
+            </button>
+            <button
+              type='submit'
+              disabled={isSubmitting}
+              className='px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg transition-colors duration-200'
+            >
+              {isSubmitting ? 'Updating...' : 'Update Coupon'}
             </button>
           </div>
         </form>

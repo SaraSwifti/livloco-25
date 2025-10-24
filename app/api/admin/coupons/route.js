@@ -19,14 +19,14 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      coupons: coupons.map(coupon => ({
+      coupons: coupons.map((coupon) => ({
         _id: coupon._id,
         code: coupon.code,
         name: coupon.name,
         description: coupon.description,
         discountType: coupon.discountType,
         discountValue: coupon.discountValue,
-        minimumOrderAmount: coupon.minimumOrderAmount,
+        zipcodeRestriction: coupon.zipcodeRestriction,
         usageLimit: coupon.usageLimit,
         usageCount: coupon.usageCount,
         usageLimitPerUser: coupon.usageLimitPerUser,
@@ -45,7 +45,7 @@ export async function GET() {
         updatedAt: coupon.updatedAt,
         isValid: coupon.isValid,
         remainingUses: coupon.remainingUses,
-      }))
+      })),
     })
   } catch (error) {
     console.error('Error fetching coupons:', error)
@@ -72,7 +72,7 @@ export async function POST(request) {
       description,
       discountType,
       discountValue,
-      minimumOrderAmount,
+      zipcodeRestriction,
       usageLimit,
       usageLimitPerUser,
       validFrom,
@@ -85,7 +85,14 @@ export async function POST(request) {
     } = await request.json()
 
     // Validation
-    if (!code || !name || !discountType || !discountValue || !validFrom || !validUntil) {
+    if (
+      !code ||
+      !name ||
+      !discountType ||
+      !discountValue ||
+      !validFrom ||
+      !validUntil
+    ) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -101,7 +108,10 @@ export async function POST(request) {
 
     if (new Date(validFrom) >= new Date(validUntil)) {
       return NextResponse.json(
-        { success: false, error: 'Valid until date must be after valid from date' },
+        {
+          success: false,
+          error: 'Valid until date must be after valid from date',
+        },
         { status: 400 }
       )
     }
@@ -114,7 +124,7 @@ export async function POST(request) {
       description,
       discountType,
       discountValue,
-      minimumOrderAmount: minimumOrderAmount || 0,
+      zipcodeRestriction: zipcodeRestriction || 0,
       usageLimit: usageLimit || null,
       usageLimitPerUser: usageLimitPerUser || 1,
       validFrom: new Date(validFrom),
@@ -139,7 +149,7 @@ export async function POST(request) {
         description: coupon.description,
         discountType: coupon.discountType,
         discountValue: coupon.discountValue,
-        minimumOrderAmount: coupon.minimumOrderAmount,
+        zipcodeRestriction: coupon.zipcodeRestriction,
         usageLimit: coupon.usageLimit,
         usageCount: coupon.usageCount,
         usageLimitPerUser: coupon.usageLimitPerUser,
@@ -158,11 +168,11 @@ export async function POST(request) {
         updatedAt: coupon.updatedAt,
         isValid: coupon.isValid,
         remainingUses: coupon.remainingUses,
-      }
+      },
     })
   } catch (error) {
     console.error('Error creating coupon:', error)
-    
+
     if (error.code === 11000) {
       return NextResponse.json(
         { success: false, error: 'Coupon code already exists' },
@@ -179,4 +189,3 @@ export async function POST(request) {
     )
   }
 }
-

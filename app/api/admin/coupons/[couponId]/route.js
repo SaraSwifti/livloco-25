@@ -34,7 +34,7 @@ export async function GET(request, { params }) {
         description: coupon.description,
         discountType: coupon.discountType,
         discountValue: coupon.discountValue,
-        minimumOrderAmount: coupon.minimumOrderAmount,
+        zipcodeRestriction: coupon.zipcodeRestriction,
         usageLimit: coupon.usageLimit,
         usageCount: coupon.usageCount,
         usageLimitPerUser: coupon.usageLimitPerUser,
@@ -53,7 +53,7 @@ export async function GET(request, { params }) {
         updatedAt: coupon.updatedAt,
         isValid: coupon.isValid,
         remainingUses: coupon.remainingUses,
-      }
+      },
     })
   } catch (error) {
     console.error('Error fetching coupon:', error)
@@ -89,17 +89,26 @@ export async function PUT(request, { params }) {
     }
 
     // Validation
-    if (updateData.discountType === 'percentage' && updateData.discountValue > 100) {
+    if (
+      updateData.discountType === 'percentage' &&
+      updateData.discountValue > 100
+    ) {
       return NextResponse.json(
         { success: false, error: 'Percentage discount cannot exceed 100%' },
         { status: 400 }
       )
     }
 
-    if (updateData.validFrom && updateData.validUntil && 
-        new Date(updateData.validFrom) >= new Date(updateData.validUntil)) {
+    if (
+      updateData.validFrom &&
+      updateData.validUntil &&
+      new Date(updateData.validFrom) >= new Date(updateData.validUntil)
+    ) {
       return NextResponse.json(
-        { success: false, error: 'Valid until date must be after valid from date' },
+        {
+          success: false,
+          error: 'Valid until date must be after valid from date',
+        },
         { status: 400 }
       )
     }
@@ -113,8 +122,12 @@ export async function PUT(request, { params }) {
         // Ensure code is uppercase if being updated
         ...(updateData.code && { code: updateData.code.toUpperCase() }),
         // Convert dates if provided
-        ...(updateData.validFrom && { validFrom: new Date(updateData.validFrom) }),
-        ...(updateData.validUntil && { validUntil: new Date(updateData.validUntil) }),
+        ...(updateData.validFrom && {
+          validFrom: new Date(updateData.validFrom),
+        }),
+        ...(updateData.validUntil && {
+          validUntil: new Date(updateData.validUntil),
+        }),
       },
       { new: true, runValidators: true }
     )
@@ -130,7 +143,7 @@ export async function PUT(request, { params }) {
         description: updatedCoupon.description,
         discountType: updatedCoupon.discountType,
         discountValue: updatedCoupon.discountValue,
-        minimumOrderAmount: updatedCoupon.minimumOrderAmount,
+        zipcodeRestriction: updatedCoupon.zipcodeRestriction,
         usageLimit: updatedCoupon.usageLimit,
         usageCount: updatedCoupon.usageCount,
         usageLimitPerUser: updatedCoupon.usageLimitPerUser,
@@ -149,11 +162,11 @@ export async function PUT(request, { params }) {
         updatedAt: updatedCoupon.updatedAt,
         isValid: updatedCoupon.isValid,
         remainingUses: updatedCoupon.remainingUses,
-      }
+      },
     })
   } catch (error) {
     console.error('Error updating coupon:', error)
-    
+
     if (error.code === 11000) {
       return NextResponse.json(
         { success: false, error: 'Coupon code already exists' },
@@ -195,7 +208,7 @@ export async function DELETE(request, { params }) {
 
     return NextResponse.json({
       success: true,
-      message: 'Coupon deleted successfully'
+      message: 'Coupon deleted successfully',
     })
   } catch (error) {
     console.error('Error deleting coupon:', error)
@@ -208,4 +221,3 @@ export async function DELETE(request, { params }) {
     )
   }
 }
-
