@@ -17,6 +17,7 @@ import VoteButton from '@/components/VoteButton'
 import SaveButton from '@/components/SaveButton'
 import MemberSince from '@/components/MemberSince'
 import MessageButton from '@/components/MessageButton'
+import MarketDistanceDisplay from '@/components/MarketDistanceDisplay'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/utils/authOptions'
 
@@ -143,6 +144,12 @@ export default async function HostFarmMarketPage(props) {
                     mode='directions'
                   />
                 </div>
+
+                {/* Distance Display */}
+                <MarketDistanceDisplay
+                  marketId={market._id}
+                  className='text-center mt-2'
+                />
 
                 {/* Phone */}
                 {addr?.hostfm_phone && (

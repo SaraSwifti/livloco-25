@@ -160,11 +160,18 @@ export async function getUserLocation(fallbackZipcode = null) {
  * @returns {string} Formatted distance string
  */
 export function formatDistance(distance) {
-  if (distance < 1) {
-    return `${Math.round(distance * 5280)} ft` // Convert to feet
+  if (distance < 0.1) {
+    // For very small distances, show in feet with more precision
+    const feet = Math.round(distance * 5280)
+    return feet < 10 ? `${feet} ft` : `${feet} ft`
+  } else if (distance < 1) {
+    // For distances under 1 mile, show to 1 decimal place
+    return `${distance.toFixed(1)} mi`
   } else if (distance < 10) {
-    return `${distance} mi`
+    // For distances under 10 miles, show to 1 decimal place
+    return `${distance.toFixed(1)} mi`
   } else {
+    // For longer distances, round to whole miles
     return `${Math.round(distance)} mi`
   }
 }

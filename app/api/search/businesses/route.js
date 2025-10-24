@@ -73,18 +73,16 @@ export async function GET(request) {
           } else if (business.locobiz_address?.zipcode) {
             // Geocode on-the-fly if no coordinates
             try {
-              // Try zipapi.co first
-              let response = await fetch(
-                `https://zipapi.co/api/${business.locobiz_address.zipcode}`
-              )
               let data = null
 
-              if (response.ok) {
-                data = await response.json()
-              } else {
-                // Fallback to zippopotam.us
-                response = await fetch(
-                  `https://api.zippopotam.us/us/${business.locobiz_address.zipcode}`
+              // Try zippopotam.us first (more reliable)
+              try {
+                const response = await fetch(
+                  `https://api.zippopotam.us/us/${business.locobiz_address.zipcode}`,
+                  {
+                    timeout: 5000,
+                    signal: AbortSignal.timeout(5000),
+                  }
                 )
                 if (response.ok) {
                   data = await response.json()
@@ -95,6 +93,30 @@ export async function GET(request) {
                       longitude: place.longitude,
                     }
                   }
+                }
+              } catch (error) {
+                console.log(
+                  `Zippopotam.us failed for ${business.locobiz_name}, trying zipapi.co`
+                )
+              }
+
+              // Fallback to zipapi.co if zippopotam.us failed
+              if (!data || !data.latitude || !data.longitude) {
+                try {
+                  const response = await fetch(
+                    `https://zipapi.co/api/${business.locobiz_address.zipcode}`,
+                    {
+                      timeout: 5000,
+                      signal: AbortSignal.timeout(5000),
+                    }
+                  )
+                  if (response.ok) {
+                    data = await response.json()
+                  }
+                } catch (error) {
+                  console.log(
+                    `Zipapi.co also failed for ${business.locobiz_name}`
+                  )
                 }
               }
 
@@ -112,7 +134,7 @@ export async function GET(request) {
               }
             } catch (error) {
               console.error(
-                `Geocoding failed for ${business.locobiz_name}:`,
+                `All geocoding services failed for ${business.locobiz_name}:`,
                 error
               )
             }

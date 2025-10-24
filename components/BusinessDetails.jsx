@@ -5,6 +5,7 @@ import MappingPin from '@/components/MappingPin'
 import VoteButton from '@/components/VoteButton'
 import SaveButton from '@/components/SaveButton'
 import MemberSince from '@/components/MemberSince'
+import DistanceDisplay from '@/components/DistanceDisplay'
 import { FaClipboardList, FaDollyFlatbed } from 'react-icons/fa'
 import ItemsGrid from './ItemsGrid'
 
@@ -37,6 +38,12 @@ const BusinessDetails = ({
               mode='modal'
               size='md'
             />
+
+            {/* Distance Display */}
+            <DistanceDisplay
+              businessId={locobiz._id}
+              className='text-center mt-2'
+            />
           </div>
           <div className='flex flex-col lg:flex-row gap-6'>
             <div className='lg:w-1/2 p-3 text-center'>
@@ -48,8 +55,6 @@ const BusinessDetails = ({
                   <h3 className='text-xl text-orange-800 font-bold'>{`${locobiz.current_promotional}`}</h3>
                 </>
               )}
-
-              
             </div>
             <div className='lg:w-1/2 p-3 text-center'>
               <div className='flex flex-col items-center gap-2 mt-4'>
