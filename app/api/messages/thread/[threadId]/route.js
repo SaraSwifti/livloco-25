@@ -63,7 +63,6 @@ export async function GET(request, { params }) {
         postingName: postingName,
         blockedBy: thread.blockedBy,
         lastMessageAt: thread.lastMessageAt,
-        autoDeleteAt: thread.autoDeleteAt,
       },
       otherUser,
     })

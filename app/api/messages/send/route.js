@@ -65,7 +65,6 @@ export async function POST(request) {
     await MessageThread.findByIdAndUpdate(threadId, {
       lastMessage: message._id,
       lastMessageAt: new Date(),
-      autoDeleteAt: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000), // 6 months
     })
 
     return NextResponse.json({

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import connectDB from '@/config/database'
-import MessageThread from '@/models/MessageThread'
+import BlockedUser from '@/models/BlockedUser'
 import { getSessionUser } from '@/utils/getSessionUser'
 
 export async function GET() {
@@ -15,33 +15,27 @@ export async function GET() {
 
     await connectDB()
 
-    // Find all threads where the current user has blocked someone
-    const blockedThreads = await MessageThread.find({
-      participants: sessionUser.userId,
-      blockedBy: sessionUser.userId,
+    // Find all users blocked by the current user
+    const blockedUsers = await BlockedUser.find({
+      blocker: sessionUser.userId,
     })
-      .populate('participants', 'full_name email')
-      .sort({ updatedAt: -1 })
+      .populate('blocked', 'full_name email')
+      .sort({ createdAt: -1 })
 
-    // Extract the blocked users (the other participants)
-    const blockedUsers = blockedThreads.map((thread) => {
-      const blockedUser = thread.participants.find(
-        (p) => p._id.toString() !== sessionUser.userId
-      )
-      return {
-        threadId: thread._id,
-        userId: blockedUser._id,
-        fullName: blockedUser.full_name,
-        email: blockedUser.email,
-        postingType: thread.postingType,
-        postingId: thread.postingId,
-        blockedAt: thread.updatedAt,
-      }
-    })
+    // Format the response
+    const formattedBlockedUsers = blockedUsers.map((blockedUser) => ({
+      userId: blockedUser.blocked._id,
+      fullName: blockedUser.blocked.full_name,
+      email: blockedUser.blocked.email,
+      postingType: blockedUser.originalThreadInfo.postingType,
+      postingId: blockedUser.originalThreadInfo.postingId,
+      postingName: blockedUser.originalThreadInfo.postingName,
+      blockedAt: blockedUser.createdAt,
+    }))
 
     return NextResponse.json({
       success: true,
-      blockedUsers,
+      blockedUsers: formattedBlockedUsers,
     })
   } catch (error) {
     console.error('Error fetching blocked users:', error)

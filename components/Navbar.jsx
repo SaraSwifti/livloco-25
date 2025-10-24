@@ -92,24 +92,34 @@ const Navbar = () => {
   }, [pathname])
 
   return (
-    <nav className='relative z-50 bg-white border-b border-gray-300 py-3'>
-      <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-        <div className='relative flex h-20 items-center justify-between'>
-          <div className='absolute inset-y-0 left-0 flex items-center md:hidden'>
-            {/* <!-- Mobile menu button--> */}
+    <header
+      role='banner'
+      className='sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm'
+    >
+      <nav
+        aria-label='Main navigation'
+        className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'
+      >
+        <div className='flex items-center justify-between h-16'>
+          {/* Mobile menu button */}
+          <div className='flex items-center lg:hidden'>
             <button
               type='button'
-              id='mobile-dropdown-button'
-              className='relative inline-flex items-center justify-center rounded-md p-2 text-black hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black'
+              className='inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-all duration-200'
               aria-controls='mobile-menu'
               aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
+              aria-label={
+                isMobileMenuOpen ? 'Close main menu' : 'Open main menu'
+              }
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               ref={mobileButtonRef}
             >
-              <span className='absolute -inset-0.5'></span>
               <span className='sr-only'>Open main menu</span>
+              {/* Animated hamburger icon */}
               <svg
-                className='block h-6 w-6'
+                className={`${
+                  isMobileMenuOpen ? 'hidden' : 'block'
+                } h-6 w-6 transition-all duration-200`}
                 fill='none'
                 viewBox='0 0 24 24'
                 strokeWidth='1.5'
@@ -122,39 +132,66 @@ const Navbar = () => {
                   d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
                 />
               </svg>
+              {/* Close icon */}
+              <svg
+                className={`${
+                  isMobileMenuOpen ? 'block' : 'hidden'
+                } h-6 w-6 transition-all duration-200`}
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth='1.5'
+                stroke='currentColor'
+                aria-hidden='true'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M6 18L18 6M6 6l12 12'
+                />
+              </svg>
             </button>
           </div>
 
-          <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
-            {/* <!-- Logo --> */}
+          {/* Brand/Logo */}
+          <div className='flex items-center flex-shrink-0'>
             <Link
-              className='flex flex-shrink-0 items-center'
               href='/'
+              className='flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200'
+              aria-label='LivLoco Home'
             >
               <Image
-                className='h-10 w-auto'
+                className='h-8 w-auto'
                 src={logo}
                 alt='LivLoco logo'
+                width={32}
+                height={32}
+                priority
               />
-
-              <span className='hidden md:block text-black text-2xl font-bold ml-2'>
+              <span className='hidden md:block text-xl font-bold text-gray-900'>
                 The Livlo.co Co-op
               </span>
             </Link>
-            {/* <!-- Desktop Menu Hidden below md screens --> */}
-            <div className='hidden md:ml-6 md:block'>
-              <div className='flex space-x-2'>
-                <Link
-                  href='/'
-                  className={`${
-                    pathname === '/'
-                      ? 'bg-gray-200 border-b-4 border-black'
-                      : ''
-                  } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
-                >
-                  LocoHome
-                </Link>
-                {/* <Link
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className='hidden lg:flex lg:items-center lg:space-x-8'>
+            <div
+              className='flex space-x-8'
+              role='menubar'
+            >
+              <Link
+                href='/'
+                role='menuitem'
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  pathname === '/'
+                    ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-700'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                }`}
+                aria-current={pathname === '/' ? 'page' : undefined}
+              >
+                LocoHome
+              </Link>
+              {/* <Link
                   href='/living'
                   className={`${
                     pathname === '/living' ? 'bg-black border-b-4 border-white' : ''
@@ -162,39 +199,44 @@ const Navbar = () => {
                 >
                   LocoLiving
                 </Link> */}
-                {/* I only want them to see the businesses if they are logged in */}
-                {session && (
-                  <Link
-                    href='/businesses'
-                    className={`${
-                      pathname === '/businesses'
-                        ? 'bg-gray-200 border-b-4 border-black'
-                        : ''
-                    } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
-                  >
-                    LocoBusinesses
-                  </Link>
-                )}
-                {session && (
-                  <Link
-                    href='/hostfarmmarkets'
-                    className={`${
-                      pathname === '/hostfarmmarkets'
-                        ? 'bg-gray-200 border-b-4 border-black'
-                        : ''
-                    } text-black hover:bg-gray-100 hover:text-black rounded-md px-3 py-2`}
-                  >
-                    LocoFarmers' Markets
-                  </Link>
-                )}
-              </div>
+              {/* I only want them to see the businesses if they are logged in */}
+              {session && (
+                <Link
+                  href='/businesses'
+                  role='menuitem'
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    pathname === '/businesses'
+                      ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-700'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                  aria-current={pathname === '/businesses' ? 'page' : undefined}
+                >
+                  LocoBusinesses
+                </Link>
+              )}
+              {session && (
+                <Link
+                  href='/hostfarmmarkets'
+                  role='menuitem'
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    pathname === '/hostfarmmarkets'
+                      ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-700'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                  aria-current={
+                    pathname === '/hostfarmmarkets' ? 'page' : undefined
+                  }
+                >
+                  LocoFarmers' Markets
+                </Link>
+              )}
             </div>
           </div>
 
-          {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!session && (
-            <div className='hidden md:block md:ml-6'>
-              <div className='flex items-center'>
+          {/* User Actions */}
+          <div className='flex items-center space-x-4'>
+            {!session && (
+              <div className='hidden md:flex md:items-center'>
                 {providers &&
                   Object.values(providers).map((provider, index) => (
                     <button
@@ -202,193 +244,208 @@ const Navbar = () => {
                       onClick={() =>
                         signIn(provider.id, { callbackUrl: '/onboarding' })
                       }
-                      className='flex items-center text-white bg-black hover:bg-gray-800 hover:text-white rounded-md px-3 py-2'
+                      className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
                     >
-                      <FaGoogle className='text-white mr-2' />
+                      <FaGoogle className='mr-2 h-4 w-4' />
                       <span>Login or Register</span>
                     </button>
                   ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* <!-- Right Side Menu (Logged In) --> */}
-          {session && (
-            <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
-              <Link
-                href='/messages'
-                className='relative group'
-              >
-                <button
-                  type='button'
-                  className='relative rounded-full bg-gray-100 p-1 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white'
+            {session && (
+              <>
+                {/* Messages Button */}
+                <Link
+                  href='/messages'
+                  className='relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  aria-label='View Messages'
                 >
-                  <span className='absolute -inset-1.5'></span>
                   <span className='sr-only'>View Messages</span>
-                  <span className='relative inline-block h-7 w-7'>
-                    {/* Solid (fill) layer appears on hover to turn inside black */}
-                    <HiChatBubbleLeft className='absolute inset-0 h-7 w-7 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-150' />
-                    {/* Outline layer stays on top and changes to darker on hover */}
-                    <HiOutlineChatBubbleLeft className='relative h-7 w-7 text-gray-600 group-hover:text-black transition-colors duration-150' />
-                  </span>
-                </button>
-                <UnreadMessageCount />
-              </Link>
-              {/* <!-- Profile dropdown button --> */}
-              <div
-                className='relative ml-3 z-50'
-                ref={profileMenuRef}
-              >
-                <div>
+                  <HiOutlineChatBubbleLeft className='h-6 w-6' />
+                  <UnreadMessageCount />
+                </Link>
+                {/* Profile Dropdown */}
+                <div
+                  className='relative'
+                  ref={profileMenuRef}
+                >
                   <button
                     type='button'
-                    className='relative flex rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-white'
-                    id='user-menu-button'
-                    aria-expanded='false'
+                    className='flex items-center p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                    aria-expanded={isProfileMenuOpen ? 'true' : 'false'}
                     aria-haspopup='true'
                     onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                   >
-                    <span className='absolute -inset-1.5'></span>
                     <span className='sr-only'>Open user menu</span>
                     <Image
-                      className='h-8 w-8 text-black rounded-full'
+                      className='h-8 w-8 rounded-full'
                       src={profileImage || profileDefault}
-                      alt='user profile image'
-                      width={40}
-                      height={40}
+                      alt='User profile'
+                      width={32}
+                      height={32}
                     />
                   </button>
-                </div>
 
-                {/* <!-- Profile dropdown --> */}
-                {isProfileMenuOpen && (
-                  <div
-                    id='user-menu'
-                    className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
-                    role='menu'
-                    aria-orientation='vertical'
-                    aria-labelledby='user-menu-button'
-                    tabIndex='-1'
+                  {/* Profile Dropdown Menu */}
+                  {isProfileMenuOpen && (
+                    <div
+                      className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                      role='menu'
+                      aria-orientation='vertical'
+                    >
+                      <Link
+                        href={me?._id ? `/profile/${me._id}` : '/profile'}
+                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200'
+                        onClick={() => setIsProfileMenuOpen(false)}
+                        role='menuitem'
+                      >
+                        Your Profile & Membership
+                      </Link>
+
+                      <Link
+                        href='/businesses/saved'
+                        className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200'
+                        role='menuitem'
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        Saved LivLoco Businesses and Markets
+                      </Link>
+
+                      <button
+                        className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200'
+                        role='menuitem'
+                        onClick={() => {
+                          setIsProfileMenuOpen(false)
+                          signOut({ callbackUrl: '/' })
+                        }}
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className='lg:hidden'>
+            <div className='fixed inset-0 z-50 lg:hidden'>
+              <div
+                className='fixed inset-0 bg-black bg-opacity-25'
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              <div className='relative flex-1 flex flex-col max-w-xs w-full bg-white shadow-xl'>
+                <div className='flex-1 h-0 pt-5 pb-4 overflow-y-auto'>
+                  <div className='flex-shrink-0 flex items-center px-4'>
+                    <Image
+                      className='h-8 w-auto'
+                      src={logo}
+                      alt='LivLoco logo'
+                      width={32}
+                      height={32}
+                    />
+                    <span className='ml-3 text-xl font-bold text-gray-900'>
+                      The Livlo.co Co-op
+                    </span>
+                  </div>
+                  <nav
+                    className='mt-5 px-2 space-y-1'
+                    role='menubar'
                   >
                     <Link
-                      href={me?._id ? `/profile/${me._id}` : '/profile'}
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      onClick={() => setIsProfileMenuOpen(false)}
-                    >
-                      Your Profile & Membership
-                    </Link>
-
-                    <Link
-                      href='/businesses/saved'
-                      className='block px-4 py-2 text-sm text-black'
+                      href='/'
+                      className={`${
+                        pathname === '/'
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                      } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                      onClick={() => setIsMobileMenuOpen(false)}
                       role='menuitem'
-                      tabIndex='-1'
-                      id='user-menu-item-2'
-                      onClick={() => setIsProfileMenuOpen(false)}
+                      aria-current={pathname === '/' ? 'page' : undefined}
                     >
-                      Saved LivLoco Businesses and Markets
+                      LocoHome
                     </Link>
-                    <button
-                      className='block px-4 py-2 text-sm text-gray-700'
-                      role='menuitem'
-                      tabIndex='-1'
-                      id='user-menu-item-2'
-                      onClick={() => {
-                        setIsProfileMenuOpen(false)
-                        signOut({ callbackUrl: '/' })
-                      }}
-                    >
-                      Sign Out
-                    </button>
+                    {session && (
+                      <Link
+                        href='/businesses'
+                        className={`${
+                          pathname === '/businesses'
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        role='menuitem'
+                        aria-current={
+                          pathname === '/businesses' ? 'page' : undefined
+                        }
+                      >
+                        LocoBusinesses
+                      </Link>
+                    )}
+                    {session && (
+                      <Link
+                        href='/hostfarmmarkets'
+                        className={`${
+                          pathname === '/hostfarmmarkets'
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        role='menuitem'
+                        aria-current={
+                          pathname === '/hostfarmmarkets' ? 'page' : undefined
+                        }
+                      >
+                        LocoFarmers' Markets
+                      </Link>
+                    )}
+                    {session && (
+                      <Link
+                        href={me?._id ? `/profile/${me._id}` : '/profile'}
+                        className={`${
+                          pathname.startsWith('/profile')
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        role='menuitem'
+                        aria-current={
+                          pathname.startsWith('/profile') ? 'page' : undefined
+                        }
+                      >
+                        Your Profile & Membership
+                      </Link>
+                    )}
+                  </nav>
+                </div>
+                {!session && (
+                  <div className='flex-shrink-0 border-t border-gray-200 p-4'>
+                    {providers &&
+                      Object.values(providers).map((provider) => (
+                        <button
+                          key={provider.id}
+                          onClick={() => {
+                            setIsMobileMenuOpen(false)
+                            signIn(provider.id, { callbackUrl: '/onboarding' })
+                          }}
+                          className='w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200'
+                        >
+                          <FaGoogle className='mr-2 h-4 w-4' />
+                          <span>Login or Register</span>
+                        </button>
+                      ))}
                   </div>
                 )}
               </div>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* <!-- Mobile menu, show/hide based on menu state. --> */}
-      {isMobileMenuOpen && (
-        <div
-          id='mobile-menu'
-          ref={mobileMenuRef}
-        >
-          <div className='space-y-1 px-2 pb-3 pt-2'>
-            <Link
-              href='/'
-              className={`${
-                pathname === '/' ? 'bg-gray-200' : ''
-              } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              LocoHome
-            </Link>
-            {/* will add the locoliving slogan after it has launched */}
-            {/* <Link
-              href='/living'
-              className={`${
-                pathname === '/living' ? 'bg-black' : ''
-              } flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5`}
-            onClick={() => setIsMobileMenuOpen(false)} 
-            >
-              LocoLiving
-            </Link> */}
-            {session && (
-              <Link
-                href='/businesses'
-                className={`${
-                  pathname === '/businesses' ? 'bg-gray-200' : ''
-                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                LocoBusinesses
-              </Link>
-            )}
-            {session && (
-              <Link
-                href='/hostfarmmarkets'
-                className={`${
-                  pathname === '/hostfarmmarkets' ? 'bg-gray-200' : ''
-                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                LocoFarmers' Markets
-              </Link>
-            )}
-            {session && (
-              <Link
-                href={me?._id ? `/profile/${me._id}` : '/profile'}
-                className={`${
-                  pathname.startsWith('/profile') ? 'bg-gray-200' : ''
-                } flex items-center text-black bg-gray-100 hover:bg-gray-200 hover:text-black rounded-md px-3 py-2 my-5`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Your Profile & Membership
-              </Link>
-            )}
-            {!session && (
-              <div>
-                {providers &&
-                  Object.values(providers).map((provider) => (
-                    <button
-                      key={provider.id}
-                      onClick={() => {
-                        setIsMobileMenuOpen(false)
-                        signIn(provider.id, { callbackUrl: '/onboarding' })
-                      }}
-                      className='flex items-center text-white bg-black hover:bg-gray-800 hover:text-white rounded-md px-3 py-2 my-5'
-                    >
-                      <FaGoogle className='fa-brands fa-google mr-2'></FaGoogle>
-                      <span>Login or Register</span>
-                    </button>
-                  ))}
-              </div>
-            )}
           </div>
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
+    </header>
   )
 }
 

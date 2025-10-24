@@ -33,7 +33,6 @@ export async function GET() {
         blockedBy: thread.blockedBy,
         lastMessage: thread.lastMessage,
         lastMessageAt: thread.lastMessageAt,
-        autoDeleteAt: thread.autoDeleteAt,
       })),
     })
   } catch (error) {

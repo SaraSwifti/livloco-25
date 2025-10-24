@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import connectDB from '@/config/database'
-import MessageThread from '@/models/MessageThread'
+import BlockedUser from '@/models/BlockedUser'
 import { getSessionUser } from '@/utils/getSessionUser'
 
 export async function POST(request) {
@@ -24,22 +24,22 @@ export async function POST(request) {
 
     await connectDB()
 
-    // Check if there's a thread between these users where current user has blocked
-    const currentUserBlockedThread = await MessageThread.findOne({
-      participants: { $all: [sessionUser.userId, recipientId] },
-      blockedBy: sessionUser.userId,
+    // Check if current user has blocked the recipient
+    const currentUserBlocked = await BlockedUser.findOne({
+      blocker: sessionUser.userId,
+      blocked: recipientId,
     })
 
-    // Check if there's a thread between these users where recipient has blocked current user
-    const recipientBlockedThread = await MessageThread.findOne({
-      participants: { $all: [sessionUser.userId, recipientId] },
-      blockedBy: recipientId,
+    // Check if recipient has blocked the current user
+    const recipientBlocked = await BlockedUser.findOne({
+      blocker: recipientId,
+      blocked: sessionUser.userId,
     })
 
     return NextResponse.json({
       success: true,
-      isBlockedByCurrentUser: !!currentUserBlockedThread,
-      isBlockedByRecipient: !!recipientBlockedThread,
+      isBlockedByCurrentUser: !!currentUserBlocked,
+      isBlockedByRecipient: !!recipientBlocked,
     })
   } catch (error) {
     console.error('Error checking blocked state:', error)

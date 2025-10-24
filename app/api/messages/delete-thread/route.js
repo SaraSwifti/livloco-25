@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import connectDB from '@/config/database'
 import MessageThread from '@/models/MessageThread'
 import Message from '@/models/Message'
+import ThreadDeletionNotification from '@/models/ThreadDeletionNotification'
+import LocoBiz from '@/models/LocoBiz'
+import HostFMarket from '@/models/HostFMarket'
 import { getSessionUser } from '@/utils/getSessionUser'
 
 export async function DELETE(request) {
@@ -29,13 +32,50 @@ export async function DELETE(request) {
     const thread = await MessageThread.findOne({
       _id: threadId,
       participants: sessionUser.userId,
-    })
+    }).populate('participants', 'full_name')
 
     if (!thread) {
       return NextResponse.json(
         { success: false, error: 'Thread not found' },
         { status: 404 }
       )
+    }
+
+    // Find the other participant (the one who didn't delete)
+    const otherParticipant = thread.participants.find(
+      (p) => p._id.toString() !== sessionUser.userId
+    )
+
+    // Get posting information for the notification
+    let postingName = 'Unknown'
+    try {
+      if (thread.postingType === 'business') {
+        const business = await LocoBiz.findById(thread.postingId)
+          .select('locobiz_name')
+          .lean()
+        postingName = business?.locobiz_name || 'Unknown Business'
+      } else if (thread.postingType === 'hostfarmmarket') {
+        const market = await HostFMarket.findById(thread.postingId)
+          .select('hostfm_name')
+          .lean()
+        postingName = market?.hostfm_name || 'Unknown Market'
+      }
+    } catch (error) {
+      console.error('Error fetching posting name:', error)
+    }
+
+    // Create notification for the other participant
+    if (otherParticipant) {
+      const notification = new ThreadDeletionNotification({
+        recipient: otherParticipant._id,
+        deletedBy: sessionUser.userId,
+        threadInfo: {
+          postingType: thread.postingType,
+          postingId: thread.postingId,
+          postingName: postingName,
+        },
+      })
+      await notification.save()
     }
 
     // Delete all messages in the thread

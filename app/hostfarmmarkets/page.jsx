@@ -1,4 +1,4 @@
-import Hero from '@/components/Hero'
+
 import SearchableMarketList from '@/components/SearchableMarketList'
 // import markets from '@/app/hostfmarkets.json'; // adjust path if your JSON lives elsewhere
 import connectDB from '@/config/database'
@@ -25,7 +25,7 @@ const HostFarmMarketsPage = async () => {
 
   return (
     <>
-      <Hero />
+     
       <SearchableMarketList initialMarkets={serializedMarkets} />
     </>
   )

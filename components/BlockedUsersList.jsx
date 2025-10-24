@@ -26,7 +26,7 @@ export default function BlockedUsersList({ currentUserId }) {
     }
   }
 
-  const unblockUser = async (threadId) => {
+  const unblockUser = async (blockedUserId) => {
     try {
       const response = await fetch('/api/messages/unblock', {
         method: 'POST',
@@ -34,7 +34,7 @@ export default function BlockedUsersList({ currentUserId }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          threadId,
+          blockedUserId,
         }),
       })
 
@@ -43,7 +43,10 @@ export default function BlockedUsersList({ currentUserId }) {
       if (result.success) {
         // Remove the user from the blocked list
         setBlockedUsers((prev) =>
-          prev.filter((user) => user.threadId !== threadId)
+          prev.filter((user) => user.userId !== blockedUserId)
+        )
+        alert(
+          'User unblocked successfully. You can now start a new conversation with them.'
         )
       } else {
         alert(result.error || 'Failed to unblock user')
@@ -80,7 +83,7 @@ export default function BlockedUsersList({ currentUserId }) {
         <div className='space-y-4'>
           {blockedUsers.map((user) => (
             <div
-              key={user.threadId}
+              key={user.userId}
               className='bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200'
             >
               <div className='flex items-center justify-between'>
@@ -104,11 +107,12 @@ export default function BlockedUsersList({ currentUserId }) {
                     {user.postingType === 'business'
                       ? 'business listing'
                       : 'farmers market'}
+                    : {user.postingName}
                   </p>
                 </div>
                 <div className='flex gap-2'>
                   <button
-                    onClick={() => unblockUser(user.threadId)}
+                    onClick={() => unblockUser(user.userId)}
                     className='bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200'
                   >
                     Unblock

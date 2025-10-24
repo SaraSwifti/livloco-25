@@ -178,7 +178,7 @@ export default function SearchFilters({
               <button
                 onClick={handleZipcodeSearch}
                 disabled={isLoadingLocation}
-                className='px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 disabled:bg-gray-400'
+                className='px-4 py-2 bg-green-800 text-white rounded-r-lg hover:bg-green-900 disabled:bg-gray-400'
               >
                 Go
               </button>
@@ -191,7 +191,7 @@ export default function SearchFilters({
       <div className='flex items-center justify-between mb-2'>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className='flex items-center text-blue-600 hover:text-blue-800'
+          className='flex items-center text-blue-800 hover:text-blue-900 bg-white/20 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/30 transition-all duration-200'
         >
           <FaFilter className='mr-2' />
           Advanced Filters
@@ -199,7 +199,7 @@ export default function SearchFilters({
 
         <button
           onClick={clearFilters}
-          className='flex items-center text-black hover:text-gray-800'
+          className='flex items-center text-black hover:text-gray-800 bg-white/20 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/30 transition-all duration-200'
         >
           <FaTimes className='mr-2' />
           Clear All

@@ -45,11 +45,6 @@ const MessageThreadSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    // Auto-deletion date (6 months from last message)
-    autoDeleteAt: {
-      type: Date,
-      default: () => new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000), // 6 months
-    },
   },
   {
     timestamps: true,
@@ -60,15 +55,6 @@ const MessageThreadSchema = new mongoose.Schema(
 MessageThreadSchema.index({ participants: 1, lastMessageAt: -1 })
 MessageThreadSchema.index({ initiator: 1 })
 MessageThreadSchema.index({ recipient: 1 })
-MessageThreadSchema.index({ autoDeleteAt: 1 })
-
-// Update auto-deletion date when last message changes
-MessageThreadSchema.pre('save', function (next) {
-  if (this.isModified('lastMessageAt')) {
-    this.autoDeleteAt = new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000)
-  }
-  next()
-})
 
 export default mongoose.models.MessageThread ||
   mongoose.model('MessageThread', MessageThreadSchema)

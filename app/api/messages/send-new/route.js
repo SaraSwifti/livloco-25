@@ -16,11 +16,25 @@ export async function POST(request) {
       )
     }
 
-    const { postingType, postingId, recipientId } = await request.json()
+    const { postingType, postingId, recipientId, content } =
+      await request.json()
 
-    if (!postingType || !postingId || !recipientId) {
+    if (
+      !postingType ||
+      !postingId ||
+      !recipientId ||
+      !content ||
+      content.trim().length === 0
+    ) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+
+    if (content.length > 100) {
+      return NextResponse.json(
+        { success: false, error: 'Message too long (max 100 characters)' },
         { status: 400 }
       )
     }
@@ -88,31 +102,51 @@ export async function POST(request) {
       )
     }
 
-    // Check if a thread already exists between these two users (regardless of posting)
-    const existingThread = await MessageThread.findOne({
+    // Check if a thread already exists between these two users
+    let thread = await MessageThread.findOne({
       participants: { $all: [sessionUser.userId, recipientId] },
     })
 
-    if (existingThread) {
-      return NextResponse.json({
-        success: true,
-        threadId: existingThread._id.toString(),
-        existing: true,
+    // If no thread exists, create one
+    if (!thread) {
+      thread = new MessageThread({
+        participants: [sessionUser.userId, recipientId],
+        initiator: sessionUser.userId,
+        recipient: recipientId,
+        postingType,
+        postingId,
       })
+
+      await thread.save()
     }
 
-    // Instead of creating a thread, return compose URL for new conversation
-    const composeUrl = `/messages/compose?postingType=${postingType}&postingId=${postingId}&recipientId=${recipientId}&postingName=${encodeURIComponent(
-      postingType === 'business' ? posting.locobiz_name : posting.hostfm_name
-    )}`
+    // Create the message
+    const message = new Message({
+      thread: thread._id,
+      sender: sessionUser.userId,
+      content: content.trim(),
+    })
+
+    await message.save()
+
+    // Update thread with last message info
+    await MessageThread.findByIdAndUpdate(thread._id, {
+      lastMessage: message._id,
+      lastMessageAt: new Date(),
+    })
 
     return NextResponse.json({
       success: true,
-      composeUrl,
-      existing: false,
+      threadId: thread._id.toString(),
+      message: {
+        _id: message._id,
+        content: message.content,
+        sender: sessionUser.userId,
+        createdAt: message.createdAt,
+      },
     })
   } catch (error) {
-    console.error('Error creating message thread:', error)
+    console.error('Error sending new message:', error)
     return NextResponse.json(
       {
         success: false,
@@ -122,3 +156,4 @@ export async function POST(request) {
     )
   }
 }
+

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import connectDB from '@/config/database'
-import BlockedUser from '@/models/BlockedUser'
+import User from '@/models/User'
 import { getSessionUser } from '@/utils/getSessionUser'
 
-export async function POST(request) {
+export async function GET(request, { params }) {
   try {
     const sessionUser = await getSessionUser()
     if (!sessionUser?.userId) {
@@ -13,30 +13,29 @@ export async function POST(request) {
       )
     }
 
-    const { threadId, blockedUserId } = await request.json()
-
-    if (!blockedUserId) {
-      return NextResponse.json(
-        { success: false, error: 'Missing blocked user ID' },
-        { status: 400 }
-      )
-    }
+    const { userId } = params
 
     await connectDB()
 
-    // Remove the blocked user record
-    await BlockedUser.findOneAndDelete({
-      blocker: sessionUser.userId,
-      blocked: blockedUserId,
-    })
+    const user = await User.findById(userId).select('full_name email')
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: 'User not found' },
+        { status: 404 }
+      )
+    }
 
     return NextResponse.json({
       success: true,
-      message:
-        'User unblocked. You can now start a new conversation with them.',
+      user: {
+        _id: user._id,
+        full_name: user.full_name,
+        email: user.email,
+      },
     })
   } catch (error) {
-    console.error('Error unblocking user:', error)
+    console.error('Error fetching user:', error)
     return NextResponse.json(
       {
         success: false,
@@ -46,3 +45,4 @@ export async function POST(request) {
     )
   }
 }
+

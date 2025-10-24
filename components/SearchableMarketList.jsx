@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import MarketCard from '@/components/MarketCard'
 import SearchFilters from '@/components/SearchFilters'
+import logo from '@/assets/images/newlivlocologo.png'
 
 export default function SearchableMarketList({ initialMarkets = [] }) {
   const [markets, setMarkets] = useState(initialMarkets)
@@ -15,10 +17,37 @@ export default function SearchableMarketList({ initialMarkets = [] }) {
     zipcode: '',
     sortBy: 'distance',
   })
+  const [hasInitialized, setHasInitialized] = useState(false)
 
   useEffect(() => {
-    searchMarkets(filters)
-  }, [filters])
+    // Try to restore user location from sessionStorage on first load
+    const savedLocation = sessionStorage.getItem('userLocation')
+    if (savedLocation) {
+      try {
+        const location = JSON.parse(savedLocation)
+        const newFilters = {
+          ...filters,
+          userLat: location.latitude,
+          userLon: location.longitude,
+          source: location.source,
+        }
+        setFilters(newFilters)
+        setHasInitialized(true)
+        return
+      } catch (error) {
+        console.error('Failed to restore location from sessionStorage:', error)
+      }
+    }
+
+    setHasInitialized(true)
+  }, [])
+
+  // Handle filter changes after initialization
+  useEffect(() => {
+    if (hasInitialized) {
+      searchMarkets(filters)
+    }
+  }, [filters, hasInitialized])
 
   const searchMarkets = async (searchFilters) => {
     setIsLoading(true)
@@ -54,46 +83,139 @@ export default function SearchableMarketList({ initialMarkets = [] }) {
 
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters)
+    if (!hasInitialized) {
+      setHasInitialized(true)
+    }
+
+    // Save user location to sessionStorage if available
+    if (newFilters.userLat && newFilters.userLon) {
+      const location = {
+        latitude: newFilters.userLat,
+        longitude: newFilters.userLon,
+        source: newFilters.source || 'unknown',
+      }
+      sessionStorage.setItem('userLocation', JSON.stringify(location))
+    }
   }
 
   return (
-    <div className='max-w-7xl mx-auto px-4 py-6'>
-      <SearchFilters
-        onFiltersChange={handleFiltersChange}
-        initialFilters={filters}
-        showLocationInput={true}
-        searchPlaceholder='Search Markets...'
-      />
+    <div className='-mx-4 -mt-8'>
+      {/* Hero Section with Search - Full Width */}
+      <section className='mb-4 relative'>
+        <div className='w-full bg-gradient-to-r from-green-800 via-green-700 to-blue-800 relative'>
+          <div className='max-w-7xl py-4 pb-2 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
+            {/* Logo: top-center on mobile, right 1/4 on md+ */}
+            <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
+              <Image
+                src={logo}
+                alt='LivLoco logo'
+                className='h-auto w-auto object-contain'
+                width={80}
+                height={80}
+              />
+            </div>
 
-      {isLoading ? (
-        <div className='flex items-center justify-center h-64'>
-          <div className='text-gray-500'>Searching markets...</div>
-        </div>
-      ) : markets.length === 0 ? (
-        <div className='text-center py-12'>
-          <div className='text-gray-500 text-lg mb-4'>No markets found</div>
-          <p className='text-gray-400'>
-            Try adjusting your search filters or expanding your search radius.
-          </p>
-        </div>
-      ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {markets.map((market) => (
-            <MarketCard
-              key={market._id}
-              market={market}
-            />
-          ))}
-        </div>
-      )}
+            {/* Text + Form: 3/4 on md+, full on mobile */}
+            <div className='order-2 md:order-1 w-full md:w-3/4 md:pr-6 text-center md:text-left'>
+              <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl'>
+                Find Your LocoMarkets and Meetups
+              </h1>
+              <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+                Discover farmers markets and local vendors. Supporting local
+                agriculture and community connections.
+              </p>
+            </div>
+          </div>
 
-      {/* Results Summary */}
-      {markets.length > 0 && (
-        <div className='mt-8 text-center text-gray-600'>
-          Showing {markets.length} market{markets.length !== 1 ? 's' : ''}
-          {filters.query && ` matching "${filters.query}"`}
+          {/* Search Filters with white form fields */}
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+            <div className='bg-transparent rounded-lg p-2'>
+              <SearchFilters
+                onFiltersChange={handleFiltersChange}
+                initialFilters={filters}
+                showLocationInput={true}
+                searchPlaceholder='Search Markets...'
+              />
+            </div>
+          </div>
+
+          {/* Wavy bottom design */}
+          <div className='absolute bottom-0 left-0 w-full overflow-hidden'>
+            <svg
+              className='relative block w-full h-10'
+              data-name='Layer 1'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 1200 120'
+              preserveAspectRatio='none'
+            >
+              <defs>
+                <linearGradient
+                  id='waveGradient'
+                  x1='0%'
+                  y1='0%'
+                  x2='100%'
+                  y2='0%'
+                >
+                  <stop
+                    offset='0%'
+                    style={{ stopColor: '#1e40af', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='30%'
+                    style={{ stopColor: '#1d4ed8', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='60%'
+                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='100%'
+                    style={{ stopColor: '#166534', stopOpacity: 1 }}
+                  />
+                </linearGradient>
+              </defs>
+              <path
+                d='M0,60 Q37.5,20 75,60 T150,60 T225,60 T300,60 T375,60 T450,60 T525,60 T600,60 T675,60 T750,60 T825,60 T900,60 T975,60 T1050,60 T1125,60 T1200,60 L1200,120 L0,120 Z'
+                fill='url(#waveGradient)'
+              ></path>
+            </svg>
+          </div>
         </div>
-      )}
+      </section>
+
+      {/* Content Section */}
+      <div className='max-w-7xl mx-auto px-4 py-6 mt-8 bg-white'>
+        {isLoading ? (
+          <div className='flex items-center justify-center h-64'>
+            <div className='text-gray-500'>Searching markets...</div>
+          </div>
+        ) : markets.length === 0 ? (
+          <div className='text-center py-12'>
+            <div className='text-gray-500 text-lg mb-4'>No markets found</div>
+            <p className='text-gray-400'>
+              Try adjusting your search filters or expanding your search radius.
+            </p>
+          </div>
+        ) : (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            {markets.map((market) => (
+              <MarketCard
+                key={market._id}
+                market={market}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Results Summary */}
+        {markets.length > 0 && (
+          <div className='mt-8 text-center text-gray-600'>
+            Showing {markets.length} market
+            {markets.length !== 1 ? 's' : ''}
+            {filters.query && ` matching "${filters.query}"`}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

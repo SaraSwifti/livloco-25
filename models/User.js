@@ -75,6 +75,19 @@ const UserSchema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: 'HostFMarket' }],
       default: [],
     },
+
+    // Admin role for site administration
+    role: {
+      type: String,
+      enum: ['user', 'admin', 'super_admin'],
+      default: 'user',
+    },
+
+    // Admin permissions (for future expansion)
+    permissions: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,

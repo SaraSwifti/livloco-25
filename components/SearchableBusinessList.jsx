@@ -102,16 +102,16 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
     <div className='-mx-4 -mt-8'>
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
-        <div className='w-full bg-gradient-to-r from-green-600 via-green-500 to-blue-600 relative'>
-          <div className='max-w-7xl py-4 pb-1 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
+        <div className='w-full bg-gradient-to-r from-green-800 via-green-700 to-blue-800 relative'>
+          <div className='max-w-7xl py-4 pb-2 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
             {/* Logo: top-center on mobile, right 1/4 on md+ */}
             <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
               <Image
                 src={logo}
                 alt='LivLoco logo'
                 className='h-auto w-auto object-contain'
-                width={120}
-                height={120}
+                width={80}
+                height={80}
               />
             </div>
 
@@ -128,7 +128,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
           </div>
 
           {/* Search Filters with white form fields */}
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-2 relative z-10'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
             <div className='bg-transparent rounded-lg p-2'>
               <SearchFilters
                 onFiltersChange={handleFiltersChange}
@@ -148,9 +148,35 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
               viewBox='0 0 1200 120'
               preserveAspectRatio='none'
             >
+              <defs>
+                <linearGradient
+                  id='waveGradient'
+                  x1='0%'
+                  y1='0%'
+                  x2='100%'
+                  y2='0%'
+                >
+                  <stop
+                    offset='0%'
+                    style={{ stopColor: '#1e40af', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='30%'
+                    style={{ stopColor: '#1d4ed8', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='60%'
+                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset='100%'
+                    style={{ stopColor: '#166534', stopOpacity: 1 }}
+                  />
+                </linearGradient>
+              </defs>
               <path
-                d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
-                className='fill-white'
+                d='M0,60 Q37.5,20 75,60 T150,60 T225,60 T300,60 T375,60 T450,60 T525,60 T600,60 T675,60 T750,60 T825,60 T900,60 T975,60 T1050,60 T1125,60 T1200,60 L1200,120 L0,120 Z'
+                fill='url(#waveGradient)'
               ></path>
             </svg>
           </div>
@@ -158,7 +184,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
       </section>
 
       {/* Content Section */}
-      <div className='max-w-7xl mx-auto px-4 py-6 mt-8'>
+      <div className='max-w-7xl mx-auto px-4 py-6 mt-8 bg-white'>
         {isLoading ? (
           <div className='flex items-center justify-center h-64'>
             <div className='text-gray-500'>Searching businesses...</div>

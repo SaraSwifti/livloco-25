@@ -67,8 +67,13 @@ export default function MessageButton({
       const result = await response.json()
 
       if (result.success) {
-        // Navigate to the message thread (either existing or new)
-        router.push(`/messages/${result.threadId}`)
+        if (result.existing) {
+          // Navigate to existing thread
+          router.push(`/messages/${result.threadId}`)
+        } else {
+          // Navigate to compose page for new conversation
+          router.push(result.composeUrl)
+        }
       } else {
         alert(result.error || 'Failed to start conversation')
       }
@@ -91,7 +96,7 @@ export default function MessageButton({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          threadId: blockedBy,
+          blockedUserId: recipientId,
         }),
       })
 

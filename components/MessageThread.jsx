@@ -141,15 +141,15 @@ export default function MessageThread({ threadId, currentUserId }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          threadId,
+          blockedUserId: otherUser._id,
         }),
       })
 
       const result = await response.json()
 
       if (result.success) {
-        setIsBlocked(false)
-        setThread((prev) => ({ ...prev, blockedBy: null }))
+        // Redirect to messages list since the thread is now deleted
+        window.location.href = '/messages'
       } else {
         alert(result.error || 'Failed to unblock user')
       }
@@ -340,14 +340,6 @@ export default function MessageThread({ threadId, currentUserId }) {
             </button>
           </form>
         )}
-
-        {/* Auto-deletion warning */}
-        <div className='mt-2 text-xs text-gray-500 text-center'>
-          <p>
-            ⚠️ Message threads are automatically deleted after 6 months of
-            inactivity. Messages are limited to 100 characters.
-          </p>
-        </div>
       </div>
     </div>
   )
