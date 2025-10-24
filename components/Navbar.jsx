@@ -14,6 +14,7 @@ const Navbar = () => {
   const { data: session } = useSession()
   //this is to check user route and permissions on mem profile.
   const [me, setMe] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const profileImage = session?.user?.image
   const profileMenuRef = useRef(null)
@@ -43,7 +44,20 @@ const Navbar = () => {
         setMe(j.user || null)
       } catch {}
     }
-    if (session) loadMe()
+
+    // check admin status
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch('/api/admin/status', { cache: 'no-store' })
+        const result = await response.json()
+        setIsAdmin(result.success && result.isAdmin)
+      } catch {}
+    }
+
+    if (session) {
+      loadMe()
+      checkAdminStatus()
+    }
 
     // NOTE: close mobile menu if the viewport size is changed
     function handleResize() {
@@ -230,6 +244,20 @@ const Navbar = () => {
                   LocoFarmers' Markets
                 </Link>
               )}
+              {session && isAdmin && (
+                <Link
+                  href='/admin'
+                  role='menuitem'
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    pathname === '/admin'
+                      ? 'bg-red-100 text-red-700 border-b-2 border-red-700'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                  aria-current={pathname === '/admin' ? 'page' : undefined}
+                >
+                  Admin Panel
+                </Link>
+              )}
             </div>
           </div>
 
@@ -401,6 +429,23 @@ const Navbar = () => {
                         }
                       >
                         LocoFarmers' Markets
+                      </Link>
+                    )}
+                    {session && isAdmin && (
+                      <Link
+                        href='/admin'
+                        className={`${
+                          pathname === '/admin'
+                            ? 'bg-red-100 text-red-700'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        role='menuitem'
+                        aria-current={
+                          pathname === '/admin' ? 'page' : undefined
+                        }
+                      >
+                        Admin Panel
                       </Link>
                     )}
                     {session && (

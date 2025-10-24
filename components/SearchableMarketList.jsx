@@ -121,8 +121,8 @@ export default function SearchableMarketList({ initialMarkets = [] }) {
                 Find Your LocoMarkets and Meetups
               </h1>
               <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
-                Discover farmers markets and local vendors. Supporting local
-                agriculture and community connections.
+                Discover farmers markets, food truck, and local vendor Meetups. Supporting local
+                agriculture, economies and community connections.
               </p>
             </div>
           </div>

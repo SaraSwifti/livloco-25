@@ -36,15 +36,15 @@ export async function GET(request) {
 
     // Location filters
     if (state) {
-      mongoQuery['address.state_code'] = state.toUpperCase()
+      mongoQuery['hostfm_address.state_code'] = state.toUpperCase()
     }
 
     if (city) {
-      mongoQuery['address.city'] = { $regex: city, $options: 'i' }
+      mongoQuery['hostfm_address.city'] = { $regex: city, $options: 'i' }
     }
 
     if (zipcode) {
-      mongoQuery['address.zipcode'] = { $regex: zipcode }
+      mongoQuery['hostfm_address.zipcode'] = { $regex: zipcode }
     }
 
     // Execute query
@@ -58,17 +58,17 @@ export async function GET(request) {
 
           // Use existing coordinates if available
           if (
-            market.address?.coordinates?.latitude &&
-            market.address?.coordinates?.longitude
+            market.hostfm_address?.coordinates?.latitude &&
+            market.hostfm_address?.coordinates?.longitude
           ) {
-            lat = market.address.coordinates.latitude
-            lon = market.address.coordinates.longitude
-          } else if (market.address?.zipcode) {
+            lat = market.hostfm_address.coordinates.latitude
+            lon = market.hostfm_address.coordinates.longitude
+          } else if (market.hostfm_address?.zipcode) {
             // Geocode on-the-fly if no coordinates
             try {
               // Try zipapi.co first
               let response = await fetch(
-                `https://zipapi.co/api/${market.address.zipcode}`
+                `https://zipapi.co/api/${market.hostfm_address.zipcode}`
               )
               let data = null
 
@@ -77,7 +77,7 @@ export async function GET(request) {
               } else {
                 // Fallback to zippopotam.us
                 response = await fetch(
-                  `https://api.zippopotam.us/us/${market.address.zipcode}`
+                  `https://api.zippopotam.us/us/${market.hostfm_address.zipcode}`
                 )
                 if (response.ok) {
                   data = await response.json()
@@ -97,7 +97,10 @@ export async function GET(request) {
 
                 // Save coordinates to database for future use
                 await HostFMarket.findByIdAndUpdate(market._id, {
-                  'address.coordinates': { latitude: lat, longitude: lon },
+                  'hostfm_address.coordinates': {
+                    latitude: lat,
+                    longitude: lon,
+                  },
                 })
               }
             } catch (error) {
