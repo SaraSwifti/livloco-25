@@ -37,3 +37,126 @@ body {
 /* @tailwind base; */
 /* @tailwind components; */
 /* @tailwind utilities; */
+
+/* ========================================
+   LIVLOCO BRAND GRADIENT COMPONENTS
+   ======================================== */
+
+/* Main brand gradient background */
+.livloco-gradient {
+  background: linear-gradient(to right, #15803d, #047857, #0369a1);
+}
+
+/* Main brand gradient background with hover effects */
+.livloco-gradient-hover {
+  background: linear-gradient(to right, #15803d, #047857, #0369a1);
+  transition: all 0.3s ease;
+}
+
+.livloco-gradient-hover:hover {
+  background: linear-gradient(to right, #166534, #065f46, #075985);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   LIVLOCO WAVE DESIGN COMPONENTS
+   ======================================== */
+
+/* Wave container - positions the wave at the bottom */
+.livloco-wave-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.livloco-wave-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5rem; /* h-10 equivalent */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='waveGradient' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%230369a1;stop-opacity:1' /%3E%3Cstop offset='30%25' style='stop-color:%23047857;stop-opacity:1' /%3E%3Cstop offset='60%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z' fill='url(%23waveGradient)' stroke='white' stroke-width='4'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+/* Double height wave for larger sections */
+.livloco-wave-container-lg::after {
+  height: 5rem; /* h-20 equivalent */
+}
+
+/* ========================================
+   LIVLOCO HERO SECTION COMPONENTS
+   ======================================== */
+
+/* Complete hero section with gradient and wave */
+.livloco-hero {
+  @apply relative overflow-hidden;
+  background: linear-gradient(to right, #15803d, #047857, #0369a1);
+}
+
+.livloco-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='waveGradient' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%230369a1;stop-opacity:1' /%3E%3Cstop offset='30%25' style='stop-color:%23047857;stop-opacity:1' /%3E%3Cstop offset='60%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z' fill='url(%23waveGradient)' stroke='white' stroke-width='4'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+/* Large hero section with double wave height */
+.livloco-hero-lg {
+  @apply relative overflow-hidden;
+  background: linear-gradient(to right, #15803d, #047857, #0369a1);
+}
+
+.livloco-hero-lg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='waveGradient' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%230369a1;stop-opacity:1' /%3E%3Cstop offset='30%25' style='stop-color:%23047857;stop-opacity:1' /%3E%3Cstop offset='60%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2315803d;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z' fill='url(%23waveGradient)' stroke='white' stroke-width='4'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+/* ========================================
+   LIVLOCO TEXT STYLES
+   ======================================== */
+
+/* White text with drop shadow for gradient backgrounds */
+.livloco-text-white {
+  @apply text-white drop-shadow-2xl;
+}
+
+/* Hero title styling */
+.livloco-hero-title {
+  @apply text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl;
+}
+
+/* Hero subtitle styling */
+.livloco-hero-subtitle {
+  @apply font-bold drop-shadow-2xl text-sm text-white;
+}
+
+/* ========================================
+   LIVLOCO LOGO HALO COMPONENTS
+   ======================================== */
+
+/* Circular halo around logo */
+.livloco-logo-halo {
+  @apply bg-white/20 backdrop-blur-sm rounded-full shadow-lg;
+}
+
+/* Large circular halo for prominent logos */
+.livloco-logo-halo-lg {
+  @apply bg-white/20 backdrop-blur-sm rounded-full shadow-xl w-48 h-48 p-8 flex items-center justify-center;
+}

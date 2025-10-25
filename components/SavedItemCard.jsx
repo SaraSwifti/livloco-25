@@ -49,108 +49,144 @@ const SavedItemCard = ({ item, type }) => {
     : null
 
   return (
-    <div
-      className={`bg-white rounded-xl shadow-md border-4 border-black ring-1 ring-black/20 overflow-hidden flex flex-col ${
-        !isActive ? 'opacity-60' : ''
-      }`}
-    >
-      {/* Image */}
-      {isActive ? (
-        <Link
-          href={linkUrl}
-          className='block'
+    <div className='bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden'>
+      <article
+        className='rounded-xl overflow-hidden'
+        itemScope
+        itemType={
+          isBusiness
+            ? 'https://schema.org/LocalBusiness'
+            : 'https://schema.org/FarmersMarket'
+        }
+      >
+        {/* Image Section */}
+        <div
+          className={`relative h-48 w-full bg-gray-900 rounded-t-xl overflow-hidden ${
+            !isActive ? 'opacity-60' : ''
+          }`}
         >
-          <div className='mt-5 flex justify-center items-center'>
+          <div
+            className='absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900'
+            aria-hidden='true'
+          />
+          <div
+            className='absolute inset-0 bg-green-500/10'
+            aria-hidden='true'
+          />
+          {isActive ? (
+            <Link
+              href={linkUrl}
+              className='block h-full w-full'
+            >
+              <SafeImage
+                src={profileImage}
+                alt={`${name} profile image`}
+                className='h-full w-full object-cover'
+                imgClassName='object-cover'
+                cover={true}
+                sizes='(max-width: 640px) 90vw, 300px'
+                zoomOnClick={false}
+                itemProp='image'
+              />
+            </Link>
+          ) : (
             <SafeImage
               src={profileImage}
               alt={`${name} profile image`}
-              className='h-[200px] w-[300px] rounded-t-xl'
-              imgClassName='object-contain'
-              cover={false}
+              className='h-full w-full object-cover'
+              imgClassName='object-cover'
+              cover={true}
               sizes='(max-width: 640px) 90vw, 300px'
+              zoomOnClick={false}
+              itemProp='image'
             />
-          </div>
-        </Link>
-      ) : (
-        <div className='mt-5 flex justify-center items-center'>
-          <SafeImage
-            src={profileImage}
-            alt={`${name} profile image`}
-            className='h-[200px] w-[300px] rounded-t-xl'
-            imgClassName='object-contain'
-            cover={false}
-            sizes='(max-width: 640px) 90vw, 300px'
-          />
+          )}
         </div>
-      )}
 
-      {/* Content */}
-      <div className='p-4 flex-1 flex flex-col'>
-        {isActive ? (
-          <Link
-            href={linkUrl}
-            className='block mb-3'
-          >
-            <h3 className='text-2xl font-bold text-center mb-1 hover:text-blue-600 transition-colors'>
-              {name}
-            </h3>
+        {/* Content Section */}
+        <div className='p-4'>
+          {/* Name */}
+          <header className='mb-2'>
+            {isActive ? (
+              <Link
+                href={linkUrl}
+                className='block'
+              >
+                <h3
+                  className='text-lg font-bold text-gray-900 text-center hover:text-blue-600 transition-colors'
+                  itemProp='name'
+                >
+                  {name}
+                </h3>
+              </Link>
+            ) : (
+              <h3
+                className='text-lg font-bold text-gray-900 text-center'
+                itemProp='name'
+              >
+                {name}
+              </h3>
+            )}
+          </header>
+
+          {/* Rest of content with conditional opacity */}
+          <div className={!isActive ? 'opacity-60' : ''}>
+            {/* Type */}
             {itemType && (
-              <p className='text-sm text-gray-600 text-center'>{itemType}</p>
+              <div
+                className='text-sm text-gray-600 mb-2 text-center'
+                itemProp='description'
+              >
+                {itemType}
+              </div>
             )}
+
+            {/* Description */}
             {description && (
-              <p className='text-sm text-gray-700 text-center mt-2 line-clamp-2'>
+              <div className='text-sm text-gray-700 mb-4 text-center line-clamp-2'>
                 {description}
-              </p>
+              </div>
             )}
-          </Link>
-        ) : (
-          <div className='block mb-3'>
-            <h3 className='text-2xl font-bold text-center mb-1 text-gray-500'>
-              {name}
-            </h3>
-            {itemType && (
-              <p className='text-sm text-gray-500 text-center'>{itemType}</p>
-            )}
-            {description && (
-              <p className='text-sm text-gray-500 text-center mt-2 line-clamp-2'>
-                {description}
-              </p>
-            )}
+
+            {/* Location */}
+            <div
+              className='flex items-center justify-center gap-1 mb-4'
+              aria-label={`${isBusiness ? 'Business' : 'Market'} location`}
+            >
+              <MappingPin
+                memZip={memZip}
+                city={city}
+                stateName={stateName}
+                className={`text-green-600 text-sm font-medium underline decoration-dotted underline-offset-2 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 rounded ${
+                  !isActive ? 'text-gray-500 hover:text-gray-500' : ''
+                }`}
+                mode='modal'
+                size='sm'
+              />
+            </div>
+
             {/* Inactive Notice */}
-            <div className='mt-3 p-3 bg-gray-100 border border-gray-300 rounded-lg'>
-              <p className='text-sm text-gray-600 text-center font-medium'>
-                This {isBusiness ? 'business' : 'market'} is currently inactive
-              </p>
+            {!isActive && (
+              <div className='mb-4 p-3 bg-gray-100 border border-gray-300 rounded-lg'>
+                <p className='text-sm text-gray-600 text-center font-medium'>
+                  This {isBusiness ? 'business' : 'market'} is currently
+                  inactive - It could be a seasonal thing.
+                </p>
+              </div>
+            )}
+
+            {/* Unsave Button */}
+            <div className='flex justify-center'>
+              <SaveButton
+                id={id}
+                type={type}
+                initialHasSaved={true}
+                isLoggedIn={true}
+              />
             </div>
           </div>
-        )}
-
-        {/* Location */}
-        <div className='flex justify-center mb-3'>
-          <MappingPin
-            memZip={memZip}
-            city={city}
-            stateName={stateName}
-            className={`justify-center ${
-              isActive
-                ? 'text-indigo-700 hover:text-indigo-800'
-                : 'text-gray-500'
-            } underline decoration-dotted underline-offset-4`}
-            mode='modal'
-            size='sm'
-          />
         </div>
-
-        {/* Unsave Button */}
-        <div className='flex justify-center mt-auto'>
-          <SaveButton
-            id={id}
-            type={type}
-            initialHasSaved={true}
-            isLoggedIn={true}
-          />
-        </div>
-      </div>
+      </article>
     </div>
   )
 }

@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import logo from '@/assets/images/newlivlocologo.png'
 import profileDefault from '@/assets/images/profile.png'
-import { FaGoogle } from 'react-icons/fa'
 import { HiOutlineChatBubbleLeft, HiChatBubbleLeft } from 'react-icons/hi2'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { FaGoogle } from 'react-icons/fa'
 import UnreadMessageCount from './UnreadMessageCount'
 
 const Navbar = () => {
@@ -33,7 +33,6 @@ const Navbar = () => {
       const res = await getProviders()
       setProviders(res)
     }
-
     setAuthProviders()
 
     // fetch current user document
@@ -174,11 +173,11 @@ const Navbar = () => {
               aria-label='LivLoco Home'
             >
               <Image
-                className='h-8 w-auto'
                 src={logo}
                 alt='LivLoco logo'
-                width={32}
-                height={32}
+                width={40}
+                height={40}
+                style={{ width: 'auto', height: '40px' }}
                 priority
               />
               <span className='hidden md:block text-xl font-bold text-gray-900'>
@@ -193,18 +192,21 @@ const Navbar = () => {
               className='flex space-x-8'
               role='menubar'
             >
-              <Link
-                href='/'
-                role='menuitem'
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  pathname === '/'
-                    ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-700'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-                }`}
-                aria-current={pathname === '/' ? 'page' : undefined}
-              >
-                LocoHome
-              </Link>
+              {/* Show LocoHome link when logged in, highlight if on home page */}
+              {session && (
+                <Link
+                  href='/'
+                  role='menuitem'
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    pathname === '/'
+                      ? 'bg-blue-100 text-blue-700 border-b-2 border-blue-700'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                  }`}
+                  aria-current={pathname === '/' ? 'page' : undefined}
+                >
+                  LocoHome
+                </Link>
+              )}
               {/* <Link
                   href='/living'
                   className={`${
@@ -263,22 +265,15 @@ const Navbar = () => {
 
           {/* User Actions */}
           <div className='flex items-center space-x-4'>
-            {!session && (
-              <div className='hidden md:flex md:items-center'>
-                {providers &&
-                  Object.values(providers).map((provider, index) => (
-                    <button
-                      key={index}
-                      onClick={() =>
-                        signIn(provider.id, { callbackUrl: '/onboarding' })
-                      }
-                      className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
-                    >
-                      <FaGoogle className='mr-2 h-4 w-4' />
-                      <span>Login or Register</span>
-                    </button>
-                  ))}
-              </div>
+            {/* Co-op Member Login - Only show if not signed in */}
+            {!session && providers && (
+              <button
+                onClick={() => signIn('google', { callbackUrl: '/' })}
+                className='inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
+              >
+                <FaGoogle className='mr-2 h-4 w-4' />
+                Co-op Member Login
+              </button>
             )}
 
             {session && (
@@ -370,11 +365,11 @@ const Navbar = () => {
                 <div className='flex-1 h-0 pt-5 pb-4 overflow-y-auto'>
                   <div className='flex-shrink-0 flex items-center px-4'>
                     <Image
-                      className='h-8 w-auto'
                       src={logo}
                       alt='LivLoco logo'
-                      width={32}
-                      height={32}
+                      width={40}
+                      height={40}
+                      style={{ width: 'auto', height: '40px' }}
                     />
                     <span className='ml-3 text-xl font-bold text-gray-900'>
                       The Livlo.co Co-op
@@ -384,19 +379,22 @@ const Navbar = () => {
                     className='mt-5 px-2 space-y-1'
                     role='menubar'
                   >
-                    <Link
-                      href='/'
-                      className={`${
-                        pathname === '/'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-                      } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      role='menuitem'
-                      aria-current={pathname === '/' ? 'page' : undefined}
-                    >
-                      LocoHome
-                    </Link>
+                    {/* Show LocoHome link when logged in, highlight if on home page */}
+                    {session && (
+                      <Link
+                        href='/'
+                        className={`${
+                          pathname === '/'
+                            ? 'bg-blue-100 text-blue-700'
+                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        role='menuitem'
+                        aria-current={pathname === '/' ? 'page' : undefined}
+                      >
+                        LocoHome
+                      </Link>
+                    )}
                     {session && (
                       <Link
                         href='/businesses'
@@ -467,24 +465,7 @@ const Navbar = () => {
                     )}
                   </nav>
                 </div>
-                {!session && (
-                  <div className='flex-shrink-0 border-t border-gray-200 p-4'>
-                    {providers &&
-                      Object.values(providers).map((provider) => (
-                        <button
-                          key={provider.id}
-                          onClick={() => {
-                            setIsMobileMenuOpen(false)
-                            signIn(provider.id, { callbackUrl: '/onboarding' })
-                          }}
-                          className='w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200'
-                        >
-                          <FaGoogle className='mr-2 h-4 w-4' />
-                          <span>Login or Register</span>
-                        </button>
-                      ))}
-                  </div>
-                )}
+                {/* Authentication buttons removed from mobile menu - now handled on home page */}
               </div>
             </div>
           </div>

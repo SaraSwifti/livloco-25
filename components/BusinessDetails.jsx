@@ -78,7 +78,7 @@ const BusinessDetails = ({
         <section className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12'>
           {/* Promotional Section */}
           {(locobiz.current_promotional || '').trim() !== '' && (
-            <div className='bg-amber-700 p-6 rounded-lg border border-amber-900'>
+            <div className='bg-yellow-600 p-6 rounded-lg border border-yellow-700'>
               <h2 className='text-lg font-semibold text-white mb-2'>
                 Current Promotional
               </h2>
