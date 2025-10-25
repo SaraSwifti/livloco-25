@@ -19,7 +19,7 @@ const VoteButton = ({
   type,
   initialVoteCount = 0,
   initialHasVoted = false,
-  isLoggedIn = false
+  isLoggedIn = false,
 }) => {
   const [voteCount, setVoteCount] = useState(initialVoteCount)
   const [hasVoted, setHasVoted] = useState(initialHasVoted)
@@ -68,18 +68,32 @@ const VoteButton = ({
       <button
         onClick={handleVoteToggle}
         disabled={isLoading || !isLoggedIn}
-        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
+        className={`flex items-center gap-2 px-8 py-4 rounded-lg font-semibold transition-all w-[200px] justify-center ${
           hasVoted
-            ? 'bg-blue-600 text-white hover:bg-blue-700'
+            ? 'bg-sky-600 text-white hover:bg-sky-700'
             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
         } ${
-          isLoading || !isLoggedIn ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+          isLoading || !isLoggedIn
+            ? 'opacity-50 cursor-not-allowed'
+            : 'cursor-pointer'
         }`}
-        title={!isLoggedIn ? 'Log in to vote' : hasVoted ? 'Remove vote' : 'Vote'}
+        title={
+          !isLoggedIn ? 'Log in to vote' : hasVoted ? 'Remove vote' : 'Vote'
+        }
       >
-        <FaThumbsUp className={`text-lg ${hasVoted ? 'text-white' : 'text-gray-600'}`} />
-        <span className='text-lg'>{voteCount}</span>
-        {hasVoted && <span className='text-sm ml-1'>You Voted</span>}
+        <FaThumbsUp
+          className={`text-2xl ${hasVoted ? 'text-white' : 'text-gray-600'}`}
+        />
+        {hasVoted ? (
+          <span className='text-sm'>
+            You have voted for this business.
+            <span className='block font-bold text-base mt-1'>
+              Click to unvote
+            </span>
+          </span>
+        ) : (
+          <span className='text-sm'>Vote</span>
+        )}
       </button>
     </div>
   )

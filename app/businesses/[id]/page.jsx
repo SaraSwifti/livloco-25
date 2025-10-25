@@ -67,76 +67,64 @@ const BusinessPage = async ({ params }) => {
 
   return (
     <>
-      <div className='relative w-full'>
-        <BusinessHeaderImage locobiz={locobiz} />
+      {/* Hero Section with Gradient Background */}
+      <section className='relative w-full'>
+        <div className='relative'>
+          <BusinessHeaderImage locobiz={locobiz} />
 
-        {/* dim layer */}
-        <div className='absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/50 to-transparent pointer-events-none' />
-      </div>
+          {/* Gradient overlay */}
+          <div className='absolute inset-0 bg-gradient-to-b from-black/30 to-transparent pointer-events-none' />
 
-      <section>
-        {/* Go Back Arrow */}
-        <div className='flex items-center justify-between m-5'>
-          <button
-            type='button'
-            className='border-4 border-black rounded-md bg-white/70 px-3.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-white'
-          >
+          {/* Back Button */}
+          <div className='absolute top-4 left-4 z-10'>
             <Link
               href='/businesses'
-              className='text-black hover:text-xl flex items-center'
+              className='inline-flex items-center bg-white/90 hover:bg-white px-4 py-2 text-lg font-semibold text-gray-900 shadow-lg rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-800'
+              aria-label='Back to business listings'
             >
-              <FaArrowLeft className='mr-2' /> Back to LocoBusiness Listings
+              <FaArrowLeft
+                className='mr-2'
+                aria-hidden='true'
+              />
+              Back to Listings
             </Link>
-          </button>
-        </div>
-      </section>
-      <section className='flex items-start justify-center'>
-        <div className='container m-auto py-10 px-6 '>
-          <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6 border-4 border-black '>
-            {/*Co-op mem business info*/}
-            <BusinessDetails
-              locobiz={locobiz}
-              voteData={{
-                id: id,
-                voteCount: locobiz.locobiz_votes?.length || 0,
-                hasVoted: hasVoted,
-                isLoggedIn: !!session?.user,
-              }}
-              saveData={{
-                id: id,
-                hasSaved: hasSaved,
-                isLoggedIn: !!session?.user,
-              }}
-              messageButtonProps={
-                session?.user &&
-                currentUser &&
-                locobiz?.owner &&
-                currentUser._id.toString() !== locobiz.owner._id.toString()
-                  ? {
-                      postingType: 'business',
-                      postingId: id,
-                      recipientId: locobiz.owner._id.toString(),
-                      postingName: locobiz.locobiz_name,
-                      currentUserId: currentUser._id.toString(),
-                    }
-                  : null
-              }
-            />
           </div>
-
-          <button
-            type='button'
-            className='border-4 border-black rounded-md bg-white/70 px-3.5 py-2.5 text-lg m-5 font-semibold text-white shadow-sm hover:bg-white'
-          >
-            <Link
-              href='/businesses'
-              className='text-black hover:text-xl flex items-center'
-            >
-              <FaArrowLeft className='mr-2' /> Back to Co-op Listings
-            </Link>
-          </button>
         </div>
       </section>
+
+      {/* Main Content Section */}
+      <main className='bg-white min-h-screen'>
+        <div className='max-w-7xl mx-auto px-4 py-8'>
+          <BusinessDetails
+            locobiz={locobiz}
+            voteData={{
+              id: id,
+              voteCount: locobiz.locobiz_votes?.length || 0,
+              hasVoted: hasVoted,
+              isLoggedIn: !!session?.user,
+            }}
+            saveData={{
+              id: id,
+              hasSaved: hasSaved,
+              isLoggedIn: !!session?.user,
+            }}
+            messageButtonProps={
+              session?.user &&
+              currentUser &&
+              locobiz?.owner &&
+              currentUser._id.toString() !== locobiz.owner._id.toString()
+                ? {
+                    postingType: 'business',
+                    postingId: id,
+                    recipientId: locobiz.owner._id.toString(),
+                    postingName: locobiz.locobiz_name,
+                    currentUserId: currentUser._id.toString(),
+                  }
+                : null
+            }
+          />
+        </div>
+      </main>
     </>
   )
 }

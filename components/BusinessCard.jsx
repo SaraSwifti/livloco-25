@@ -19,24 +19,34 @@ const EntryList = ({ label, root, keys, isSelling = false }) => {
   if (items.length === 0) return null
 
   const bulletColor = isSelling ? 'bg-green-500' : 'bg-orange-500'
+  const ariaLabel = isSelling ? 'Items for sale' : 'Items needed'
 
   return (
-    <div className='mb-4'>
-      <div className='flex items-center gap-2 mb-2'>
-        <div className={`w-2 h-2 rounded-full ${bulletColor}`}></div>
-        <p className='font-bold text-base text-black'>{label}</p>
-      </div>
-      <div className='ml-4 space-y-1'>
+    <section
+      className='mb-4'
+      aria-label={ariaLabel}
+    >
+      <header className='flex items-center gap-2 mb-2'>
+        <div
+          className={`w-2 h-2 rounded-full ${bulletColor}`}
+          aria-hidden='true'
+        />
+        <h4 className='font-bold text-base text-black'>{label}</h4>
+      </header>
+      <ul
+        className='ml-4 space-y-1'
+        role='list'
+      >
         {items.map((entry, idx) => (
-          <p
+          <li
             key={idx}
             className='text-black text-sm leading-relaxed'
           >
             {entry?.description?.trim()}
-          </p>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   )
 }
 
@@ -67,38 +77,58 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
     <Link
       onClick={handleCardClick}
       href={`/businesses/${id}`}
-      className='group block bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600'
+      className='group block bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 focus-visible:shadow-xl'
+      aria-label={`View details for ${name} business`}
     >
-      <article className='rounded-xl overflow-hidden'>
+      <article
+        className='rounded-xl overflow-hidden'
+        itemScope
+        itemType='https://schema.org/LocalBusiness'
+      >
         {/* Image Section */}
         <div className='relative h-48 w-full bg-gray-900 rounded-t-xl overflow-hidden'>
-          <div className='absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900'></div>
-          <div className='absolute inset-0 bg-green-500/10'></div>
+          <div
+            className='absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900'
+            aria-hidden='true'
+          />
+          <div
+            className='absolute inset-0 bg-green-500/10'
+            aria-hidden='true'
+          />
           <SafeImage
             src={profileImage}
-            alt={`${name} profile image`}
+            alt={`${name} business profile image`}
             className='h-full w-full object-cover'
             imgClassName='object-cover'
             cover={true}
             sizes='(max-width: 640px) 90vw, 300px'
             zoomOnClick={false}
+            itemProp='image'
           />
         </div>
 
         {/* Content Section */}
         <div className='p-4'>
           {/* Business Name */}
-          <h3 className='text-lg font-bold text-gray-900 mb-2 text-center'>
-            {name}
-          </h3>
+          <header className='mb-2'>
+            <h3
+              className='text-lg font-bold text-gray-900 text-center'
+              itemProp='name'
+            >
+              {name}
+            </h3>
+          </header>
 
           {/* Location */}
-          <div className='flex items-center justify-center gap-1 mb-4'>
+          <div
+            className='flex items-center justify-center gap-1 mb-4'
+            aria-label='Business location'
+          >
             <MappingPin
               memZip={locobiz?.mem_zip}
               city={city}
               stateName={stateName}
-              className='text-green-600 text-sm font-medium underline decoration-dotted underline-offset-2 hover:text-green-700'
+              className='text-green-600 text-sm font-medium underline decoration-dotted underline-offset-2 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 rounded'
               mode='modal'
               size='sm'
             />
@@ -106,8 +136,14 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
 
           {/* Distance indicator */}
           {locobiz?.distance !== null && locobiz?.distance !== undefined && (
-            <div className='text-xs text-black mb-3 text-center'>
-              {formatDistance(locobiz.distance)} away
+            <div
+              className='text-xs text-gray-600 mb-3 text-center'
+              aria-label={`Distance: ${formatDistance(locobiz.distance)}`}
+            >
+              <span aria-hidden='true'>📍</span>
+              <span className='ml-1'>
+                {formatDistance(locobiz.distance)} away
+              </span>
             </div>
           )}
 
