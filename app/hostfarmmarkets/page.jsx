@@ -1,11 +1,31 @@
-
 import SearchableMarketList from '@/components/SearchableMarketList'
 // import markets from '@/app/hostfmarkets.json'; // adjust path if your JSON lives elsewhere
 import connectDB from '@/config/database'
 import HostFMarket from '@/models/HostFMarket'
+import User from '@/models/User'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/utils/authOptions'
 
 const HostFarmMarketsPage = async () => {
   await connectDB()
+
+  // Get user session
+  const session = await getServerSession(authOptions)
+  let currentUser = null
+  let userSavedMarkets = []
+
+  if (session?.user?.email) {
+    currentUser = await User.findOne({ email: session.user.email })
+      .select('saved_markets')
+      .lean()
+
+    if (currentUser) {
+      // Convert ObjectIds to strings for Client Components
+      userSavedMarkets = (currentUser.saved_markets || []).map((id) =>
+        id.toString()
+      )
+    }
+  }
 
   let markets = []
   try {
@@ -25,8 +45,11 @@ const HostFarmMarketsPage = async () => {
 
   return (
     <>
-     
-      <SearchableMarketList initialMarkets={serializedMarkets} />
+      <SearchableMarketList
+        initialMarkets={serializedMarkets}
+        isLoggedIn={!!session?.user}
+        userSavedMarkets={userSavedMarkets}
+      />
     </>
   )
 }

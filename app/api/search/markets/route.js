@@ -30,7 +30,7 @@ export async function GET(request) {
     if (query.trim()) {
       mongoQuery.$or = [
         { hostfm_name: { $regex: query, $options: 'i' } },
-        { hostfm_description: { $regex: query, $options: 'i' } },
+        { hostfm_type: { $regex: query, $options: 'i' } },
       ]
     }
 

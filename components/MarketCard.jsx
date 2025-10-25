@@ -5,10 +5,11 @@ import SafeImage from '@/components/SafeImage'
 import Link from 'next/link'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import MappingPin from '@/components/MappingPin'
+import CardSaveButton from '@/components/CardSaveButton'
 import { incrementMarketClickAction } from '@/app/actions/incrementMarketClickAction'
 import { formatDistance } from '@/utils/location'
 
-const MarketCard = ({ market }) => {
+const MarketCard = ({ market, isLoggedIn = false, hasSaved = false }) => {
   if (!market) return null
 
   const {
@@ -81,6 +82,14 @@ const MarketCard = ({ market }) => {
             sizes='(max-width: 640px) 90vw, 300px'
             zoomOnClick={false}
             itemProp='image'
+          />
+
+          {/* Save Button */}
+          <CardSaveButton
+            id={_id}
+            type='market'
+            isLoggedIn={isLoggedIn}
+            initialHasSaved={hasSaved}
           />
         </div>
 

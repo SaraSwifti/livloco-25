@@ -2,10 +2,31 @@
 
 import connectDB from '@/config/database'
 import LocoBiz from '@/models/LocoBiz'
+import User from '@/models/User'
 import SearchableBusinessList from '@/components/SearchableBusinessList'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/utils/authOptions'
 
 const BusinessesPage = async () => {
   await connectDB()
+
+  // Get user session
+  const session = await getServerSession(authOptions)
+  let currentUser = null
+  let userSavedBusinesses = []
+
+  if (session?.user?.email) {
+    currentUser = await User.findOne({ email: session.user.email })
+      .select('saved_businesses')
+      .lean()
+
+    if (currentUser) {
+      // Convert ObjectIds to strings for Client Components
+      userSavedBusinesses = (currentUser.saved_businesses || []).map((id) =>
+        id.toString()
+      )
+    }
+  }
 
   let locobizs = []
   try {
@@ -20,7 +41,11 @@ const BusinessesPage = async () => {
 
   return (
     <>
-      <SearchableBusinessList initialBusinesses={serializedLocobizs} />
+      <SearchableBusinessList
+        initialBusinesses={serializedLocobizs}
+        isLoggedIn={!!session?.user}
+        userSavedBusinesses={userSavedBusinesses}
+      />
     </>
   )
 }

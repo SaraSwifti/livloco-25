@@ -5,6 +5,7 @@ import SafeImage from '@/components/SafeImage'
 import PropTypes from 'prop-types'
 import React from 'react'
 import MappingPin from '@/components/MappingPin'
+import CardSaveButton from '@/components/CardSaveButton'
 import { incrementBusinessClickAction } from '@/app/actions/incrementBusinessClickAction'
 import { formatDistance } from '@/utils/location'
 
@@ -53,7 +54,11 @@ const EntryList = ({ label, root, keys, isSelling = false }) => {
 const SELL_KEYS = ['selling1', 'selling2', 'selling3']
 const NEED_KEYS = ['need1', 'need2', 'need3']
 
-const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
+const BusinessCard = React.memo(function BusinessCard({
+  locobiz,
+  isLoggedIn = false,
+  hasSaved = false,
+}) {
   if (!locobiz) return null
 
   const id = locobiz?._id
@@ -104,6 +109,14 @@ const BusinessCard = React.memo(function BusinessCard({ locobiz }) {
             sizes='(max-width: 640px) 90vw, 300px'
             zoomOnClick={false}
             itemProp='image'
+          />
+
+          {/* Save Button */}
+          <CardSaveButton
+            id={id}
+            type='business'
+            isLoggedIn={isLoggedIn}
+            initialHasSaved={hasSaved}
           />
         </div>
 
@@ -186,6 +199,8 @@ BusinessCard.propTypes = {
     selling: PropTypes.object,
     needs: PropTypes.object,
   }),
+  isLoggedIn: PropTypes.bool,
+  hasSaved: PropTypes.bool,
 }
 
 export default BusinessCard

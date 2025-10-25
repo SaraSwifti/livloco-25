@@ -58,11 +58,6 @@ export default function SavedItemPopup({
               />
             </div>
           </div>
-
-          {/* Success Icon */}
-          <div className='absolute top-4 left-4 bg-green-500 text-white rounded-full p-3 shadow-lg'>
-            <FaHeart className='w-6 h-6' />
-          </div>
         </div>
 
         {/* Content */}

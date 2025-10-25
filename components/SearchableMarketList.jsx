@@ -6,7 +6,11 @@ import MarketCard from '@/components/MarketCard'
 import SearchFilters from '@/components/SearchFilters'
 import logo from '@/assets/images/newlivlocologo.png'
 
-export default function SearchableMarketList({ initialMarkets = [] }) {
+export default function SearchableMarketList({
+  initialMarkets = [],
+  isLoggedIn = false,
+  userSavedMarkets = [],
+}) {
   const [markets, setMarkets] = useState(initialMarkets)
   const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
@@ -201,12 +205,20 @@ export default function SearchableMarketList({ initialMarkets = [] }) {
           </div>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-            {markets.map((market) => (
-              <MarketCard
-                key={market._id}
-                market={market}
-              />
-            ))}
+            {markets.map((market) => {
+              const hasSaved = userSavedMarkets.some(
+                (savedId) => savedId.toString() === market._id.toString()
+              )
+
+              return (
+                <MarketCard
+                  key={market._id}
+                  market={market}
+                  isLoggedIn={isLoggedIn}
+                  hasSaved={hasSaved}
+                />
+              )
+            })}
           </div>
         )}
 

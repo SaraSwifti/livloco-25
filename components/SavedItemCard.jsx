@@ -24,9 +24,7 @@ const SavedItemCard = ({ item, type }) => {
   const profileImage = isBusiness
     ? item.locobiz_profile_image
     : item.hostfm_profile_image
-  const description = isBusiness
-    ? item.locobiz_description
-    : item.hostfm_description
+  const description = isBusiness ? item.locobiz_description : null
   const itemType = isBusiness ? item.locobiz_type : item.hostfm_type
 
   // Check if item is active

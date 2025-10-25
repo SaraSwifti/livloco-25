@@ -119,7 +119,6 @@ const HostFMarketSchema = new Schema(
     hostfm_active: { type: Boolean, default: false },
 
     hostfm_name: { type: String, trim: true, required: true },
-    hostfm_description: { type: String, trim: true },
     hostfm_type: { type: String, trim: true },
 
     // email_memmessage_notification: { type: Boolean, default: false }, // TODO: Implement email notification feature later
@@ -189,7 +188,7 @@ HostFMarketSchema.index({
   'hostfm_address.state_code': 1,
   'hostfm_address.city': 1,
 })
-HostFMarketSchema.index({ hostfm_name: 'text', hostfm_description: 'text' })
+HostFMarketSchema.index({ hostfm_name: 'text', hostfm_type: 'text' })
 
 /* -------------------------------- Export --------------------------------- */
 

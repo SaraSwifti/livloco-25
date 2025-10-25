@@ -162,7 +162,7 @@ export default function ProfileNavBar({ user }) {
                   {user.hostfmarket.hostfm_name || 'Your Market'}
                 </h3>
                 <p className='text-gray-600 mb-4'>
-                  {user.hostfmarket.hostfm_description || 'No description'}
+                  {user.hostfmarket.hostfm_type || 'No market type specified'}
                 </p>
               </div>
               <button

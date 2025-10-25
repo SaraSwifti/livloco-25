@@ -44,20 +44,29 @@ export default async function UserProfilePage(props) {
   }
 
   return (
-    <section className='flex justify-center'>
-      <div className='max-w-6xl w-full mx-auto px-4 py-10'>
-        <div className='bg-white p-6 border rounded-lg shadow-md ring-1 ring-black/10 mb-6'>
-          <h1 className='text-3xl font-bold text-center mb-2'>
-            {user.full_name || 'User Profile'}
-          </h1>
-          <div className='text-center'>
-            <MemberSince createdAt={user.createdAt} />
+    <div className='-mx-4 -mt-8'>
+      {/* Hero Section with Profile Header */}
+      <section className='mb-4 relative'>
+        <div className='livloco-hero'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center relative z-10'>
+            {/* Profile Header Content */}
+            <div className='text-center'>
+              <h1 className='livloco-hero-title mb-2'>
+                {user.full_name || 'User Profile'}
+              </h1>
+              <div className='livloco-text-white mb-2'>
+                <MemberSince createdAt={user.createdAt} />
+              </div>
+              <p className='livloco-hero-subtitle'>{user.email}</p>
+            </div>
           </div>
-          <p className='text-center text-gray-600'>{user.email}</p>
         </div>
+      </section>
 
+      {/* Content Section */}
+      <div className='max-w-6xl mx-auto px-4 py-6 mt-8 bg-white'>
         <ProfileNavBar user={user} />
       </div>
-    </section>
+    </div>
   )
 }

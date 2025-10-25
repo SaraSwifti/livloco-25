@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import logo from '@/assets/images/newlivlocologo.png'
 import AuthButtons from './AuthButtons'
 import { useSession } from 'next-auth/react'
@@ -13,7 +14,7 @@ const HomeHeader = () => {
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
         <div className='w-full bg-gradient-to-r from-green-700 via-emerald-700 to-sky-700 relative'>
-          <div className='max-w-7xl py-20 pb-10 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
+          <div className='max-w-7xl py-12 pb-10 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
             {/* Text + Auth Buttons: 3/4 on md+, full on mobile */}
             <div className='order-2 md:order-1 w-full md:w-3/4 md:pr-6 text-center md:text-left'>
               <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl'>
@@ -30,6 +31,16 @@ const HomeHeader = () => {
                   <AuthButtons />
                 </div>
               )}
+
+              {/* Explore Members Button - Show for everyone */}
+              <div className='mt-6'>
+                <Link
+                  href='/recent-members'
+                  className='inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition-all duration-300 backdrop-blur-sm border border-white/30'
+                >
+                  Explore our latest members
+                </Link>
+              </div>
             </div>
 
             {/* Logo: top-center on mobile, right 1/4 on md+ */}

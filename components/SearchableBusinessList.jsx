@@ -6,7 +6,11 @@ import BusinessCard from '@/components/BusinessCard'
 import SearchFilters from '@/components/SearchFilters'
 import logo from '@/assets/images/newlivlocologo.png'
 
-export default function SearchableBusinessList({ initialBusinesses = [] }) {
+export default function SearchableBusinessList({
+  initialBusinesses = [],
+  isLoggedIn = false,
+  userSavedBusinesses = [],
+}) {
   const [businesses, setBusinesses] = useState(initialBusinesses)
   const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
@@ -103,7 +107,7 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
         <div className='livloco-hero'>
-          <div className='max-w-7xl py-4 pb-2 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
             {/* Logo: top-center on mobile, right 1/4 on md+ */}
             <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
               <Image
@@ -117,8 +121,10 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
 
             {/* Text + Form: 3/4 on md+, full on mobile */}
             <div className='order-2 md:order-1 w-full md:w-3/4 md:pr-6 text-center md:text-left'>
-              <h1 className='livloco-hero-title'>Find Your LocoPeeps</h1>
-              <p className='my-2 livloco-hero-subtitle'>
+              <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl'>
+                Find Your LocoPeeps
+              </h1>
+              <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
                 Local businesses finding local businesses. Creating local
                 economies right where you live.
               </p>
@@ -156,12 +162,20 @@ export default function SearchableBusinessList({ initialBusinesses = [] }) {
           </div>
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-            {businesses.map((business) => (
-              <BusinessCard
-                key={business._id}
-                locobiz={business}
-              />
-            ))}
+            {businesses.map((business) => {
+              const hasSaved = userSavedBusinesses.some(
+                (savedId) => savedId.toString() === business._id.toString()
+              )
+
+              return (
+                <BusinessCard
+                  key={business._id}
+                  locobiz={business}
+                  isLoggedIn={isLoggedIn}
+                  hasSaved={hasSaved}
+                />
+              )
+            })}
           </div>
         )}
 

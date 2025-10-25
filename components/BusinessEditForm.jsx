@@ -917,6 +917,11 @@ export default function BusinessEditForm({
               back and create another LocoBusiness. However, you will lose all
               your votes and click statistics that are tied to this profile.
             </p>
+            <p className='text-sm text-blue-600 font-medium'>
+              Note: You have the ability to seasonally inactivate your posting
+              without losing your votes, clicks, or being saved by other
+              members.
+            </p>
             <button
               type='button'
               onClick={() => setShowDeleteModal(true)}

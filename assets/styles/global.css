@@ -94,6 +94,8 @@ body {
 .livloco-hero {
   @apply relative overflow-hidden;
   background: linear-gradient(to right, #15803d, #047857, #0369a1);
+  padding-top: 3rem; /* py-8 equivalent - increased by 20% */
+  padding-bottom: 2.4rem; /* pb-4 equivalent - increased by 20% */
 }
 
 .livloco-hero::after {

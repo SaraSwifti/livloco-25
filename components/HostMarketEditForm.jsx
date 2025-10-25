@@ -313,25 +313,6 @@ export default function HostMarketEditForm({ marketData, userEmail }) {
 
           <div>
             <label
-              htmlFor='hostfm_description'
-              className='block font-bold mb-1'
-            >
-              Description <span className='text-red-500'>required</span>
-            </label>
-            <textarea
-              id='hostfm_description'
-              name='hostfm_description'
-              required
-              rows={4}
-              defaultValue={marketData?.hostfm_description || ''}
-              className='border rounded w-full py-2 px-3'
-              placeholder='Tell us about your market...where and why do you exist?'
-              maxLength={500}
-            />
-          </div>
-
-          <div>
-            <label
               htmlFor='hostfm_type'
               className='block font-bold mb-1'
             >
@@ -786,6 +767,11 @@ export default function HostMarketEditForm({ marketData, userEmail }) {
               Once you delete your LocoMarket profile, you can always come back
               and create another LocoMarket Post. However, you will loose all
               your votes and click statistics that are tied to this post id.
+            </p>
+            <p className='text-sm text-blue-600 font-medium'>
+              Note: You have the ability to seasonally inactivate your posting
+              without losing your votes, clicks, or being saved by other
+              members.
             </p>
             <button
               type='button'

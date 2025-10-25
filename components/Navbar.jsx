@@ -177,7 +177,6 @@ const Navbar = () => {
                 alt='LivLoco logo'
                 width={40}
                 height={40}
-                style={{ width: 'auto', height: '40px' }}
                 priority
               />
               <span className='hidden md:block text-xl font-bold text-gray-900'>
