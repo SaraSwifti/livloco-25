@@ -21,7 +21,7 @@ const UserSchema = new Schema(
     },
     full_name: { type: String, trim: true, default: '' },
     phone: { type: String, trim: true, match: /^\+1\d{10}$/ }, // E.164 US
-    email_memmessage_notification: { type: Boolean, default: false },
+    // email_memmessage_notification: { type: Boolean, default: false }, // TODO: Implement email notification feature later
 
     // Location preferences for search
     location_preferences: {

@@ -7,7 +7,7 @@ export default function ProfileEditForm({ user }) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     full_name: '',
-    email_memmessage_notification: false,
+    // email_memmessage_notification: false, // TODO: Implement email notification feature later
   })
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState({ type: '', text: '' })
@@ -16,8 +16,7 @@ export default function ProfileEditForm({ user }) {
     if (user) {
       setFormData({
         full_name: user.full_name || '',
-        email_memmessage_notification:
-          user.email_memmessage_notification || false,
+        // email_memmessage_notification: user.email_memmessage_notification || false, // TODO: Implement email notification feature later
       })
     }
   }, [user])
@@ -138,8 +137,8 @@ export default function ProfileEditForm({ user }) {
             />
           </div>
 
-          {/* Email Notification Checkbox */}
-          <div className='flex items-center'>
+          {/* Email Notification Checkbox - TODO: Implement email notification feature later */}
+          {/* <div className='flex items-center'>
             <input
               type='checkbox'
               id='email_memmessage_notification'
@@ -154,7 +153,7 @@ export default function ProfileEditForm({ user }) {
             >
               Receive email notifications when I get in-app messages
             </label>
-          </div>
+          </div> */}
 
           {/* Message Display */}
           {message.text && (

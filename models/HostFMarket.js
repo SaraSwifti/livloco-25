@@ -122,7 +122,7 @@ const HostFMarketSchema = new Schema(
     hostfm_description: { type: String, trim: true },
     hostfm_type: { type: String, trim: true },
 
-    email_memmessage_notification: { type: Boolean, default: false },
+    // email_memmessage_notification: { type: Boolean, default: false }, // TODO: Implement email notification feature later
 
     // Address & site
     hostfm_address: { type: AddressSchema, default: () => ({}) },

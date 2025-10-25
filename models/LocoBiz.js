@@ -159,10 +159,10 @@ const LocoBizSchema = new Schema(
     locobiz_name: { type: String, trim: true },
     locobiz_description: { type: String, trim: true },
 
-    email_memmessage_notification: {
-      type: Boolean,
-      default: false,
-    },
+    // email_memmessage_notification: {
+    //   type: Boolean,
+    //   default: false,
+    // }, // TODO: Implement email notification feature later
 
     locobiz_address: {
       post_permission: {

@@ -1,39 +1,75 @@
 // components/LocoStats.jsx
-'use client';
+'use client'
+
+import { useState, useEffect } from 'react'
 
 export default function LocoStats({ user }) {
+  const [savedCount, setSavedCount] = useState({
+    totalSavedCount: 0,
+    businessSavedCount: 0,
+    marketSavedCount: 0,
+  })
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Fetch saved count data
+  useEffect(() => {
+    const fetchSavedCount = async () => {
+      try {
+        const response = await fetch(`/api/user/saved-count?userId=${user._id}`)
+        const data = await response.json()
+        if (data.success) {
+          setSavedCount(data.data)
+        }
+      } catch (error) {
+        console.error('Error fetching saved count:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    if (user?._id) {
+      fetchSavedCount()
+    }
+  }, [user?._id])
+
   // Get actual vote counts from the arrays
-  const businessVotes = user?.locobiz?.locobiz_votes?.length ?? 0;
-  const marketVotes = user?.hostfmarket?.hostfm_votes?.length ?? 0;
+  const businessVotes = user?.locobiz?.locobiz_votes?.length ?? 0
+  const marketVotes = user?.hostfmarket?.hostfm_votes?.length ?? 0
 
   // Get actual click counts from the profile data
-  const businessClicks = user?.locobiz?.card_clicks ?? 0;
-  const marketClicks = user?.hostfmarket?.card_clicks ?? 0;
+  const businessClicks = user?.locobiz?.card_clicks ?? 0
+  const marketClicks = user?.hostfmarket?.card_clicks ?? 0
 
   const stats = {
     businessClicks,
     marketClicks,
     businessVotes,
     marketVotes,
-  };
+    totalSavedCount: savedCount.totalSavedCount,
+  }
 
-  const hasLocoBiz = user?.profile_choice === 'locobiz' && user?.locobiz;
-  const hasHostFMarket = user?.profile_choice === 'hostfmarket' && user?.hostfmarket;
+  const hasLocoBiz = user?.profile_choice === 'locobiz' && user?.locobiz
+  const hasHostFMarket =
+    user?.profile_choice === 'hostfmarket' && user?.hostfmarket
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center text-black">Your LocoStats</h2>
+    <div className='space-y-6'>
+      <h2 className='text-2xl font-bold text-center text-black'>
+        Your LocoStats
+      </h2>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
         {/* Business Card Clicks */}
         {hasLocoBiz && (
-          <div className="bg-gray-50 p-6 border rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+          <div className='bg-gray-50 p-6 border rounded-lg'>
+            <h3 className='text-lg font-semibold text-gray-700 mb-2'>
               LocoBiz Card Clicks
             </h3>
-            <div className="text-4xl font-bold text-black">{stats.businessClicks}</div>
-            <p className="text-sm text-gray-600 mt-2">
+            <div className='text-4xl font-bold text-black'>
+              {stats.businessClicks}
+            </div>
+            <p className='text-sm text-gray-600 mt-2'>
               Number of times your business card has been clicked
             </p>
           </div>
@@ -41,12 +77,14 @@ export default function LocoStats({ user }) {
 
         {/* Market Card Clicks */}
         {hasHostFMarket && (
-          <div className="bg-gray-50 p-6 border rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+          <div className='bg-gray-50 p-6 border rounded-lg'>
+            <h3 className='text-lg font-semibold text-gray-700 mb-2'>
               LocoMarket Card Clicks
             </h3>
-            <div className="text-4xl font-bold text-black">{stats.marketClicks}</div>
-            <p className="text-sm text-gray-600 mt-2">
+            <div className='text-4xl font-bold text-black'>
+              {stats.marketClicks}
+            </div>
+            <p className='text-sm text-gray-600 mt-2'>
               Number of times your market card has been clicked
             </p>
           </div>
@@ -54,10 +92,14 @@ export default function LocoStats({ user }) {
 
         {/* Business Votes */}
         {hasLocoBiz && (
-          <div className="bg-gray-50 p-6 border rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">LocoBiz Votes</h3>
-            <div className="text-4xl font-bold text-black">{stats.businessVotes}</div>
-            <p className="text-sm text-gray-600 mt-2">
+          <div className='bg-gray-50 p-6 border rounded-lg'>
+            <h3 className='text-lg font-semibold text-gray-700 mb-2'>
+              LocoBiz Votes
+            </h3>
+            <div className='text-4xl font-bold text-black'>
+              {stats.businessVotes}
+            </div>
+            <p className='text-sm text-gray-600 mt-2'>
               Votes received for your business
             </p>
           </div>
@@ -65,13 +107,40 @@ export default function LocoStats({ user }) {
 
         {/* Market Votes */}
         {hasHostFMarket && (
-          <div className="bg-gray-50 p-6 border rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+          <div className='bg-gray-50 p-6 border rounded-lg'>
+            <h3 className='text-lg font-semibold text-gray-700 mb-2'>
               LocoMarket Votes
             </h3>
-            <div className="text-4xl font-bold text-black">{stats.marketVotes}</div>
-            <p className="text-sm text-gray-600 mt-2">
+            <div className='text-4xl font-bold text-black'>
+              {stats.marketVotes}
+            </div>
+            <p className='text-sm text-gray-600 mt-2'>
               Votes received for your farmers market
+            </p>
+          </div>
+        )}
+
+        {/* Saved Count - Always show if user has business or market */}
+        {(hasLocoBiz || hasHostFMarket) && (
+          <div className='bg-gray-50 p-6 border rounded-lg'>
+            <h3 className='text-lg font-semibold text-gray-700 mb-2'>
+              Members Who Have Saved Your{' '}
+              {hasLocoBiz && hasHostFMarket
+                ? 'LocoBusiness or LocoMarket'
+                : hasLocoBiz
+                ? 'LocoBusiness'
+                : 'LocoMarket'}
+            </h3>
+            <div className='text-4xl font-bold text-black'>
+              {isLoading ? '...' : stats.totalSavedCount}
+            </div>
+            <p className='text-sm text-gray-600 mt-2'>
+              Total members who have saved your{' '}
+              {hasLocoBiz && hasHostFMarket
+                ? 'business and market'
+                : hasLocoBiz
+                ? 'business'
+                : 'market'}
             </p>
           </div>
         )}
@@ -79,11 +148,11 @@ export default function LocoStats({ user }) {
 
       {/* No Profile Message */}
       {!hasLocoBiz && !hasHostFMarket && (
-        <div className="text-center py-8">
-          <p className="text-gray-600 text-lg">
+        <div className='text-center py-8'>
+          <p className='text-gray-600 text-lg'>
             You haven't created a LocoBiz or LocoMarket yet.
           </p>
-          <p className="text-gray-500 mt-2">
+          <p className='text-gray-500 mt-2'>
             Create one to start tracking your stats!
           </p>
         </div>
@@ -91,13 +160,14 @@ export default function LocoStats({ user }) {
 
       {/* Note about stats */}
       {(hasLocoBiz || hasHostFMarket) && (
-        <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <strong>Note:</strong> Click and vote counts are tracked in real-time from your profile.
-            Card clicks show how many times users have viewed your full profile page.
+        <div className='bg-blue-50 p-4 border border-blue-200 rounded-lg'>
+          <p className='text-sm text-blue-800'>
+            <strong>Note:</strong> Click and vote counts are tracked in
+            real-time from your profile. Card clicks show how many times users
+            have viewed your full profile page.
           </p>
         </div>
       )}
     </div>
-  );
+  )
 }

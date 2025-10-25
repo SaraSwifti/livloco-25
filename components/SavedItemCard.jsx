@@ -21,65 +21,128 @@ const SavedItemCard = ({ item, type }) => {
   // Extract common fields
   const id = item._id
   const name = isBusiness ? item.locobiz_name : item.hostfm_name
-  const profileImage = isBusiness ? item.locobiz_profile_image : item.hostfm_profile_image
-  const description = isBusiness ? item.locobiz_description : item.hostfm_description
+  const profileImage = isBusiness
+    ? item.locobiz_profile_image
+    : item.hostfm_profile_image
+  const description = isBusiness
+    ? item.locobiz_description
+    : item.hostfm_description
   const itemType = isBusiness ? item.locobiz_type : item.hostfm_type
+
+  // Check if item is active
+  const isActive = isBusiness ? item.locobiz_active : item.hostfm_active
 
   // Address fields
   const address = isBusiness ? item.locobiz_address : item.hostfm_address
   const city = address?.city || ''
-  const stateName = address?.state_name || address?.state || address?.state_code || ''
-  const memZip = isBusiness ? item.mem_zip : (item.mem_zip || address?.zipcode || address?.zip)
+  const stateName =
+    address?.state_name || address?.state || address?.state_code || ''
+  const memZip = isBusiness
+    ? item.mem_zip
+    : item.mem_zip || address?.zipcode || address?.zip
 
-  // Link URL
-  const linkUrl = isBusiness ? `/businesses/${id}` : `/hostfarmmarkets/${id}`
+  // Link URL (only if active)
+  const linkUrl = isActive
+    ? isBusiness
+      ? `/businesses/${id}`
+      : `/hostfarmmarkets/${id}`
+    : null
 
   return (
-    <div className="bg-white rounded-xl shadow-md border-4 border-black ring-1 ring-black/20 overflow-hidden flex flex-col">
+    <div
+      className={`bg-white rounded-xl shadow-md border-4 border-black ring-1 ring-black/20 overflow-hidden flex flex-col ${
+        !isActive ? 'opacity-60' : ''
+      }`}
+    >
       {/* Image */}
-      <Link href={linkUrl} className="block">
-        <div className="mt-5 flex justify-center items-center">
+      {isActive ? (
+        <Link
+          href={linkUrl}
+          className='block'
+        >
+          <div className='mt-5 flex justify-center items-center'>
+            <SafeImage
+              src={profileImage}
+              alt={`${name} profile image`}
+              className='h-[200px] w-[300px] rounded-t-xl'
+              imgClassName='object-contain'
+              cover={false}
+              sizes='(max-width: 640px) 90vw, 300px'
+            />
+          </div>
+        </Link>
+      ) : (
+        <div className='mt-5 flex justify-center items-center'>
           <SafeImage
             src={profileImage}
             alt={`${name} profile image`}
-            className="h-[200px] w-[300px] rounded-t-xl"
-            imgClassName="object-contain"
+            className='h-[200px] w-[300px] rounded-t-xl'
+            imgClassName='object-contain'
             cover={false}
-            sizes="(max-width: 640px) 90vw, 300px"
+            sizes='(max-width: 640px) 90vw, 300px'
           />
         </div>
-      </Link>
+      )}
 
       {/* Content */}
-      <div className="p-4 flex-1 flex flex-col">
-        <Link href={linkUrl} className="block mb-3">
-          <h3 className="text-2xl font-bold text-center mb-1 hover:text-blue-600 transition-colors">
-            {name}
-          </h3>
-          {itemType && (
-            <p className="text-sm text-gray-600 text-center">{itemType}</p>
-          )}
-          {description && (
-            <p className="text-sm text-gray-700 text-center mt-2 line-clamp-2">
-              {description}
-            </p>
-          )}
-        </Link>
+      <div className='p-4 flex-1 flex flex-col'>
+        {isActive ? (
+          <Link
+            href={linkUrl}
+            className='block mb-3'
+          >
+            <h3 className='text-2xl font-bold text-center mb-1 hover:text-blue-600 transition-colors'>
+              {name}
+            </h3>
+            {itemType && (
+              <p className='text-sm text-gray-600 text-center'>{itemType}</p>
+            )}
+            {description && (
+              <p className='text-sm text-gray-700 text-center mt-2 line-clamp-2'>
+                {description}
+              </p>
+            )}
+          </Link>
+        ) : (
+          <div className='block mb-3'>
+            <h3 className='text-2xl font-bold text-center mb-1 text-gray-500'>
+              {name}
+            </h3>
+            {itemType && (
+              <p className='text-sm text-gray-500 text-center'>{itemType}</p>
+            )}
+            {description && (
+              <p className='text-sm text-gray-500 text-center mt-2 line-clamp-2'>
+                {description}
+              </p>
+            )}
+            {/* Inactive Notice */}
+            <div className='mt-3 p-3 bg-gray-100 border border-gray-300 rounded-lg'>
+              <p className='text-sm text-gray-600 text-center font-medium'>
+                This {isBusiness ? 'business' : 'market'} is currently inactive
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Location */}
-        <div className="flex justify-center mb-3">
+        <div className='flex justify-center mb-3'>
           <MappingPin
             memZip={memZip}
             city={city}
             stateName={stateName}
-            className="justify-center text-indigo-700 hover:text-indigo-800 underline decoration-dotted underline-offset-4"
-            mode="modal"
-            size="sm"
+            className={`justify-center ${
+              isActive
+                ? 'text-indigo-700 hover:text-indigo-800'
+                : 'text-gray-500'
+            } underline decoration-dotted underline-offset-4`}
+            mode='modal'
+            size='sm'
           />
         </div>
 
         {/* Unsave Button */}
-        <div className="flex justify-center mt-auto">
+        <div className='flex justify-center mt-auto'>
           <SaveButton
             id={id}
             type={type}
