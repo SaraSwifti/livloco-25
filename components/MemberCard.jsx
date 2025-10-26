@@ -139,7 +139,7 @@ const MemberCard = ({ member }) => {
               Sign In Required
             </h3>
             <p className='text-gray-600 mb-6'>
-              Please sign in or become a member to access the details of this{' '}
+              Please sign in or become a livloco co-op member to access the details of this{' '}
               {isBusiness ? 'LocoBusiness' : 'LocoMarket'}.
             </p>
             <div className='flex gap-3'>
@@ -153,7 +153,7 @@ const MemberCard = ({ member }) => {
                 href='/api/auth/signin'
                 className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-center transition-colors'
               >
-                Join Co-op
+                Join Livloco Co-op
               </Link>
             </div>
             <button
