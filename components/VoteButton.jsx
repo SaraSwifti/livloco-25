@@ -85,12 +85,7 @@ const VoteButton = ({
           className={`text-2xl ${hasVoted ? 'text-white' : 'text-gray-600'}`}
         />
         {hasVoted ? (
-          <span className='text-sm'>
-            You have voted for this business.
-            <span className='block font-bold text-base mt-1'>
-              Click to unvote
-            </span>
-          </span>
+          <span className='text-sm font-bold'>Voted</span>
         ) : (
           <span className='text-sm'>Vote</span>
         )}

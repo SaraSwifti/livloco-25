@@ -139,7 +139,7 @@ const MarketDetails = ({ market, voteData, saveData, messageButtonProps }) => {
         {/* Actions Section */}
         {(voteData || saveData || messageButtonProps) && (
           <section className='mb-12'>
-            <div className='bg-yellow-600 p-6 rounded-lg border border-yellow-700'>
+            <div className='bg-gradient-to-r from-yellow-300 via-yellow-600 to-yellow-300 p-6 rounded-lg border border-yellow-700'>
               <h2 className='text-lg font-semibold text-white mb-4 drop-shadow-lg text-center'>
                 Market Actions
               </h2>
@@ -178,12 +178,12 @@ const MarketDetails = ({ market, voteData, saveData, messageButtonProps }) => {
         {/* Stall Availability Section */}
         <section className='mb-12'>
           {hasStall ? (
-            <div className='bg-emerald-700 p-6 rounded-lg border border-emerald-700'>
+            <div className='bg-gradient-to-r from-emerald-500 via-emerald-700 to-emerald-500 p-6 rounded-lg border border-emerald-700'>
               <HostFMStallInfo market={market} />
             </div>
           ) : (
-            <div className='bg-emerald-700 p-6 rounded-lg border border-emerald-700 text-center'>
-              <p className='text-lg text-white'>
+            <div className='bg-gradient-to-r from-emerald-500 via-emerald-700 to-emerald-500 p-6 rounded-lg border border-emerald-700 text-center'>
+              <p className='text-lg text-white drop-shadow-lg'>
                 No stall availability for vendors at this time.
               </p>
             </div>
@@ -192,29 +192,31 @@ const MarketDetails = ({ market, voteData, saveData, messageButtonProps }) => {
 
         {/* Schedule Section */}
         <section className='mb-12'>
-          <div className='bg-white p-6 rounded-lg shadow-lg border border-sky-200'>
-            <h2 className='text-2xl font-bold text-gray-900 mb-6 text-center'>
-              Market Schedule
-            </h2>
+          <div className='p-2 rounded-lg bg-gradient-to-r from-sky-200 via-sky-500 to-sky-200'>
+            <div className='bg-gradient-to-r from-sky-200 via-sky-500 to-sky-200 p-4 rounded-lg'>
+              <h2 className='text-2xl font-bold text-white mb-6 text-center drop-shadow-lg'>
+                Market Schedule
+              </h2>
 
-            {showWeekly && <HostFMarketWeeklySch weekly={weekly} />}
-            {showRandom && (
-              <HostFMarketRandomDates
-                datesArr={
-                  Array.isArray(randomDatesObj?.dates)
-                    ? randomDatesObj.dates
-                    : []
-                }
-                legacyObj={randomDatesObj}
-              />
-            )}
-            {!showWeekly && !showRandom && (
-              <div className='text-center'>
-                <p className='text-gray-700'>
-                  No schedule information posted yet for this market.
-                </p>
-              </div>
-            )}
+              {showWeekly && <HostFMarketWeeklySch weekly={weekly} />}
+              {showRandom && (
+                <HostFMarketRandomDates
+                  datesArr={
+                    Array.isArray(randomDatesObj?.dates)
+                      ? randomDatesObj.dates
+                      : []
+                  }
+                  legacyObj={randomDatesObj}
+                />
+              )}
+              {!showWeekly && !showRandom && (
+                <div className='text-center'>
+                  <p className='text-white drop-shadow-lg'>
+                    No schedule information posted yet for this market.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       </div>

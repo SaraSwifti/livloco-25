@@ -90,12 +90,7 @@ const SaveButton = ({
             className={`text-2xl ${hasSaved ? 'text-white' : 'text-gray-600'}`}
           />
           {hasSaved ? (
-            <span className='text-sm'>
-              You have saved this {itemType}.
-              <span className='block font-bold text-base mt-1'>
-                Click to unsave
-              </span>
-            </span>
+            <span className='text-sm font-bold'>Saved</span>
           ) : (
             <span className='text-sm'>Save</span>
           )}
