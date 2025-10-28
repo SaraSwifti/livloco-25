@@ -6,7 +6,6 @@ const HomePage = async () => {
   return (
     <>
       <HomeHeader />
-      <div className='mb-8' />
       <MoreLessHero />
       <AboutBox />
 

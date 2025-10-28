@@ -12,7 +12,7 @@ const HomeHeader = () => {
   return (
     <div className='-mx-4 -mt-8'>
       {/* Hero Section with Search - Full Width */}
-      <section className='mb-4 relative'>
+      <section className='mb-0 relative'>
         <div
           className='w-full bg-gradient-to-l from-yellow-600 via-blue-400 to-sky-700 relative'
           style={{
@@ -108,10 +108,10 @@ const HomeHeader = () => {
             </div>
           </div>
 
-          {/* Wavy bottom design */}
+          {/* Wavy bottom design - wave going down */}
           <div className='absolute bottom-0 left-0 w-full overflow-hidden'>
             <svg
-              className='relative block w-full h-20'
+              className='relative block w-full h-10'
               data-name='Layer 1'
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 1200 120'
@@ -119,7 +119,7 @@ const HomeHeader = () => {
             >
               <defs>
                 <linearGradient
-                  id='waveGradient'
+                  id='homeHeaderWave'
                   x1='0%'
                   y1='0%'
                   x2='100%'
@@ -140,10 +140,8 @@ const HomeHeader = () => {
                 </linearGradient>
               </defs>
               <path
-                d='M0,60 Q300,20 600,60 T1200,60 L1200,120 L0,120 Z'
-                fill='url(#waveGradient)'
-                stroke='white'
-                strokeWidth='4'
+                d='M0,60 Q300,100 600,60 T1200,60 L1200,120 L0,120 Z'
+                fill='url(#homeHeaderWave)'
               ></path>
             </svg>
           </div>
