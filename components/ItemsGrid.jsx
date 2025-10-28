@@ -4,8 +4,24 @@ import { ItemIcon } from '@/components/ItemIcon'
 import SafeImage from '@/components/SafeImage'
 
 export default function ItemsGrid({ title, entries, keys }) {
+  const isSelling = title.toLowerCase() === 'selling'
+  const isSeeking = title.toLowerCase() === 'seeking'
+
   return (
-    <section className='p-4 border rounded shadow bg-white'>
+    <section
+      className='p-4 border rounded bg-white'
+      style={
+        isSelling
+          ? {
+              boxShadow: '0 25px 50px -12px rgba(16, 185, 129, 0.5)',
+            }
+          : isSeeking
+          ? {
+              boxShadow: '0 25px 50px -12px rgba(202, 138, 4, 0.5)',
+            }
+          : {}
+      }
+    >
       <h2 className='text-xl font-bold tracking-tight text-gray-900 mb-4 text-center'>
         {title}
       </h2>

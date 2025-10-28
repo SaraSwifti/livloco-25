@@ -51,10 +51,14 @@ const MarketDetails = ({ market, voteData, saveData, messageButtonProps }) => {
       itemType='https://schema.org/FarmersMarket'
     >
       {/* Market Header Section */}
-      <header className='bg-sky-700'>
+      <header className='bg-gradient-to-r from-sky-400 via-sky-700 to-sky-400'>
         <div className='max-w-4xl mx-auto py-8 px-4 text-center'>
           <h1
             className='text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-2xl'
+            style={{
+              textShadow:
+                '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000',
+            }}
             itemProp='name'
           >
             {market.hostfm_name}
@@ -192,8 +196,8 @@ const MarketDetails = ({ market, voteData, saveData, messageButtonProps }) => {
 
         {/* Schedule Section */}
         <section className='mb-12'>
-          <div className='p-2 rounded-lg bg-gradient-to-r from-sky-200 via-sky-500 to-sky-200'>
-            <div className='bg-gradient-to-r from-sky-200 via-sky-500 to-sky-200 p-4 rounded-lg'>
+          <div className='p-2 rounded-lg bg-gradient-to-r from-sky-400 via-sky-700 to-sky-400'>
+            <div className='bg-gradient-to-r from-sky-400 via-sky-700 to-sky-400 p-4 rounded-lg'>
               <h2 className='text-2xl font-bold text-white mb-6 text-center drop-shadow-lg'>
                 Market Schedule
               </h2>

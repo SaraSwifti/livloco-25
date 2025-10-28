@@ -27,10 +27,14 @@ const BusinessDetails = ({
       itemType='https://schema.org/LocalBusiness'
     >
       {/* Business Header Section */}
-      <header className='bg-sky-600'>
+      <header className='bg-gradient-to-r from-sky-400 via-sky-700 to-sky-400'>
         <div className='max-w-4xl mx-auto py-8 px-4 text-center'>
           <h1
             className='text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-2xl'
+            style={{
+              textShadow:
+                '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000',
+            }}
             itemProp='name'
           >
             {locobiz.locobiz_name}
@@ -78,7 +82,7 @@ const BusinessDetails = ({
         <section className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12'>
           {/* Promotional Section */}
           {(locobiz.current_promotional || '').trim() !== '' && (
-            <div className='bg-yellow-600 p-6 rounded-lg border border-yellow-700'>
+            <div className='bg-gradient-to-r from-yellow-400 via-yellow-600 to-yellow-400 p-6 rounded-lg border border-yellow-700 text-center'>
               <h2 className='text-lg font-semibold text-white mb-2'>
                 Current Promotional
               </h2>
@@ -90,7 +94,7 @@ const BusinessDetails = ({
 
           {/* Vote & Save Actions */}
           {voteData && (
-            <div className='flex flex-col items-center justify-center bg-emerald-700 p-6 rounded-lg border border-emerald-700'>
+            <div className='flex flex-col items-center justify-center bg-gradient-to-r from-emerald-500 via-emerald-700 to-emerald-500 p-6 rounded-lg border border-emerald-700'>
               <h2 className='text-lg font-semibold text-white mb-4 drop-shadow-lg'>
                 Community Support
               </h2>
@@ -158,7 +162,7 @@ const BusinessDetails = ({
         {(hasStoreFront || hasFM) && (
           <section
             className='grid grid-cols-1 lg:grid-cols-2 gap-8'
-            aria-label='Additional locations'
+            aria-label='Storefront locations'
           >
             {hasStoreFront && <StoreFront locobiz={locobiz} />}
             {hasFM && <FarmersMarket locobiz={locobiz} />}

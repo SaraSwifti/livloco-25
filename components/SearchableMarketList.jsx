@@ -106,7 +106,13 @@ export default function SearchableMarketList({
     <div className='-mx-4 -mt-8'>
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
-        <div className='w-full bg-gradient-to-r from-green-700 via-emerald-700 to-sky-700 relative'>
+        <div
+          className='w-full relative'
+          style={{
+            background:
+              'linear-gradient(to left, #ca8a04 0%, #fbbf24 20%, #60a5fa 60%, #0c4a6e 100%)',
+          }}
+        >
           <div className='max-w-7xl py-4 pb-2 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
             {/* Logo: top-center on mobile, right 1/4 on md+ */}
             <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
@@ -163,19 +169,15 @@ export default function SearchableMarketList({
                 >
                   <stop
                     offset='0%'
-                    style={{ stopColor: '#0369a1', stopOpacity: 1 }}
+                    style={{ stopColor: '#ca8a04', stopOpacity: 1 }}
                   />
                   <stop
-                    offset='30%'
-                    style={{ stopColor: '#047857', stopOpacity: 1 }}
-                  />
-                  <stop
-                    offset='60%'
-                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                    offset='50%'
+                    style={{ stopColor: '#fbbf24', stopOpacity: 1 }}
                   />
                   <stop
                     offset='100%'
-                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                    style={{ stopColor: '#0369a1', stopOpacity: 1 }}
                   />
                 </linearGradient>
               </defs>

@@ -13,55 +13,98 @@ const HomeHeader = () => {
     <div className='-mx-4 -mt-8'>
       {/* Hero Section with Search - Full Width */}
       <section className='mb-4 relative'>
-        <div className='w-full bg-gradient-to-r from-green-700 via-emerald-700 to-sky-700 relative'>
-          <div className='max-w-7xl py-12 pb-10 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center relative z-10'>
-            {/* Text + Auth Buttons: 3/4 on md+, full on mobile */}
-            <div className='order-2 md:order-1 w-full md:w-3/4 md:pr-6 text-center md:text-left'>
-              <h1 className='text-2xl font-extrabold drop-shadow-2xl sm:text-3xl md:text-4xl'>
-                <div className='text-white'>Find Your</div>
-                <div className='flex items-center justify-between'>
+        <div
+          className='w-full bg-gradient-to-l from-yellow-600 via-blue-400 to-sky-700 relative'
+          style={{
+            background:
+              'linear-gradient(to left, #ca8a04 0%, #fbbf24 20%, #60a5fa 60%, #0c4a6e 100%)',
+          }}
+        >
+          <div className='max-w-7xl py-12 pb-10 mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+            {/* Desktop Layout: 3 columns */}
+            <div className='hidden md:flex items-center justify-between gap-6'>
+              {/* Section 1: Find Your LocoPeeps + Subtext */}
+              <div className='flex-1 text-left'>
+                <h1 className='text-2xl font-extrabold drop-shadow-2xl sm:text-3xl md:text-4xl'>
+                  <div className='text-white'>Find Your</div>
                   <div className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'>
                     LocoPeeps
                   </div>
-                  {/* Join the Co-op Button - Positioned halfway to center */}
-                  {!session && (
-                    <div className='flex-1 flex justify-center'>
-                      <AuthButtons />
-                    </div>
-                  )}
+                </h1>
+                <div className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+                  Members and local businesses finding local businesses.
+                  <br />
+                  Building sustainable economies right where you live.
                 </div>
-              </h1>
-              <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    Members and local businesses finding local businesses.
-                    <br />
-                    Building sustainable economies right where you live.
-                  </div>
-                  {/* Explore Members Button - Aligned with Join button */}
-                  <div className='flex-shrink-0 ml-4'>
-                    <Link
-                      href='/recent-members'
-                      className='inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg transition-all duration-300 hover:bg-gray-50'
-                    >
-                      Explore our latest members
-                    </Link>
-                  </div>
+              </div>
+
+              {/* Section 2: Explore Button - Centered */}
+              <div className='flex-shrink-0 flex items-center justify-center'>
+                <Link
+                  href='/recent-members'
+                  className='inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg transition-all duration-300 hover:bg-gray-50'
+                >
+                  Explore our latest members
+                </Link>
+              </div>
+
+              {/* Section 3: Logo */}
+              <div className='flex-1 flex justify-end'>
+                <div className='bg-white/20 backdrop-blur-sm rounded-full p-8 shadow-lg w-48 h-48 flex items-center justify-center'>
+                  <Image
+                    src={logo}
+                    alt='LivLoco logo'
+                    className='h-auto w-auto object-contain'
+                    width={160}
+                    height={160}
+                  />
                 </div>
-              </p>
+              </div>
             </div>
 
-            {/* Logo: top-center on mobile, right 1/4 on md+ */}
-            <div className='order-1 md:order-2 w-full md:w-1/4 mb-2 md:mb-0 flex justify-center md:justify-end'>
-              <div className='bg-white/20 backdrop-blur-sm rounded-full p-8 shadow-lg w-48 h-48 flex items-center justify-center'>
-                <Image
-                  src={logo}
-                  alt='LivLoco logo'
-                  className='h-auto w-auto object-contain'
-                  width={160}
-                  height={160}
-                />
+            {/* Mobile Layout: Stacked */}
+            <div className='flex flex-col md:hidden items-center'>
+              {/* Section 3: Logo (Top on mobile) */}
+              <div className='mb-4'>
+                <div className='bg-white/20 backdrop-blur-sm rounded-full p-8 shadow-lg w-48 h-48 flex items-center justify-center'>
+                  <Image
+                    src={logo}
+                    alt='LivLoco logo'
+                    className='h-auto w-auto object-contain'
+                    width={160}
+                    height={160}
+                  />
+                </div>
               </div>
+
+              {/* Section 1: Find Your LocoPeeps + Subtext (Middle on mobile) */}
+              <div className='text-center mb-4'>
+                <h1 className='text-2xl font-extrabold drop-shadow-2xl'>
+                  <div className='text-white'>Find Your</div>
+                  <div className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'>
+                    LocoPeeps
+                  </div>
+                </h1>
+                <div className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+                  Members and local businesses finding local businesses.
+                  <br />
+                  Building sustainable economies right where you live.
+                </div>
+                {/* Join the Co-op Button for mobile */}
+                {!session && (
+                  <div className='mt-4'>
+                    <AuthButtons />
+                  </div>
+                )}
+              </div>
+
+              {/* Section 2: Explore Button (Bottom on mobile) */}
+              <Link
+                href='/recent-members'
+                className='inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg transition-all duration-300 hover:bg-gray-50'
+              >
+                Explore our latest members
+              </Link>
             </div>
           </div>
 
@@ -84,19 +127,15 @@ const HomeHeader = () => {
                 >
                   <stop
                     offset='0%'
-                    style={{ stopColor: '#0369a1', stopOpacity: 1 }}
+                    style={{ stopColor: '#ca8a04', stopOpacity: 1 }}
                   />
                   <stop
-                    offset='30%'
-                    style={{ stopColor: '#047857', stopOpacity: 1 }}
-                  />
-                  <stop
-                    offset='60%'
-                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                    offset='50%'
+                    style={{ stopColor: '#fbbf24', stopOpacity: 1 }}
                   />
                   <stop
                     offset='100%'
-                    style={{ stopColor: '#15803d', stopOpacity: 1 }}
+                    style={{ stopColor: '#0369a1', stopOpacity: 1 }}
                   />
                 </linearGradient>
               </defs>

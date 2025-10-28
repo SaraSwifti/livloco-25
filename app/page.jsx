@@ -1,23 +1,18 @@
-
-import HomeHeader from '@/components/HomeHeader';
-import AboutBox from '@/components/AboutBox';
-
-
+import HomeHeader from '@/components/HomeHeader'
+import MoreLessHero from '@/components/MoreLessHero'
+import AboutBox from '@/components/AboutBox'
 
 const HomePage = async () => {
-    
-    
-   
-    return ( 
-        <>
-            
-            <HomeHeader />
-            <AboutBox />
-           
-           
-            {/* <NewMemLocal /> */}
-        </>
-     );
+  return (
+    <>
+      <HomeHeader />
+      <div className='mb-8' />
+      <MoreLessHero />
+      <AboutBox />
+
+      {/* <NewMemLocal /> */}
+    </>
+  )
 }
- 
-export default HomePage;
+
+export default HomePage
