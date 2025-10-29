@@ -66,87 +66,94 @@ export default async function SavedBusinessesAndMarketsPage() {
   const hasSavedItems = savedBusinesses.length > 0 || savedMarkets.length > 0
 
   return (
-    <section className='flex justify-center'>
-      <div className='max-w-6xl w-full mx-auto px-4 py-10'>
-        {/* Back button */}
-        <Link
-          href='/businesses'
-          className='inline-flex items-center bg-white/80 px-3.5 py-2.5 text-lg mb-6 font-semibold text-black shadow-sm p-4 rounded border hover:bg-white'
-        >
-          <FaArrowLeft className='mr-2' /> Back to Businesses
-        </Link>
-
-        {/* Header */}
-        <div className='bg-white p-6 border rounded-lg shadow-md ring-1 ring-black/10 mb-6'>
-          <h1 className='text-3xl font-bold text-center mb-2'>
-            Saved LivLoco Businesses and Markets
-          </h1>
-          <p className='text-center text-gray-600'>
-            Your saved businesses and markets appear here. Click on any item to
-            view details or unsave them.
-          </p>
-        </div>
-
-        {!hasSavedItems ? (
-          <div className='bg-white p-10 border rounded-lg shadow-md ring-1 ring-black/10 text-center'>
-            <p className='text-lg text-gray-600 mb-4'>
-              You haven't saved any businesses or markets yet.
+    <div className='-mx-4 -mt-8'>
+      {/* Header */}
+      <section className='mb-4 relative'>
+        <div className='livloco-hero'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center relative z-10'>
+            <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl mb-2'>
+              Saved LivLoco Businesses and Markets
+            </h1>
+            <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+              Your saved businesses and markets appear here. Click on any item
+              to view details or unsave them.
             </p>
-            <div className='flex gap-4 justify-center'>
-              <Link
-                href='/businesses'
-                className='inline-flex items-center bg-blue-600 px-4 py-2 text-white font-semibold rounded hover:bg-blue-700'
-              >
-                Browse Businesses
-              </Link>
-              <Link
-                href='/hostfarmmarkets'
-                className='inline-flex items-center bg-green-600 px-4 py-2 text-white font-semibold rounded hover:bg-green-700'
-              >
-                Browse Markets
-              </Link>
-            </div>
           </div>
-        ) : (
-          <>
-            {/* Saved Businesses Section */}
-            {savedBusinesses.length > 0 && (
-              <div className='mb-8'>
-                <h2 className='text-2xl font-bold mb-4 text-blue-800'>
-                  Saved Businesses ({savedBusinesses.length})
-                </h2>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {savedBusinesses.map((business) => (
-                    <SavedItemCard
-                      key={business._id}
-                      item={business}
-                      type='business'
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+        </div>
+      </section>
 
-            {/* Saved Markets Section */}
-            {savedMarkets.length > 0 && (
-              <div>
-                <h2 className='text-2xl font-bold mb-4 text-green-800'>
-                  Saved Markets ({savedMarkets.length})
-                </h2>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {savedMarkets.map((market) => (
-                    <SavedItemCard
-                      key={market._id}
-                      item={market}
-                      type='market'
-                    />
-                  ))}
-                </div>
+      {/* Content Section */}
+      <section className='flex justify-center'>
+        <div className='max-w-6xl w-full mx-auto px-4 py-10'>
+          {/* Back button */}
+          <Link
+            href='/businesses'
+            className='inline-flex items-center bg-white/80 px-3.5 py-2.5 text-lg mb-6 font-semibold text-black shadow-sm p-4 rounded border hover:bg-white'
+          >
+            <FaArrowLeft className='mr-2' /> Back to Businesses
+          </Link>
+
+          {!hasSavedItems ? (
+            <div className='bg-white p-10 border rounded-lg shadow-md ring-1 ring-black/10 text-center'>
+              <p className='text-lg text-gray-600 mb-4'>
+                You haven't saved any businesses or markets yet.
+              </p>
+              <div className='flex gap-4 justify-center'>
+                <Link
+                  href='/businesses'
+                  className='inline-flex items-center bg-blue-600 px-4 py-2 text-white font-semibold rounded hover:bg-blue-700'
+                >
+                  Browse Businesses
+                </Link>
+                <Link
+                  href='/hostfarmmarkets'
+                  className='inline-flex items-center bg-green-600 px-4 py-2 text-white font-semibold rounded hover:bg-green-700'
+                >
+                  Browse Markets
+                </Link>
               </div>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+            </div>
+          ) : (
+            <>
+              {/* Saved Businesses Section */}
+              {savedBusinesses.length > 0 && (
+                <div className='mb-8'>
+                  <h2 className='text-2xl font-bold mb-4 text-blue-800'>
+                    Saved Businesses ({savedBusinesses.length})
+                  </h2>
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                    {savedBusinesses.map((business) => (
+                      <SavedItemCard
+                        key={business._id}
+                        item={business}
+                        type='business'
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Saved Markets Section */}
+              {savedMarkets.length > 0 && (
+                <div>
+                  <h2 className='text-2xl font-bold mb-4 text-green-800'>
+                    Saved Markets ({savedMarkets.length})
+                  </h2>
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                    {savedMarkets.map((market) => (
+                      <SavedItemCard
+                        key={market._id}
+                        item={market}
+                        type='market'
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+    </div>
   )
 }

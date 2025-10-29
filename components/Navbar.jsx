@@ -177,8 +177,8 @@ const Navbar = () => {
               <Image
                 src={logo}
                 alt='LivLoco logo'
-                width={40}
-                height={40}
+                width={80}
+                height={80}
                 priority
               />
               <span className='hidden md:block text-xl font-bold text-gray-900'>
@@ -256,7 +256,7 @@ const Navbar = () => {
             {!session && providers && (
               <button
                 onClick={() => signIn('google', { callbackUrl: '/' })}
-                className='inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
+                className='inline-flex items-center px-4 py-2 border border-sky-500 text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
               >
                 <FaGoogle className='mr-2 h-4 w-4' />
                 Co-op Member Login
@@ -365,9 +365,9 @@ const Navbar = () => {
                     <Image
                       src={logo}
                       alt='LivLoco logo'
-                      width={40}
-                      height={40}
-                      style={{ width: 'auto', height: '40px' }}
+                      width={80}
+                      height={80}
+                      style={{ width: 'auto', height: '80px' }}
                     />
                     <span className='ml-3 text-xl font-bold text-gray-900'>
                       The Livlo.co Co-op

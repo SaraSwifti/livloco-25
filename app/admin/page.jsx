@@ -88,6 +88,33 @@ export default function AdminDashboard() {
     }
   }
 
+  const updateFeedbackStatus = async (feedbackId, newStatus) => {
+    try {
+      const response = await fetch(`/api/admin/feedback?id=${feedbackId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setFeedback(
+          feedback.map((fb) =>
+            fb._id === feedbackId ? { ...fb, status: newStatus } : fb
+          )
+        )
+      } else {
+        alert(result.error || 'Failed to update feedback status')
+      }
+    } catch (error) {
+      console.error('Error updating feedback status:', error)
+      alert('Failed to update feedback status')
+    }
+  }
+
   const deleteFeedback = async (feedbackId) => {
     if (!window.confirm('Are you sure you want to delete this feedback?')) {
       return
@@ -462,6 +489,7 @@ export default function AdminDashboard() {
         <FeedbackManagement
           feedback={feedback}
           onDelete={deleteFeedback}
+          onStatusUpdate={updateFeedbackStatus}
         />
       )}
 
@@ -1054,7 +1082,7 @@ function EditCouponModal({ coupon, onClose, onSuccess }) {
 }
 
 // Feedback Management Component
-function FeedbackManagement({ feedback, onDelete }) {
+function FeedbackManagement({ feedback, onDelete, onStatusUpdate }) {
   return (
     <div className='bg-white rounded-lg shadow'>
       <div className='px-6 py-4 border-b border-gray-200'>
@@ -1103,16 +1131,33 @@ function FeedbackManagement({ feedback, onDelete }) {
                   </span>
                 </div>
                 <p className='text-gray-700 mb-3'>{fb.body}</p>
-                <div className='flex items-center justify-between text-sm text-gray-500'>
-                  <span>
+                <div className='flex items-center justify-between'>
+                  <span className='text-sm text-gray-500'>
                     Submitted: {new Date(fb.createdAt).toLocaleDateString()}
                   </span>
-                  <button
-                    onClick={() => onDelete(fb._id)}
-                    className='text-red-600 hover:text-red-800 font-medium'
-                  >
-                    Delete
-                  </button>
+                  <div className='flex items-center gap-3'>
+                    {fb.status === 'pending' ? (
+                      <button
+                        onClick={() => onStatusUpdate(fb._id, 'resolved')}
+                        className='text-green-600 hover:text-green-800 font-medium text-sm px-3 py-1 border border-green-600 rounded hover:bg-green-50 transition-colors'
+                      >
+                        Mark as Resolved
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => onStatusUpdate(fb._id, 'pending')}
+                        className='text-yellow-600 hover:text-yellow-800 font-medium text-sm px-3 py-1 border border-yellow-600 rounded hover:bg-yellow-50 transition-colors'
+                      >
+                        Mark as Pending
+                      </button>
+                    )}
+                    <button
+                      onClick={() => onDelete(fb._id)}
+                      className='text-red-600 hover:text-red-800 font-medium text-sm'
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
