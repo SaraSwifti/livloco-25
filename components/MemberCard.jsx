@@ -24,6 +24,23 @@ const MemberCard = ({ member }) => {
   const description = isBusiness ? member.locobiz_description : null
   const itemType = isBusiness ? member.locobiz_type : member.hostfm_type
 
+  // Business-specific fields for Selling and Needing
+  const sellingItems = isBusiness
+    ? [
+        member.selling?.selling1?.description,
+        member.selling?.selling2?.description,
+        member.selling?.selling3?.description,
+      ].filter(Boolean)
+    : []
+
+  const needingItems = isBusiness
+    ? [
+        member.needs?.need1?.description,
+        member.needs?.need2?.description,
+        member.needs?.need3?.description,
+      ].filter(Boolean)
+    : []
+
   // Address fields
   const address = isBusiness ? member.locobiz_address : member.hostfm_address
   const city = address?.city || ''
@@ -127,6 +144,52 @@ const MemberCard = ({ member }) => {
                 size='sm'
               />
             </div>
+
+            {/* Selling Items - Show for all businesses */}
+            {isBusiness && sellingItems.length > 0 && (
+              <div className='mb-3'>
+                <div className='flex items-center gap-2 mb-1'>
+                  <div
+                    className='w-2 h-2 rounded-full bg-green-500'
+                    aria-hidden='true'
+                  />
+                  <h4 className='font-bold text-sm text-black'>Selling</h4>
+                </div>
+                <ul className='ml-4 space-y-0.5'>
+                  {sellingItems.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className='text-black text-xs'
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Needing Items - Show for all businesses */}
+            {isBusiness && needingItems.length > 0 && (
+              <div className='mb-3'>
+                <div className='flex items-center gap-2 mb-1'>
+                  <div
+                    className='w-2 h-2 rounded-full bg-orange-500'
+                    aria-hidden='true'
+                  />
+                  <h4 className='font-bold text-sm text-black'>Needing</h4>
+                </div>
+                <ul className='ml-4 space-y-0.5'>
+                  {needingItems.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className='text-black text-xs'
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </article>
       </Link>
@@ -139,8 +202,8 @@ const MemberCard = ({ member }) => {
               Sign In Required
             </h3>
             <p className='text-gray-600 mb-6'>
-              Please sign in or become a livloco co-op member to access the details of this{' '}
-              {isBusiness ? 'LocoBusiness' : 'LocoMarket'}.
+              Please sign in or become a livloco co-op member to access the
+              details of this {isBusiness ? 'LocoBusiness' : 'LocoMarket'}.
             </p>
             <div className='flex gap-3'>
               <Link

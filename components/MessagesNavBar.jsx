@@ -6,9 +6,11 @@ import { usePathname } from 'next/navigation'
 
 export default function MessagesNavBar() {
   const pathname = usePathname()
-  const [activeTab, setActiveTab] = useState(
-    pathname.includes('/blocked') ? 'blocked' : 'messages'
-  )
+  const [activeTab, setActiveTab] = useState(() => {
+    if (pathname.includes('/blocked')) return 'blocked'
+    if (pathname.includes('/feedback')) return 'feedback'
+    return 'messages'
+  })
 
   const handleTabClick = (tab) => {
     setActiveTab(tab)
@@ -42,6 +44,17 @@ export default function MessagesNavBar() {
             }`}
           >
             Blocked For Messaging
+          </Link>
+          <Link
+            href='/messages/feedback'
+            onClick={() => handleTabClick('feedback')}
+            className={`flex-1 py-4 px-4 text-center text-xs sm:text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'feedback'
+                ? 'border-transparent text-black bg-white'
+                : 'border-transparent text-black bg-gray-300 hover:bg-gray-200'
+            }`}
+          >
+            Submit Feedback to Site Admins
           </Link>
         </nav>
       </div>

@@ -8,20 +8,23 @@ export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [coupons, setCoupons] = useState([])
+  const [feedback, setFeedback] = useState([])
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [showEditForm, setShowEditForm] = useState(false)
   const [editingCoupon, setEditingCoupon] = useState(null)
   const [statusMessage, setStatusMessage] = useState('')
+  const [activeTab, setActiveTab] = useState('coupons')
   const router = useRouter()
 
   useEffect(() => {
     checkAdminStatus()
   }, [])
 
-  // Fetch coupons only after admin status is confirmed
+  // Fetch coupons and feedback only after admin status is confirmed
   useEffect(() => {
     if (isAdmin && !isLoading) {
       fetchCoupons()
+      fetchFeedback()
     }
   }, [isAdmin, isLoading])
 
@@ -69,6 +72,43 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Error fetching coupons:', error)
+    }
+  }
+
+  const fetchFeedback = async () => {
+    try {
+      const response = await fetch('/api/admin/feedback')
+      const result = await response.json()
+
+      if (result.success) {
+        setFeedback(result.feedback)
+      }
+    } catch (error) {
+      console.error('Error fetching feedback:', error)
+    }
+  }
+
+  const deleteFeedback = async (feedbackId) => {
+    if (!window.confirm('Are you sure you want to delete this feedback?')) {
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/admin/feedback?id=${feedbackId}`, {
+        method: 'DELETE',
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setFeedback(feedback.filter((fb) => fb._id !== feedbackId))
+        alert('Feedback deleted successfully')
+      } else {
+        alert(result.error || 'Failed to delete feedback')
+      }
+    } catch (error) {
+      console.error('Error deleting feedback:', error)
+      alert('Failed to delete feedback')
     }
   }
 
@@ -230,168 +270,200 @@ export default function AdminDashboard() {
       {/* Navigation */}
       <div className='mb-8'>
         <nav className='flex space-x-8'>
-          <button className='border-b-2 border-blue-500 text-blue-600 font-medium pb-2'>
+          <button
+            onClick={() => setActiveTab('coupons')}
+            className={`border-b-2 font-medium pb-2 ${
+              activeTab === 'coupons'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
             Coupons
           </button>
-          <button className='text-gray-500 hover:text-gray-700 font-medium pb-2'>
+          <button
+            onClick={() => setActiveTab('feedback')}
+            className={`border-b-2 font-medium pb-2 ${
+              activeTab === 'feedback'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Feedback
+          </button>
+          <button
+            disabled
+            className='text-gray-400 cursor-not-allowed font-medium pb-2'
+          >
             Reports (Coming Soon)
           </button>
-          <button className='text-gray-500 hover:text-gray-700 font-medium pb-2'>
+          <button
+            disabled
+            className='text-gray-400 cursor-not-allowed font-medium pb-2'
+          >
             Users (Coming Soon)
           </button>
         </nav>
       </div>
 
-      {/* Coupon Management */}
-      <div className='bg-white rounded-lg shadow'>
-        <div className='px-6 py-4 border-b border-gray-200'>
-          <div className='flex items-center justify-between'>
-            <h2 className='text-xl font-semibold text-gray-900'>
-              Coupon Management
-            </h2>
-            <button
-              onClick={() => setShowCreateForm(true)}
-              className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200'
-            >
-              Create New Coupon
-            </button>
+      {/* Render content based on active tab */}
+      {activeTab === 'coupons' && (
+        <div className='bg-white rounded-lg shadow'>
+          <div className='px-6 py-4 border-b border-gray-200'>
+            <div className='flex items-center justify-between'>
+              <h2 className='text-xl font-semibold text-gray-900'>
+                Coupon Management
+              </h2>
+              <button
+                onClick={() => setShowCreateForm(true)}
+                className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200'
+              >
+                Create New Coupon
+              </button>
+            </div>
+          </div>
+
+          <div className='p-6'>
+            {coupons.length === 0 ? (
+              <div className='text-center py-8'>
+                <div className='text-gray-500 text-lg mb-4'>
+                  No coupons created yet
+                </div>
+                <p className='text-gray-400'>
+                  Create your first coupon to get started
+                </p>
+              </div>
+            ) : (
+              <div className='overflow-x-auto'>
+                <table className='min-w-full divide-y divide-gray-200'>
+                  <thead className='bg-gray-50'>
+                    <tr>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Code
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Name
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Discount
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Usage
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Status
+                      </th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className='bg-white divide-y divide-gray-200'>
+                    {coupons.map((coupon) => (
+                      <tr key={coupon._id}>
+                        <td className='px-6 py-4 whitespace-nowrap'>
+                          <div className='text-sm font-medium text-gray-900'>
+                            {coupon.code}
+                          </div>
+                        </td>
+                        <td className='px-6 py-4 whitespace-nowrap'>
+                          <div className='text-sm text-gray-900'>
+                            {coupon.name}
+                          </div>
+                          {coupon.description && (
+                            <div className='text-sm text-gray-500'>
+                              {coupon.description}
+                            </div>
+                          )}
+                        </td>
+                        <td className='px-6 py-4 whitespace-nowrap'>
+                          <div className='text-sm text-gray-900'>
+                            {coupon.discountType === 'percentage'
+                              ? `${coupon.discountValue}%`
+                              : `$${coupon.discountValue}`}
+                          </div>
+                          {coupon.zipcodeRestriction && (
+                            <div className='text-sm text-gray-500'>
+                              Zipcode: {coupon.zipcodeRestriction}
+                            </div>
+                          )}
+                        </td>
+                        <td className='px-6 py-4 whitespace-nowrap'>
+                          <div className='text-sm text-gray-900'>
+                            {coupon.usageCount}
+                            {coupon.usageLimit
+                              ? ` / ${coupon.usageLimit}`
+                              : ' / ∞'}
+                          </div>
+                          <div className='text-sm text-gray-500'>
+                            {coupon.usageLimitPerUser} per user
+                          </div>
+                        </td>
+                        <td className='px-6 py-4 whitespace-nowrap'>
+                          <div className='flex items-center space-x-2'>
+                            <span
+                              className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                coupon.isActive
+                                  ? 'bg-green-100 text-green-800'
+                                  : 'bg-red-100 text-red-800'
+                              }`}
+                            >
+                              {coupon.isActive ? 'Active' : 'Inactive'}
+                            </span>
+                            <span
+                              className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                coupon.isValid
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}
+                            >
+                              {coupon.isValid ? 'Valid' : 'Expired'}
+                            </span>
+                          </div>
+                        </td>
+                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
+                          <div className='flex space-x-2'>
+                            <button
+                              onClick={() => editCoupon(coupon)}
+                              className='text-blue-600 hover:text-blue-900'
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() =>
+                                toggleCouponStatus(coupon._id, coupon.isActive)
+                              }
+                              className={`${
+                                coupon.isActive
+                                  ? 'text-red-600 hover:text-red-900'
+                                  : 'text-green-600 hover:text-green-900'
+                              }`}
+                            >
+                              {coupon.isActive ? 'Deactivate' : 'Activate'}
+                            </button>
+                            <button
+                              onClick={() => deleteCoupon(coupon._id)}
+                              className='text-red-600 hover:text-red-900'
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
+      )}
 
-        <div className='p-6'>
-          {coupons.length === 0 ? (
-            <div className='text-center py-8'>
-              <div className='text-gray-500 text-lg mb-4'>
-                No coupons created yet
-              </div>
-              <p className='text-gray-400'>
-                Create your first coupon to get started
-              </p>
-            </div>
-          ) : (
-            <div className='overflow-x-auto'>
-              <table className='min-w-full divide-y divide-gray-200'>
-                <thead className='bg-gray-50'>
-                  <tr>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Code
-                    </th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Name
-                    </th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Discount
-                    </th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Usage
-                    </th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Status
-                    </th>
-                    <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className='bg-white divide-y divide-gray-200'>
-                  {coupons.map((coupon) => (
-                    <tr key={coupon._id}>
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='text-sm font-medium text-gray-900'>
-                          {coupon.code}
-                        </div>
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='text-sm text-gray-900'>
-                          {coupon.name}
-                        </div>
-                        {coupon.description && (
-                          <div className='text-sm text-gray-500'>
-                            {coupon.description}
-                          </div>
-                        )}
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='text-sm text-gray-900'>
-                          {coupon.discountType === 'percentage'
-                            ? `${coupon.discountValue}%`
-                            : `$${coupon.discountValue}`}
-                        </div>
-                        {coupon.zipcodeRestriction && (
-                          <div className='text-sm text-gray-500'>
-                            Zipcode: {coupon.zipcodeRestriction}
-                          </div>
-                        )}
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='text-sm text-gray-900'>
-                          {coupon.usageCount}
-                          {coupon.usageLimit
-                            ? ` / ${coupon.usageLimit}`
-                            : ' / ∞'}
-                        </div>
-                        <div className='text-sm text-gray-500'>
-                          {coupon.usageLimitPerUser} per user
-                        </div>
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='flex items-center space-x-2'>
-                          <span
-                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                              coupon.isActive
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-red-100 text-red-800'
-                            }`}
-                          >
-                            {coupon.isActive ? 'Active' : 'Inactive'}
-                          </span>
-                          <span
-                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                              coupon.isValid
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-gray-100 text-gray-800'
-                            }`}
-                          >
-                            {coupon.isValid ? 'Valid' : 'Expired'}
-                          </span>
-                        </div>
-                      </td>
-                      <td className='px-6 py-4 whitespace-nowrap text-sm font-medium'>
-                        <div className='flex space-x-2'>
-                          <button
-                            onClick={() => editCoupon(coupon)}
-                            className='text-blue-600 hover:text-blue-900'
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() =>
-                              toggleCouponStatus(coupon._id, coupon.isActive)
-                            }
-                            className={`${
-                              coupon.isActive
-                                ? 'text-red-600 hover:text-red-900'
-                                : 'text-green-600 hover:text-green-900'
-                            }`}
-                          >
-                            {coupon.isActive ? 'Deactivate' : 'Activate'}
-                          </button>
-                          <button
-                            onClick={() => deleteCoupon(coupon._id)}
-                            className='text-red-600 hover:text-red-900'
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
+      {activeTab === 'feedback' && (
+        <FeedbackManagement
+          feedback={feedback}
+          onDelete={deleteFeedback}
+        />
+      )}
 
       {/* Create Coupon Modal */}
       {showCreateForm && (
@@ -976,6 +1048,76 @@ function EditCouponModal({ coupon, onClose, onSuccess }) {
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  )
+}
+
+// Feedback Management Component
+function FeedbackManagement({ feedback, onDelete }) {
+  return (
+    <div className='bg-white rounded-lg shadow'>
+      <div className='px-6 py-4 border-b border-gray-200'>
+        <h2 className='text-xl font-semibold text-gray-900'>
+          Feedback Management
+        </h2>
+      </div>
+
+      <div className='p-6'>
+        {feedback.length === 0 ? (
+          <div className='text-center py-8'>
+            <div className='text-gray-500 text-lg mb-4'>
+              No feedback submitted yet
+            </div>
+            <p className='text-gray-400'>User feedback will appear here</p>
+          </div>
+        ) : (
+          <div className='space-y-4'>
+            {feedback.map((fb) => (
+              <div
+                key={fb._id}
+                className='border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow'
+              >
+                <div className='flex justify-between items-start mb-2'>
+                  <div>
+                    <h3 className='text-lg font-semibold text-gray-900'>
+                      {fb.title}
+                    </h3>
+                    <p className='text-sm text-gray-600'>
+                      Email: {fb.userEmail}
+                    </p>
+                    {fb.userPhone && (
+                      <p className='text-sm text-gray-600'>
+                        Phone: {fb.userPhone}
+                      </p>
+                    )}
+                  </div>
+                  <span
+                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      fb.status === 'pending'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-green-100 text-green-800'
+                    }`}
+                  >
+                    {fb.status}
+                  </span>
+                </div>
+                <p className='text-gray-700 mb-3'>{fb.body}</p>
+                <div className='flex items-center justify-between text-sm text-gray-500'>
+                  <span>
+                    Submitted: {new Date(fb.createdAt).toLocaleDateString()}
+                  </span>
+                  <button
+                    onClick={() => onDelete(fb._id)}
+                    className='text-red-600 hover:text-red-800 font-medium'
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

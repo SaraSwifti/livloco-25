@@ -41,14 +41,22 @@ const HomeHeader = () => {
                 </div>
               </div>
 
-              {/* Section 2: Explore Button - Centered */}
-              <div className='flex-shrink-0 flex items-center justify-center'>
+              {/* Section 2: Explore Button and Register Button - Centered */}
+              <div className='flex-shrink-0 flex flex-col items-center justify-center gap-5'>
                 <Link
                   href='/recent-members'
                   className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-black text-base font-semibold rounded-lg transition-all duration-300 hover:bg-white/40'
                 >
                   Explore our newest members' postings
                 </Link>
+                {!session && (
+                  <Link
+                    href='/onboarding'
+                    className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-black text-base font-semibold rounded-lg border-2 border-black transition-all duration-300 hover:bg-white/40'
+                  >
+                    Register to become a Livloco Co-op Member
+                  </Link>
+                )}
               </div>
 
               {/* Section 3: Logo */}
@@ -104,13 +112,23 @@ const HomeHeader = () => {
                 )}
               </div>
 
-              {/* Section 2: Explore Button (Bottom on mobile) */}
-              <Link
-                href='/recent-members'
-                className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-green-700 text-base font-semibold rounded-lg transition-all duration-300 hover:bg-white/40'
-              >
-                Explore our newest members' postings
-              </Link>
+              {/* Section 2: Explore Button and Register Button (Bottom on mobile) */}
+              <div className='flex flex-col gap-5 items-center'>
+                <Link
+                  href='/recent-members'
+                  className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-black text-base font-semibold rounded-lg transition-all duration-300 hover:bg-white/40'
+                >
+                  Explore our newest members' postings
+                </Link>
+                {!session && (
+                  <Link
+                    href='/onboarding'
+                    className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-black text-base font-semibold rounded-lg border-2 border-black transition-all duration-300 hover:bg-white/40'
+                  >
+                    Register to become a Livloco Co-op Member
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
 

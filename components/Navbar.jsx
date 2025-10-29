@@ -50,7 +50,9 @@ const Navbar = () => {
         const response = await fetch('/api/admin/status', { cache: 'no-store' })
         const result = await response.json()
         setIsAdmin(result.success && result.isAdmin)
-      } catch {}
+      } catch (error) {
+        console.error('Error checking admin status:', error)
+      }
     }
 
     if (session) {
@@ -97,7 +99,7 @@ const Navbar = () => {
       document.removeEventListener('mousedown', handleClickOutsideProfile)
       document.removeEventListener('mousedown', handleClickOutsideMobile)
     }
-  }, [isMobileMenuOpen])
+  }, [isMobileMenuOpen, session])
   // NEW: Close mobile menu on route change (pathname updates)
   useEffect(() => {
     setIsMobileMenuOpen(false) // LINE 81 (NEW)
@@ -245,20 +247,6 @@ const Navbar = () => {
                   LocoFarmers' Markets
                 </Link>
               )}
-              {session && isAdmin && (
-                <Link
-                  href='/admin'
-                  role='menuitem'
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                    pathname === '/admin'
-                      ? 'bg-red-100 text-red-700 border-b-2 border-red-700'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
-                  aria-current={pathname === '/admin' ? 'page' : undefined}
-                >
-                  Admin Panel
-                </Link>
-              )}
             </div>
           </div>
 
@@ -333,6 +321,17 @@ const Navbar = () => {
                       >
                         Saved LivLoco Businesses and Markets
                       </Link>
+
+                      {isAdmin && (
+                        <Link
+                          href='/admin'
+                          className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200'
+                          role='menuitem'
+                          onClick={() => setIsProfileMenuOpen(false)}
+                        >
+                          Admin Panel
+                        </Link>
+                      )}
 
                       <button
                         className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200'
@@ -426,40 +425,6 @@ const Navbar = () => {
                         }
                       >
                         LocoFarmers' Markets
-                      </Link>
-                    )}
-                    {session && isAdmin && (
-                      <Link
-                        href='/admin'
-                        className={`${
-                          pathname === '/admin'
-                            ? 'bg-red-100 text-red-700'
-                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        role='menuitem'
-                        aria-current={
-                          pathname === '/admin' ? 'page' : undefined
-                        }
-                      >
-                        Admin Panel
-                      </Link>
-                    )}
-                    {session && (
-                      <Link
-                        href={me?._id ? `/profile/${me._id}` : '/profile'}
-                        className={`${
-                          pathname.startsWith('/profile')
-                            ? 'bg-blue-100 text-blue-700'
-                            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-                        } group flex items-center px-2 py-2 text-base font-medium rounded-md transition-all duration-200`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        role='menuitem'
-                        aria-current={
-                          pathname.startsWith('/profile') ? 'page' : undefined
-                        }
-                      >
-                        Your Profile & Membership
                       </Link>
                     )}
                   </nav>

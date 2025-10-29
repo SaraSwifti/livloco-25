@@ -17,10 +17,6 @@ export default function ProfileNavBar({ user }) {
     { id: 'business', label: 'LocoBiz/LocoMarket Add/Edit' },
     { id: 'listing', label: 'Your Listing' },
     { id: 'membership', label: 'LocoMembership Profile and Renewal' },
-    // Add admin tab for super_admin users
-    ...(user?.role === 'super_admin'
-      ? [{ id: 'admin', label: 'Admin Panel' }]
-      : []),
   ]
 
   // Determine what to render in listing tab based on profile_choice
@@ -223,41 +219,6 @@ export default function ProfileNavBar({ user }) {
     )
   }
 
-  // Render admin tab content
-  const renderAdminTab = () => {
-    return (
-      <div className='space-y-6'>
-        <div className='text-center'>
-          <h2 className='text-2xl font-bold mb-4'>Admin Panel</h2>
-          <p className='text-gray-600 mb-6'>
-            Access the full admin dashboard to manage coupons, users, and system
-            settings.
-          </p>
-        </div>
-
-        <div className='flex justify-center'>
-          <button
-            onClick={() => router.push('/admin')}
-            className='bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-full transition-colors shadow-lg'
-          >
-            Go to Admin Dashboard
-          </button>
-        </div>
-
-        <div className='bg-gray-50 p-6 rounded-lg border'>
-          <h3 className='text-lg font-semibold mb-3'>Admin Capabilities</h3>
-          <ul className='space-y-2 text-sm text-gray-700'>
-            <li>• Create and manage discount coupons</li>
-            <li>• Set usage limits and track coupon performance</li>
-            <li>• Monitor system analytics and user activity</li>
-            <li>• Manage user accounts and permissions</li>
-            <li>• Access system-wide settings and controls</li>
-          </ul>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className='bg-white border rounded-lg shadow-md ring-1 ring-black/10'>
       {/* Tab Navigation */}
@@ -292,7 +253,6 @@ export default function ProfileNavBar({ user }) {
         {activeTab === 'business' && renderBusinessTab()}
         {activeTab === 'listing' && renderListingTab()}
         {activeTab === 'membership' && renderMembershipTab()}
-        {activeTab === 'admin' && renderAdminTab()}
       </div>
     </div>
   )
