@@ -57,7 +57,7 @@ const MoreLessHero = () => {
           className='w-full relative'
           style={{
             background:
-              'linear-gradient(to right, #0369a1 0%, #60a5fa 50%, #ca8a04 100%)',
+              'linear-gradient(to right, #059669 0%, #60a5fa 50%, #0284c7 100%)',
           }}
         >
           <div
@@ -66,31 +66,54 @@ const MoreLessHero = () => {
           >
             {/* Three Section Layout */}
             <div className='flex flex-col md:flex-row gap-8'>
-              {/* Left Section - More */}
-              <div className='flex-1 text-white drop-shadow-lg'>
-                <h2 className='text-3xl font-bold mb-4'>More....</h2>
-                <p className='text-sm font-semibold'>
-                  Knowing your neighbor, local business, community, their needs.
-                </p>
-                <p className='text-sm font-semibold mt-2'>
-                  Growing in our sustainability, interdependence, ....peace.
-                </p>
-              </div>
-
-              {/* Middle Section - Less is More */}
-              <div className='flex-1 text-center md:text-left'>
-                <h1 className='text-2xl font-extrabold drop-shadow-2xl sm:text-3xl md:text-4xl'>
-                  <span className='text-white'>Less is </span>
-                  <span className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'>
+              {/* Middle Section - Less is More (First on mobile) */}
+              <div className='flex-1 text-center md:text-left order-first md:order-none'>
+                <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight sm:text-5xl'>
+                  <span
+                    className='text-white'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
+                    Less
+                  </span>
+                  <span
+                    className='text-white'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
+                    {' '}
+                    is{' '}
+                  </span>
+                  <span
+                    className='text-white'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
                     More
                   </span>
-                </h1>
+                </h3>
+              </div>
+
+              {/* Left Section - More */}
+              <div className='flex-1 text-black order-2'>
+                <h3
+                  className='text-pretty pb-3 text-4xl font-semibold tracking-tight bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent sm:text-5xl'
+                  style={{ WebkitTextStroke: '0.3px black' }}
+                >
+                  More...
+                </h3>
+                <p className='text-xl/8 text-black'>
+                  Knowing your neighbor, local business, community, their needs.
+                  Growing in our sustainability, interdependence, ...peace.
+                </p>
               </div>
 
               {/* Right Section - Less */}
-              <div className='flex-1 text-white drop-shadow-lg'>
-                <h2 className='text-3xl font-bold mb-4'>Less....</h2>
-                <p className='text-sm font-semibold'>
+              <div className='flex-1 text-black order-3'>
+                <h3
+                  className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-lime-400 sm:text-5xl'
+                  style={{ WebkitTextStroke: '0.3px black' }}
+                >
+                  Less...
+                </h3>
+                <p className='text-xl/8 text-black'>
                   Distance, Transport, Energy, Pollution
                 </p>
               </div>

@@ -78,26 +78,21 @@ const AboutBox = async () => {
           className='w-full relative'
           style={{
             background:
-              'linear-gradient(to right, #ca8a04 0%, #fbbf24 20%, #60a5fa 60%, #0c4a6e 100%)',
+              'linear-gradient(to right, #075985 0%, #60a5fa 20%, #fbbf24 60%, #ca8a04 100%)',
           }}
         >
           <div
             className='mx-auto -mt-12 max-w-7xl p-10 sm:mt-0 lg:px-8 xl:-mt-8'
             style={{ marginTop: '80px' }}
           >
-            <div className='mx-auto rounded bg-white p-10 max-w-2xl lg:mx-0 lg:max-w-none'>
-            
+            <div className='mx-auto rounded bg-transparent p-10 max-w-2xl lg:mx-0 lg:max-w-none'>
               <div className='mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row'>
-                <div className='lg:w-full lg:max-w-2xl lg:flex-auto'>
-                 
-                  <div className='text-xl/8 text-black'>
-                    
-                  </div>
-                  <br />
-                 
-                 
-                  <br />
-                  <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+                {/* Left Section - At the LivLoco Co-op */}
+                <div className='flex-1 text-black'>
+                  <h3
+                    className='text-pretty pb-3 text-4xl font-semibold tracking-tight bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent sm:text-5xl'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
                     At the LivLoco Co-op:
                   </h3>
                   <ul className='list-disc ml-6 space-y-2'>
@@ -131,8 +126,32 @@ const AboutBox = async () => {
                       </span>
                     </li>
                   </ul>
-                  <br />
-                  <h3 className='text-pretty pb-3 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl'>
+                </div>
+
+                {/* Middle Section - LivLoco's Current Stats */}
+                <div className='flex-1 flex items-center justify-center'>
+                  <div className='bg-white/20 backdrop-blur-sm p-6 rounded-lg text-center'>
+                    <h2 className='text-4xl font-bold text-black mb-4'>
+                      LivLoco's Current Stats
+                    </h2>
+                    <div className='flex flex-col gap-2'>
+                      {/* Make this counter dynamic */}
+                      {/* NEW: Members counter based on total users */}
+                      <MemberCountDisplay total={totalUsers} />
+                      <LocoBizsCountDisplay total={totalLocoBizs} />
+                      <HostFarmersMarketCountDisplay
+                        total={totalFarmersMarkets}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Section - I hope that... */}
+                <div className='flex-1 text-black'>
+                  <h3
+                    className='text-pretty pb-3 text-4xl font-semibold tracking-tight bg-gradient-to-r from-green-700 via-lime-500 to-green-700 bg-clip-text text-transparent sm:text-5xl'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
                     I hope that...
                   </h3>
                   <p className='text-xl/8 text-black'>
@@ -141,21 +160,6 @@ const AboutBox = async () => {
                     a new trade, regardless of age. Together, the possibilities
                     are endless!
                   </p>
-                </div>
-
-                <div className='lg:flex lg:flex-auto lg:justify-center'>
-                  <div className='bg-green-100 p-6 rounded-lg shadow-md'>
-                    <h2 className='text-4xl font-bold'>
-                      LivLoco's Current Stats
-                    </h2>
-                    {/* Make this counter dynamic */}
-                    {/* NEW: Members counter based on total users */}
-                    <MemberCountDisplay total={totalUsers} />
-                    <LocoBizsCountDisplay total={totalLocoBizs} />
-                    <HostFarmersMarketCountDisplay
-                      total={totalFarmersMarkets}
-                    />
-                  </div>
                 </div>
               </div>
             </div>

@@ -17,21 +17,24 @@ const HomeHeader = () => {
           className='w-full bg-gradient-to-l from-yellow-600 via-blue-400 to-sky-700 relative'
           style={{
             background:
-              'linear-gradient(to left, #ca8a04 0%, #fbbf24 20%, #60a5fa 60%, #0c4a6e 100%)',
+              'linear-gradient(to left, #d97706 0%, #fbbf24 20%, #7dd3fc 60%, #0284c7 100%)',
           }}
         >
-          <div className='max-w-7xl py-12 pb-10 mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+          <div className='max-w-7xl py-12 pb-20 mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
             {/* Desktop Layout: 3 columns */}
             <div className='hidden md:flex items-center justify-between gap-6'>
               {/* Section 1: Find Your LocoPeeps + Subtext */}
               <div className='flex-1 text-left'>
-                <h1 className='text-2xl font-extrabold drop-shadow-2xl sm:text-3xl md:text-4xl'>
-                  <div className='text-white'>Find Your</div>
-                  <div className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'>
+                <h1 className='text-pretty text-4xl font-semibold tracking-tight text-black sm:text-5xl'>
+                  <div className='text-black'>Find Your</div>
+                  <div
+                    className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
                     LocoPeeps
                   </div>
                 </h1>
-                <div className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+                <div className='text-xl/8 text-black my-2'>
                   Members and local businesses finding local businesses.
                   <br />
                   Building sustainable economies right where you live.
@@ -42,21 +45,21 @@ const HomeHeader = () => {
               <div className='flex-shrink-0 flex items-center justify-center'>
                 <Link
                   href='/recent-members'
-                  className='inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg transition-all duration-300 hover:bg-gray-50'
+                  className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-black text-base font-semibold rounded-lg transition-all duration-300 hover:bg-white/40'
                 >
-                  Explore our latest members
+                  Explore our newest members' postings
                 </Link>
               </div>
 
               {/* Section 3: Logo */}
               <div className='flex-1 flex justify-end'>
-                <div className='bg-white/20 backdrop-blur-sm rounded-full p-8 shadow-lg w-48 h-48 flex items-center justify-center'>
+                <div className='bg-white/10 backdrop-blur-sm rounded-full p-16 shadow-lg w-96 h-96 flex items-center justify-center absolute bottom-0 right-8 overflow-visible'>
                   <Image
                     src={logo}
                     alt='LivLoco logo'
                     className='h-auto w-auto object-contain'
-                    width={160}
-                    height={160}
+                    width={320}
+                    height={320}
                   />
                 </div>
               </div>
@@ -66,26 +69,29 @@ const HomeHeader = () => {
             <div className='flex flex-col md:hidden items-center'>
               {/* Section 3: Logo (Top on mobile) */}
               <div className='mb-4'>
-                <div className='bg-white/20 backdrop-blur-sm rounded-full p-8 shadow-lg w-48 h-48 flex items-center justify-center'>
+                <div className='bg-white/20 backdrop-blur-sm rounded-full p-16 shadow-lg w-96 h-96 flex items-center justify-center'>
                   <Image
                     src={logo}
                     alt='LivLoco logo'
                     className='h-auto w-auto object-contain'
-                    width={160}
-                    height={160}
+                    width={320}
+                    height={320}
                   />
                 </div>
               </div>
 
               {/* Section 1: Find Your LocoPeeps + Subtext (Middle on mobile) */}
               <div className='text-center mb-4'>
-                <h1 className='text-2xl font-extrabold drop-shadow-2xl'>
-                  <div className='text-white'>Find Your</div>
-                  <div className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'>
+                <h1 className='text-pretty text-4xl font-semibold tracking-tight text-black sm:text-5xl'>
+                  <div className='text-black'>Find Your</div>
+                  <div
+                    className='bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent'
+                    style={{ WebkitTextStroke: '0.3px black' }}
+                  >
                     LocoPeeps
                   </div>
                 </h1>
-                <div className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+                <div className='text-xl/8 text-black my-2'>
                   Members and local businesses finding local businesses.
                   <br />
                   Building sustainable economies right where you live.
@@ -101,15 +107,15 @@ const HomeHeader = () => {
               {/* Section 2: Explore Button (Bottom on mobile) */}
               <Link
                 href='/recent-members'
-                className='inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg transition-all duration-300 hover:bg-gray-50'
+                className='inline-flex items-center px-8 py-4 bg-white/50 backdrop-blur-md text-green-700 text-base font-semibold rounded-lg transition-all duration-300 hover:bg-white/40'
               >
-                Explore our latest members
+                Explore our newest members' postings
               </Link>
             </div>
           </div>
 
           {/* Wavy bottom design - wave going down */}
-          <div className='absolute bottom-0 left-0 w-full overflow-hidden'>
+          <div className='absolute bottom-0 left-0 w-full overflow-visible'>
             <svg
               className='relative block w-full h-10'
               data-name='Layer 1'
