@@ -122,9 +122,23 @@ export default function SearchableBusinessList({
             {/* Text + Form: 3/4 on md+, full on mobile */}
             <div className='order-2 md:order-1 w-full md:w-3/4 md:pr-6 text-center md:text-left'>
               <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl'>
-                Find Your LocoPeeps
+                <span className='livloco-text-outline'>Find Your </span>
+                <span
+                  className='font-extrabold inline-block livloco-text-outline'
+                  style={{
+                    background:
+                      'linear-gradient(to right, #d97706, #fbbf24, #d97706)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    WebkitTextStroke: '0.5px black',
+                    textShadow: '0.5px 0.5px 1px rgba(0, 0, 0, 0.1)',
+                  }}
+                >
+                  LocoPeeps
+                </span>
               </h1>
-              <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+              <p className='my-2 font-bold drop-shadow-2xl text-2xl text-white livloco-text-outline'>
                 Local businesses finding local businesses. Creating local
                 economies right where you live.
               </p>

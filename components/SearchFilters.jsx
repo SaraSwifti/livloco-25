@@ -120,7 +120,7 @@ export default function SearchFilters({
       <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mb-2'>
         {/* Distance Filter */}
         <div>
-          <label className='block text-sm font-medium text-black mb-2'>
+          <label className='block text-2xl font-medium text-black mb-2'>
             Distance
           </label>
           <select
@@ -149,7 +149,7 @@ export default function SearchFilters({
         <div className='flex items-center'>
           <FaMapMarkerAlt className='text-blue-500 mr-2' />
           <div>
-            <p className='text-sm font-medium text-black'>
+            <p className='text-2xl font-medium text-black'>
               {isLoadingLocation ? 'Getting location...' : 'Location'}
             </p>
             <p className='text-xs text-black'>
@@ -163,7 +163,7 @@ export default function SearchFilters({
         {/* Zipcode Input */}
         {showLocationInput && (
           <div>
-            <label className='block text-sm font-medium text-black mb-2'>
+            <label className='block text-2xl font-medium text-black mb-2'>
               Zipcode
             </label>
             <div className='flex'>
@@ -191,9 +191,9 @@ export default function SearchFilters({
       <div className='flex items-center justify-between mb-2'>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className='flex items-center text-blue-800 hover:text-blue-900 bg-white/20 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/30 transition-all duration-200'
+          className='flex items-center text-black hover:text-gray-800 bg-white/20 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/30 transition-all duration-200'
         >
-          <FaFilter className='mr-2' />
+          <FaFilter className='mr-2 text-black' />
           Advanced Filters
         </button>
 

@@ -51,13 +51,15 @@ export default async function UserProfilePage(props) {
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center relative z-10'>
             {/* Profile Header Content */}
             <div className='text-center'>
-              <h1 className='livloco-hero-title mb-2'>
+              <h1 className='livloco-hero-title mb-2 livloco-text-outline'>
                 {user.full_name || 'User Profile'}
               </h1>
-              <div className='livloco-text-white mb-2'>
+              <div className='livloco-text-white mb-2 livloco-text-outline'>
                 <MemberSince createdAt={user.createdAt} />
               </div>
-              <p className='livloco-hero-subtitle'>{user.email}</p>
+              <p className='livloco-hero-subtitle livloco-text-outline'>
+                {user.email}
+              </p>
             </div>
           </div>
         </div>

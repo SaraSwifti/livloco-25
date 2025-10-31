@@ -71,10 +71,10 @@ export default async function SavedBusinessesAndMarketsPage() {
       <section className='mb-4 relative'>
         <div className='livloco-hero'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center relative z-10'>
-            <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl mb-2'>
+            <h1 className='text-2xl font-extrabold drop-shadow-2xl text-white sm:text-3xl md:text-4xl mb-2 livloco-text-outline'>
               Saved LivLoco Businesses and Markets
             </h1>
-            <p className='my-2 font-bold drop-shadow-2xl text-sm text-white'>
+            <p className='my-2 font-bold drop-shadow-2xl text-2xl text-white livloco-text-outline'>
               Your saved businesses and markets appear here. Click on any item
               to view details or unsave them.
             </p>

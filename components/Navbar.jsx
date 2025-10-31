@@ -7,7 +7,8 @@ import logo from '@/assets/images/newlivlocologo.png'
 import profileDefault from '@/assets/images/profile.png'
 import { HiOutlineChatBubbleLeft, HiChatBubbleLeft } from 'react-icons/hi2'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
-import { FaGoogle } from 'react-icons/fa'
+import { FaGoogle, FaApple } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
 import UnreadMessageCount from './UnreadMessageCount'
 
 const Navbar = () => {
@@ -254,13 +255,33 @@ const Navbar = () => {
           <div className='flex items-center space-x-4'>
             {/* Co-op Member Login - Only show if not signed in */}
             {!session && providers && (
-              <button
-                onClick={() => signIn('google', { callbackUrl: '/' })}
-                className='inline-flex items-center px-4 py-2 border border-sky-500 text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
-              >
-                <FaGoogle className='mr-2 h-4 w-4' />
-                Co-op Member Login
-              </button>
+              <div className='flex items-center gap-2'>
+                <button
+                  onClick={() => signIn('google', { callbackUrl: '/' })}
+                  className='inline-flex items-center px-3 py-2 border border-sky-500 text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
+                  title='Sign in with Google'
+                >
+                  <FaGoogle className='h-4 w-4' />
+                </button>
+                {providers.apple && (
+                  <button
+                    onClick={() => signIn('apple', { callbackUrl: '/' })}
+                    className='inline-flex items-center px-3 py-2 border border-sky-500 text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
+                    title='Sign in with Apple'
+                  >
+                    <FaApple className='h-4 w-4' />
+                  </button>
+                )}
+                {providers.credentials && (
+                  <Link
+                    href='/api/auth/signin'
+                    className='inline-flex items-center px-3 py-2 border border-sky-500 text-sm font-medium rounded-md text-white bg-sky-500 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm'
+                    title='Sign in with Email'
+                  >
+                    <MdEmail className='h-4 w-4' />
+                  </Link>
+                )}
+              </div>
             )}
 
             {session && (

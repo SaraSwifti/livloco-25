@@ -16,6 +16,11 @@ const UserSchema = new Schema(
       type: String,
       required: [true, 'Username is required'],
     },
+    password: {
+      type: String,
+      // Password is optional (for OAuth users) but required for credentials users
+      select: false, // Don't return password in queries by default
+    },
     image: {
       type: String,
     },
